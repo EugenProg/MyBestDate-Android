@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/startFragment"
         android:name="com.bestDate.fragment.StartFragment"
-        android:label="StartFragment" />
+        android:label="StartFragment" >
+        <action
+            android:id="@+id/action_startFragment_to_onboardStartFragment"
+            app:destination="@id/onboardStartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardStartFragment"
+        android:name="com.bestDate.fragment.OnboardStartFragment"
+        android:label="OnboardStartFragment" />
 </navigation>

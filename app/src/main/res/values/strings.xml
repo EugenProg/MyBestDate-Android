@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Best date</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="skip">Skip</string>
+    <string name="dating_without_restrictions">Dating without restrictions</string>
+    <string name="communicate_and_get_to_know_people_from_all_over_the_world">Communicate and get to know people from all over the world, and a convenient automatic language translator will help you.</string>
 
 
 </resources>

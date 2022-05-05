@@ -1,6 +1,7 @@
 package com.bestDate.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
+import com.bestDate.R
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 abstract class BaseFragment<VB: ViewBinding>: Fragment() {
@@ -48,13 +51,28 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
         onViewClickListener()
     }
 
-    protected open fun onInit() { }
+    protected open fun onInit() {
+        setNavBarColor()
+        setStatusBarColor()
+    }
 
     protected open fun onViewLifecycle() { }
 
     protected open fun onViewClickListener() { }
 
     open fun onCustomBackNavigation() {}
+
+    private fun setNavBarColor() {
+        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), navBarColor)
+    }
+
+    private fun setStatusBarColor() {
+        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), statusBarColor)
+    }
+
+    open val navBarColor: Int = R.color.bg_main
+
+    open val statusBarColor: Int = R.color.bg_main
 
     private fun keyboardAction() {
         KeyboardVisibilityEvent.setEventListener(requireActivity()) { isOpen ->
