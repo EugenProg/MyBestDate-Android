@@ -72,7 +72,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
 
     open val navBarColor: Int = R.color.bg_main
 
-    open val statusBarColor: Int = R.color.bg_main
+    open val statusBarColor: Int = R.color.white
 
     private fun keyboardAction() {
         KeyboardVisibilityEvent.setEventListener(requireActivity()) { isOpen ->

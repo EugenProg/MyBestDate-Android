@@ -10,10 +10,24 @@
         android:label="StartFragment" >
         <action
             android:id="@+id/action_startFragment_to_onboardStartFragment"
-            app:destination="@id/onboardStartFragment" />
+            app:destination="@id/onboardStartFragment"
+            app:popUpTo="@id/onboardStartFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onboardStartFragment"
         android:name="com.bestDate.fragment.OnboardStartFragment"
-        android:label="OnboardStartFragment" />
+        android:label="OnboardStartFragment" >
+        <action
+            android:id="@+id/action_onboardStartFragment_to_onboardSecondFragment"
+            app:destination="@id/onboardSecondFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardSecondFragment"
+        android:name="com.bestDate.fragment.OnboardSecondFragment"
+        android:label="OnboardSecondFragment" />
 </navigation>

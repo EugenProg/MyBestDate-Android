@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_pink">
+    android:background="@color/bg_light_blue">
 
     <View
         android:id="@+id/view"
@@ -42,7 +42,7 @@
         android:id="@+id/imageView"
         android:layout_width="204dp"
         android:layout_height="181dp"
-        android:src="@drawable/ic_heart_pink"
+        android:src="@drawable/ic_heart_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:id="@+id/textView"
         style="@style/title"
         android:gravity="center_horizontal"
-        android:text="@string/dating_without_restrictions"
+        android:text="@string/no_loneliness_just_reality"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +65,7 @@
         style="@style/text"
         android:gravity="center_horizontal"
         android:lineSpacingExtra="5dp"
-        android:text="@string/communicate_and_get_to_know_people_from_all_over_the_world"
+        android:text="@string/it_s_very_simple_i_signed_off_threw_an_invitation_card_and_got_a_meeting_of_my_destiny"
         app:layout_constraintBottom_toTopOf="@+id/next_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,18 +84,34 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_right_pink"
+            android:src="@drawable/ic_arrow_right_blue"
             android:layout_gravity="center"/>
     </FrameLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="27dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/next_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/next_button">
+
+        <FrameLayout
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingStart="5dp"
+            android:paddingEnd="10dp"
+            android:paddingVertical="15dp">
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/circle"/>
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="38dp"
@@ -112,7 +128,7 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@+id/secondButton"
+            android:id="@+id/authButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -124,21 +140,6 @@
                 android:layout_width="8dp"
                 android:layout_height="8dp"
                 android:src="@drawable/circle"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/authButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingStart="5dp"
-            android:paddingEnd="10dp"
-            android:paddingVertical="15dp">
-
-        <ImageView
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:src="@drawable/circle"/>
         </FrameLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

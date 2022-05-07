@@ -11,4 +11,5 @@
     <color name="bg_main">#283034</color>
     <color name="bg_pink">#f28be6</color>
     <color name="bg_light_blue">#c0f0ff</color>
+    <color name="main_opacity_10">#1A283034</color>
 </resources>

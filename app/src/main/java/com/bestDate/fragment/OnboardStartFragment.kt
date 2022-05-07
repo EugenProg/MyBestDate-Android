@@ -10,4 +10,25 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
         { inflater, parent, attach -> FragmentOnboardStartBinding.inflate(inflater, parent, attach) }
 
     override val navBarColor = R.color.bg_pink
+    override val statusBarColor = R.color.bg_main
+
+    override fun onViewClickListener() {
+        super.onViewClickListener()
+        binding.nextButton.setOnClickListener {
+            navController.navigate(OnboardStartFragmentDirections
+                .actionOnboardStartFragmentToOnboardSecondFragment())
+        }
+        binding.skipButton.setOnClickListener { //TODO change to auth screen
+            navController.navigate(OnboardStartFragmentDirections
+                .actionOnboardStartFragmentToOnboardSecondFragment())
+        }
+        binding.secondButton.setOnClickListener {
+            navController.navigate(OnboardStartFragmentDirections
+                .actionOnboardStartFragmentToOnboardSecondFragment())
+        }
+        binding.authButton.setOnClickListener { //TODO change to auth screen
+            navController.navigate(OnboardStartFragmentDirections
+                .actionOnboardStartFragmentToOnboardSecondFragment())
+        }
+    }
 }
