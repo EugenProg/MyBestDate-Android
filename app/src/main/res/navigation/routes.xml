@@ -25,9 +25,28 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_onboardStartFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
         android:name="com.bestDate.fragment.OnboardSecondFragment"
-        android:label="OnboardSecondFragment" />
+        android:label="OnboardSecondFragment" >
+        <action
+            android:id="@+id/action_onboardSecondFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.bestDate.fragment.AuthFragment"
+        android:label="AuthFragment" />
 </navigation>

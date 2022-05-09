@@ -20,7 +20,7 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
         }
         binding.skipButton.setOnClickListener { //TODO change to auth screen
             navController.navigate(OnboardStartFragmentDirections
-                .actionOnboardStartFragmentToOnboardSecondFragment())
+                .actionOnboardStartFragmentToAuthFragment())
         }
         binding.secondButton.setOnClickListener {
             navController.navigate(OnboardStartFragmentDirections
@@ -28,7 +28,7 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
         }
         binding.authButton.setOnClickListener { //TODO change to auth screen
             navController.navigate(OnboardStartFragmentDirections
-                .actionOnboardStartFragmentToOnboardSecondFragment())
+                .actionOnboardStartFragmentToAuthFragment())
         }
     }
 }
