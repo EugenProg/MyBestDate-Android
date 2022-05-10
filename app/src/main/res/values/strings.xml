@@ -17,6 +17,9 @@
     <string name="email_or_phone_number">Email / Phone Number</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
+    <string name="geolocation_must_be_enabled">Geolocation must be enabled</string>
+    <string name="this_is_necessary_so_that_we_can_make_a_more_suitable_selection">This is necessary so that we can make a more suitable selection of partners who are close to you</string>
+    <string name="do_it_later">Do it later</string>
 
 
 </resources>

@@ -112,7 +112,7 @@
 
                 <com.bestDate.view.WhiteButton
                     android:id="@+id/authButton"
-                    style="@style/white_button"
+                    style="@style/standard_button"
                     android:layout_marginTop="10dp" />
 
                 <LinearLayout

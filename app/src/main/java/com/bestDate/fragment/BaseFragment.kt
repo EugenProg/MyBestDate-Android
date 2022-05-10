@@ -1,10 +1,12 @@
 package com.bestDate.fragment
 
 import android.content.Context
-import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -17,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-import java.lang.Exception
+
 
 abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     abstract val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> VB
@@ -60,6 +62,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     protected open fun onInit() {
         setNavBarColor()
         setStatusBarColor()
+        setLightBarFlags()
     }
 
     protected open fun onViewLifecycle() { }
@@ -69,15 +72,26 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     open fun onCustomBackNavigation() {}
 
     private fun setNavBarColor() {
-        requireActivity().window.navigationBarColor = ContextCompat.getColor(requireContext(), navBarColor)
-        requireActivity().window.decorView.systemUiVisibility =
-            if (navBarLight) View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR else 0
+        requireActivity().window.navigationBarColor =
+            ContextCompat.getColor(requireContext(), navBarColor)
     }
 
     private fun setStatusBarColor() {
-        requireActivity().window.statusBarColor = ContextCompat.getColor(requireContext(), statusBarColor)
-        requireActivity().window.decorView.systemUiVisibility =
-            if (statusBarLight) View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR else 0
+        requireActivity().window.statusBarColor =
+            ContextCompat.getColor(requireContext(), statusBarColor)
+    }
+
+    private fun setLightBarFlags() {
+        requireActivity().window.decorView.systemUiVisibility = when {
+            navBarLight && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && statusBarLight -> {
+                SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR xor SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            }
+            navBarLight && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+            statusBarLight -> SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            else -> 0
+        }
     }
 
     open val navBarColor: Int = R.color.bg_main

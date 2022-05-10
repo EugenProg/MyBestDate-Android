@@ -118,7 +118,7 @@
             android:layout_height="38dp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/circle"
-            android:backgroundTint="@color/main_opacity_10">
+            android:backgroundTint="@color/main_10">
 
             <ImageView
                 android:layout_width="16dp"

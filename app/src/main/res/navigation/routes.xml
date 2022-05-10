@@ -32,6 +32,9 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_onboardStartFragment_to_geoEnableFragment"
+            app:destination="@id/geoEnableFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -49,4 +52,8 @@
         android:id="@+id/authFragment"
         android:name="com.bestDate.fragment.AuthFragment"
         android:label="AuthFragment" />
+    <fragment
+        android:id="@+id/geoEnableFragment"
+        android:name="com.bestDate.fragment.GeoEnableFragment"
+        android:label="GeoEnableFragment" />
 </navigation>

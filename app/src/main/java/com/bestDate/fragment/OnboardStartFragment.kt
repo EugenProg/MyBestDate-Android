@@ -18,7 +18,7 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
             navController.navigate(OnboardStartFragmentDirections
                 .actionOnboardStartFragmentToOnboardSecondFragment())
         }
-        binding.skipButton.setOnClickListener { //TODO change to auth screen
+        binding.skipButton.setOnClickListener {
             navController.navigate(OnboardStartFragmentDirections
                 .actionOnboardStartFragmentToAuthFragment())
         }
@@ -26,9 +26,9 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
             navController.navigate(OnboardStartFragmentDirections
                 .actionOnboardStartFragmentToOnboardSecondFragment())
         }
-        binding.authButton.setOnClickListener { //TODO change to auth screen
-            navController.navigate(OnboardStartFragmentDirections
-                .actionOnboardStartFragmentToAuthFragment())
+        binding.authButton.setOnClickListener {
+            navController.navigate(OnboardStartFragmentDirections.actionOnboardStartFragmentToGeoEnableFragment())
+                //.actionOnboardStartFragmentToAuthFragment())
         }
     }
 }

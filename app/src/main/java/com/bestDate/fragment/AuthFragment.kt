@@ -46,9 +46,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             }
             passForgotButton.setOnClickListener {
                 //TODO: go to pass forgot screen
+                binding.authButton.toggleActionEnabled(true)
             }
             signUpButton.setOnClickListener {
                 //TODO: go to sign up screen
+                binding.authButton.toggleActionEnabled(false)
             }
         }
     }
