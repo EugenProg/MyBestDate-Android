@@ -8,6 +8,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ButtonViewBinding
 
 abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
@@ -24,7 +25,7 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
 
         setButtonColor(context)
 
-        binding.button.setOnClickListener {
+        binding.button.setOnSaveClickListener {
             onClick?.invoke()
         }
     }

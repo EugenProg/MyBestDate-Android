@@ -51,9 +51,21 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.bestDate.fragment.AuthFragment"
-        android:label="AuthFragment" />
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_passRecoveryFragment"
+            app:destination="@id/passRecoveryFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/geoEnableFragment"
         android:name="com.bestDate.fragment.GeoEnableFragment"
         android:label="GeoEnableFragment" />
+    <fragment
+        android:id="@+id/passRecoveryFragment"
+        android:name="com.bestDate.fragment.PassRecoveryFragment"
+        android:label="PassRecoveryFragment" />
 </navigation>

@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
 import com.bestDate.R
-import com.bestDate.data.setPaddingBottom
-import com.bestDate.data.toPx
+import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.databinding.FragmentAuthBinding
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
@@ -45,8 +43,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 showMessage("facebook")
             }
             passForgotButton.setOnClickListener {
-                //TODO: go to pass forgot screen
-                binding.authButton.toggleActionEnabled(true)
+                navController.navigate(AuthFragmentDirections
+                    .actionAuthFragmentToPassRecoveryFragment())
             }
             signUpButton.setOnClickListener {
                 //TODO: go to sign up screen

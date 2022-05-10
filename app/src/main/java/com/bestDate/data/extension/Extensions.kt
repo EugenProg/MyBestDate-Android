@@ -1,4 +1,4 @@
-package com.bestDate.data
+package com.bestDate.data.extension
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,7 +9,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.core.view.updatePadding

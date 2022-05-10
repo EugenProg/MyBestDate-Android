@@ -7,9 +7,9 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
-import com.bestDate.data.animateError
-import com.bestDate.data.textIsChanged
-import com.bestDate.data.vibratePhone
+import com.bestDate.data.extension.animateError
+import com.bestDate.data.extension.textIsChanged
+import com.bestDate.data.extension.vibratePhone
 import com.bestDate.databinding.StandardInputViewBinding
 
 class StandardInput @JvmOverloads constructor(

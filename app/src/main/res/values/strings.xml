@@ -20,6 +20,9 @@
     <string name="geolocation_must_be_enabled">Geolocation must be enabled</string>
     <string name="this_is_necessary_so_that_we_can_make_a_more_suitable_selection">This is necessary so that we can make a more suitable selection of partners who are close to you</string>
     <string name="do_it_later">Do it later</string>
+    <string name="password_recovery">Password Recovery</string>
+    <string name="specify_the_email_or_phone_number_that_was_entered_earlier_during_registration">Specify the email or phone number that was entered earlier during registration. We will send a confirmation code</string>
+    <string name="next">Next</string>
 
 
 </resources>
