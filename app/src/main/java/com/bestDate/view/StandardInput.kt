@@ -1,6 +1,7 @@
 package com.bestDate.view
 
 import android.content.Context
+import android.graphics.Color
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
@@ -85,22 +86,27 @@ class StandardInput @JvmOverloads constructor(
     }
 
     fun setError() {
-        binding.placeholder.setTextColor(ContextCompat.getColor(context, R.color.red))
-        binding.root.setBackgroundResource(R.drawable.error_input_shape)
-        binding.input.setTextColor(ContextCompat.getColor(context, R.color.red))
+        with(binding) {
+            placeholder.setTextColor(ContextCompat.getColor(context, R.color.red))
+            root.setBackgroundResource(R.drawable.error_input_shape)
+            input.setTextColor(ContextCompat.getColor(context, R.color.red))
+            icon.setColorFilter(ContextCompat.getColor(context, R.color.red))
+        }
         this.animateError()
         context.vibratePhone()
     }
 
     private fun setDefault() {
-        binding.placeholder.setTextColor(ContextCompat.getColor(context, R.color.white_60))
-        binding.root.setBackgroundResource(R.drawable.default_input_shape)
-        binding.input.setTextColor(ContextCompat.getColor(context, R.color.white_90))
+        with(binding) {
+            placeholder.setTextColor(ContextCompat.getColor(context, R.color.white_60))
+            root.setBackgroundResource(R.drawable.default_input_shape)
+            input.setTextColor(ContextCompat.getColor(context, R.color.white_90))
+            icon.setColorFilter(ContextCompat.getColor(context, R.color.white))
+        }
     }
 
     fun setFocus() {
         binding.input.isFocusableInTouchMode = true
         binding.input.requestFocus()
     }
-
 }

@@ -1,4 +1,4 @@
-package com.bestDate.view
+package com.bestDate.view.base
 
 import android.content.Context
 import android.graphics.PorterDuff

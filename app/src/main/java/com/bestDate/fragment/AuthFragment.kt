@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setPaddingBottom
+import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>() {
@@ -47,8 +48,8 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                     .actionAuthFragmentToPassRecoveryFragment())
             }
             signUpButton.setOnClickListener {
-                //TODO: go to sign up screen
-                binding.authButton.toggleActionEnabled(false)
+                navController.navigate(AuthFragmentDirections
+                    .actionAuthFragmentToStartRegistrationFragment())
             }
         }
     }
@@ -56,8 +57,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override fun scrollAction() {
         super.scrollAction()
         with(binding) {
-            socialContainer.isVisible = false
-            signUpButton.isVisible = false
+            ViewUtils().hideViews(socialContainer, signUpButton)
             inputContainer.setPaddingBottom(0)
             var focusView = emailInput
             if (passInput.hasFocus) focusView = passInput
@@ -69,8 +69,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
     override fun hideAction() {
         super.hideAction()
         with(binding) {
-            socialContainer.isVisible = true
-            signUpButton.isVisible = true
+            ViewUtils().showViews(socialContainer, signUpButton)
             inputContainer.setPaddingBottom(90)
         }
     }

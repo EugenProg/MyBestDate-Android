@@ -3,6 +3,7 @@ package com.bestDate.view
 import android.content.Context
 import android.util.AttributeSet
 import com.bestDate.R
+import com.bestDate.view.base.BaseButton
 
 class WhiteButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

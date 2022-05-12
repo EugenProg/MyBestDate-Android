@@ -23,6 +23,10 @@
     <string name="password_recovery">Password Recovery</string>
     <string name="specify_the_email_or_phone_number_that_was_entered_earlier_during_registration">Specify the email or phone number that was entered earlier during registration. We will send a confirmation code</string>
     <string name="next">Next</string>
+    <string name="already_have_in_account">Already have in account?</string>
+    <string name="name">Name</string>
+    <string name="gender">Gender</string>
+    <string name="birth_date">Birth date</string>
 
 
 </resources>

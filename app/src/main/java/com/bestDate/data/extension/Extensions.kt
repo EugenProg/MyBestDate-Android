@@ -1,5 +1,6 @@
 package com.bestDate.data.extension
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.os.Build
@@ -13,6 +14,8 @@ import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.core.view.updatePadding
 import com.bestDate.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun EditText.textIsChanged(textIsChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
@@ -51,3 +54,9 @@ fun Int.toPx() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,
     this.toFloat(),
     Resources.getSystem().displayMetrics).toInt()
+
+@SuppressLint("SimpleDateFormat")
+fun Date.toStringFormat(): String {
+    val formatter = SimpleDateFormat("dd MMMM yyyy")
+    return formatter.format(this)
+}
