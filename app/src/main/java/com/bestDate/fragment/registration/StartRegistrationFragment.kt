@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
+import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.fragment.BaseFragment
@@ -38,10 +39,15 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
             birthInput.icon = R.drawable.ic_calendar
 
             nextButton.title = getString(R.string.next)
+
+            nameInput.text = RegistrationDataHolder.username.orEmpty()
+            birthInput.text = RegistrationDataHolder.birthdate?.toStringFormat().orEmpty()
+            genderInput.text = RegistrationDataHolder.gender.orEmpty()
         }
 
         datePicker = CalendarView().getDateSelectCalender(
             getString(R.string.birth_date),
+            RegistrationDataHolder.birthdate,
             birthDateSelect()
         )
     }
@@ -67,6 +73,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                 datePicker.show(childFragmentManager, datePicker.tag)
             }
             genderSheetDialog.itemClick = {
+                RegistrationDataHolder.gender = it
                 genderInput.text = it
             }
         }
@@ -74,6 +81,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
 
     private fun birthDateSelect(): (Date) -> Unit {
         return {
+            RegistrationDataHolder.birthdate = it
             binding.birthInput.text = it.toStringFormat()
         }
     }
@@ -85,8 +93,9 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                 genderInput.text.isBlank() -> genderInput.setError()
                 birthInput.text.isBlank() -> birthInput.setError()
                 else -> {
-                    showMessage("next")
-                    //TODO: going to next step
+                    RegistrationDataHolder.username = nameInput.text
+                    navController.navigate(StartRegistrationFragmentDirections
+                        .actionStartRegistrationFragmentToContinueRegistrationFragment())
                 }
             }
         }

@@ -22,5 +22,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_10">#1Affffff</color>
     <color name="white_60">#99ffffff</color>
+    <color name="white_80">#CCffffff</color>
     <color name="white_90">#E6ffffff</color>
 </resources>

@@ -46,7 +46,7 @@
                 android:id="@+id/textView3"
                 style="@style/title"
                 android:layout_marginTop="2dp"
-                android:text="@string/hello_login_now"
+                android:text="@string/create_new_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/backButton" />
@@ -56,7 +56,7 @@
                 style="@style/text"
                 android:layout_marginTop="4dp"
                 android:lineSpacingExtra="3dp"
-                android:text="@string/welcome_to_our_kind_and_cozy_home"
+                android:text="@string/when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />

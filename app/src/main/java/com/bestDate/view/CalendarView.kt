@@ -7,9 +7,13 @@ class CalendarView {
     private val calendar = Calendar.getInstance()
 
     fun getDateSelectCalender(title: String,
+                              selectedDate: Date?,
                               saveClick: ((Date) -> Unit),
                               cancel: (() -> Unit)? = null): MaterialDatePicker<Long> {
-        calendar.add(Calendar.YEAR, -18)
+
+        if (selectedDate == null) calendar.add(Calendar.YEAR, -18)
+        else calendar.timeInMillis = selectedDate.time
+
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setSelection(calendar.timeInMillis)
             .setTitleText(title)
@@ -19,6 +23,7 @@ class CalendarView {
             calendar.timeInMillis = it
             saveClick.invoke(calendar.time)
         }
+
         datePicker.addOnCancelListener {
             cancel?.invoke()
         }

@@ -27,6 +27,10 @@
     <string name="name">Name</string>
     <string name="gender">Gender</string>
     <string name="birth_date">Birth date</string>
+    <string name="create_new_account">Create\nNew Account.</string>
+    <string name="when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy">When creating a new account, we recommend that you read our privacy policy and terms of use of the dating app.</string>
+    <string name="one_step_to_your_dream">One step to your dream</string>
+    <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">By clicking the “Sign up” button, you agree to our privacy policy and terms of use</string>
 
 
 </resources>
