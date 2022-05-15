@@ -1,15 +1,15 @@
-package com.bestDate.view.bottomSheet.GenderSheet
+package com.bestDate.view.bottomSheet.genderSheet
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bestDate.databinding.GenderSheetDialogBinding
+import com.bestDate.R
+import com.bestDate.databinding.ListSheetDialogBinding
 import com.bestDate.view.base.BaseBottomSheetDialog
-import com.hadilq.liveevent.LiveEvent
 
-class GenderSheetDialog: BaseBottomSheetDialog<GenderSheetDialogBinding>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> GenderSheetDialogBinding =
-        { inflater, parent, attach -> GenderSheetDialogBinding.inflate(inflater, parent, attach) }
+class GenderSheetDialog: BaseBottomSheetDialog<ListSheetDialogBinding>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> ListSheetDialogBinding =
+        { inflater, parent, attach -> ListSheetDialogBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: GenderSheetAdapter
     private var genderList: MutableList<String> = ArrayList()
@@ -27,7 +27,10 @@ class GenderSheetDialog: BaseBottomSheetDialog<GenderSheetDialogBinding>() {
             dismiss()
             itemClick?.invoke(it)
         }
-        binding.genderList.adapter = adapter
-        binding.genderList.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.title.text = getString(R.string.gender)
+
+        binding.itemList.adapter = adapter
+        binding.itemList.layoutManager = LinearLayoutManager(requireContext())
     }
 }

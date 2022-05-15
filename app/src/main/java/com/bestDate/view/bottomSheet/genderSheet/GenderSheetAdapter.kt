@@ -1,11 +1,8 @@
-package com.bestDate.view.bottomSheet.GenderSheet
+package com.bestDate.view.bottomSheet.genderSheet
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.GenderListItemBinding
 

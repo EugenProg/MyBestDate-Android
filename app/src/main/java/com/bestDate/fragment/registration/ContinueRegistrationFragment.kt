@@ -48,8 +48,10 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
                 emailInput.text.isBlank() -> emailInput.setError()
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
-                    showMessage("next")
-                    //TODO: going to next step
+                    RegistrationDataHolder.email = emailInput.text
+                    RegistrationDataHolder.password = passInput.text
+                    navController.navigate(ContinueRegistrationFragmentDirections
+                        .actionContinueRegistrationFragmentToProfilePhotoEditingFragment())
                 }
             }
         }

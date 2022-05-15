@@ -6,4 +6,7 @@ object RegistrationDataHolder {
     var username: String? = null
     var birthdate: Date? = null
     var gender: String? = null
+
+    var email: String? = null
+    var password: String? = null
 }

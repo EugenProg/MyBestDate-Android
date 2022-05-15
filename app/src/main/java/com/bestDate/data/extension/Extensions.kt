@@ -37,16 +37,6 @@ fun Context.vibratePhone() {
         vibrator.vibrate(100)
     }
 }
-
-fun View.animateError() {
-    this.startAnimation(
-        AnimationUtils.loadAnimation(context, R.anim.show_shake)
-    )
-}
-
-fun View.setPaddingBottom(paddingBottom: Int) {
-    this.updatePadding(bottom = paddingBottom.toPx())
-}
 /**
  * An extension to convert numbers from dp to px
  * */

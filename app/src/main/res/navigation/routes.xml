@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/profilePhotoEditingFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardStartFragment"
-        android:name="com.bestDate.fragment.OnboardStartFragment"
+        android:name="com.bestDate.fragment.onboarding.OnboardStartFragment"
         android:label="OnboardStartFragment" >
         <action
             android:id="@+id/action_onboardStartFragment_to_onboardSecondFragment"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
-        android:name="com.bestDate.fragment.OnboardSecondFragment"
+        android:name="com.bestDate.fragment.onboarding.OnboardSecondFragment"
         android:label="OnboardSecondFragment" >
         <action
             android:id="@+id/action_onboardSecondFragment_to_authFragment"
@@ -97,5 +97,17 @@
     <fragment
         android:id="@+id/continueRegistrationFragment"
         android:name="com.bestDate.fragment.registration.ContinueRegistrationFragment"
-        android:label="ContinueRegistrationFragment" />
+        android:label="ContinueRegistrationFragment" >
+        <action
+            android:id="@+id/action_continueRegistrationFragment_to_profilePhotoEditingFragment"
+            app:destination="@id/profilePhotoEditingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/profilePhotoEditingFragment"
+        android:name="com.bestDate.fragment.profilePhotoEditor.ProfilePhotoEditingFragment"
+        android:label="ProfilePhotoEditingFragment" />
 </navigation>

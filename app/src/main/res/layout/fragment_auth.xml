@@ -43,7 +43,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/headerTitle"
                 style="@style/title"
                 android:layout_marginTop="2dp"
                 android:text="@string/hello_login_now"
@@ -59,7 +59,7 @@
                 android:text="@string/welcome_to_our_kind_and_cozy_home"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
 
             <LinearLayout
                 android:id="@+id/inputContainer"

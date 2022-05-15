@@ -1,5 +1,6 @@
 package com.bestDate.fragment.registration
 
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,7 @@ import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.fragment.BaseFragment
 import com.bestDate.view.CalendarView
-import com.bestDate.view.bottomSheet.GenderSheet.GenderSheetDialog
+import com.bestDate.view.bottomSheet.genderSheet.GenderSheetDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
@@ -31,6 +32,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
         with(binding) {
             nameInput.hint = getString(R.string.name)
             nameInput.icon = R.drawable.ic_user
+            nameInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
 
             genderInput.hint = getString(R.string.gender)
             genderInput.icon = R.drawable.ic_gender

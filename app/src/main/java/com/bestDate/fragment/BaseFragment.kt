@@ -1,6 +1,7 @@
 package com.bestDate.fragment
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,16 +9,22 @@ import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
+import com.bestDate.data.extension.setMarginTop
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 
@@ -60,9 +67,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     }
 
     protected open fun onInit() {
-        setNavBarColor()
-        setStatusBarColor()
-        setLightBarFlags()
+        reDrawBars()
     }
 
     protected open fun onViewLifecycle() { }
@@ -92,6 +97,37 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
             statusBarLight -> SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             else -> 0
         }
+    }
+
+    protected fun makeStatusBarTransparent(offsetView: View) {
+        requireActivity().window.apply {
+            decorView.systemUiVisibility = when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                }
+                else -> {
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                            SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                }
+            }
+            statusBarColor = Color.TRANSPARENT
+            makeStatusBarOffset(offsetView)
+        }
+    }
+
+    private fun makeStatusBarOffset(offsetView: View) {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val top = insets?.getInsets(WindowInsetsCompat.Type.systemGestures())?.top
+            offsetView.setMarginTop(top ?: 0)
+            insets
+        }
+    }
+
+    protected fun reDrawBars() {
+        setNavBarColor()
+        setStatusBarColor()
+        setLightBarFlags()
     }
 
     open val navBarColor: Int = R.color.bg_main
