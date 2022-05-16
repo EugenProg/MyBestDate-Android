@@ -8,14 +8,14 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.ImagesListPageBinding
+import com.bestDate.databinding.PageImagesListBinding
 import com.bumptech.glide.Glide
 
 class ImagesPageAdapter(private val imageList: MutableList<Uri>,
                         private val imageClick: (Uri) -> Unit):
     RecyclerView.Adapter<ImagesPageAdapter.ImagesPageViewHolder>() {
 
-    class ImagesPageViewHolder(val binding: ImagesListPageBinding):
+    class ImagesPageViewHolder(val binding: PageImagesListBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(items: MutableList<Uri>, imageClick: (Uri) -> Unit) {
             itemView.apply {
@@ -52,7 +52,7 @@ class ImagesPageAdapter(private val imageList: MutableList<Uri>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImagesPageViewHolder {
         return ImagesPageViewHolder(
-            ImagesListPageBinding.inflate(
+            PageImagesListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false)
         )
     }

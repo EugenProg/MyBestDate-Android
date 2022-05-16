@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.GenderListItemBinding
+import com.bestDate.databinding.ItemGenderListBinding
 
 class GenderSheetAdapter(private val items: MutableList<String>,
                          private val itemClick: (String) -> Unit):
     RecyclerView.Adapter<GenderSheetAdapter.GenderSheetViewHolder>() {
 
-    class GenderSheetViewHolder(val binding: GenderListItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class GenderSheetViewHolder(val binding: ItemGenderListBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: String, itemClick: (String) -> Unit) {
             itemView.apply {
                 binding.name.text = item
@@ -24,7 +24,7 @@ class GenderSheetAdapter(private val items: MutableList<String>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenderSheetViewHolder {
         return GenderSheetViewHolder(
-            GenderListItemBinding.inflate(
+            ItemGenderListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false)
         )
     }

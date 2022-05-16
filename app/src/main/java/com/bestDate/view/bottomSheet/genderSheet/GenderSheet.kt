@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.databinding.ListSheetDialogBinding
-import com.bestDate.view.base.BaseBottomSheetDialog
+import com.bestDate.databinding.SheetImageListBinding
+import com.bestDate.view.base.BaseBottomSheet
 
-class GenderSheetDialog: BaseBottomSheetDialog<ListSheetDialogBinding>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> ListSheetDialogBinding =
-        { inflater, parent, attach -> ListSheetDialogBinding.inflate(inflater, parent, attach) }
+class GenderSheet: BaseBottomSheet<SheetImageListBinding>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
+        { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: GenderSheetAdapter
     private var genderList: MutableList<String> = ArrayList()

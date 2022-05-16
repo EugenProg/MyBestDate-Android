@@ -14,7 +14,9 @@ import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
 import com.bestDate.fragment.BaseFragment
-import com.bestDate.view.bottomSheet.imageSheet.ImageListSheetDialog
+import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
+import com.bestDate.view.bottomSheet.photoEditorSheet.PhotoEditorSheet
+import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -30,7 +32,9 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
     override val statusBarLight = true
 
     private lateinit var pagerAdapter: ImagesPageAdapter
-    private var imageSheetDialogDialog: ImageListSheetDialog = ImageListSheetDialog()
+    private var imageListSheet: ImageListSheet = ImageListSheet()
+    private var photoEditorSheet: PhotoEditorSheet = PhotoEditorSheet()
+    private var photoSettingsSheet: PhotoSettingsSheet = PhotoSettingsSheet()
     private var imageList: MutableList<Uri> = ArrayList()
 
     override fun onInit() {
@@ -55,7 +59,7 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
         with(binding) {
             uploadButton.onClick = {
                 if (imageList.size < 9) {
-                    imageSheetDialogDialog.show(childFragmentManager, imageSheetDialogDialog.tag)
+                    imageListSheet.show(childFragmentManager, imageListSheet.tag)
                 } else {
                     showMessage("You can upload only 9 photo")
                 }
@@ -68,15 +72,35 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
                     //TODO: go to next page
                 }
             }
-            imageSheetDialogDialog.itemClick = {
-                imageSheetDialogDialog.dismiss()
+
+            imageListSheet.itemClick = {
+                imageListSheet.dismiss()
                 imageList.add(it)
                 nextButton.isVisible = true
                 if (imageList.isNotEmpty()) {
                     pagerAdapter.notifyItemChanged((imageList.size - 1) / 3)
                 }
 
+                photoSettingsSheet.selectedImage = it
+                photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+            }
+
+            photoSettingsSheet.saveClick = {
+                photoSettingsSheet.dismiss()
                 setMainImage(it)
+            }
+            photoSettingsSheet.editClick = {
+                photoSettingsSheet.dismiss()
+                photoEditorSheet.show(childFragmentManager, photoEditorSheet.tag)
+            }
+            photoSettingsSheet.deleteClick = { uri ->
+                photoSettingsSheet.dismiss()
+                val index = imageList.indexOfFirst { it == uri }
+                imageList.removeAt(index)
+                pagerAdapter.notifyDataSetChanged()
+            }
+            photoSettingsSheet.sendMessage = {
+                showMessage(it)
             }
         }
     }
@@ -137,7 +161,8 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
 
     private fun imageClick(): (Uri) -> Unit {
         return {
-            showMessage("click")
+            photoSettingsSheet.selectedImage = it
+            photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
         }
     }
 }

@@ -9,19 +9,19 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.ButtonViewBinding
+import com.bestDate.databinding.ViewButtonBinding
 
 abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
     private val buttonColor: Int, private val textColor: Int, private val progressColor: Int):
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ButtonViewBinding
+    private var binding: ViewButtonBinding
     private var buttonTitle: String = ""
     var onClick: (() -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.button_view, this)
-        binding = ButtonViewBinding.bind(view)
+        val view = View.inflate(context, R.layout.view_button, this)
+        binding = ViewButtonBinding.bind(view)
 
         setButtonColor(context)
 

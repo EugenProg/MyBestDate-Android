@@ -1,7 +1,6 @@
 package com.bestDate.view
 
 import android.content.Context
-import android.graphics.Color
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
@@ -11,13 +10,13 @@ import com.bestDate.R
 import com.bestDate.data.extension.animateError
 import com.bestDate.data.extension.textIsChanged
 import com.bestDate.data.extension.vibratePhone
-import com.bestDate.databinding.StandardInputViewBinding
+import com.bestDate.databinding.ViewStandardInputBinding
 
 class StandardInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: StandardInputViewBinding
+    private var binding: ViewStandardInputBinding
 
     private var passIsVisible: Boolean = false
     var isPasswordField: Boolean = false
@@ -33,8 +32,8 @@ class StandardInput @JvmOverloads constructor(
         get() = binding.input.hasFocus()
 
     init {
-        View.inflate(context, R.layout.standard_input_view, this)
-        binding = StandardInputViewBinding.bind(this)
+        View.inflate(context, R.layout.view_standard_input, this)
+        binding = ViewStandardInputBinding.bind(this)
 
         binding.iconFrame.setOnClickListener {
             togglePassVisibility()

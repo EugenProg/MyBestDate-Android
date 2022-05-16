@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.ImageItemBinding
+import com.bestDate.databinding.ItemImageBinding
 import com.bumptech.glide.Glide
 
 class ImageSheetAdapter(private val imageClick: (Uri) -> Unit):
@@ -24,7 +23,7 @@ class ImageSheetAdapter(private val imageClick: (Uri) -> Unit):
         }
     }
 
-    class ImageSheetViewHolder(val binding: ImageItemBinding): RecyclerView.ViewHolder(binding.root) {
+    class ImageSheetViewHolder(val binding: ItemImageBinding): RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: Uri, imageClick: (Uri) -> Unit) {
             itemView.apply {
                 Glide.with(context).load(item).into(binding.image)
@@ -36,7 +35,7 @@ class ImageSheetAdapter(private val imageClick: (Uri) -> Unit):
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageSheetViewHolder {
         return ImageSheetViewHolder(
-            ImageItemBinding.inflate(
+            ItemImageBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false)
         )
     }

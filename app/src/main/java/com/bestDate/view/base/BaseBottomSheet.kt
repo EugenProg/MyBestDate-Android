@@ -12,11 +12,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.lang.Exception
 
-abstract class BaseBottomSheetDialog<VB: ViewBinding>: BottomSheetDialogFragment() {
+abstract class BaseBottomSheet<VB: ViewBinding>: BottomSheetDialogFragment() {
     abstract val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
+
+    var sendMessage: ((String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +34,7 @@ abstract class BaseBottomSheetDialog<VB: ViewBinding>: BottomSheetDialogFragment
         try {
             onInit()
             onViewLifecycle()
+            onViewClickListener()
         } catch (e: Exception) {
 
         }
@@ -40,6 +43,8 @@ abstract class BaseBottomSheetDialog<VB: ViewBinding>: BottomSheetDialogFragment
     protected open fun onInit() { }
 
     protected open fun onViewLifecycle() { }
+
+    protected open fun onViewClickListener() { }
 
     @SuppressLint("RestrictedApi")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -51,4 +56,8 @@ abstract class BaseBottomSheetDialog<VB: ViewBinding>: BottomSheetDialogFragment
     }
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+
+    protected fun showMessage(message: String) {
+        sendMessage?.invoke(message)
+    }
 }

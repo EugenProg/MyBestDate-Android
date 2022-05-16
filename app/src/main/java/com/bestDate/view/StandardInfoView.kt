@@ -9,18 +9,18 @@ import com.bestDate.R
 import com.bestDate.data.extension.animateError
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.vibratePhone
-import com.bestDate.databinding.StandardInfoViewBinding
+import com.bestDate.databinding.ViewStandardInfoBinding
 
 class StandardInfoView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: StandardInfoViewBinding
+    private var binding: ViewStandardInfoBinding
     var onClick: (() -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.standard_info_view, this)
-        binding = StandardInfoViewBinding.bind(view)
+        val view = View.inflate(context, R.layout.view_standard_info, this)
+        binding = ViewStandardInfoBinding.bind(view)
 
         binding.root.setOnSaveClickListener {
             onClick?.invoke()

@@ -13,7 +13,7 @@ import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.fragment.BaseFragment
 import com.bestDate.view.CalendarView
-import com.bestDate.view.bottomSheet.genderSheet.GenderSheetDialog
+import com.bestDate.view.bottomSheet.genderSheet.GenderSheet
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
@@ -24,7 +24,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
 
-    private var genderSheetDialog: GenderSheetDialog = GenderSheetDialog()
+    private var genderSheet: GenderSheet = GenderSheet()
     private lateinit var datePicker: MaterialDatePicker<Long>
 
     override fun onInit() {
@@ -69,12 +69,12 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                     .actionStartRegistrationFragmentToAuthFragment())
             }
             genderInput.onClick = {
-                genderSheetDialog.show(childFragmentManager, genderSheetDialog.tag)
+                genderSheet.show(childFragmentManager, genderSheet.tag)
             }
             birthInput.onClick = {
                 datePicker.show(childFragmentManager, datePicker.tag)
             }
-            genderSheetDialog.itemClick = {
+            genderSheet.itemClick = {
                 RegistrationDataHolder.gender = it
                 genderInput.text = it
             }

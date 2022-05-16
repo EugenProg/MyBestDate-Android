@@ -35,6 +35,10 @@
     <string name="you_can_upload_up_to_9_photos_to_your_profile">You can upload up to 9 photos\nto your profile.</string>
     <string name="upload_a_photo">Upload a photo</string>
     <string name="no_permission">Permission not granted</string>
+    <string name="take_part_in_a_contest">Take part in a contest</string>
+    <string name="mutual_sympathy">Mutual Sympathy</string>
+    <string name="top_50">TOP 50</string>
+    <string name="set_the_main_photo">Set the main photo</string>
 
 
 </resources>

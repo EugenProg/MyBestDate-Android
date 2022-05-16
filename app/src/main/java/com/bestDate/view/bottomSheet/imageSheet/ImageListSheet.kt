@@ -14,15 +14,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.data.extension.getImages
-import com.bestDate.databinding.ListSheetDialogBinding
-import com.bestDate.view.base.BaseBottomSheetDialog
+import com.bestDate.databinding.SheetImageListBinding
+import com.bestDate.view.base.BaseBottomSheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ImageListSheetDialog: BaseBottomSheetDialog<ListSheetDialogBinding>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> ListSheetDialogBinding =
-        { inflater, parent, attach -> ListSheetDialogBinding.inflate(inflater, parent, attach) }
+class ImageListSheet: BaseBottomSheet<SheetImageListBinding>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
+        { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: ImageSheetAdapter
     private var imageList: MutableLiveData<MutableList<Uri>> = MutableLiveData(ArrayList())
