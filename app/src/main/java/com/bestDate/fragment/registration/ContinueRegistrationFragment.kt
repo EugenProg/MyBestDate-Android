@@ -4,17 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.locale.RegistrationDataHolder
-import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
-import com.bestDate.fragment.BaseFragment
+import com.bestDate.base.BaseFragment
 
 class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) ->
     FragmentContinueRegistrationBinding = { inflater, parent, attach ->
         FragmentContinueRegistrationBinding.inflate(inflater, parent, attach)}
+
+    override val statusBarLight = true
 
     override fun onInit() {
         super.onInit()
@@ -27,6 +27,7 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
             name.text = RegistrationDataHolder.username
             birthdate.text = RegistrationDataHolder.birthdate?.toStringFormat()
             gender.text = RegistrationDataHolder.gender
+            emailInput.text = RegistrationDataHolder.email.orEmpty()
         }
     }
 

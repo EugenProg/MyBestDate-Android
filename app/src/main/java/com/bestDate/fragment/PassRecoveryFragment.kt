@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
+import com.bestDate.base.BaseFragment
 import com.bestDate.databinding.FragmentPassRecoveryBinding
 
 class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {

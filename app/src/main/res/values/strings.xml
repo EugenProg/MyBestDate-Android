@@ -39,6 +39,11 @@
     <string name="mutual_sympathy">Mutual Sympathy</string>
     <string name="top_50">TOP 50</string>
     <string name="set_the_main_photo">Set the main photo</string>
+    <string name="photo_editing">Photo Editing</string>
+    <string name="save">Save</string>
+    <string name="image_list">Image list</string>
+    <string name="you_can_upload_only_9_photo">You can upload only 9 photo</string>
+    <string name="oops_its_error">oops</string>
 
 
 </resources>

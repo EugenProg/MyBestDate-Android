@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.ViewStandardInfoBinding
 import com.bestDate.databinding.ViewSwitchBinding
 
 class SwitchView @JvmOverloads constructor(
@@ -42,6 +41,12 @@ class SwitchView @JvmOverloads constructor(
         get() = binding.name.text.toString()
         set(value) {
             binding.name.text = value
+        }
+
+    var checked: Boolean
+        get() = binding.switchCompat.isChecked
+        set(value) {
+            binding.switchCompat.isChecked = value
         }
 
     private fun setTrackColor(checked: Boolean) {

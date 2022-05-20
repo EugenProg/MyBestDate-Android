@@ -13,7 +13,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bestDate.R
 import com.bestDate.data.extension.getImages
+import com.bestDate.data.model.Image
 import com.bestDate.databinding.SheetImageListBinding
 import com.bestDate.view.base.BaseBottomSheet
 import kotlinx.coroutines.Dispatchers
@@ -26,15 +28,15 @@ class ImageListSheet: BaseBottomSheet<SheetImageListBinding>() {
 
     private lateinit var adapter: ImageSheetAdapter
     private var imageList: MutableLiveData<MutableList<Uri>> = MutableLiveData(ArrayList())
-    var itemClick: ((Uri) -> Unit)? = null
+    var itemClick: ((Image) -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
-        adapter = ImageSheetAdapter { itemClick?.invoke(it) }
+        adapter = ImageSheetAdapter { itemClick?.invoke(Image(uri = it)) }
 
         with(binding) {
             progress.isVisible = true
-            title.text = "Image list"
+            title.text = getString(R.string.image_list)
 
             itemList.layoutManager = GridLayoutManager(requireContext(), 3)
             itemList.adapter = adapter

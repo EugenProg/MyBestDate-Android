@@ -14,16 +14,12 @@ class SocialView @JvmOverloads constructor(
     private val binding: ViewSocialBinding
 
     var facebookClick: (() -> Unit)? = null
-    var appleClick: (() -> Unit)? = null
     var googleClick: (() -> Unit)? = null
 
     init {
         View.inflate(context, R.layout.view_social, this)
         binding = ViewSocialBinding.bind(this)
 
-        binding.apple.setOnClickListener {
-            appleClick?.invoke()
-        }
         binding.facebook.setOnClickListener {
             facebookClick?.invoke()
         }

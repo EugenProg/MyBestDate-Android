@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/profilePhotoEditingFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -109,5 +109,21 @@
     <fragment
         android:id="@+id/profilePhotoEditingFragment"
         android:name="com.bestDate.fragment.profilePhotoEditor.ProfilePhotoEditingFragment"
-        android:label="ProfilePhotoEditingFragment" />
+        android:label="ProfilePhotoEditingFragment" >
+        <action
+            android:id="@+id/action_profilePhotoEditingFragment_to_photoEditorFragment"
+            app:destination="@id/photoEditorFragment"
+            app:enterAnim="@anim/push_up_in"
+            app:exitAnim="@anim/push_up_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoEditorFragment"
+        android:name="com.bestDate.fragment.profilePhotoEditor.PhotoEditorFragment"
+        android:label="PhotoEditorFragment" >
+        <argument
+            android:name="selectedImage"
+            app:argType="com.bestDate.data.model.Image" />
+    </fragment>
 </navigation>

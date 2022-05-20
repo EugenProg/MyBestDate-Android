@@ -11,7 +11,8 @@ import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
-import com.bestDate.fragment.BaseFragment
+import com.bestDate.base.BaseFragment
+import com.bestDate.data.extension.show
 import com.bestDate.view.CalendarView
 import com.bestDate.view.bottomSheet.genderSheet.GenderSheet
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -72,7 +73,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                 genderSheet.show(childFragmentManager, genderSheet.tag)
             }
             birthInput.onClick = {
-                datePicker.show(childFragmentManager, datePicker.tag)
+                datePicker.show(childFragmentManager)
             }
             genderSheet.itemClick = {
                 RegistrationDataHolder.gender = it

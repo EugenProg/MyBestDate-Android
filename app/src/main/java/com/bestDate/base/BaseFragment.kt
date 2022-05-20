@@ -1,4 +1,4 @@
-package com.bestDate.fragment
+package com.bestDate.base
 
 import android.content.Context
 import android.graphics.Color
@@ -9,16 +9,13 @@ import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -26,7 +23,6 @@ import androidx.viewbinding.ViewBinding
 import com.bestDate.R
 import com.bestDate.data.extension.setMarginTop
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
-
 
 abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     abstract val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> VB

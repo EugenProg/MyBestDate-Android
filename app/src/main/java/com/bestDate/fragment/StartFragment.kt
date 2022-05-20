@@ -2,6 +2,7 @@ package com.bestDate.fragment
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.bestDate.base.BaseFragment
 import com.bestDate.databinding.FragmentStartBinding
 
 class StartFragment : BaseFragment<FragmentStartBinding>() {
