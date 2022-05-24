@@ -69,6 +69,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.bestDate.view.SwitchView
+        android:id="@+id/profilePhotoSwitch"
+        style="@style/standard_input"
+        android:layout_marginTop="16dp" />
+
+    <com.bestDate.view.SwitchView
         android:id="@+id/sympathySwitch"
         style="@style/standard_input"
         android:layout_marginTop="16dp" />

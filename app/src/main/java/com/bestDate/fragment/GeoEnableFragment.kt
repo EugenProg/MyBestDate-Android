@@ -20,7 +20,7 @@ class GeoEnableFragment : BaseFragment<FragmentGeoEnableBinding>() {
             skipButton.setOnClickListener {
                 showMessage("skip")
             }
-            enableButton.onClick = {
+            enableButton.onSafeClick = {
                 showMessage("enabled")
             }
         }

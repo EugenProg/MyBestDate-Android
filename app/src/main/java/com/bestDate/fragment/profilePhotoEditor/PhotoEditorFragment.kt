@@ -38,7 +38,7 @@ class PhotoEditorFragment : BaseFragment<FragmentPhotoEditorBinding>() {
 
     override fun onViewClickListener() {
         super.onViewClickListener()
-        binding.saveButton.onClick = {
+        binding.saveButton.onSafeClick = {
             binding.photoEditor.crop()
         }
         binding.backButton.setOnClickListener {

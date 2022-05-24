@@ -37,7 +37,7 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
             backButton.setOnClickListener {
                 navController.popBackStack()
             }
-            signUpButton.onClick = {
+            signUpButton.onSafeClick = {
                 validate()
             }
         }

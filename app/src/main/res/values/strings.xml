@@ -44,6 +44,24 @@
     <string name="image_list">Image list</string>
     <string name="you_can_upload_only_9_photo">You can upload only 9 photo</string>
     <string name="oops_its_error">oops</string>
+    <string name="let_s_start">Let’s start!</string>
+    <string name="normally">Normally</string>
+    <string name="nice">Nice</string>
+    <string name="excellent">Excellent</string>
+    <string name="surprise">Surprise</string>
+    <string name="of">of</string>
+    <string name="tell_us_about_yourself_what_you_find_interesting">Tell us about yourself what you find interesting</string>
+    <string name="personal_information">Personal information</string>
+    <string name="your_appearance">Your appearance</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="set_as_a_profile_photo">Set as profile picture</string>
+    <string name="main_picture">Main picture</string>
+    <string name="adding_and_editing_a_photo">Adding and editing a photo</string>
+    <string name="search_condition">Search condition</string>
+    <string name="about_me">About me</string>
+    <string name="data_verification">Data verification</string>
+    <string name="well_done">Well done</string>
+    <string name="your_free_time">Your free time</string>
 
 
 </resources>

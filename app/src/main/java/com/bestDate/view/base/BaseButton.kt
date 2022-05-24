@@ -15,9 +15,10 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
     private val buttonColor: Int, private val textColor: Int, private val progressColor: Int):
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ViewButtonBinding
+    protected var binding: ViewButtonBinding
     private var buttonTitle: String = ""
     var onClick: (() -> Unit)? = null
+    var onSafeClick: (() -> Unit)? = null
 
     init {
         val view = View.inflate(context, R.layout.view_button, this)
@@ -26,6 +27,7 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
         setButtonColor(context)
 
         binding.button.setOnSaveClickListener {
+            onSafeClick?.invoke()
             onClick?.invoke()
         }
     }

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/questionnaireFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -126,4 +126,8 @@
             android:name="selectedImage"
             app:argType="com.bestDate.data.model.Image" />
     </fragment>
+    <fragment
+        android:id="@+id/questionnaireFragment"
+        android:name="com.bestDate.fragment.questionnarie.QuestionnaireFragment"
+        android:label="QuestionnaireFragment" />
 </navigation>

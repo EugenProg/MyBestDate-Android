@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/white_rectangle">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/view_questionnaire_page_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/questionsList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
+        <Button
+            android:id="@+id/backButton"
+            style="@style/text_button"
+            android:layout_width="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="0dp"
+            android:fontFamily="@font/bold"
+            android:textColor="@color/bg_main"
+            android:text="@string/back"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toStartOf="@+id/nextButton"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.bestDate.view.BlueButton
+            android:id="@+id/nextButton"
+            style="@style/standard_button"
+            android:layout_width="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="21dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/backButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

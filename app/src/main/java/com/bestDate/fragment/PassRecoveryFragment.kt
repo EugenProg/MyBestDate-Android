@@ -27,7 +27,7 @@ class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {
         binding.backButton.setOnClickListener {
             navController.popBackStack()
         }
-        binding.recoveryButton.onClick = {
+        binding.recoveryButton.onSafeClick = {
             validate()
         }
     }

@@ -29,7 +29,10 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
             topFiftySwitch.hint = getString(R.string.take_part_in_a_contest)
             topFiftySwitch.text = getString(R.string.top_50)
 
-            safeButton.title = getString(R.string.set_the_main_photo)
+            profilePhotoSwitch.hint = getString(R.string.set_as_a_profile_photo)
+            profilePhotoSwitch.text = getString(R.string.main_picture)
+
+            safeButton.title = getString(R.string.save_changes)
 
             Glide.with(requireContext())
                 .load(selectedImage?.bitmap ?: selectedImage?.uri)
@@ -46,7 +49,7 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
             sympathySwitch.onInfoClick = { showMessage(getString(R.string.mutual_sympathy)) }
             topFiftySwitch.onInfoClick = { showMessage(getString(R.string.top_50)) }
 
-            safeButton.onClick = {
+            safeButton.onSafeClick = {
                 selectedImage?.let { setMainClick?.invoke(it) }
             }
 

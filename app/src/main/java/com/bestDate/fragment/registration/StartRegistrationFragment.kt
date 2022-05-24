@@ -61,7 +61,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
             backButton.setOnClickListener {
                 navController.popBackStack()
             }
-            nextButton.onClick = {
+            nextButton.onSafeClick = {
                 if (!genderInput.isVisible) hideKeyboardAction()
                 else validate()
             }

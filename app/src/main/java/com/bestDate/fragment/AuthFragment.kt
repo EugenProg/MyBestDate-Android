@@ -32,7 +32,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
             backButton.setOnClickListener {
                 navController.popBackStack()
             }
-            authButton.onClick = {
+            authButton.onSafeClick = {
                 validate()
             }
             socialContainer.googleClick = {
