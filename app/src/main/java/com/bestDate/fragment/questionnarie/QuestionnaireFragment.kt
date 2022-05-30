@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.base.BaseFragment
+import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.FragmentQuestionnaireBinding
-import com.bestDate.view.questionnaire.QuestionnairePage
-import com.bestDate.view.questionnaire.QuestionnairePageType
+import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
+import com.bestDate.view.questionnaire.seekBarSheet.SeekBarQuestionnaireSheet
 
 class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentQuestionnaireBinding =
@@ -15,12 +16,39 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
 
     override val statusBarColor = R.color.bg_main
 
+    private val oneLineSheet: OneLineQuestionnaireSheet = OneLineQuestionnaireSheet()
+    private var seekBarSheet: SeekBarQuestionnaireSheet = SeekBarQuestionnaireSheet()
+
     override fun onInit() {
         super.onInit()
 
-        binding.questionnaireView.setPages(getPages())
+        binding.questionnaireView.viewLifecycle(viewLifecycleOwner)
+        binding.questionnaireView.setPages(QuestionnaireItemsList().getPages())
         binding.questionnaireView.progressAdded = {
             binding.progressBar.addProgress(it)
+        }
+        binding.questionnaireView.questionClick = { question, list ->
+            when (question.questionInfo?.viewType) {
+                QuestionnaireViewType.ONE_LINE_INFO_VIEW -> {
+                    oneLineSheet.setInfo(question)
+                    oneLineSheet.show(childFragmentManager, oneLineSheet.tag)
+                    oneLineSheet.itemClick = {
+                        binding.questionnaireView.updateQuestionnaireList(question, it, list)
+                        oneLineSheet.dismiss()
+                    }
+                }
+                QuestionnaireViewType.SEEKBAR_VIEW -> {
+                    seekBarSheet = SeekBarQuestionnaireSheet()
+                    seekBarSheet.setInfo(question)
+                    seekBarSheet.show(childFragmentManager, seekBarSheet.tag)
+                    seekBarSheet.onClose = {
+                        binding.questionnaireView.updateQuestionnaireList(question, it.toString(), list)
+                    }
+                }
+                QuestionnaireViewType.RANGE_BAR_VIEW -> {
+
+                }
+            }
         }
     }
 
@@ -48,68 +76,15 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
         }
     }
 
-    private fun getPages(): MutableList<QuestionnairePage> {
-        val pageList: MutableList<QuestionnairePage> = ArrayList()
-
-        pageList.add(QuestionnairePage(
-            number = 1,
-            type = QuestionnairePageType.QUESTION_LIST,
-            title = R.string.personal_information,
-            questions = null
-            )
-        )
-
-        pageList.add(QuestionnairePage(
-            number = 2,
-            type = QuestionnairePageType.QUESTION_LIST,
-            title = R.string.your_appearance,
-            questions = null
-            )
-        )
-
-        pageList.add(QuestionnairePage(
-            number = 3,
-            type = QuestionnairePageType.QUESTION_LIST,
-            title = R.string.search_condition,
-            questions = null
-            )
-        )
-
-        pageList.add(QuestionnairePage(
-            number = 4,
-            type = QuestionnairePageType.QUESTION_LIST,
-            title = R.string.your_free_time,
-            questions = null
-            )
-        )
-
-        pageList.add(QuestionnairePage(
-            number = 5,
-            type = QuestionnairePageType.MULTILINE_INPUT,
-            title = R.string.about_me,
-            questions = null
-            )
-        )
-
-        pageList.add(QuestionnairePage(
-            number = 6,
-            type = QuestionnairePageType.QUESTION_LIST,
-            title = R.string.data_verification,
-            questions = null,
-            nextButtonText = R.string.well_done
-            )
-        )
-
-        return pageList
-    }
-
     override fun scrollAction() {
         super.scrollAction()
         binding.header.isVisible = false
+        binding.questionnaireView.setKeyboardAction(true)
     }
 
     override fun hideAction() {
         super.hideAction()
         binding.header.isVisible = true
+        binding.questionnaireView.setKeyboardAction(false)
     }
 }

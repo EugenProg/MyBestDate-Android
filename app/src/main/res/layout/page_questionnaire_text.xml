@@ -20,7 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="14dp"
@@ -28,20 +28,77 @@
             android:layout_marginEnd="14dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/gray_rectangle"
-            android:fontFamily="@font/bold"
-            android:gravity="top"
-            android:hint="@string/tell_us_about_yourself_what_you_find_interesting"
-            android:inputType="textMultiLine|textCapSentences"
-            android:paddingStart="24dp"
-            android:paddingTop="18dp"
-            android:paddingEnd="24dp"
-            android:textColor="@color/bg_main"
-            android:textColorHint="@color/main_30"
-            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/nextButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header" />
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <EditText
+                android:id="@+id/textInput"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@null"
+                android:fontFamily="@font/bold"
+                android:gravity="top"
+                android:hint="@string/tell_us_about_yourself_what_you_find_interesting"
+                android:inputType="textMultiLine|textCapSentences"
+                android:paddingStart="24dp"
+                android:paddingTop="18dp"
+                android:paddingEnd="24dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/bg_main"
+                android:textColorHint="@color/main_30"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@id/percentContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/percentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <TextView
+                    android:id="@+id/plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:fontFamily="@font/bold"
+                    android:text="+"
+                    android:textColor="@color/main_30"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/percentNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/bold"
+                    android:text="7"
+                    android:textColor="@color/main_30"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/percent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="22dp"
+                    android:layout_marginBottom="3dp"
+                    android:fontFamily="@font/bold"
+                    android:text="%"
+                    android:textColor="@color/main_30"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/backButton"

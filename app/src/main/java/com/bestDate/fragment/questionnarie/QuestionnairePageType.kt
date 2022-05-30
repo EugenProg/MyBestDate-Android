@@ -1,4 +1,4 @@
-package com.bestDate.view.questionnaire
+package com.bestDate.fragment.questionnarie
 
 enum class QuestionnairePageType {
     QUESTION_LIST,

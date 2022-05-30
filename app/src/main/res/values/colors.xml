@@ -8,15 +8,22 @@
     <color name="black">#FF000000</color>
 
     <color name="bg_main">#283034</color>
+    <color name="main_5">#0D283034</color>
     <color name="main_10">#1A283034</color>
     <color name="main_20">#33283034</color>
+    <color name="main_20_without_opacity">#cacccd</color>
     <color name="main_30">#4D283034</color>
+    <color name="main_30_without_opacity">#c0c1c2</color>
+    <color name="main_50">#80283034</color>
     <color name="main_60">#99283034</color>
     <color name="main_70">#B3283034</color>
+    <color name="main_90">#E6283034</color>
     <color name="main_dark">#232c31</color>
 
     <color name="bg_pink">#f28be6</color>
     <color name="bg_light_blue">#beefff</color>
+    <color name="blue">#7bd7f5</color>
+    <color name="blue_90">#E67bd7f5</color>
     <color name="gray">#1fe7eef2</color>
     <color name="red">#ff3333</color>
 

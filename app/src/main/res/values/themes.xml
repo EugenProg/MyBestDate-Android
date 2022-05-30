@@ -61,16 +61,35 @@
         <item name="android:layout_marginEnd">18dp</item>
     </style>
 
-    <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+    <style name="WhiteBottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_white_sheet</item>
+    </style>
+
+    <style name="BaseWhiteBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/WhiteBottomSheet</item>
+    </style>
+
+    <style name="WhiteBottomSheetDialogTheme" parent="BaseWhiteBottomSheetDialog">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="DarkBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_dark_sheet</item>
     </style>
 
-    <style name="BaseBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="BaseDarkBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
-        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="bottomSheetStyle">@style/DarkBottomSheet</item>
     </style>
 
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog">
+    <style name="DarkBottomSheetDialogTheme" parent="BaseDarkBottomSheetDialog">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@color/bg_main</item>
         <item name="android:colorBackground">@android:color/transparent</item>

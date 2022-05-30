@@ -18,10 +18,10 @@ class GenderSheet: BaseBottomSheet<SheetImageListBinding>() {
     override fun onInit() {
         super.onInit()
         genderList.clear()
-        genderList.add("Woman, looking for a man")
-        genderList.add("Woman, looking for a woman")
-        genderList.add("Man, looking for a man")
-        genderList.add("Man, looking for a woman")
+        genderList.add(getString(R.string.woman_looking_for_a_man))
+        genderList.add(getString(R.string.woman_looking_for_a_woman))
+        genderList.add(getString(R.string.man_looking_for_a_man))
+        genderList.add(getString(R.string.man_looking_for_a_woman))
 
         adapter = GenderSheetAdapter(genderList) {
             dismiss()

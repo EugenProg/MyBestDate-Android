@@ -55,7 +55,7 @@ abstract class BaseBottomSheet<VB: ViewBinding>: BottomSheetDialogFragment() {
         return bottomSheetDialog
     }
 
-    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+    override fun getTheme(): Int = R.style.DarkBottomSheetDialogTheme
 
     protected fun showMessage(message: String) {
         sendMessage?.invoke(message)

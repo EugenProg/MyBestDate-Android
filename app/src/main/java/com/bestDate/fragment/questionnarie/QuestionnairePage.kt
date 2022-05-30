@@ -1,6 +1,7 @@
-package com.bestDate.view.questionnaire
+package com.bestDate.fragment.questionnarie
 
 import com.bestDate.R
+import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 
 data class QuestionnairePage(
     var number: Int,

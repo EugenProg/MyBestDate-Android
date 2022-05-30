@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
+import com.bestDate.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemImageBinding
 import com.bumptech.glide.Glide
@@ -23,13 +23,13 @@ class ImageSheetAdapter(private val imageClick: (Uri) -> Unit):
         }
     }
 
-    class ImageSheetViewHolder(val binding: ItemImageBinding): RecyclerView.ViewHolder(binding.root) {
-        fun onBind(item: Uri, imageClick: (Uri) -> Unit) {
-            itemView.apply {
-                Glide.with(context).load(item).into(binding.image)
-            }
+    class ImageSheetViewHolder(override val binding: ItemImageBinding):
+        BaseClickViewHolder<Uri, (Uri) -> Unit, ItemImageBinding>(binding) {
 
-            itemView.setOnSaveClickListener { imageClick.invoke(item) }
+        override fun bindView(item: Uri, itemClick: (Uri) -> Unit) {
+            Glide.with(itemView.context).load(item).into(binding.image)
+
+            itemView.setOnSaveClickListener { itemClick.invoke(item) }
         }
     }
 
@@ -41,6 +41,6 @@ class ImageSheetAdapter(private val imageClick: (Uri) -> Unit):
     }
 
     override fun onBindViewHolder(holder: ImageSheetViewHolder, position: Int) {
-        holder.onBind(getItem(position), imageClick)
+        holder.bind(getItem(position), imageClick)
     }
 }

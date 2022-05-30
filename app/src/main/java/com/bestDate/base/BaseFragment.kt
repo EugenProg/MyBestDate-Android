@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -144,6 +145,10 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     open fun showMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         //requireActivity().showStandardMessage(message)
+    }
+
+    open fun showMessage(@StringRes message: Int) {
+        showMessage(getString(message))
     }
 
     fun hideKeyboardAction() {
