@@ -14,6 +14,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import androidx.core.view.updatePadding
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
 import com.bestDate.R
 import com.bumptech.glide.Glide
@@ -22,6 +23,9 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,6 +39,17 @@ fun EditText.textIsChanged(textIsChanged: (String) -> Unit) {
             textIsChanged.invoke(s.toString())
         }
     })
+}
+
+/**
+ * An extension to create a observer from a editText
+ * */
+@ExperimentalCoroutinesApi
+fun EditText.textInputAsFlow() = callbackFlow {
+    val watcher: TextWatcher = doOnTextChanged { text: CharSequence?, _, _, _ ->
+        this.trySend(text).isSuccess
+    }
+    awaitClose { this@textInputAsFlow.removeTextChangedListener(watcher) }
 }
 
 fun RequestBuilder<Drawable>.imageIsSet(

@@ -396,5 +396,6 @@
     <string name="secondary">Secondary</string>
     <string name="higher">Higher</string>
     <string name="walking_around_the_city">Walking around the city</string>
+    <string name="specify_the_search_location">Specify the search location</string>
 
 </resources>
