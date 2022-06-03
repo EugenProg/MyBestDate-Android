@@ -7,9 +7,9 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.R
 import com.bestDate.base.BaseFragment
-import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.databinding.FragmentQuestionnaireBinding
+import com.bestDate.view.questionnaire.itemSelectSheet.MultilineQuestionnaireSheet
 import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
 import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 import com.bestDate.view.questionnaire.seekBarSheet.SeekBarQuestionnaireSheet
@@ -21,6 +21,7 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
     override val statusBarColor = R.color.bg_main
 
     private val oneLineSheet: OneLineQuestionnaireSheet = OneLineQuestionnaireSheet()
+    private val multiLineSheet: MultilineQuestionnaireSheet = MultilineQuestionnaireSheet()
     private var seekBarSheet: SeekBarQuestionnaireSheet = SeekBarQuestionnaireSheet()
     private var searchLocationFragment: SearchQuestionnaireLocationFragment? = null
 
@@ -59,7 +60,6 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
             }
 
             binding.questionnaireView.questionClick = questionnaireClickAction()
-
         }
     }
 
@@ -80,11 +80,7 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
                     seekBarSheet.setInfo(question)
                     seekBarSheet.show(childFragmentManager, seekBarSheet.tag)
                     seekBarSheet.onClose = {
-                        binding.questionnaireView.updateQuestionnaireList(
-                            question,
-                            it.toString(),
-                            list
-                        )
+                        binding.questionnaireView.updateQuestionnaireList(question, it, list)
                     }
                 }
                 QuestionnaireViewType.CONFIRMATION_VIEW -> {
@@ -103,6 +99,14 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
                     }
 
                     searchLocationFragment?.backClick = { closeSearchPage() }
+                }
+                QuestionnaireViewType.MULTILINE_INFO_VIEW -> {
+                    multiLineSheet.setInfo(question)
+                    multiLineSheet.show(childFragmentManager, oneLineSheet.tag)
+                    multiLineSheet.onClose = {
+                        binding.questionnaireView.updateQuestionnaireList(question, it, list)
+                        multiLineSheet.dismiss()
+                    }
                 }
             }
         }
@@ -139,7 +143,7 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
 
     override fun onCustomBackNavigation() {
         super.onCustomBackNavigation()
-
+        if (!binding.questionnaireView.goBack()) navController.popBackStack()
     }
 
     override fun scrollAction() {

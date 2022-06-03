@@ -93,6 +93,10 @@
     <string name="social_network">Social network</string>
     <string name="phone_number">Phone number</string>
     <string name="search_age_range">Search age range</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="your_email_has_not_been_confirmed">Your email has not been confirmed</string>
+    <string name="the_questionnaire_has_not_been_confirmed">The questionnaire has not been confirmed</string>
+    <string name="your_phone_number_has_not_been_confirmed">Your phone number has not been confirmed</string>
 
     <!--ANSWERS-->
     <string name="married">Married</string>
@@ -138,6 +142,28 @@
     <string name="one_time_sex">One time sex</string>
     <string name="do_not_specify_height">Do not specify height</string>
     <string name="cancel">Cancel</string>
+    <string name="no_education">No education</string>
+    <string name="secondary">Secondary</string>
+    <string name="higher">Higher</string>
+    <string name="walking_around_the_city">Walking around the city</string>
+    <string name="specify_the_search_location">Specify the search location</string>
+    <string name="badminton">Badminton</string>
+    <string name="basketball">Basketball</string>
+    <string name="baseball">Baseball</string>
+    <string name="billiards">Billiards</string>
+    <string name="boxing">Boxing</string>
+    <string name="wrestling">Wrestling</string>
+    <string name="bowling">Bowling</string>
+    <string name="cycling">Cycling</string>
+    <string name="volleyball">Volleyball</string>
+    <string name="gymnastics">Gymnastics</string>
+    <string name="golf">Golf</string>
+    <string name="rowing">Rowing</string>
+    <string name="darts">Darts</string>
+    <string name="skating">Skating</string>
+    <string name="music">Music</string>
+    <string name="dancing">Dancing</string>
+    <string name="stand_up">Stand up</string>
 
     <!--COUNTRIES-->
     <string name="AB">Abkhazia</string>
@@ -388,14 +414,12 @@
     <string name="SS">South Sudan</string>
     <string name="JM">Jamaica</string>
     <string name="JP">Japan</string>
-    <string name="confirmed">Confirmed</string>
-    <string name="your_email_has_not_been_confirmed">Your email has not been confirmed</string>
-    <string name="the_questionnaire_has_not_been_confirmed">The questionnaire has not been confirmed</string>
-    <string name="your_phone_number_has_not_been_confirmed">Your phone number has not been confirmed</string>
-    <string name="no_education">No education</string>
-    <string name="secondary">Secondary</string>
-    <string name="higher">Higher</string>
-    <string name="walking_around_the_city">Walking around the city</string>
-    <string name="specify_the_search_location">Specify the search location</string>
+    <string name="i_didn_t_get_the_code_send_it_again">I didn’t get the code, send it again</string>
+    <string name="_60_second">%d second</string>
+    <string name="enter_the_confirmation_code">Enter the confirmation code</string>
+    <string name="confirmation_code">Confirmation code</string>
+    <string name="on_the_email_you_specified_we_send_the_confirmation_code">On the email you specified, we sent the\nconfirmation code, it must be entered</string>
+    <string name="confirm">Confirm</string>
+
 
 </resources>

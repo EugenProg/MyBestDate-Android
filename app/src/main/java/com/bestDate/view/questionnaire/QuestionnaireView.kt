@@ -33,28 +33,29 @@ class QuestionnaireView @JvmOverloads constructor(
     private val binding: ViewQuestionnaireBinding
     private lateinit var personalPage: PageQuestionnaireQuestionsBinding
     private lateinit var personalPageAdapter: QuestionnaireListAdapter
-    var personalPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
+    private var personalPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
 
     private lateinit var appearancePage: PageQuestionnaireQuestionsBinding
     private lateinit var appearancePageAdapter: QuestionnaireListAdapter
-    var appearancePageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
+    private var appearancePageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
 
     private lateinit var searchPage: PageQuestionnaireQuestionsBinding
     private lateinit var searchPageAdapter: QuestionnaireListAdapter
-    var searchPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
+    private var searchPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
 
     private lateinit var freeTimePage: PageQuestionnaireQuestionsBinding
     private lateinit var freeTimePageAdapter: QuestionnaireListAdapter
-    var freeTimePageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
+    private var freeTimePageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
 
     private lateinit var aboutMePage: PageQuestionnaireTextBinding
 
     private lateinit var dataPage: PageQuestionnaireQuestionsBinding
     private lateinit var dataPageAdapter: QuestionnaireListAdapter
-    var dataPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
+    private var dataPageQuestionsList = MutableLiveData<MutableList<QuestionnaireQuestion>>()
 
     private var animationInProcess: Boolean = false
 
+    private var viewsStack: MutableList<View> = ArrayList()
     private var aboutMe: String? = null
 
     private var totalPages: Int = 6
@@ -124,6 +125,11 @@ class QuestionnaireView @JvmOverloads constructor(
         dataPage.backButton.setOnSaveClickListener {
             toPreviousPage(dataPage.root, aboutMePage.root)
         }
+    }
+
+    fun goBack(): Boolean {
+        if (viewsStack.size > 1) toPreviousPage(viewsStack.last(), viewsStack[viewsStack.lastIndex - 1])
+        return viewsStack.isNotEmpty()
     }
 
     private fun checkFilling(textPage: PageQuestionnaireTextBinding) {
@@ -247,10 +253,6 @@ class QuestionnaireView @JvmOverloads constructor(
         list.value = items
     }
 
-    private fun saveChanges() {
-
-    }
-
     private fun toNextPage(topView: View, bottomView: View) {
         if (animationInProcess) return
         collapseAction?.invoke(false)
@@ -285,6 +287,9 @@ class QuestionnaireView @JvmOverloads constructor(
             topView.isVisible = false
             animationInProcess = false
         })
+
+        if (!viewsStack.contains(topView)) viewsStack.add(topView)
+        if (!viewsStack.contains(bottomView)) viewsStack.add(bottomView)
     }
 
     private fun toPreviousPage(bottomView: View, topView: View) {
@@ -313,6 +318,8 @@ class QuestionnaireView @JvmOverloads constructor(
             bottomView.isVisible = false
             animationInProcess = false
         })
+
+        viewsStack.remove(bottomView)
     }
 
     fun setKeyboardAction(isVisible: Boolean) {

@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/questionnaireFragment">
+    app:startDestination="@id/startRegistrationFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -99,8 +99,8 @@
         android:name="com.bestDate.fragment.registration.ContinueRegistrationFragment"
         android:label="ContinueRegistrationFragment" >
         <action
-            android:id="@+id/action_continueRegistrationFragment_to_profilePhotoEditingFragment"
-            app:destination="@id/profilePhotoEditingFragment"
+            android:id="@+id/action_continueRegistrationFragment_to_registrationOtpFragment"
+            app:destination="@id/registrationOtpFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -117,6 +117,13 @@
             app:exitAnim="@anim/push_up_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out" />
+        <action
+            android:id="@+id/action_profilePhotoEditingFragment_to_questionnaireFragment"
+            app:destination="@id/questionnaireFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/photoEditorFragment"
@@ -130,4 +137,19 @@
         android:id="@+id/questionnaireFragment"
         android:name="com.bestDate.fragment.questionnarie.QuestionnaireFragment"
         android:label="QuestionnaireFragment" />
+    <fragment
+        android:id="@+id/registrationOtpFragment"
+        android:name="com.bestDate.fragment.registration.RegistrationOtpFragment"
+        android:label="RegistrationOtpFragment" >
+        <action
+            android:id="@+id/action_registrationOtpFragment_to_profilePhotoEditingFragment"
+            app:destination="@id/profilePhotoEditingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 </navigation>

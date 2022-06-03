@@ -4,10 +4,13 @@ import android.content.Context
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.animateError
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.textIsChanged
 import com.bestDate.data.extension.vibratePhone
 import com.bestDate.databinding.ViewStandardInputBinding
@@ -17,6 +20,7 @@ class StandardInput @JvmOverloads constructor(
 ): ConstraintLayout(context, attrs, defStyleAttr) {
 
     private var binding: ViewStandardInputBinding
+    var onTextChangeListener: ((String) -> Unit)? = null
 
     private var passIsVisible: Boolean = false
     var isPasswordField: Boolean = false
@@ -40,6 +44,7 @@ class StandardInput @JvmOverloads constructor(
         }
 
         binding.input.textIsChanged {
+            onTextChangeListener?.invoke(it)
             setDefault()
         }
     }
@@ -56,9 +61,14 @@ class StandardInput @JvmOverloads constructor(
         binding.input.setText(value)
     }
 
-    var icon: Int = R.drawable.ic_message
+    @DrawableRes var icon: Int? = R.drawable.ic_message
     set(value) {
-        binding.icon.setImageResource(value)
+        if (value == null) binding.icon.isVisible = false
+        else {
+            binding.icon.setImageResource(value)
+            binding.icon.isVisible = true
+        }
+
     }
 
     var inputType: Int =

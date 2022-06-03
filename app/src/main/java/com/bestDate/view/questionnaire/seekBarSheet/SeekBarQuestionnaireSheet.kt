@@ -17,7 +17,7 @@ class SeekBarQuestionnaireSheet: BaseBottomSheet<SheetSeekBarQuestionnaireBindin
 
     override fun getTheme() = R.style.WhiteBottomSheetDialogTheme
     private lateinit var question: QuestionnaireQuestion
-    var onClose: ((currentProgress: Int) -> Unit)? = null
+    var onClose: ((progress: String) -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
@@ -70,7 +70,7 @@ class SeekBarQuestionnaireSheet: BaseBottomSheet<SheetSeekBarQuestionnaireBindin
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
-        onClose?.invoke(binding.bar.progress)
+        onClose?.invoke(binding.bar.progress.toString())
     }
 
 }

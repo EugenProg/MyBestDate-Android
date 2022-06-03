@@ -52,7 +52,10 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
                     RegistrationDataHolder.email = emailInput.text
                     RegistrationDataHolder.password = passInput.text
                     navController.navigate(ContinueRegistrationFragmentDirections
-                        .actionContinueRegistrationFragmentToProfilePhotoEditingFragment())
+                        .actionContinueRegistrationFragmentToRegistrationOtpFragment(
+                            RegistrationDataHolder.email.orEmpty()
+                        )
+                    )
                 }
             }
         }

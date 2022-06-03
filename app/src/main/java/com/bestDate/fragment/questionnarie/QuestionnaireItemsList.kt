@@ -179,7 +179,6 @@ enum class Question(
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.no, R.string.one, R.string.two, R.string.three, R.string.four, R.string.five_or_more),
-    /** */
     PLACE_OF_RESIDENCE(
         question =  R.string.plase_of_residence,
         percent = 2,
@@ -227,7 +226,6 @@ enum class Question(
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.no_education,R.string.secondary, R.string.higher),
-    /** */
     OCCUPATIONAL_STATUS(
         question = R.string.occupational_status,
         percent = 3,
@@ -292,12 +290,16 @@ enum class Question(
         question = R.string.hobby,
         percent = 4,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
-        unitString = null),
+        unitString = null,
+        R.string.music, R.string.dancing, R.string.stand_up),
     TYPES_OF_SPORTS(
         question = R.string.types_of_sports,
         percent = 5,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
-        unitString = null),
+        unitString = null,
+        R.string.badminton, R.string.basketball, R.string.baseball, R.string.billiards, R.string.boxing,
+        R.string.wrestling, R.string.bowling, R.string.cycling, R.string.volleyball, R.string.gymnastics,
+        R.string.golf, R.string.rowing, R.string.darts, R.string.skating),
     EVENING_TYPE(
         question = R.string.evening_time,
         percent = 3,
@@ -336,6 +338,7 @@ class QuestionnaireViewHolderFactory {
         return when(viewTypeId) {
             QuestionnaireViewType.ONE_LINE_INFO_VIEW.id,
             QuestionnaireViewType.MULTILINE_INFO_VIEW.id,
+            QuestionnaireViewType.INPUT_LOCATION_VIEW.id,
             QuestionnaireViewType.SEEKBAR_VIEW.id -> InfoViewHolder(
                 ItemMultilineQuestionInfoBinding.inflate(
                     createLayoutInflater(parent), parent, false)
