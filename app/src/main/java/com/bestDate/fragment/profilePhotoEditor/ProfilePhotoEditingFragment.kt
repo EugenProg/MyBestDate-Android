@@ -159,14 +159,14 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
         }
 
         Glide.with(requireContext())
-            .load(image.bitmap ?: image.uri)
+            .load(image.bitmap)
             .circleCrop()
             .into(binding.avatar)
 
         binding.imageBack.visibility = View.INVISIBLE
 
         Glide.with(requireContext())
-            .load(image.bitmap ?: image.uri)
+            .load(image.bitmap)
             .imageIsSet(this) {
                 createBlur()
             }
