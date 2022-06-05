@@ -64,6 +64,7 @@ class QuestionnaireView @JvmOverloads constructor(
     var collapseAction: ((Boolean) -> Unit)? = null
     var keyboardHideAction: (() -> Unit)? = null
     var questionClick: ((QuestionnaireQuestion, MutableLiveData<MutableList<QuestionnaireQuestion>>) -> Unit)? = null
+    var finishClick: (() -> Unit)? = null
 
     init {
         val view = View.inflate(context, R.layout.view_questionnaire, this)
@@ -121,7 +122,10 @@ class QuestionnaireView @JvmOverloads constructor(
         }
         aboutMePage.textInput.textIsChanged { checkFilling(aboutMePage) }
 
-        dataPage.nextButton.onClick = { }
+        dataPage.nextButton.onClick = {
+            dataPage.nextButton.toggleActionEnabled(true)
+            finishClick?.invoke()
+        }
         dataPage.backButton.setOnSaveClickListener {
             toPreviousPage(dataPage.root, aboutMePage.root)
         }

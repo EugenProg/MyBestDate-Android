@@ -11,6 +11,7 @@ import com.bestDate.R
 import com.bestDate.base.BaseFragment
 import com.bestDate.data.extension.imageIsSet
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.data.model.Image
@@ -63,9 +64,10 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
                 navController.popBackStack()
                 editorAction.value = null
             }
-            nextButton.setOnClickListener {
+            nextButton.setOnSaveClickListener {
                 if (imageList.value?.size.orZero > 0) {
-                    //TODO: go to next page
+                    navController.navigate(ProfilePhotoEditingFragmentDirections
+                        .actionProfilePhotoEditingFragmentToQuestionnaireFragment())
                 }
             }
 

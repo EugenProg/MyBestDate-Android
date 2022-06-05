@@ -15,6 +15,8 @@ abstract class BaseOtpFragment(
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBaseOtpBinding =
         { inflater, parent, attach -> FragmentBaseOtpBinding.inflate(inflater, parent, attach) }
 
+    override val statusBarLight = true
+
     override fun onInit() {
         super.onInit()
         with(binding) {

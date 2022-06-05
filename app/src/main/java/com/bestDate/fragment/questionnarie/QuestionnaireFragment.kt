@@ -5,9 +5,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
 import com.bestDate.base.BaseFragment
 import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentQuestionnaireBinding
 import com.bestDate.view.questionnaire.itemSelectSheet.MultilineQuestionnaireSheet
 import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
@@ -24,16 +26,22 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
     private val multiLineSheet: MultilineQuestionnaireSheet = MultilineQuestionnaireSheet()
     private var seekBarSheet: SeekBarQuestionnaireSheet = SeekBarQuestionnaireSheet()
     private var searchLocationFragment: SearchQuestionnaireLocationFragment? = null
+    private var pagesLiveData = MutableLiveData<MutableList<QuestionnairePage>>()
 
     override var customBackNavigation = true
 
     override fun onInit() {
         super.onInit()
 
-        binding.questionnaireView.viewLifecycle(viewLifecycleOwner)
-        binding.questionnaireView.setPages(QuestionnaireItemsList().getPages())
-        binding.questionnaireView.progressAdded = {
-            binding.progressBar.addProgress(it)
+        with(binding.questionnaireView) {
+            viewLifecycle(viewLifecycleOwner)
+            progressAdded = {
+                binding.progressBar.addProgress(it)
+            }
+        }
+
+        lifecycleScope.launchWhenStarted {
+            pagesLiveData.postValue(QuestionnaireItemsList().getPages())
         }
     }
 
@@ -59,7 +67,24 @@ class QuestionnaireFragment : BaseFragment<FragmentQuestionnaireBinding>() {
                 hideKeyboardAction()
             }
 
-            binding.questionnaireView.questionClick = questionnaireClickAction()
+            questionnaireView.questionClick = questionnaireClickAction()
+            questionnaireView.finishClick = {
+                postDelayed({
+                    navController.navigate(QuestionnaireFragmentDirections
+                        .actionQuestionnaireFragmentToGeoEnableFragment())
+                }, 1000)
+            }
+            skipButton.setOnSaveClickListener {
+                navController.navigate(QuestionnaireFragmentDirections
+                    .actionQuestionnaireFragmentToGeoEnableFragment())
+            }
+        }
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        pagesLiveData.observe(viewLifecycleOwner) {
+            binding.questionnaireView.setPages(it)
         }
     }
 
