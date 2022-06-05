@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/startRegistrationFragment">
+    app:startDestination="@id/profilePhotoEditingFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -73,8 +73,16 @@
         android:label="GeoEnableFragment" />
     <fragment
         android:id="@+id/passRecoveryFragment"
-        android:name="com.bestDate.fragment.PassRecoveryFragment"
-        android:label="PassRecoveryFragment" />
+        android:name="com.bestDate.fragment.passRecovery.PassRecoveryFragment"
+        android:label="PassRecoveryFragment" >
+        <action
+            android:id="@+id/action_passRecoveryFragment_to_passRecoveryOtpFragment"
+            app:destination="@id/passRecoveryOtpFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/startRegistrationFragment"
         android:name="com.bestDate.fragment.registration.StartRegistrationFragment"
@@ -151,5 +159,22 @@
         <argument
             android:name="email"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/passRecoveryOtpFragment"
+        android:name="com.bestDate.fragment.passRecovery.PassRecoveryOtpFragment"
+        android:label="PassRecoveryOtpFragment" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_passRecoveryOtpFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 </navigation>

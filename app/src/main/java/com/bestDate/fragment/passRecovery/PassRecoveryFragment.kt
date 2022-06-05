@@ -1,4 +1,4 @@
-package com.bestDate.fragment
+package com.bestDate.fragment.passRecovery
 
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +37,8 @@ class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {
             when {
                 emailInput.text.isBlank() -> emailInput.setError()
                 else -> {
-                    //TODO: recovery password
+                    navController.navigate(PassRecoveryFragmentDirections
+                        .actionPassRecoveryFragmentToPassRecoveryOtpFragment(emailInput.text))
                 }
             }
         }
