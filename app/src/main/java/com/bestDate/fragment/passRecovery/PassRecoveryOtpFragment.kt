@@ -18,7 +18,7 @@ class PassRecoveryOtpFragment: BaseOtpFragment(
 
     override fun sendOtp(code: String) {
         navController.navigate(PassRecoveryOtpFragmentDirections
-            .actionPassRecoveryOtpFragmentToAuthFragment())
+            .actionPassRecoveryOtpFragmentToPassRecoverySetNewFragment())
     }
 
 }

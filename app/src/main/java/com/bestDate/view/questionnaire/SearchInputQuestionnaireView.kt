@@ -48,4 +48,10 @@ class SearchInputQuestionnaireView @JvmOverloads constructor(
         set(value) {
             binding.searchInput.setText(value)
         }
+
+
+    fun setFocus() {
+        binding.searchInput.isFocusableInTouchMode = true
+        binding.searchInput.requestFocus()
+    }
 }

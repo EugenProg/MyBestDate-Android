@@ -28,8 +28,8 @@ class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
                 .actionOnboardStartFragmentToOnboardSecondFragment())
         }
         binding.authButton.setOnClickListener {
-            navController.navigate(OnboardStartFragmentDirections.actionOnboardStartFragmentToGeoEnableFragment())
-                //.actionOnboardStartFragmentToAuthFragment())
+            navController.navigate(OnboardStartFragmentDirections
+                .actionOnboardStartFragmentToAuthFragment())
         }
     }
 }

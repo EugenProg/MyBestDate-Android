@@ -45,6 +45,8 @@ class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQue
             adapter = SearchResultsAdapter(itemClick())
             addressList.layoutManager = LinearLayoutManager(context)
             addressList.adapter = adapter
+
+            searchInput.setFocus()
         }
     }
 
@@ -76,5 +78,10 @@ class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQue
         return {
             binding.searchInput.text = it
         }
+    }
+
+    override fun scrollAction() {
+        super.scrollAction()
+        binding.searchInput.setFocus()
     }
 }

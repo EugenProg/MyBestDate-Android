@@ -432,6 +432,10 @@
     <string name="recommendation">Recommendation:</string>
     <string name="upload_photos_where_only_you_are_alone_and_at_a_close_distance_so_that_your_face_is_clearly_visible">Upload photos where only you are alone and at a close distance, so that your face is clearly visible</string>
     <string name="ok">ok</string>
+    <string name="set_new_password">Set new password</string>
+    <string name="create_a_new_password_for_your_profile_password_must_be_at_least_6_characters">Create a new password for your profile\nPassword must be at least 6 characters</string>
+    <string name="install_and_login">Install and Login</string>
+    <string name="enter_a_new_password">Enter a new password</string>
 
 
 </resources>

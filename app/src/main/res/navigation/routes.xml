@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/profilePhotoEditingFragment">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -32,9 +32,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_onboardStartFragment_to_geoEnableFragment"
-            app:destination="@id/geoEnableFragment" />
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -144,7 +141,15 @@
     <fragment
         android:id="@+id/questionnaireFragment"
         android:name="com.bestDate.fragment.questionnarie.QuestionnaireFragment"
-        android:label="QuestionnaireFragment" />
+        android:label="QuestionnaireFragment" >
+        <action
+            android:id="@+id/action_questionnaireFragment_to_geoEnableFragment"
+            app:destination="@id/geoEnableFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/registrationOtpFragment"
         android:name="com.bestDate.fragment.registration.RegistrationOtpFragment"
@@ -168,10 +173,20 @@
             android:name="email"
             app:argType="string" />
         <action
-            android:id="@+id/action_passRecoveryOtpFragment_to_authFragment"
-            app:destination="@id/authFragment"
-            app:popUpTo="@id/authFragment"
-            app:popUpToInclusive="true"
+            android:id="@+id/action_passRecoveryOtpFragment_to_passRecoverySetNewFragment"
+            app:destination="@id/passRecoverySetNewFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/passRecoverySetNewFragment"
+        android:name="com.bestDate.fragment.passRecovery.PassRecoverySetNewFragment"
+        android:label="PassRecoverySetNewFragment" >
+        <action
+            android:id="@+id/action_passRecoverySetNewFragment_to_geoEnableFragment"
+            app:destination="@id/geoEnableFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
