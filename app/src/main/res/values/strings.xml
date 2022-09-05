@@ -436,6 +436,9 @@
     <string name="create_a_new_password_for_your_profile_password_must_be_at_least_6_characters">Create a new password for your profile\nPassword must be at least 6 characters</string>
     <string name="install_and_login">Install and Login</string>
     <string name="enter_a_new_password">Enter a new password</string>
+    <string name="app_language">en</string>
+    <string name="enter_email_or_phone">Enter a email or a phone number</string>
+    <string name="wrong_auth_data">Wrong login or password</string>
 
 
 </resources>

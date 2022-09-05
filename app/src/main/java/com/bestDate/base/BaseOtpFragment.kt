@@ -1,5 +1,6 @@
 package com.bestDate.base
 
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
@@ -24,6 +25,7 @@ abstract class BaseOtpFragment(
             headerText.text = getString(text)
             confirmButton.title = getString(buttonText)
             otpInput.hint = getString(R.string.enter_the_confirmation_code)
+            otpInput.inputType = InputType.TYPE_CLASS_NUMBER
 
             otpInput.icon = null
         }

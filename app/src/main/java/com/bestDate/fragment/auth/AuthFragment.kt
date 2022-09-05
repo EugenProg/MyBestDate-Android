@@ -1,17 +1,20 @@
-package com.bestDate.fragment
+package com.bestDate.fragment.auth
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
+import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class AuthFragment : BaseFragment<FragmentAuthBinding>() {
+@AndroidEntryPoint
+class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAuthBinding =
         { inflater, parent, attach -> FragmentAuthBinding.inflate(inflater, parent, attach) }
+    override val viewModelClass: Class<AuthViewModel> = AuthViewModel::class.java
 
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
@@ -54,6 +57,25 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
         }
     }
 
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.loadingMode.observe(viewLifecycleOwner) {
+            binding.authButton.toggleActionEnabled(it)
+        }
+        viewModel.loginByEmailLiveData.observe(viewLifecycleOwner) {
+            showMessage("SUCCESS EMAIL")
+        }
+        viewModel.loginByPhoneLiveData.observe(viewLifecycleOwner) {
+            showMessage("SUCCESS PHONE")
+        }
+        viewModel.errorLive.observe(viewLifecycleOwner) {
+            showMessage(getString(R.string.wrong_auth_data))
+        }
+        viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+            showMessage(it)
+        }
+    }
+
     override fun scrollAction() {
         super.scrollAction()
         with(binding) {
@@ -80,8 +102,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>() {
                 emailInput.text.isBlank() -> emailInput.setError()
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
-                    //TODO: login
-                    navController.popBackStack()
+                    viewModel.logIn(emailInput.text, passInput.text)
                 }
             }
         }

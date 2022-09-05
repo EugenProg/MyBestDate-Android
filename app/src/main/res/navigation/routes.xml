@@ -47,7 +47,7 @@
     </fragment>
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.bestDate.fragment.AuthFragment"
+        android:name="com.bestDate.fragment.auth.AuthFragment"
         android:label="AuthFragment" >
         <action
             android:id="@+id/action_authFragment_to_passRecoveryFragment"

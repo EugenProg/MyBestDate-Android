@@ -37,8 +37,9 @@ class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {
             when {
                 emailInput.text.isBlank() -> emailInput.setError()
                 else -> {
-                    navController.navigate(PassRecoveryFragmentDirections
-                        .actionPassRecoveryFragmentToPassRecoveryOtpFragment(emailInput.text))
+                    //TODO: abracadabra
+                    /*navController.navigate(PassRecoveryFragmentDirections
+                        .actionPassRecoveryFragmentToPassRecoveryOtpFragment(emailInput.text))*/
                 }
             }
         }

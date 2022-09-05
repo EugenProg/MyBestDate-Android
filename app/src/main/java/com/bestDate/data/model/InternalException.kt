@@ -7,6 +7,7 @@ sealed class InternalException(override val message: String): IOException(messag
     class NotFoundException(): InternalException("Not founded")
     class UnknownException(val original: Exception): InternalException("Unknown error")
     class LogoutException(): InternalException("Logout error")
+    class ValidationException(message: String): InternalException(message)
 }
 
 class HandleError(val exception: InternalException)

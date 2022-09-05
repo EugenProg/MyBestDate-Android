@@ -16,13 +16,6 @@ abstract class BaseVMFragment<VB: ViewBinding, VM: BaseViewModel> : BaseFragment
         viewModel = ViewModelProvider(this).get(viewModelClass)
     }
 
-    override fun onViewLifecycle() {
-        super.onViewLifecycle()
-        viewModel.errorLive.observe(viewLifecycleOwner) {
-            exceptionAction(it)
-        }
-    }
-
     protected open fun exceptionAction(handler: HandleError) {
         if (handler.exception is InternalException.OperationException) {
             showMessage(handler.exception.message)

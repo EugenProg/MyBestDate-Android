@@ -1,7 +1,7 @@
 
 buildscript {
     ext.kotlin_version = "1.5.30"
-    ext.navigation_version = "2.4.2"
+    ext.navigation_version = "2.5.1"
     ext.dagger_version = "2.40"
     repositories {
         google()
