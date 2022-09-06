@@ -4,12 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
+import com.bestDate.base.BaseVMFragment
 import com.bestDate.databinding.FragmentPassRecoveryBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {
+@AndroidEntryPoint
+class PassRecoveryFragment : BaseVMFragment<FragmentPassRecoveryBinding, PassRecoveryViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPassRecoveryBinding =
         { inflater, parent, attach -> FragmentPassRecoveryBinding.inflate(inflater, parent, attach) }
+
+    override val viewModelClass: Class<PassRecoveryViewModel> = PassRecoveryViewModel::class.java
 
     override val navBarColor = R.color.bg_main
     override val statusBarLight = true
@@ -32,14 +36,30 @@ class PassRecoveryFragment : BaseFragment<FragmentPassRecoveryBinding>() {
         }
     }
 
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.sendCodeLiveData.observe(viewLifecycleOwner) {
+            navController.navigate(PassRecoveryFragmentDirections
+                .actionPassRecoveryFragmentToPassRecoveryOtpFragment())
+        }
+        viewModel.loadingMode.observe(viewLifecycleOwner) {
+            binding.recoveryButton.toggleActionEnabled(it)
+        }
+        viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+            showMessage(it)
+        }
+        viewModel.errorLive.observe(viewLifecycleOwner) {
+            showMessage(it.exception.message)
+        }
+    }
+
     private fun validate() {
         with(binding) {
             when {
                 emailInput.text.isBlank() -> emailInput.setError()
                 else -> {
-                    //TODO: abracadabra
-                    /*navController.navigate(PassRecoveryFragmentDirections
-                        .actionPassRecoveryFragmentToPassRecoveryOtpFragment(emailInput.text))*/
+                    PassRecoveryDataHolder.login = emailInput.text
+                    viewModel.sendPassRecoveryCode(emailInput.text)
                 }
             }
         }

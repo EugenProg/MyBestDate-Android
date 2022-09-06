@@ -89,7 +89,6 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-
     private fun loginByEmail(login: String, password: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)

@@ -166,9 +166,6 @@
         android:id="@+id/passRecoveryOtpFragment"
         android:name="com.bestDate.fragment.passRecovery.PassRecoveryOtpFragment"
         android:label="PassRecoveryOtpFragment" >
-        <argument
-            android:name="email"
-            app:argType="string" />
         <action
             android:id="@+id/action_passRecoveryOtpFragment_to_passRecoverySetNewFragment"
             app:destination="@id/passRecoverySetNewFragment"
