@@ -74,6 +74,7 @@ dependencies {
 
     //Editor photo
     implementation 'com.github.takusemba:cropme:2.0.8'
+    implementation 'com.google.mlkit:face-detection:16.1.5'
 
     //Logger
     implementation "com.jakewharton.timber:timber:4.7.1"

@@ -14,6 +14,7 @@ import com.bestDate.data.extension.cropListener
 import com.bestDate.data.extension.getBitmap
 import com.bestDate.data.extension.scale
 import com.bestDate.data.model.Image
+import com.bestDate.data.utils.FaceDetectorUtils
 import com.bestDate.databinding.FragmentPhotoEditorBinding
 import com.bestDate.view.bottomSheet.NotCorrectPhotoSheet
 import kotlinx.coroutines.Dispatchers
@@ -66,7 +67,7 @@ class PhotoEditorFragment : BaseFragment<FragmentPhotoEditorBinding>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        binding.photoEditor.cropListener(success = successSave())
+        binding.photoEditor.cropListener(success = successCrop())
 
         imageLiveData.observe(viewLifecycleOwner) {
             with(binding) {
@@ -77,14 +78,20 @@ class PhotoEditorFragment : BaseFragment<FragmentPhotoEditorBinding>() {
         }
     }
 
-    private fun successSave(): (Bitmap) -> Unit {
+    private fun successCrop(): (Bitmap) -> Unit {
         return {
             binding.saveButton.toggleActionEnabled(false)
-            selectedImage?.bitmap = it
-            notCorrectSheet.show(childFragmentManager, notCorrectSheet.tag)
+            val detector = FaceDetectorUtils()
+            detector.detectFaces(it)
 
-            ProfilePhotoEditingFragment.editorAction.value = selectedImage
-            //navController.popBackStack()
+            detector.completion = { faces ->
+                if (faces > 0) {
+                    showMessage("Found $faces faces")
+                    ProfilePhotoEditingFragment.editorAction.value = selectedImage
+                } else {
+                    notCorrectSheet.show(childFragmentManager, notCorrectSheet.tag)
+                }
+            }
         }
     }
 }

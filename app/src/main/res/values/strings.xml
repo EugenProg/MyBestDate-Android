@@ -439,6 +439,7 @@
     <string name="enter_email_or_phone">Enter a email or a phone number</string>
     <string name="wrong_auth_data">Wrong login or password</string>
     <string name="wrong_otp_code">Wrong code</string>
+    <string name="more_than_one_person">More than one person in the picture</string>
 
 
 </resources>
