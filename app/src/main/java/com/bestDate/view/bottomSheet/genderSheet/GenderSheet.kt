@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.databinding.SheetImageListBinding
+import com.bestDate.fragment.registration.GenderType
 import com.bestDate.view.base.BaseBottomSheet
 
 class GenderSheet: BaseBottomSheet<SheetImageListBinding>() {
@@ -12,16 +13,15 @@ class GenderSheet: BaseBottomSheet<SheetImageListBinding>() {
         { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: GenderSheetAdapter
-    private var genderList: MutableList<String> = ArrayList()
-    var itemClick: ((String) -> Unit)? = null
+    private var genderList: MutableList<GenderType> = ArrayList()
+    var itemClick: ((GenderType) -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
         genderList.clear()
-        genderList.add(getString(R.string.woman_looking_for_a_man))
-        genderList.add(getString(R.string.woman_looking_for_a_woman))
-        genderList.add(getString(R.string.man_looking_for_a_man))
-        genderList.add(getString(R.string.man_looking_for_a_woman))
+        GenderType.values().forEach {
+            genderList.add(it)
+        }
 
         adapter = GenderSheetAdapter(genderList) {
             dismiss()

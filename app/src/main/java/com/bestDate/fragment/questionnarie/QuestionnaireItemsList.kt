@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.base.QuestionnaireBaseViewHolder
-import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.databinding.ItemConfirmationBinding
 import com.bestDate.databinding.ItemMultilineQuestionInfoBinding
 import com.bestDate.databinding.ItemRangeBarQuestionnaireBinding
+import com.bestDate.fragment.registration.RegistrationHolder
+import com.bestDate.fragment.registration.RegistrationType
 import com.bestDate.view.questionnaire.list.ConfirmationViewHolder
 import com.bestDate.view.questionnaire.list.InfoViewHolder
 import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
@@ -154,9 +155,11 @@ class QuestionsItemsList {
         val questions: MutableList<QuestionnaireQuestion> = ArrayList()
 
         questions.add(QuestionnaireQuestion(questionInfo = Question.PHOTO, "Your photo is confirmed"))
-        questions.add(QuestionnaireQuestion(questionInfo = Question.EMAIL, RegistrationDataHolder.email))
+        questions.add(QuestionnaireQuestion(questionInfo = Question.EMAIL,
+            if (RegistrationHolder.type == RegistrationType.EMAIL) RegistrationHolder.login else null))
         questions.add(QuestionnaireQuestion(questionInfo = Question.SOCIAL_NETWORK))
-        questions.add(QuestionnaireQuestion(questionInfo = Question.PHONE_NUMBER, RegistrationDataHolder.phone))
+        questions.add(QuestionnaireQuestion(questionInfo = Question.PHONE_NUMBER,
+            if (RegistrationHolder.type == RegistrationType.PHONE) RegistrationHolder.login else null))
         return questions
     }
 }

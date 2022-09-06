@@ -1,8 +1,6 @@
 package com.bestDate.data.model
 
-import android.os.Parcelable
-
-abstract class BaseResponse: Parcelable {
+open class BaseResponse {
     var success: Boolean = false
     var message: String = ""
 }

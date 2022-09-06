@@ -13,7 +13,7 @@ class PassRecoveryOtpFragment: BaseOtpFragment(
 
     override fun onInit() {
         super.onInit()
-        setEmail(args.email)
+        setLogin(args.email)
     }
 
     override fun sendOtp(code: String) {

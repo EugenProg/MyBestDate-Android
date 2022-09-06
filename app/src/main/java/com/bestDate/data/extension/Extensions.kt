@@ -102,6 +102,12 @@ fun Date.toStringFormat(): String {
     return formatter.format(this)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun Date.toServerFormat(): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd")
+    return formatter.format(this)
+}
+
 val Int?.orZero: Int
 get() = this ?: 0
 

@@ -6,16 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemGenderListBinding
+import com.bestDate.fragment.registration.GenderType
 
-class GenderSheetAdapter(private val items: MutableList<String>,
-                         private val itemClick: (String) -> Unit):
+class GenderSheetAdapter(private val items: MutableList<GenderType>,
+                         private val itemClick: (GenderType) -> Unit):
     RecyclerView.Adapter<GenderSheetAdapter.GenderSheetViewHolder>() {
 
     class GenderSheetViewHolder(override val binding: ItemGenderListBinding):
-        BaseClickViewHolder<String, (String) -> Unit, ItemGenderListBinding>(binding) {
+        BaseClickViewHolder<GenderType, (GenderType) -> Unit, ItemGenderListBinding>(binding) {
 
-        override fun bindView(item: String, itemClick: (String) -> Unit) {
-            binding.name.text = item
+        override fun bindView(item: GenderType, itemClick: (GenderType) -> Unit) {
+            binding.name.text = itemView.context.getString(item.line)
 
             itemView.setOnSaveClickListener {
                 itemClick.invoke(item)

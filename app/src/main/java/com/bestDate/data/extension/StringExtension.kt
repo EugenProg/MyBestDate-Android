@@ -11,6 +11,13 @@ fun String.isPhoneNumber(): Boolean {
         .length in 10..14
 }
 
+fun String.formatToPhoneNumber(): String {
+    return this.replace(" ", "")
+        .replace("-", "")
+        .replace("(", "")
+        .replace(")", "")
+}
+
 fun String.isAEmail(): Boolean {
     return this.matches(Regex("\\S+@\\S+\\.[a-zA-Z]{2,3}"))
 }

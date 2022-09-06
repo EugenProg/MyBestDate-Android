@@ -5,14 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.toStringFormat
-import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
 import com.bestDate.base.BaseFragment
+import com.bestDate.base.BaseVMFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBinding>() {
+@AndroidEntryPoint
+class ContinueRegistrationFragment :
+    BaseVMFragment<FragmentContinueRegistrationBinding, RegistrationViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) ->
     FragmentContinueRegistrationBinding = { inflater, parent, attach ->
         FragmentContinueRegistrationBinding.inflate(inflater, parent, attach)}
+    override val viewModelClass: Class<RegistrationViewModel> = RegistrationViewModel::class.java
 
     override val statusBarLight = true
 
@@ -20,14 +24,17 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
         super.onInit()
         with(binding) {
             emailInput.hint = getString(R.string.email_or_phone_number)
+            emailInput.text = RegistrationHolder.login
+
             passInput.hint = getString(R.string.password)
             passInput.isPasswordField = true
+            passInput.text = RegistrationHolder.password
+
             signUpButton.title = getString(R.string.sign_up)
 
-            name.text = RegistrationDataHolder.username
-            birthdate.text = RegistrationDataHolder.birthdate?.toStringFormat()
-            gender.text = RegistrationDataHolder.gender
-            emailInput.text = RegistrationDataHolder.email.orEmpty()
+            name.text = RegistrationHolder.name
+            birthdate.text = RegistrationHolder.birthdate?.toStringFormat()
+            RegistrationHolder.gender?.line?.let { gender.text = getString(it) }
         }
     }
 
@@ -43,19 +50,34 @@ class ContinueRegistrationFragment : BaseFragment<FragmentContinueRegistrationBi
         }
     }
 
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.sendCodeLiveData.observe(viewLifecycleOwner) {
+            navController.navigate(ContinueRegistrationFragmentDirections
+                .actionContinueRegistrationFragmentToRegistrationOtpFragment()
+            )
+        }
+        viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+            showMessage(it)
+        }
+        viewModel.errorLive.observe(viewLifecycleOwner) {
+            showMessage(it.exception.message)
+            //showMessage(R.string.oops_its_error)
+        }
+        viewModel.loadingMode.observe(viewLifecycleOwner) {
+            binding.signUpButton.toggleActionEnabled(it)
+        }
+    }
+
     private fun validate() {
         with(binding) {
             when {
                 emailInput.text.isBlank() -> emailInput.setError()
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
-                    RegistrationDataHolder.email = emailInput.text
-                    RegistrationDataHolder.password = passInput.text
-                    navController.navigate(ContinueRegistrationFragmentDirections
-                        .actionContinueRegistrationFragmentToRegistrationOtpFragment(
-                            RegistrationDataHolder.email.orEmpty()
-                        )
-                    )
+                    RegistrationHolder.login = emailInput.text
+                    RegistrationHolder.password = passInput.text
+                    viewModel.sendRegistrationCode(emailInput.text)
                 }
             }
         }

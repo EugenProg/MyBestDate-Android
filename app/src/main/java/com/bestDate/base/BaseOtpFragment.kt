@@ -44,8 +44,8 @@ abstract class BaseOtpFragment(
         }
     }
 
-    protected fun setEmail(email: String) {
-        binding.headerEmail.text = email
+    protected fun setLogin(login: String) {
+        binding.headerEmail.text = login
     }
 
     protected open fun goBack() {

@@ -13,9 +13,9 @@ import com.bestDate.data.extension.imageIsSet
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toStringFormat
-import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.data.model.Image
 import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
+import com.bestDate.fragment.registration.RegistrationHolder
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -43,10 +43,10 @@ class ProfilePhotoEditingFragment : BaseFragment<FragmentProfilePhotoEditingBind
 
             uploadButton.title = getString(R.string.upload_a_photo)
 
-            name.text = RegistrationDataHolder.username
-            birthdate.text = RegistrationDataHolder.birthdate?.toStringFormat()
-            gender.text = RegistrationDataHolder.gender
-            email.text = RegistrationDataHolder.email
+            name.text = RegistrationHolder.name
+            birthdate.text = RegistrationHolder.birthdate?.toStringFormat()
+            RegistrationHolder.gender?.line?.let { gender.text = getString(it) }
+            email.text = RegistrationHolder.login
         }
     }
 

@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
-import com.bestDate.data.locale.RegistrationDataHolder
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.base.BaseFragment
@@ -34,24 +33,22 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
             nameInput.hint = getString(R.string.name)
             nameInput.icon = R.drawable.ic_user
             nameInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
+            nameInput.text = RegistrationHolder.name
 
             genderInput.hint = getString(R.string.gender)
             genderInput.icon = R.drawable.ic_gender
+            RegistrationHolder.gender?.line?.let { genderInput.text = getString(it) }
 
             birthInput.hint = getString(R.string.birth_date)
             birthInput.icon = R.drawable.ic_calendar
+            birthInput.text = RegistrationHolder.birthdate?.toStringFormat().orEmpty()
 
             nextButton.title = getString(R.string.next)
 
-            nameInput.text = RegistrationDataHolder.username.orEmpty()
-            birthInput.text = RegistrationDataHolder.birthdate?.toStringFormat().orEmpty()
-            genderInput.text = RegistrationDataHolder.gender.orEmpty()
         }
 
         datePicker = CalendarView().getDateSelectCalender(
-            getString(R.string.birth_date),
-            RegistrationDataHolder.birthdate,
-            birthDateSelect()
+            getString(R.string.birth_date), RegistrationHolder.birthdate, birthDateSelect()
         )
     }
 
@@ -76,15 +73,15 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                 datePicker.show(childFragmentManager)
             }
             genderSheet.itemClick = {
-                RegistrationDataHolder.gender = it
-                genderInput.text = it
+                RegistrationHolder.gender = it
+                genderInput.text = getString(it.line)
             }
         }
     }
 
     private fun birthDateSelect(): (Date) -> Unit {
         return {
-            RegistrationDataHolder.birthdate = it
+            RegistrationHolder.birthdate = it
             binding.birthInput.text = it.toStringFormat()
         }
     }
@@ -96,7 +93,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
                 genderInput.text.isBlank() -> genderInput.setError()
                 birthInput.text.isBlank() -> birthInput.setError()
                 else -> {
-                    RegistrationDataHolder.username = nameInput.text
+                    RegistrationHolder.name = nameInput.text
                     navController.navigate(StartRegistrationFragmentDirections
                         .actionStartRegistrationFragmentToContinueRegistrationFragment())
                 }

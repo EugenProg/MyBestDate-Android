@@ -1,23 +1,38 @@
 package com.bestDate.fragment.registration
 
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.viewModels
 import com.bestDate.R
 import com.bestDate.base.BaseOtpFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegistrationOtpFragment: BaseOtpFragment(
     R.string.confirmation_code,
     R.string.on_the_email_you_specified_we_send_the_confirmation_code,
     R.string.confirm) {
-
-    private val args by navArgs<RegistrationOtpFragmentArgs>()
+    private val viewModel by viewModels<RegistrationViewModel>()
 
     override fun onInit() {
         super.onInit()
-        setEmail(args.email)
+        setLogin(RegistrationHolder.login)
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.registrationLiveData.observe(viewLifecycleOwner) {
+            navController.navigate(RegistrationOtpFragmentDirections
+                .actionRegistrationOtpFragmentToProfilePhotoEditingFragment())
+        }
+        viewModel.errorLive.observe(viewLifecycleOwner) {
+            showMessage(it.exception.message)
+            binding.confirmButton.toggleActionEnabled(false)
+        }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            binding.confirmButton.toggleActionEnabled(it)
+        }
     }
 
     override fun sendOtp(code: String) {
-        navController.navigate(RegistrationOtpFragmentDirections
-            .actionRegistrationOtpFragmentToProfilePhotoEditingFragment())
+        viewModel.confirmRegistration(code)
     }
 }
