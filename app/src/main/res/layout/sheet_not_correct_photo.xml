@@ -205,7 +205,7 @@
         android:textColor="@color/white_70"
         android:textSize="14sp" />
 
-    <com.bestDate.view.WhiteButton
+    <com.bestDate.view.button.WhiteButton
         android:id="@+id/clearButton"
         style="@style/standard_button"
         android:layout_marginTop="32dp"

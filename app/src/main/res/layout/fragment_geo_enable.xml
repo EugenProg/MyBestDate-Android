@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@id/enableButton"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <com.bestDate.view.BlackButton
+    <com.bestDate.view.button.BlackButton
         android:id="@+id/enableButton"
         style="@style/standard_button"
         app:layout_constraintEnd_toEndOf="parent"

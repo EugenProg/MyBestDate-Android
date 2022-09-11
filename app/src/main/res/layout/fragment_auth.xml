@@ -110,7 +110,7 @@
                         android:textSize="16sp" />
                 </LinearLayout>
 
-                <com.bestDate.view.WhiteButton
+                <com.bestDate.view.button.WhiteButton
                     android:id="@+id/authButton"
                     style="@style/standard_button"
                     android:layout_marginTop="10dp"

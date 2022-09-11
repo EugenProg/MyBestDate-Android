@@ -21,8 +21,8 @@ import com.bestDate.data.extension.textIsChanged
 import com.bestDate.databinding.PageQuestionnaireQuestionsBinding
 import com.bestDate.databinding.PageQuestionnaireTextBinding
 import com.bestDate.databinding.ViewQuestionnaireBinding
-import com.bestDate.fragment.questionnarie.QuestionnairePage
-import com.bestDate.fragment.questionnarie.QuestionnairePageType
+import com.bestDate.presentation.questionnarie.QuestionnairePage
+import com.bestDate.presentation.questionnarie.QuestionnairePageType
 import com.bestDate.view.questionnaire.list.QuestionnaireListAdapter
 import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 

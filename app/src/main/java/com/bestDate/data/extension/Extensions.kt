@@ -27,6 +27,7 @@ import com.takusemba.cropme.OnCropListener
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
@@ -131,6 +132,13 @@ fun Bitmap.scale(size: Double? = 2048.0): Bitmap {
 
     val nh = (this.height * (readySize / this.width)).toInt()
     return Bitmap.createScaledBitmap(this, readySize.toInt(), nh, true)
+}
+
+fun Bitmap.toByteArray(): ByteArray {
+    val stream = ByteArrayOutputStream()
+    this.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+    return stream.toByteArray()
 }
 
 fun CropLayout.cropListener(success: ((Bitmap) -> Unit)? = null,

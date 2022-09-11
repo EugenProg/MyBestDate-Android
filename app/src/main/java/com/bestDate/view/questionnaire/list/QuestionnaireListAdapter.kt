@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.base.QuestionnaireBaseViewHolder
 import com.bestDate.data.extension.orZero
-import com.bestDate.fragment.questionnarie.QuestionnaireViewHolderFactory
+import com.bestDate.presentation.questionnarie.QuestionnaireViewHolderFactory
 
 class QuestionnaireListAdapter(private val itemClick: ((QuestionnaireQuestion) -> Unit)):
     ListAdapter<QuestionnaireQuestion, QuestionnaireBaseViewHolder<*>>(QuestionnaireDiffCallback()) {

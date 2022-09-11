@@ -1,7 +1,7 @@
 package com.bestDate.view.questionnaire.list
 
 import android.os.Parcelable
-import com.bestDate.fragment.questionnarie.Question
+import com.bestDate.presentation.questionnarie.Question
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

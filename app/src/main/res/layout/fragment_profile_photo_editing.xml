@@ -8,7 +8,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="290dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -183,7 +183,7 @@
                     android:textColor="@color/white_60"
                     android:textSize="20sp" />
 
-                <com.bestDate.view.WhiteButton
+                <com.bestDate.view.button.WhiteButton
                     android:id="@+id/uploadButton"
                     style="@style/standard_button"
                     android:layout_marginTop="35dp"

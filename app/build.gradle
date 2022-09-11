@@ -76,6 +76,12 @@ dependencies {
     implementation 'com.github.takusemba:cropme:2.0.8'
     implementation 'com.google.mlkit:face-detection:16.1.5'
 
+    //ROOM
+    def room_version = "2.4.3"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
     //Logger
     implementation "com.jakewharton.timber:timber:4.7.1"
 

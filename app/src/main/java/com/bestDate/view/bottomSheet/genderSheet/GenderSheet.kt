@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.databinding.SheetImageListBinding
-import com.bestDate.fragment.registration.GenderType
+import com.bestDate.presentation.registration.GenderType
 import com.bestDate.view.base.BaseBottomSheet
 
 class GenderSheet: BaseBottomSheet<SheetImageListBinding>() {

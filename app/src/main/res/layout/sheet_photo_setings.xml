@@ -29,43 +29,14 @@
                 android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
+        <com.bestDate.view.button.PhotoDeleteButtonView
             android:id="@+id/deleteButton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            android:layout_marginStart="26dp"
-            app:cardBackgroundColor="@color/bg_main"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/cardView2"
             app:layout_constraintStart_toEndOf="@+id/cardView2"
-            app:layout_constraintTop_toTopOf="@+id/cardView2">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_delete" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/editButton"
-            android:layout_width="44dp"
-            android:layout_height="44dp"
-            app:cardBackgroundColor="@color/bg_main"
-            app:cardCornerRadius="22dp"
-            app:cardElevation="10dp"
-            android:layout_marginStart="19dp"
-            app:layout_constraintBottom_toBottomOf="@+id/deleteButton"
-            app:layout_constraintStart_toEndOf="@+id/deleteButton"
-            app:layout_constraintTop_toTopOf="@+id/deleteButton">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_edit" />
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="@+id/cardView2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.bestDate.view.SwitchView
@@ -74,16 +45,11 @@
         android:layout_marginTop="16dp" />
 
     <com.bestDate.view.SwitchView
-        android:id="@+id/sympathySwitch"
-        style="@style/standard_input"
-        android:layout_marginTop="16dp" />
-
-    <com.bestDate.view.SwitchView
         android:id="@+id/topFiftySwitch"
         style="@style/standard_input"
         android:layout_marginTop="10dp" />
 
-    <com.bestDate.view.WhiteButton
+    <com.bestDate.view.button.WhiteButton
         android:id="@+id/safeButton"
         style="@style/standard_button"
         android:layout_marginTop="32dp"

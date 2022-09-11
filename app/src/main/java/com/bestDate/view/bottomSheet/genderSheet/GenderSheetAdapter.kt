@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemGenderListBinding
-import com.bestDate.fragment.registration.GenderType
+import com.bestDate.presentation.registration.GenderType
 
 class GenderSheetAdapter(private val items: MutableList<GenderType>,
                          private val itemClick: (GenderType) -> Unit):

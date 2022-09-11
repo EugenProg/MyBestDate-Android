@@ -7,7 +7,6 @@ import com.bestDate.data.model.InternalException
 import com.hadilq.liveevent.LiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel: ViewModel() {

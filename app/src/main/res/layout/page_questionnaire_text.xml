@@ -116,7 +116,7 @@
             app:layout_constraintEnd_toStartOf="@+id/nextButton"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.bestDate.view.BlueButton
+        <com.bestDate.view.button.BlueButton
             android:id="@+id/nextButton"
             style="@style/standard_button"
             android:layout_width="0dp"

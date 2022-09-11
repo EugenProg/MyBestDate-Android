@@ -145,7 +145,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.bestDate.view.WhiteButton
+    <com.bestDate.view.button.WhiteButton
         android:id="@+id/saveButton"
         style="@style/standard_button"
         android:layout_marginBottom="32dp"

@@ -55,3 +55,13 @@ data class RegistrationRequest(
     var birthday: String,
     var look_for: MutableList<String>
 )
+
+data class IdListRequest(
+    var ids: MutableList<Int>
+)
+
+data class PhotoStatusUpdateRequest(
+    var main: Boolean,
+    var top: Boolean,
+    var match: Boolean = false
+)
