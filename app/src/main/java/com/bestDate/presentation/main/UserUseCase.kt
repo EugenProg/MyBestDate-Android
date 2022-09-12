@@ -2,6 +2,7 @@ package com.bestDate.presentation.main
 
 import com.bestDate.data.model.InternalException
 import com.bestDate.db.dao.UserDao
+import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.UserRemoteData
 import javax.inject.Inject
@@ -27,5 +28,10 @@ class UserUseCase @Inject constructor(
         if (response.isSuccessful) {
 
         } else throw InternalException.OperationException(response.message())
+    }
+
+    suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {
+        val response = userRemoteData.saveQuestionnaire(questionnaire)
+        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
     }
 }

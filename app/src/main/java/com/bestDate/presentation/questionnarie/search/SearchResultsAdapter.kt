@@ -1,4 +1,4 @@
-package com.bestDate.presentation.questionnarie
+package com.bestDate.presentation.questionnarie.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

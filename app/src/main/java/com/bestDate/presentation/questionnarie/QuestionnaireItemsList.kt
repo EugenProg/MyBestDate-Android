@@ -172,19 +172,19 @@ enum class Question(
     vararg val answers: Int) {
     MARITAL_STATUS(
         question = R.string.marital_status,
-        percent = 3,
+        percent = 5,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.married, R.string.divorced, R.string.single, R.string.it_s_complicated, R.string.in_love, R.string.engaged, R.string.actively_searching),
     HAVING_KIDS(
         question = R.string.having_kids,
-        percent = 4,
+        percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.no, R.string.one, R.string.two, R.string.three, R.string.four, R.string.five_or_more),
     PLACE_OF_RESIDENCE(
         question =  R.string.plase_of_residence,
-        percent = 2,
+        percent = 4,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.AB, R.string.AU, R.string.AT, R.string.AZ, R.string.AL, R.string.DZ, R.string.AS,
@@ -225,20 +225,20 @@ enum class Question(
         R.string.OS, R.string.SS, R.string.JM, R.string.JP),
     EDUCATION(
         question = R.string.education,
-        percent = 5,
+        percent = 6,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.no_education,R.string.secondary, R.string.higher),
     OCCUPATIONAL_STATUS(
         question = R.string.occupational_status,
-        percent = 3,
+        percent = 5,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.student, R.string.working, R.string.unemployed, R.string.businessman, R.string.looking_for_my_self, R.string.freelancer),
 
     HEIGHT(
         question = R.string.height,
-        percent = 5,
+        percent = 6,
         viewType = QuestionnaireViewType.SEEKBAR_VIEW,
         unitString = R.string.cm_unit, 1, 3, 2, 3),
     WEIGHT(
@@ -273,13 +273,13 @@ enum class Question(
         R.string.friendship, R.string.love, R.string.communication, R.string.sex),
     WHAT_DO_YOU_WANT(
         question = R.string.what_do_you_want_for_a_date,
-        percent = 6,
+        percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.having_a_fun, R.string.interesting_communication, R.string.serious_relationship_only, R.string.one_time_sex),
     SEARCH_LOCATION(
         question = R.string.search_location,
-        percent = 5,
+        percent = 6,
         viewType = QuestionnaireViewType.INPUT_LOCATION_VIEW,
         unitString = null),
     AGE(
@@ -291,13 +291,13 @@ enum class Question(
     /** */
     HOBBY(
         question = R.string.hobby,
-        percent = 4,
+        percent = 7,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
         unitString = null,
         R.string.music, R.string.dancing, R.string.stand_up),
     TYPES_OF_SPORTS(
         question = R.string.types_of_sports,
-        percent = 5,
+        percent = 8,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
         unitString = null,
         R.string.badminton, R.string.basketball, R.string.baseball, R.string.billiards, R.string.boxing,
@@ -305,7 +305,7 @@ enum class Question(
         R.string.golf, R.string.rowing, R.string.darts, R.string.skating),
     EVENING_TYPE(
         question = R.string.evening_time,
-        percent = 3,
+        percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
         R.string.walking_around_the_city),
@@ -313,24 +313,24 @@ enum class Question(
 
     PHOTO(
         question = R.string.photo,
-        percent = 6,
+        percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null),
     EMAIL(
         question = R.string.email,
-        percent = 4,
+        percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
         R.string.your_email_has_not_been_confirmed),
     SOCIAL_NETWORK(
         question = R.string.social_network,
-        percent = 5,
+        percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
         R.string.the_questionnaire_has_not_been_confirmed),
     PHONE_NUMBER(
         question = R.string.phone_number,
-        percent = 4,
+        percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
         R.string.your_phone_number_has_not_been_confirmed)

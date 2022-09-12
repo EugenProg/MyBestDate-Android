@@ -10,10 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bestDate.R
+import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.ViewRangeBarBinding
 import com.bestDate.databinding.ViewRangeBarThumbBinding
 import com.google.gson.Gson
-import java.lang.Exception
 
 class RangeBarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -91,7 +91,10 @@ class RangeBarView @JvmOverloads constructor(
     }
 
     private fun parseRangeString(range: String) {
-        if (!range.matches(Regex("\\{\\s*\"min\":\\s*\\d+,\\s*\"max\":\\s*\\d+\\s*\\}"))) return
+        Logger.print(range)
+        if (!range.matches(Regex("\\{\"max\":\\d+,\"min\":\\d+\\}")) &&
+            !range.matches(Regex("\\{\"min\":\\d+,\"max\":\\d+\\}"))) return
+
         try {
             val gson = Gson()
             val parsedRange = gson.fromJson(range, Range::class.java)
@@ -101,7 +104,7 @@ class RangeBarView @JvmOverloads constructor(
         }
     }
 
-    private data class Range(
+    data class Range(
         var min: Int,
         var max: Int
     )

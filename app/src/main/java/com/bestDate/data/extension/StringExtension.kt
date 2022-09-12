@@ -21,3 +21,7 @@ fun String.formatToPhoneNumber(): String {
 fun String.isAEmail(): Boolean {
     return this.matches(Regex("\\S+@\\S+\\.[a-zA-Z]{2,3}"))
 }
+
+fun String?.toList(): MutableList<String>? {
+    return this?.split(", ")?.toMutableList()
+}

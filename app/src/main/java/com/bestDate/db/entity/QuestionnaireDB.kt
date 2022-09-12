@@ -1,6 +1,9 @@
 package com.bestDate.db.entity
 
 import androidx.room.Entity
+import com.bestDate.data.extension.orZero
+import com.bestDate.view.seekBar.RangeBarView
+import com.google.gson.Gson
 
 @Entity
 data class QuestionnaireDB(
@@ -25,4 +28,30 @@ data class QuestionnaireDB(
     var hobby: MutableList<String>? = mutableListOf(),
     var sport: MutableList<String>? = mutableListOf(),
     var evening_time: String? = null
-)
+) {
+    fun getLocation(): String {
+        if (search_country == null && search_city == null) return ""
+
+        var location = if (search_country != null) search_country else ""
+        location += if (location?.isNotBlank() == true) ", ${search_city.orEmpty()}" else search_city.orEmpty()
+        return location.orEmpty()
+    }
+
+    fun getAgeRange(): String {
+        val gson = Gson()
+        return gson.toJson(RangeBarView.Range(min = search_age_min ?: 27, max = search_age_max ?: 81))
+    }
+
+    fun setLocation(answer: String?) {
+        val locationArray = answer?.split(", ")
+        search_country = if (locationArray.isNullOrEmpty()) null else locationArray[0]
+        search_city = if (locationArray?.size.orZero > 1) locationArray?.get(1) else null
+    }
+
+    fun setAgeRange(answer: String?) {
+        val gson = Gson()
+        val range = gson.fromJson(answer, RangeBarView.Range::class.java)
+        search_age_max = range.max
+        search_age_min = range.min
+    }
+}
