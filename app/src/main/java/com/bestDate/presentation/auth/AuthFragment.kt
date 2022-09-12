@@ -64,7 +64,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
         }
         viewModel.loginLiveData.observe(viewLifecycleOwner) {
             navController.navigate(AuthFragmentDirections
-                .actionAuthFragmentToQuestionnaireFragment()
+                .actionAuthFragmentToProfilePhotoEditingFragment()
             )
         }
         viewModel.errorLive.observe(viewLifecycleOwner) {

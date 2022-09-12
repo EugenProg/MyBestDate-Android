@@ -13,8 +13,8 @@ interface ImageApiService {
                                  @Header("Authorization") auth: String): Response<ProfileImageResponse>
 
     /**Delete profile image*/
-    @DELETE("/api/v1/user/photos")
-    suspend fun deleteUserPhoto(@Body params: IdListRequest,
+    @DELETE("/api/v1/user/photos/{id}")
+    suspend fun deleteUserPhoto(@Path("id") id: Int,
                                 @Header("Authorization") auth: String): Response<BaseResponse>
 
     /**Update image status*/

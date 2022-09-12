@@ -17,14 +17,8 @@ class ImageRemoteData @Inject constructor(
     suspend fun saveUserPhoto(image: MultipartBody.Part) =
         service.saveProfileImage(image, preferencesUtils.getString(Preferences.ACCESS_TOKEN))
 
-    suspend fun deleteUserPhoto(id: Int): Response<BaseResponse> {
-        val body = IdListRequest(mutableListOf(id))
-        val token = preferencesUtils.getString(Preferences.ACCESS_TOKEN)
-        return service.deleteUserPhoto(
-            body,
-            token
-        )
-    }
+    suspend fun deleteUserPhoto(id: Int): Response<BaseResponse> =
+         service.deleteUserPhoto(id, preferencesUtils.getString(Preferences.ACCESS_TOKEN))
 
     suspend fun updatePhotoStatus(id: Int, main: Boolean, top: Boolean) =
         service.updateUserPhoto(id, PhotoStatusUpdateRequest(main, top),
