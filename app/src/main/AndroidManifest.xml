@@ -30,6 +30,12 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.BestDate"/>
+
+        <activity
+            android:name=".presentation.main.MainScreenActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/Theme.BestDate"/>
     </application>
 
 </manifest>

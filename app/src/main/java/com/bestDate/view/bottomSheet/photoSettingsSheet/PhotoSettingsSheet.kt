@@ -28,7 +28,7 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
             profilePhotoSwitch.isVisible = selectedImage?.main == false
 
             topFiftySwitch.hint = getString(R.string.take_part_in_a_contest)
-            topFiftySwitch.text = getString(R.string.top_50)
+            topFiftySwitch.text = getString(R.string.top_50).uppercase()
 
             profilePhotoSwitch.hint = getString(R.string.set_as_a_profile_photo)
             profilePhotoSwitch.text = getString(R.string.main_picture)
@@ -41,7 +41,7 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            topFiftySwitch.onInfoClick = { showMessage(getString(R.string.top_50)) }
+            topFiftySwitch.onInfoClick = { showMessage(getString(R.string.top_50).uppercase()) }
 
             safeButton.onSafeClick = {
                 viewModel.updatePhotoStatus(

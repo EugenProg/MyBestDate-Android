@@ -36,4 +36,5 @@
     <color name="white_90">#E6ffffff</color>
 
     <color name="startOverlay">#9f283034</color>
+    <color name="gray_ffffff">#ffffff</color>
 </resources>
