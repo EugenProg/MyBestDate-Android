@@ -14,5 +14,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     override val viewModelClass: Class<SearchViewModel> = SearchViewModel::class.java
 
     override val navBarColor = R.color.main_dark
-    override val statusBarLight = true
+    override val statusBarColor= R.color.main_dark
+
+    override val statusBarLight = false
+    override val navBarLight = false
 }

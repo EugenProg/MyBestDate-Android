@@ -14,5 +14,8 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
     override val viewModelClass: Class<MatchesViewModel> = MatchesViewModel::class.java
 
     override val navBarColor = R.color.main_dark
-    override val statusBarLight = true
+    override val statusBarColor= R.color.main_dark
+
+    override val statusBarLight = false
+    override val navBarLight = false
 }

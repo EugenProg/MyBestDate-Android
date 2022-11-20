@@ -22,6 +22,7 @@ class MainScreenActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         setUpNavigation()
+        setUpBottomNav()
     }
 
     private fun setUpNavigation() {
@@ -33,11 +34,28 @@ class MainScreenActivity : AppCompatActivity() {
             binding.bottomNavigationView.post {
                 binding.bottomNavigationView.isVisible = isBottomVisible
             }
+
         }
         binding.bottomNavigationView.itemIconTintList = null
         binding.bottomNavigationView.setupWithNavController(navController)
     }
+
+    private fun badgeSetUp(id: Int, isVisible: Boolean) {
+        val badge = binding.bottomNavigationView.getOrCreateBadge(id)
+        badge.isVisible = isVisible
+        badge.backgroundColor = getColor(R.color.bg_pink)
+        badge.horizontalOffset = 30
+        badge.verticalOffset = 10
+    }
+
+
+    private fun setUpBottomNav() {
+        binding.bottomNavigationView.post {
+            badgeSetUp(R.id.chats_nav_graph, true)
+        }
+    }
 }
+
 
 fun NavDestination.isBottomNavVisible(): Boolean {
     return when (displayName.split(":").getOrNull(1)) {
