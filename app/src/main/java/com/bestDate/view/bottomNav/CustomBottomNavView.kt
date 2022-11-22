@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import com.bestDate.R
 import com.bestDate.databinding.ViewBottomNavBinding
 import com.bestDate.databinding.ViewBottomNavButtonBinding
@@ -69,14 +70,18 @@ class CustomBottomNavView @JvmOverloads constructor(
         button.iconActive = iconActive
         button.label = context.getString(label)
         button.onClick = {
-            button.isActive = true
-            listOfButtons.forEach { buttonFromList ->
-                if (buttonFromList != button)
-                    buttonFromList.isActive = false
-            }
+            handleButtonsActive(button)
         }
         button.hasBadge = hasBadge
 
+    }
+
+    private fun handleButtonsActive(button: CustomBottomNavButtonView) {
+        button.isActive = true
+        listOfButtons.forEach { buttonFromList ->
+            if (buttonFromList != button)
+                buttonFromList.isActive = false
+        }
     }
 
     fun setupWithNavController(navController: NavController) {
@@ -99,6 +104,26 @@ class CustomBottomNavView @JvmOverloads constructor(
                         navController.navigate(R.id.guests_nav_graph)
                     }
                 }
+            }
+        }
+    }
+
+    fun setActive(destination: NavDestination) {
+        when (destination.displayName.split(":").getOrNull(1)) {
+            "id/searchFragment" -> {
+                handleButtonsActive(binding.buttonSearch)
+            }
+            "id/matchesFragment" -> {
+                handleButtonsActive(binding.buttonMatches)
+            }
+            "id/chatsFragment" -> {
+                handleButtonsActive(binding.buttonChats)
+            }
+            "id/topFragment" -> {
+                handleButtonsActive(binding.buttonTop)
+            }
+            "id/guestsFragment" -> {
+                handleButtonsActive(binding.buttonGuests)
             }
         }
     }

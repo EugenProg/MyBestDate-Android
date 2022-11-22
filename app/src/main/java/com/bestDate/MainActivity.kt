@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
             val isBottomVisible = destination.isBottomNavVisible()
             binding.bottomNavigationView.post {
                 binding.bottomNavigationView.isVisible = isBottomVisible
+                binding.bottomNavigationView.setActive(destination)
             }
 
         }
