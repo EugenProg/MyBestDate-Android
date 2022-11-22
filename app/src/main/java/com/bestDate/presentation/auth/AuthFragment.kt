@@ -19,16 +19,6 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
 
-    override fun onInit() {
-        super.onInit()
-        with(binding) {
-            emailInput.hint = getString(R.string.email_or_phone_number)
-            passInput.hint = getString(R.string.password)
-            passInput.isPasswordField = true
-            authButton.title = getString(R.string.login)
-        }
-    }
-
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
