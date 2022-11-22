@@ -62,7 +62,8 @@ class CustomBottomNavView @JvmOverloads constructor(
         button: CustomBottomNavButtonView,
         icon: Int,
         iconActive: Int,
-        label: Int
+        label: Int,
+        hasBadge: Boolean = false
     ) {
         button.icon = icon
         button.iconActive = iconActive
@@ -74,6 +75,7 @@ class CustomBottomNavView @JvmOverloads constructor(
                     buttonFromList.isActive = false
             }
         }
+        button.hasBadge = hasBadge
 
     }
 

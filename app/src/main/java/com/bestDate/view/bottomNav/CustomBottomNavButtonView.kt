@@ -51,7 +51,7 @@ class CustomBottomNavButtonView @JvmOverloads constructor(
             field = value
         }
 
-    var hasBadge: Boolean = true
+    var hasBadge: Boolean = false
         set(value) {
             binding.viewBadge.isVisible = value
             field = value
