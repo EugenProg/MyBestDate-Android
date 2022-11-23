@@ -5,7 +5,9 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
+import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.toPx
 import com.bestDate.databinding.ViewBottomNavButtonBinding
 
 class CustomBottomNavButtonView @JvmOverloads constructor(
@@ -32,7 +34,7 @@ class CustomBottomNavButtonView @JvmOverloads constructor(
     var icon: Int = 0
         set(value) {
             if (!isActive) {
-                binding.iconImageView.setImageResource(value)
+                setImage(value)
             }
             field = value
         }
@@ -40,7 +42,7 @@ class CustomBottomNavButtonView @JvmOverloads constructor(
     var iconActive: Int = 0
         set(value) {
             if (isActive) {
-                binding.iconImageView.setImageResource(value)
+                setImage(value)
             }
             field = value
         }
@@ -61,6 +63,18 @@ class CustomBottomNavButtonView @JvmOverloads constructor(
         binding.root.setOnSaveClickListener {
             onClick?.invoke()
             onNavigationChange?.invoke()
+        }
+    }
+
+    private fun setImage(value: Int) {
+        binding.iconImageView.setImageResource(value)
+        binding.iconImageView.layoutParams.width =
+            if (value == R.drawable.ic_matches) 28.toPx() else 20.toPx()
+        binding.iconImageView.layoutParams.height =
+            if (value == R.drawable.ic_matches) 28.toPx() else 20.toPx()
+
+        if (value == R.drawable.ic_matches) {
+            (binding.vgButton.layoutParams as LayoutParams).topMargin = -(4.toPx())
         }
     }
 }
