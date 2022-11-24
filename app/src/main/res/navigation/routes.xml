@@ -204,6 +204,11 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <include
+        android:id="@+id/main_nav_graph"
+        app:graph="@navigation/main_nav_graph" />
+
     <fragment
         android:id="@+id/userProfileFragment"
         android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"

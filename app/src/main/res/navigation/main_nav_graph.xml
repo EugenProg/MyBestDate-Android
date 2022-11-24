@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/search_nav_graph">
+
+    <include
+        android:id="@+id/search_nav_graph"
+        app:graph="@navigation/search_nav_graph" />
+
+    <include
+        android:id="@+id/matches_nav_graph"
+        app:graph="@navigation/matches_nav_graph" />
+
+    <include
+        android:id="@+id/chats_nav_graph"
+        app:graph="@navigation/chats_nav_graph" />
+
+    <include
+        android:id="@+id/top_nav_graph"
+        app:graph="@navigation/top_nav_graph" />
+
+    <include
+        android:id="@+id/guests_nav_graph"
+        app:graph="@navigation/guests_nav_graph" />
+
+</navigation>
