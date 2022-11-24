@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/userProfileFragment">
+    app:startDestination="@id/profile_nav_graph">
 
     <fragment
         android:id="@+id/startFragment"
@@ -74,7 +74,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/photoEditorFragment"
+            app:popUpTo="@id/registrationPhotoEditorFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_authFragment_to_questionnaireFragment"
@@ -135,7 +135,7 @@
         android:label="ProfilePhotoEditingFragment" >
         <action
             android:id="@+id/action_profilePhotoEditingFragment_to_photoEditorFragment"
-            app:destination="@id/photoEditorFragment"
+            app:destination="@id/registrationPhotoEditorFragment"
             app:enterAnim="@anim/push_up_in"
             app:exitAnim="@anim/push_up_out"
             app:popEnterAnim="@anim/fade_in"
@@ -147,14 +147,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/photoEditorFragment"
-        android:name="com.bestDate.presentation.profilePhotoEditor.PhotoEditorFragment"
-        android:label="PhotoEditorFragment" >
-        <argument
-            android:name="selectedImage"
-            app:argType="com.bestDate.data.model.Image" />
     </fragment>
     <fragment
         android:id="@+id/questionnaireFragment"
@@ -210,7 +202,12 @@
         app:graph="@navigation/main_nav_graph" />
 
     <fragment
-        android:id="@+id/userProfileFragment"
-        android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
-        android:label="UserProfileFragment" />
+        android:id="@+id/registrationPhotoEditorFragment"
+        android:name="com.bestDate.presentation.profilePhotoEditor.RegistrationPhotoEditorFragment"
+        android:label="RegistrationPhotoEditorFragment" >
+        <argument
+            android:name="selectedImage"
+            app:argType="com.bestDate.data.model.Image" />
+    </fragment>
+    <include app:graph="@navigation/profile_nav_graph" />
 </navigation>

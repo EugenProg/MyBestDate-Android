@@ -12,4 +12,16 @@ class UserProfileViewModel @Inject constructor(
 ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
+
+    fun updateUserData() {
+        doAsync {
+            userUseCase.refreshUser()
+        }
+    }
+
+    fun signOut() {
+        doAsync {
+            userUseCase.logout()
+        }
+    }
 }

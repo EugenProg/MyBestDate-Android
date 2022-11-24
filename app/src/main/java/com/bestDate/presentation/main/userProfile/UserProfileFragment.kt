@@ -5,9 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
-import com.bestDate.data.model.Image
+import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentUserProfileBinding
+import com.bestDate.base.BasePhotoEditorFragment
+import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
+import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,14 +26,46 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     override val statusBarColor = R.color.white
 
     private lateinit var adapter: ImageLineAdapter
+    private var imageListSheet: ImageListSheet = ImageListSheet()
 
     override fun onInit() {
         super.onInit()
 
-        adapter = ImageLineAdapter()
+        val height = (resources.displayMetrics.widthPixels - 42.toPx()) / 3
+        adapter = ImageLineAdapter(height)
         binding.imagesCarousel.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.imagesCarousel.adapter = adapter
+
+        binding.refreshView.setOnRefreshListener {
+            viewModel.updateUserData()
+        }
+    }
+
+    override fun onViewClickListener() {
+        super.onViewClickListener()
+        binding.signOutButton.root.setOnSaveClickListener {
+            viewModel.signOut()
+        }
+        adapter.addClick = {
+            if (adapter.itemCount < 10) {
+                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+            } else {
+                showMessage(getString(R.string.you_can_upload_only_9_photo))
+            }
+        }
+
+        adapter.imageClick = {
+            val photoSettingsSheet = PhotoSettingsSheet()
+            photoSettingsSheet.setSelectedImage(it)
+            photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+        }
+
+        imageListSheet.itemClick = {
+            imageListSheet.dismiss()
+
+            navController.navigate(UserProfileFragmentDirections.actionProfileToPhotoEditor(it))
+        }
     }
 
     override fun onViewLifecycle() {
@@ -42,7 +78,16 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 binding.name.text = user?.name
                 binding.birthdate.text = user?.getFormattedBirthday()
 
-                adapter.submitList(getImageList(user?.photos))
+                adapter.submitList(getImageList(user?.photos)) {
+                    binding.refreshView.isRefreshing = false
+                }
+            }
+        }
+        BasePhotoEditorFragment.editorAction.observe(viewLifecycleOwner) {
+            if (it != null) {
+                val photoSettingsSheet = PhotoSettingsSheet()
+                photoSettingsSheet.setSelectedImage(it)
+                photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
             }
         }
     }
@@ -54,7 +99,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private fun setMainImage(image: ProfileImage?) {
         if (image == null) return
-        makeStatusBarTransparent(binding.scroll)
+        makeStatusBarTransparent(binding.refreshView)
 
         Glide.with(requireContext())
             .load(image.thumb_url)

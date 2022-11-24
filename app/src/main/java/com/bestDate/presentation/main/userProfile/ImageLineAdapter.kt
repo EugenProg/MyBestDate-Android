@@ -8,13 +8,16 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bestDate.R
 import com.bestDate.base.BaseClickViewHolder
+import com.bestDate.data.extension.setHeight
 import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.setWidth
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.ItemAddImageBinding
 import com.bestDate.databinding.ItemImageListBinding
 import com.bumptech.glide.Glide
 
-class ImageLineAdapter: ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils()) {
+class ImageLineAdapter(var viewHeight: Int):
+    ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils()) {
 
     var imageClick: ((ProfileImage) -> Unit)? = null
     var addClick: (() -> Unit)? = null
@@ -29,25 +32,30 @@ class ImageLineAdapter: ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils
         }
     }
 
-    class ImageListViewHolder(override val binding: ItemImageListBinding):
+    class ImageListViewHolder(override val binding: ItemImageListBinding, private val viewHeight: Int):
         BaseClickViewHolder<ProfileImage, ((ProfileImage) -> Unit)?, ItemImageListBinding>(binding) {
 
         override fun bindView(item: ProfileImage, itemClick: ((ProfileImage) -> Unit)?) {
             itemView.apply {
+                itemView.setHeight(viewHeight)
+                itemView.setWidth(viewHeight)
                 Glide.with(itemView.context)
                     .load(item.thumb_url)
-                    .circleCrop()
                     .into(binding.image)
 
                 binding.top.isVisible = item.top == true
+
+                setOnSaveClickListener { itemClick?.invoke(item) }
             }
         }
     }
 
-    class AddImageViewHolder(override val binding: ItemAddImageBinding):
+    class AddImageViewHolder(override val binding: ItemAddImageBinding, private val viewHeight: Int):
         BaseClickViewHolder<ProfileImage, (() -> Unit)?, ItemAddImageBinding>(binding) {
         override fun bindView(item: ProfileImage, itemClick: (() -> Unit)?) {
             itemView.apply {
+                itemView.setHeight(viewHeight)
+                itemView.setWidth(viewHeight)
                 setOnSaveClickListener { itemClick?.invoke() }
             }
         }
@@ -61,11 +69,13 @@ class ImageLineAdapter: ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType == R.layout.item_add_image) {
             AddImageViewHolder(ItemAddImageBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false),
+                viewHeight
             )
         } else {
             ImageListViewHolder(ItemImageListBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false),
+                viewHeight
             )
         }
     }

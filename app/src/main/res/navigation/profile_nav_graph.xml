@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/profile_nav_graph"
+    app:startDestination="@id/userProfileFragment2">
+
+    <fragment
+        android:id="@+id/userProfileFragment2"
+        android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
+        android:label="UserProfileFragment" >
+        <action
+            android:id="@+id/action_profile_to_photoEditor"
+            app:destination="@id/userProfilePhotoEditorFragment"
+            app:enterAnim="@anim/push_up_in"
+            app:exitAnim="@anim/push_up_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/userProfilePhotoEditorFragment"
+        android:name="com.bestDate.presentation.main.userProfile.UserProfilePhotoEditorFragment"
+        android:label="UserProfilePhotoEditorFragment" >
+        <argument
+            android:name="selectedImage"
+            app:argType="com.bestDate.data.model.Image" />
+    </fragment>
+</navigation>

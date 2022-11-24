@@ -20,208 +20,226 @@
             android:scaleType="centerCrop" />
     </FrameLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:id="@+id/backButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:padding="16dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/backArrow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="@color/white" />
-
-                <TextView
-                    android:id="@+id/back"
-                    style="@style/text"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="7dp"
-                    android:text="@string/back"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/avatarContainer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="55dp"
-                android:background="@drawable/avatar_back"
-                android:elevation="1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/avatar"
-                    android:layout_width="104dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="0.2dp"
-                    android:layout_marginBottom="3dp" />
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/inputContainer"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="85dp"
-                android:orientation="vertical"
-                android:background="@drawable/bottom_dark_sheet"
-                android:backgroundTint="@color/bg_profile_header"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/avatarContainer">
-
-                <TableLayout
-                    android:id="@+id/frameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="32dp"
-                    android:layout_marginTop="75dp"
-                    android:shrinkColumns="0"
-                    android:gravity="center">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/name"
-                            style="@style/title"
-                            android:layout_width="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="0dp"
-                            android:layout_marginEnd="0dp"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="26sp"
-                            tools:text="Safira Artemieva" />
-
-                        <ImageView
-                            android:id="@+id/isFull"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="12dp"
-                            android:src="@drawable/ic_verify"
-                            app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
-                            app:layout_constraintStart_toEndOf="@+id/frameLayout"
-                            app:layout_constraintTop_toTopOf="@+id/frameLayout" />
-                    </TableRow>
-                </TableLayout>
-
-                <TextView
-                    android:id="@+id/birthdate"
-                    style="@style/text"
-                    android:layout_marginHorizontal="32dp"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    tools:text="10 January 1995" />
-
-                <HorizontalScrollView
-                    android:id="@+id/mainButtonsLine"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:scrollbars="none">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingStart="18dp"
-                        android:paddingEnd="18dp">
-
-                        <com.bestDate.view.button.ProfileBalanceButtonView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                        <com.bestDate.view.button.UserDataButtonView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            app:button_title="@string/matches_list"
-                            app:button_icon="@drawable/ic_matches_list"/>
-
-                        <com.bestDate.view.button.UserDataButtonView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            app:button_title="@string/cards"
-                            app:button_icon="@drawable/ic_pink_card"/>
-
-                        <com.bestDate.view.button.UserDataButtonView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            app:button_title="@string/likes"
-                            app:button_icon="@drawable/ic_likes_list"/>
-
-                        <com.bestDate.view.button.UserDataButtonView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            app:button_title="@string/my_duels"
-                            app:button_icon="@drawable/ic_my_duel"/>
-                    </LinearLayout>
-                </HorizontalScrollView>
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/bg_main"
-                    android:orientation="vertical"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginStart="16dp"
+                    android:padding="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/imagesCarousel"
+                    <ImageView
+                        android:id="@+id/backArrow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_arrow_back"
+                        app:tint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/back"
+                        style="@style/text"
+                        android:layout_width="wrap_content"
+                        android:layout_margin="7dp"
+                        android:text="@string/back"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/avatarContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="35dp"
+                    android:background="@drawable/avatar_back"
+                    android:elevation="1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/avatar"
+                        android:layout_width="104dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="0.2dp"
+                        android:layout_marginBottom="3dp" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:id="@+id/inputContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="85dp"
+                    android:background="@drawable/bottom_dark_sheet"
+                    android:backgroundTint="@color/bg_profile_header"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/avatarContainer">
+
+                    <TableLayout
+                        android:id="@+id/frameLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="32dp"
+                        android:layout_marginTop="55dp"
+                        android:gravity="center"
+                        android:shrinkColumns="0">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/name"
+                                style="@style/title"
+                                android:layout_width="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginEnd="0dp"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="26sp"
+                                tools:text="Safira Artemieva" />
+
+                            <ImageView
+                                android:id="@+id/isFull"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="12dp"
+                                android:src="@drawable/ic_verify"
+                                app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
+                                app:layout_constraintStart_toEndOf="@+id/frameLayout"
+                                app:layout_constraintTop_toTopOf="@+id/frameLayout" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <TextView
+                        android:id="@+id/birthdate"
+                        style="@style/text"
+                        android:layout_marginHorizontal="32dp"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        tools:text="10 January 1995" />
+
+                    <HorizontalScrollView
+                        android:id="@+id/mainButtonsLine"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dp"
-                        tools:layout_height="wrap_content" />
+                        android:scrollbars="none">
 
-                    <com.bestDate.view.button.DirectionLineButtonView
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp">
+
+                            <com.bestDate.view.button.ProfileBalanceButtonView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <com.bestDate.view.button.UserDataButtonView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                app:button_icon="@drawable/ic_matches_list"
+                                app:button_title="@string/matches_list" />
+
+                            <com.bestDate.view.button.UserDataButtonView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                app:button_icon="@drawable/ic_pink_card"
+                                app:button_title="@string/cards" />
+
+                            <com.bestDate.view.button.UserDataButtonView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                app:button_icon="@drawable/ic_likes_list"
+                                app:button_title="@string/likes" />
+
+                            <com.bestDate.view.button.UserDataButtonView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                app:button_icon="@drawable/ic_my_duel"
+                                app:button_title="@string/my_duels" />
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="36dp"
-                        app:button_background="@drawable/buttons_box_pink"
-                        app:button_image="@drawable/ic_questionnaire"
-                        app:button_name="@string/questionnaire"/>
+                        android:layout_marginTop="8dp"
+                        android:background="@color/bg_main"
+                        android:orientation="vertical">
 
-                    <com.bestDate.view.button.DirectionLineButtonView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:button_image="@drawable/ic_profile"
-                        app:button_name="@string/personal_data"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/imagesCarousel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="18dp"
+                            tools:layout_height="wrap_content" />
 
-                    <com.bestDate.view.button.DirectionLineButtonView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:button_image="@drawable/ic_setting"
-                        app:button_name="@string/settings"/>
+                        <com.bestDate.view.button.DirectionLineButtonView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="36dp"
+                            app:button_background="@drawable/buttons_box_pink"
+                            app:button_image="@drawable/ic_questionnaire"
+                            app:button_name="@string/questionnaire" />
+
+                        <com.bestDate.view.button.DirectionLineButtonView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:button_image="@drawable/ic_profile"
+                            app:button_name="@string/personal_data" />
+
+                        <com.bestDate.view.button.DirectionLineButtonView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:button_image="@drawable/ic_setting"
+                            app:button_name="@string/settings" />
+
+                        <include
+                            android:id="@+id/signOutButton"
+                            layout="@layout/view_sign_out_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginBottom="32dp"/>
+                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

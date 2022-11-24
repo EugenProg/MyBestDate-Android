@@ -1,23 +1,29 @@
 package com.bestDate.network.remote
 
 import com.bestDate.data.model.*
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.services.CoreAuthService
 import javax.inject.Inject
 
-class AuthRemoteData @Inject constructor(private val service: CoreAuthService) {
+class AuthRemoteData @Inject constructor(
+    private val service: CoreAuthService,
+    private val preferencesUtils: PreferencesUtils
+) {
     suspend fun loginByEmail(email: String, password: String) =
         service.loginByEmail(EmailAuthRequest(username = email, password))
 
     suspend fun loginByPhone(phone: String, password: String) =
         service.loginByPhone(PhoneAuthRequest(phone, password))
 
-    suspend fun loginSocial(provider: SocialProvider, token: String) =
-        service.loginSocial(SocialAuthRequest(provider.serverName, token))
+    suspend fun loginSocial(provider: SocialProvider) =
+        service.loginSocial(SocialAuthRequest(provider.serverName, preferencesUtils.getString(
+            Preferences.ACCESS_TOKEN)))
 
-    suspend fun refreshToken(token: String) =
-        service.refreshToken(RefreshRequest(token))
+    suspend fun refreshToken() =
+        service.refreshToken(RefreshRequest(preferencesUtils.getString(Preferences.ACCESS_TOKEN)))
 
-    suspend fun logout(token: String) = service.logout(token)
+    suspend fun logout() = service.logout(preferencesUtils.getString(Preferences.ACCESS_TOKEN))
 
     suspend fun sendEmailResetCode(email: String) =
         service.sendEmailResetCode(EmailRequest(email))

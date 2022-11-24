@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.base.BasePhotoEditorFragment
 import com.bestDate.data.extension.imageIsSet
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -58,7 +59,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             }
             backButton.setOnClickListener {
                 navController.popBackStack()
-                editorAction.value = null
+                BasePhotoEditorFragment.editorAction.value = null
             }
             nextButton.setOnSaveClickListener {
                 if (imageList.value?.size.orZero > 0) {
@@ -81,7 +82,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
         imageList.observe(viewLifecycleOwner) {
             pagerAdapter.submitList(getPageImages(it))
         }
-        editorAction.observe(viewLifecycleOwner) {
+        BasePhotoEditorFragment.editorAction.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.nextButton.isVisible = true
                 val photoSettingsSheet = PhotoSettingsSheet()
@@ -168,9 +169,5 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             photoSettingsSheet.setSelectedImage(it)
             photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
         }
-    }
-
-    companion object {
-        var editorAction: MutableLiveData<ProfileImage> = MutableLiveData()
     }
 }
