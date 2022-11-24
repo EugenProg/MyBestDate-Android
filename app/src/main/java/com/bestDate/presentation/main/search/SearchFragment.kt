@@ -25,15 +25,35 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         super.onInit()
         with(binding) {
             toolbar.title = getString(R.string.search)
-            binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
-            binding.recyclerViewSearches.adapter = adapter
-            adapter.submitList(
-                mutableListOf(
-                    ProfileData(0, "Alice", "Almaty, Kazakhstan", "25", "2.1"),
-                    ProfileData(1, "Alice2", "Almaty, Kazakhstan", "25", "2.1"),
-                    ProfileData(2, "Alice3", "Almaty, Kazakhstan", "25", "2.1")
-                )
+            setUpRV()
+            setUpFilters()
+        }
+    }
+
+    private fun setUpRV() {
+        binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.recyclerViewSearches.adapter = adapter
+        adapter.submitList(
+            mutableListOf(
+                ProfileData(0, "Alice", "Almaty, Kazakhstan", "25", "2.1 km"),
+                ProfileData(1, "Alice2", "Almaty, Kazakhstan", "25", "2.1 km"),
+                ProfileData(2, "Alice3", "Almaty, Kazakhstan", "25", "2.1 km")
             )
+        )
+    }
+
+    private fun setUpFilters() {
+        binding.run {
+            locationFilterButton.label = getString(R.string.next_to_me)
+            locationFilterButton.isActive = true
+            locationFilterButton.onClick = {
+
+            }
+            statusFilterButton.label = getString(R.string.online)
+            statusFilterButton.isActive = false
+            statusFilterButton.onClick = {
+
+            }
         }
     }
 }

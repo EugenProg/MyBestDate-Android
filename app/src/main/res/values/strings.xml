@@ -446,5 +446,7 @@
     <string name="matches">Matches</string>
     <string name="chats">Chats</string>
     <string name="guests">Guests</string>
+    <string name="next_to_me">Next to me</string>
+    <string name="online">Online</string>
 
 </resources>
