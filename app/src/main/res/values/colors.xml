@@ -19,6 +19,7 @@
     <color name="main_70">#B3283034</color>
     <color name="main_90">#E6283034</color>
     <color name="main_dark">#232c31</color>
+    <color name="dark">#222d33</color>
 
     <color name="bg_pink">#f28be6</color>
     <color name="bg_light_blue">#beefff</color>
@@ -30,11 +31,15 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_10">#1Affffff</color>
     <color name="white_13">#1dffffff</color>
+    <color name="white_20">#34ffffff</color>
+    <color name="white_40">#66FFFFFF</color>
     <color name="white_50">#80FFFFFF</color>
     <color name="white_60">#99ffffff</color>
     <color name="white_70">#B3ffffff</color>
     <color name="white_80">#CCffffff</color>
     <color name="white_90">#E6ffffff</color>
+
+    <color name="green">#00ff62</color>
 
     <color name="startOverlay">#9f283034</color>
     <color name="bg_box">#293236</color>

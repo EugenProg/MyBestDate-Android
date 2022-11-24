@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    tools:background="@color/bg_main">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/viewInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_dark_solid_light_stroke"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
+        app:layout_constraintStart_toStartOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView">
+
+        <TextView
+            android:id="@+id/nameTextVIew"
+            style="@style/text_no_margin_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Alice" />
+
+        <com.bestDate.view.verification.VerifyItem
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="7dp"
+            app:layout_constraintBottom_toBottomOf="@id/nameTextVIew"
+            app:layout_constraintStart_toEndOf="@id/nameTextVIew"
+            app:layout_constraintTop_toTopOf="@id/nameTextVIew" />
+
+        <TextView
+            android:id="@+id/locationTextView"
+            style="@style/text_no_margin_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="7dp"
+            android:textColor="@color/white_40"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameTextVIew"
+            tools:text="Almaty, Kazakhstan" />
+
+        <TextView
+            android:id="@+id/ageTextView"
+            style="@style/text_no_margin_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="2dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/yearTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="25" />
+
+        <TextView
+            android:id="@+id/yearTextView"
+            style="@style/text_no_margin_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="y"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ageTextView"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
+        android:id="@+id/profileImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="2dp"
+            android:background="@drawable/bg_light_stroke"
+            android:src="@drawable/bg_pink_square"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
+
+    <View
+        android:id="@+id/_transparentCircleView"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_circle_transparent_white"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
+        app:layout_constraintStart_toStartOf="@+id/profileImageView" />
+
+    <View
+        android:id="@+id/_greenCircleView"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:background="@drawable/bg_circle_green"
+        app:layout_constraintBottom_toBottomOf="@+id/_transparentCircleView"
+        app:layout_constraintEnd_toEndOf="@+id/_transparentCircleView"
+        app:layout_constraintStart_toStartOf="@+id/_transparentCircleView"
+        app:layout_constraintTop_toTopOf="@+id/_transparentCircleView" />
+
+    <TextView
+        android:id="@+id/distanceTextView"
+        style="@style/text_no_margin_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/_transparentCircleView"
+        app:layout_constraintStart_toEndOf="@+id/_transparentCircleView"
+        app:layout_constraintTop_toTopOf="@+id/_transparentCircleView"
+        tools:text="2.1 km" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
