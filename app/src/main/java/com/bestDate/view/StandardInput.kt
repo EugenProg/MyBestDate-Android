@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.databinding.ViewStandardInputBinding
 
 class StandardInput @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
