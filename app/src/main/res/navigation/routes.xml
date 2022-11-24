@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/main_nav_graph">
 
     <fragment
         android:id="@+id/startFragment"
@@ -204,4 +204,9 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <include
+        android:id="@+id/main_nav_graph"
+        app:graph="@navigation/main_nav_graph" />
+
 </navigation>

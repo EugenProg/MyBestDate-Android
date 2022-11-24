@@ -36,7 +36,7 @@
     <string name="no_permission">Permission not granted</string>
     <string name="take_part_in_a_contest">Take part in a contest</string>
     <string name="mutual_sympathy">Mutual Sympathy</string>
-    <string name="top_50">TOP 50</string>
+    <string name="top_50">Top 50</string>
     <string name="set_the_main_photo">Set the main photo</string>
     <string name="photo_editing">Photo Editing</string>
     <string name="save">Save</string>
@@ -441,5 +441,10 @@
     <string name="wrong_otp_code">Wrong code</string>
     <string name="more_than_one_person">More than one person in the picture</string>
 
+
+    <string name="search">Search</string>
+    <string name="matches">Matches</string>
+    <string name="chats">Chats</string>
+    <string name="guests">Guests</string>
 
 </resources>
