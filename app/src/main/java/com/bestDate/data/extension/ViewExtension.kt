@@ -1,5 +1,7 @@
 package com.bestDate.data.extension
 
+import android.content.res.TypedArray
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
@@ -41,4 +43,15 @@ fun SeekBar.onChangeListener(
             stopTouch?.invoke(bar)
         }
     })
+}
+
+inline fun View.setAttrs(attrs: AttributeSet?, styleable: IntArray, crossinline body: (TypedArray) -> Unit) {
+    context.theme.obtainStyledAttributes(attrs, styleable, 0, 0)
+        .apply {
+            try {
+                body.invoke(this)
+            } finally {
+                recycle()
+            }
+        }
 }

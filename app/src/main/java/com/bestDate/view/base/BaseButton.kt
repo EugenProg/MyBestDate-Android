@@ -8,6 +8,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
+import com.bestDate.data.extension.setAttrs
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewButtonBinding
 
@@ -23,6 +24,10 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
     init {
         val view = View.inflate(context, R.layout.view_button, this)
         binding = ViewButtonBinding.bind(view)
+
+        setAttrs(attrs, R.styleable.BaseButton) {
+            title = it.getString(R.styleable.BaseButton_title).orEmpty()
+        }
 
         setButtonColor(context)
 
