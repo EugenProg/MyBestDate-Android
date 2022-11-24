@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/userProfileFragment">
 
     <fragment
         android:id="@+id/startFragment"
@@ -204,4 +204,8 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
+        android:label="UserProfileFragment" />
 </navigation>

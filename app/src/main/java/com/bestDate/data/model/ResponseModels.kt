@@ -25,10 +25,11 @@ data class ProfileImage(
     var thumb_url: String? = null,
     var main: Boolean? = null,
     var top: Boolean? = null,
-    var liked: Boolean? = null
+    var liked: Boolean? = null,
+    var likes: Int? = null
 ) {
     fun copy(): ProfileImage {
-        return ProfileImage(id, full_url, thumb_url, main, top, liked)
+        return ProfileImage(id, full_url, thumb_url, main, top, liked, likes)
     }
 }
 

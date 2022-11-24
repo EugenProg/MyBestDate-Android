@@ -9,4 +9,15 @@
     <declare-styleable name="BaseButton">
         <attr name="title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="UserDataButtonView">
+        <attr name="button_title" format="string"/>
+        <attr name="button_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="DirectionLineButtonView">
+        <attr name="button_name" format="string"/>
+        <attr name="button_image" format="reference"/>
+        <attr name="button_background" format="reference"/>
+    </declare-styleable>
 </resources>
