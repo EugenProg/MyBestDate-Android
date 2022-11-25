@@ -1,21 +1,23 @@
 package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bestDate.R
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemSearchProfilesElementBinding
+import com.bumptech.glide.Glide
 
-class SearchAdapter : ListAdapter<ProfileData, RecyclerView.ViewHolder>(SearchDiffUtils()) {
+class SearchAdapter : ListAdapter<ShortUserData, RecyclerView.ViewHolder>(SearchDiffUtils()) {
 
-    class SearchDiffUtils : DiffUtil.ItemCallback<ProfileData>() {
-        override fun areItemsTheSame(oldItem: ProfileData, newItem: ProfileData): Boolean {
+    class SearchDiffUtils : DiffUtil.ItemCallback<ShortUserData>() {
+        override fun areItemsTheSame(oldItem: ShortUserData, newItem: ShortUserData): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: ProfileData, newItem: ProfileData): Boolean {
+        override fun areContentsTheSame(oldItem: ShortUserData, newItem: ShortUserData): Boolean {
             return oldItem == newItem
         }
     }
@@ -36,21 +38,16 @@ class SearchAdapter : ListAdapter<ProfileData, RecyclerView.ViewHolder>(SearchDi
 
     inner class SearchProfileViewHolder(val binding: ItemSearchProfilesElementBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ProfileData) {
+        fun bind(item: ShortUserData) {
             binding.run {
-                nameTextVIew.text = item.name
-                locationTextView.text = item.city
-                ageTextView.text = item.age
-                distanceTextView.text = item.distance
+                nameTextView.text = item.name
+                locationTextView.text = "${item.location?.city}, ${item.location?.country}"
+                ageTextView.text = item.getAge()
+                distanceTextView.text = binding.root.context.getString(R.string.distance_km, (item.distance ?: 0.0).toInt())
+                Glide.with(binding.root.context)
+                    .load(item.main_photo?.thumb_url)
+                    .into(binding.profileImageView)
             }
         }
     }
 }
-
-data class ProfileData(
-    val id: Int,
-    val name: String,
-    val city: String,
-    val age: String,
-    val distance: String
-)

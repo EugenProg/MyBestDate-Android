@@ -1,5 +1,6 @@
 package com.bestDate.network.remote
 
+import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.entity.QuestionnaireDB
@@ -18,5 +19,11 @@ class UserRemoteData @Inject constructor(
         service.getUserById(id, preferencesUtils.getString(Preferences.ACCESS_TOKEN))
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) =
-        service.saveQuestionnaire(questionnaire, preferencesUtils.getString(Preferences.ACCESS_TOKEN))
+        service.saveQuestionnaire(
+            questionnaire,
+            preferencesUtils.getString(Preferences.ACCESS_TOKEN)
+        )
+
+    suspend fun getUsers(filters: FilterOptions) =
+        service.getUsers(preferencesUtils.getString(Preferences.ACCESS_TOKEN), filters)
 }

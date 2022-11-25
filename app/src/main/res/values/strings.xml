@@ -448,5 +448,9 @@
     <string name="guests">Guests</string>
     <string name="next_to_me">Next to me</string>
     <string name="online">Online</string>
-
+    <string name="not_selected">Not selected</string>
+    <string name="was_recently">Was recently</string>
+    <string name="all_world">All world</string>
+    <string name="location">Location</string>
+    <string name="distance_km">%d km</string>
 </resources>

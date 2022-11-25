@@ -1,7 +1,10 @@
 package com.bestDate.data.model
 
+import com.bestDate.data.extension.CalendarUtils
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
+import java.text.SimpleDateFormat
+import java.util.Calendar.*
 
 open class BaseResponse {
     var success: Boolean = false
@@ -17,7 +20,7 @@ data class AuthResponse(
 
 data class ProfileImageResponse(
     var data: ProfileImage? = null
-): BaseResponse()
+) : BaseResponse()
 
 data class ProfileImage(
     var id: Int? = null,
@@ -34,11 +37,15 @@ data class ProfileImage(
 
 data class UserDataResponse(
     val data: UserDB
-): BaseResponse()
+) : BaseResponse()
 
 data class ShortUserDataResponse(
     val data: ShortUserData
-): BaseResponse()
+) : BaseResponse()
+
+data class ShortUserListDataResponse(
+    val data: MutableList<ShortUserData>
+) : BaseResponse()
 
 data class ShortUserData(
     var id: Int? = null,
@@ -51,5 +58,16 @@ data class ShortUserData(
     var location: LocationDB? = null,
     var block_messages: Boolean? = null,
     var full_questionnaire: Boolean? = null,
-    var distance: Double? = null,
+    var distance: Double? = null
+) {
+    fun getAge(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val yourDate = birthday?.let { sdf.parse(it) } ?: return ""
+        return CalendarUtils.getDiffYears(yourDate, getInstance().time).toString()
+    }
+}
+
+data class FilterOptions(
+    val location: String = "all",
+    val online: String = "all"
 )

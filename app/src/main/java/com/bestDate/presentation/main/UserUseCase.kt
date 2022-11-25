@@ -1,6 +1,8 @@
 package com.bestDate.presentation.main
 
+import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.InternalException
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.db.dao.UserDao
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
@@ -11,9 +13,11 @@ import javax.inject.Singleton
 @Singleton
 class UserUseCase @Inject constructor(
     private val userDao: UserDao,
-    private val userRemoteData: UserRemoteData) {
+    private val userRemoteData: UserRemoteData
+) {
 
     val getMyUser = userDao.getUserFlow()
+    var usersList: MutableList<ShortUserData>? = null
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -33,5 +37,14 @@ class UserUseCase @Inject constructor(
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {
         val response = userRemoteData.saveQuestionnaire(questionnaire)
         if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+    }
+
+    suspend fun getUsers(filters: FilterOptions) {
+        val response = userRemoteData.getUsers(filters)
+        if (response.isSuccessful) {
+            usersList = response.body()?.data
+        } else {
+            throw InternalException.OperationException(response.message())
+        }
     }
 }

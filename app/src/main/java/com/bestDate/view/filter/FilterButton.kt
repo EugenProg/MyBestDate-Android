@@ -28,10 +28,10 @@ class FilterButton @JvmOverloads constructor(
         set(value) {
             if (value) {
                 binding.textView.setTextColor(ContextCompat.getColor(context, R.color.blue))
-                binding.textView.setBackgroundResource(R.drawable.bg_dark_solid_light_blue_stroke)
+                binding.bgView.setBackgroundResource(R.drawable.bg_dark_solid_light_blue_stroke)
             } else {
                 binding.textView.setTextColor(ContextCompat.getColor(context, R.color.white))
-                binding.textView.setBackgroundResource(R.drawable.bg_dark_solid_light_stroke)
+                binding.bgView.setBackgroundResource(R.drawable.bg_dark_solid_light_stroke)
             }
             field = value
         }
