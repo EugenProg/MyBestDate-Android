@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/profile_nav_graph"
-    app:startDestination="@id/userProfileFragment2">
+    app:startDestination="@id/likesListFragment">
 
     <fragment
         android:id="@+id/userProfileFragment2"
@@ -15,6 +15,9 @@
             app:exitAnim="@anim/push_up_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_userProfileFragment2_to_likesListFragment"
+            app:destination="@id/likesListFragment" />
     </fragment>
     <fragment
         android:id="@+id/userProfilePhotoEditorFragment"
@@ -24,4 +27,8 @@
             android:name="selectedImage"
             app:argType="com.bestDate.data.model.Image" />
     </fragment>
+    <fragment
+        android:id="@+id/likesListFragment"
+        android:name="com.bestDate.presentation.main.userProfile.likesList.LikesListFragment"
+        android:label="LikesListFragment" />
 </navigation>

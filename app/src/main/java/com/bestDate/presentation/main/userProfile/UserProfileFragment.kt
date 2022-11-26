@@ -23,7 +23,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
     override val viewModelClass: Class<UserProfileViewModel> = UserProfileViewModel::class.java
     override val statusBarLight = true
-    override val statusBarColor = R.color.white
+    override val statusBarColor = R.color.bg_main
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
