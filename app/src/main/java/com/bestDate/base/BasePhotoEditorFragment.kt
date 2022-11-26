@@ -40,6 +40,7 @@ abstract class BasePhotoEditorFragment :
 
     override fun onInit() {
         super.onInit()
+        setSelectedImage()
 
         with(binding) {
             editorContainer.layoutParams.height = Resources.getSystem().displayMetrics.widthPixels
@@ -63,6 +64,7 @@ abstract class BasePhotoEditorFragment :
             binding.photoEditor.crop()
         }
         binding.backButton.setOnClickListener {
+            editorAction.value = null
             navController.popBackStack()
         }
     }
