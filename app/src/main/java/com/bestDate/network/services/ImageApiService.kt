@@ -9,18 +9,15 @@ interface ImageApiService {
     /**Load user photo*/
     @Multipart
     @POST("/api/v1/user/photos")
-    suspend fun saveProfileImage(@Part image: MultipartBody.Part,
-                                 @Header("Authorization") auth: String): Response<ProfileImageResponse>
+    suspend fun saveProfileImage(@Part image: MultipartBody.Part): Response<ProfileImageResponse>
 
     /**Delete profile image*/
     @DELETE("/api/v1/user/photos/{id}")
-    suspend fun deleteUserPhoto(@Path("id") id: Int,
-                                @Header("Authorization") auth: String): Response<BaseResponse>
+    suspend fun deleteUserPhoto(@Path("id") id: Int): Response<BaseResponse>
 
     /**Update image status*/
     @PUT("/api/v1/user/photos/{id}")
     suspend fun updateUserPhoto(@Path("id") id: Int,
-                                @Body params: PhotoStatusUpdateRequest,
-                                @Header("Authorization") auth: String): Response<BaseResponse>
+                                @Body params: PhotoStatusUpdateRequest): Response<BaseResponse>
 
 }
