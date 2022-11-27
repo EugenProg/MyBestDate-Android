@@ -26,11 +26,11 @@ object NetworkModule {
     fun providesBaseURL(): String = "https://dev-api.bestdate.info"
 
     @Provides
-    fun provideInterceptor(@ApplicationContext context: Context): OkHttpClient {
+    fun provideInterceptor(@ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(context))
+            .addInterceptor(HeaderInterceptor(context, preferences))
             .addInterceptor(interceptor)
             .build()
     }
@@ -65,11 +65,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun imageRemoteData(apiService: ImageApiService, preferences: PreferencesUtils): ImageRemoteData =
-        ImageRemoteData(apiService, preferences)
+    fun imageRemoteData(apiService: ImageApiService): ImageRemoteData =
+        ImageRemoteData(apiService)
 
     @Provides
     @Singleton
-    fun userRemoteData(apiService: UserService, preferences: PreferencesUtils): UserRemoteData =
-        UserRemoteData(apiService, preferences)
+    fun userRemoteData(apiService: UserService): UserRemoteData =
+        UserRemoteData(apiService)
 }
