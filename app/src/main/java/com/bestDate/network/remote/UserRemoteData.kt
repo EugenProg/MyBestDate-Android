@@ -19,4 +19,7 @@ class UserRemoteData @Inject constructor(
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) =
         service.saveQuestionnaire(questionnaire, preferencesUtils.getString(Preferences.ACCESS_TOKEN))
+
+    suspend fun getUserLikes() =
+        service.getLikesList(preferencesUtils.getString(Preferences.ACCESS_TOKEN))
 }

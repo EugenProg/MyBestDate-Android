@@ -40,4 +40,6 @@
 
     <color name="startOverlay">#9f283034</color>
     <color name="bg_box">#293236</color>
+
+    <color name="green">#00ff62</color>
 </resources>

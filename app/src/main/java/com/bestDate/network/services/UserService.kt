@@ -1,6 +1,7 @@
 package com.bestDate.network.services
 
 import com.bestDate.data.model.BaseResponse
+import com.bestDate.data.model.LikesListResponse
 import com.bestDate.data.model.ShortUserDataResponse
 import com.bestDate.data.model.UserDataResponse
 import com.bestDate.db.entity.QuestionnaireDB
@@ -21,4 +22,8 @@ interface UserService {
     @PUT("/api/v1/user/questionnaire")
     suspend fun saveQuestionnaire(@Body questionnaire: QuestionnaireDB,
                                   @Header("Authorization") token: String): Response<BaseResponse>
+
+    /**Get user likes list*/
+    @GET("/api/v1/likes")
+    suspend fun getLikesList(@Header("Authorization") token: String): Response<LikesListResponse>
 }
