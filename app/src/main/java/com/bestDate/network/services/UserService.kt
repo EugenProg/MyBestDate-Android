@@ -11,19 +11,17 @@ import retrofit2.http.*
 interface UserService {
     /**Get user data*/
     @GET("/api/v1/user")
-    suspend fun getUserData(@Header("Authorization") token: String): Response<UserDataResponse>
+    suspend fun getUserData(): Response<UserDataResponse>
 
     /**Get user by id*/
     @GET("/api/v1/user/{id}")
-    suspend fun getUserById(@Path("id") userId: Int,
-                            @Header("Authorization") token: String): Response<ShortUserDataResponse>
+    suspend fun getUserById(@Path("id") userId: Int): Response<ShortUserDataResponse>
 
     /**Save questionnaire*/
     @PUT("/api/v1/user/questionnaire")
-    suspend fun saveQuestionnaire(@Body questionnaire: QuestionnaireDB,
-                                  @Header("Authorization") token: String): Response<BaseResponse>
+    suspend fun saveQuestionnaire(@Body questionnaire: QuestionnaireDB): Response<BaseResponse>
 
     /**Get user likes list*/
     @GET("/api/v1/likes")
-    suspend fun getLikesList(@Header("Authorization") token: String): Response<LikesListResponse>
+    suspend fun getLikesList(): Response<LikesListResponse>
 }
