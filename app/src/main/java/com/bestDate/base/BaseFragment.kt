@@ -71,7 +71,13 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
 
     protected open fun onViewClickListener() { }
 
-    open fun onCustomBackNavigation() {}
+    open fun onCustomBackNavigation() {
+        goBack()
+    }
+
+    protected open fun goBack() {
+        navController.popBackStack()
+    }
 
     private fun setNavBarColor() {
         requireActivity().window.navigationBarColor =

@@ -185,6 +185,7 @@
                                 app:button_title="@string/cards" />
 
                             <com.bestDate.view.button.UserDataButtonView
+                                android:id="@+id/likeListButton"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"

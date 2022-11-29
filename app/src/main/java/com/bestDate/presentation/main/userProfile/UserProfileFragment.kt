@@ -47,6 +47,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.signOutButton.root.setOnSaveClickListener {
             viewModel.signOut()
         }
+        binding.likeListButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToLikesList())
+        }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
                 imageListSheet.show(childFragmentManager, imageListSheet.tag)

@@ -36,15 +36,29 @@ class LikesListFragment: BaseVMFragment<FragmentLikesListBinding, LikesListViewM
         viewModel.getLikes()
     }
 
+    override fun onViewClickListener() {
+        super.onViewClickListener()
+        binding.toolbar.backClick = {
+            goBack()
+        }
+    }
+
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
         viewModel.likesList.observe(viewLifecycleOwner) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
+                binding.noDataView.noData = it.isEmpty()
             }
         }
+        viewModel.loadingMode.observe(viewLifecycleOwner) {
+            if (!binding.refreshView.isRefreshing &&
+                viewModel.likesList.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
+        }
         viewModel.errorLive.observe(viewLifecycleOwner) {
+            binding.refreshView.isRefreshing = false
+            binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }
     }
