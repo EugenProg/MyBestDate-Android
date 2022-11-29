@@ -29,4 +29,9 @@
         <attr name="toolbar_title" format="string"/>
         <attr name="toolbar_action_visible" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="NoDataViewWithLoading">
+        <attr name="no_data_text" format="string"/>
+        <attr name="start_with_loading" format="boolean"/>
+    </declare-styleable>
 </resources>
