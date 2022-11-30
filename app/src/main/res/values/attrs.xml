@@ -20,4 +20,18 @@
         <attr name="button_image" format="reference"/>
         <attr name="button_background" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="BackButtonView">
+        <attr name="back_button_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ToolbarView">
+        <attr name="toolbar_title" format="string"/>
+        <attr name="toolbar_action_visible" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="NoDataViewWithLoading">
+        <attr name="no_data_text" format="string"/>
+        <attr name="start_with_loading" format="boolean"/>
+    </declare-styleable>
 </resources>

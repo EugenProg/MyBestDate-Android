@@ -23,7 +23,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
     override val viewModelClass: Class<UserProfileViewModel> = UserProfileViewModel::class.java
     override val statusBarLight = true
-    override val statusBarColor = R.color.white
+    override val statusBarColor = R.color.bg_main
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
@@ -46,6 +46,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         super.onViewClickListener()
         binding.signOutButton.root.setOnSaveClickListener {
             viewModel.signOut()
+        }
+        binding.likeListButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToLikesList())
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
