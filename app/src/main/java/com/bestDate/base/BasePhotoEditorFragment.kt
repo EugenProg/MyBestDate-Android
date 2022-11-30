@@ -1,4 +1,4 @@
-package com.bestDate.presentation.profilePhotoEditor
+package com.bestDate.base
 
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -9,20 +9,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.extension.cropListener
 import com.bestDate.data.extension.getBitmap
 import com.bestDate.data.extension.scale
 import com.bestDate.data.model.Image
+import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.utils.FaceDetectorUtils
 import com.bestDate.databinding.FragmentPhotoEditorBinding
+import com.bestDate.presentation.profilePhotoEditor.ProfilePhotoViewModel
 import com.bestDate.view.bottomSheet.NotCorrectPhotoSheet
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint
-class PhotoEditorFragment : BaseVMFragment<FragmentPhotoEditorBinding, ProfilePhotoViewModel>() {
+abstract class BasePhotoEditorFragment :
+    BaseVMFragment<FragmentPhotoEditorBinding, ProfilePhotoViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPhotoEditorBinding =
         { inflater, parent, attach -> FragmentPhotoEditorBinding.inflate(inflater, parent, attach) }
 
@@ -30,23 +30,22 @@ class PhotoEditorFragment : BaseVMFragment<FragmentPhotoEditorBinding, ProfilePh
 
     override val statusBarLight = false
     override val statusBarColor = R.color.bg_main
-    private val navArgs by navArgs<PhotoEditorFragmentArgs>()
 
     private val notCorrectSheet = NotCorrectPhotoSheet()
+
+    abstract fun setSelectedImage()
 
     var selectedImage: Image? = null
     var imageLiveData: MutableLiveData<Bitmap> = MutableLiveData()
 
     override fun onInit() {
         super.onInit()
-
-        selectedImage = navArgs.selectedImage.getImageCopy()
+        setSelectedImage()
 
         with(binding) {
             editorContainer.layoutParams.height = Resources.getSystem().displayMetrics.widthPixels
             editorContainer.requestLayout()
 
-            saveButton.title = getString(R.string.save)
             saveButton.isEnabled = false
 
             lifecycleScope.launch(Dispatchers.IO) {
@@ -65,6 +64,7 @@ class PhotoEditorFragment : BaseVMFragment<FragmentPhotoEditorBinding, ProfilePh
             binding.photoEditor.crop()
         }
         binding.backButton.setOnClickListener {
+            editorAction.value = null
             navController.popBackStack()
         }
     }
@@ -85,7 +85,7 @@ class PhotoEditorFragment : BaseVMFragment<FragmentPhotoEditorBinding, ProfilePh
             binding.saveButton.toggleActionEnabled(it)
         }
         viewModel.photoSaveLiveData.observe(viewLifecycleOwner) {
-            ProfilePhotoEditingFragment.editorAction.value = it
+            editorAction.value = it
             navController.popBackStack()
         }
         viewModel.errorLive.observe(viewLifecycleOwner) {
@@ -107,5 +107,9 @@ class PhotoEditorFragment : BaseVMFragment<FragmentPhotoEditorBinding, ProfilePh
                 }
             }
         }
+    }
+
+    companion object {
+        var editorAction: MutableLiveData<ProfileImage> = MutableLiveData()
     }
 }

@@ -440,11 +440,20 @@
     <string name="wrong_auth_data">Wrong login or password</string>
     <string name="wrong_otp_code">Wrong code</string>
     <string name="more_than_one_person">More than one person in the picture</string>
+    <string name="balance">Balance</string>
+    <string name="matches_list">Matches List</string>
+    <string name="my_duels">My Duels</string>
+    <string name="likes">Likes</string>
+    <string name="cards">Cards</string>
+    <string name="questionnaire">Questionnaire</string>
+    <string name="personal_data">Personal data</string>
+    <string name="settings">Settings</string>
 
 
     <string name="search">Search</string>
     <string name="matches">Matches</string>
     <string name="chats">Chats</string>
     <string name="guests">Guests</string>
+    <string name="sign_out">Sign Out</string>
 
 </resources>
