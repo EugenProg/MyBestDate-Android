@@ -70,7 +70,7 @@ data class ShortUserData(
     @Embedded
     var main_photo: ProfileImage? = null,
     @Embedded
-    var location: LocationDB? = null
+    var location: LocationDB? = null,
     var block_messages: Boolean? = null,
     var full_questionnaire: Boolean? = null,
     var distance: Double? = null
