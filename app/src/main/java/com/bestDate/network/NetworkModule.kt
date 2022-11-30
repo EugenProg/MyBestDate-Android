@@ -61,7 +61,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun authRemoteData(apiService: CoreAuthService): AuthRemoteData = AuthRemoteData(apiService)
+    fun authRemoteData(apiService: CoreAuthService): AuthRemoteData =
+        AuthRemoteData(apiService)
 
     @Provides
     @Singleton

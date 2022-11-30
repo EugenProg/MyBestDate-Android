@@ -48,10 +48,6 @@ abstract class BaseOtpFragment(
         binding.headerEmail.text = login
     }
 
-    protected open fun goBack() {
-        navController.popBackStack()
-    }
-
     abstract fun sendOtp(code: String)
 
     protected open fun resendCode() { }

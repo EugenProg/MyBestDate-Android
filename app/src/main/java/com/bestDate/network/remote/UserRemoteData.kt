@@ -8,14 +8,14 @@ import javax.inject.Inject
 class UserRemoteData @Inject constructor(
     private val service: UserService) {
 
-    suspend fun getUserData() =
-        service.getUserData()
+    suspend fun getUserData() = service.getUserData()
 
-    suspend fun getUserById(id: Int) =
-        service.getUserById(id)
+    suspend fun getUserById(id: Int) = service.getUserById(id)
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) =
         service.saveQuestionnaire(questionnaire)
+
+    suspend fun getUserLikes() = service.getLikesList()
 
     suspend fun getUsers(filters: FilterOptions) =
         service.getUsers(filters)

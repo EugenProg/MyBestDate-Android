@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.bestDate.view.squareFrameLayout.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp"
+    android:background="@color/white_10">
+
+    <View
+        android:layout_width="15dp"
+        android:layout_height="3dp"
+        android:layout_gravity="center"
+        android:background="@color/white"/>
+
+    <View
+        android:layout_width="3dp"
+        android:layout_height="15dp"
+        android:layout_gravity="center"
+        android:background="@color/white"/>
+</com.bestDate.view.squareFrameLayout.SquareFrameLayout>

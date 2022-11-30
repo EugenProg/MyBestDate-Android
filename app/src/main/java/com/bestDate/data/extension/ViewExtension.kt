@@ -25,6 +25,14 @@ fun View.setPaddingBottom(paddingBottom: Int) {
     this.updatePadding(bottom = paddingBottom.toPx())
 }
 
+fun View.setHeight(height: Int) {
+    layoutParams.height = height
+}
+
+fun View.setWidth(width: Int) {
+    layoutParams.width = width
+}
+
 fun SeekBar.onChangeListener(
     progressChanged: ((SeekBar?, Int, Boolean) -> Unit)? = null,
     startTouch: ((SeekBar?) -> Unit)? = null,
