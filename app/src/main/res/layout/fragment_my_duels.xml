@@ -13,30 +13,44 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:toolbar_action_visible="false"
-        app:toolbar_title="Likes" />
+        app:toolbar_title="@string/my_duels" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/component_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:text="@string/who_voted_for_me"
+        android:layout_marginHorizontal="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <com.bestDate.view.NoDataViewWithLoading
         android:id="@+id/noDataView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:no_data_text="@string/no_one_has_liked_your_photos_yet"
-        app:start_with_loading="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:no_data_text="@string/nobody_voted_for_you_yet"
+        app:start_with_loading="true" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="10dp"
+        android:layout_marginTop="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/title">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/likesListView"
+            android:id="@+id/myDuelsView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -457,5 +457,11 @@
     <string name="sign_out">Sign Out</string>
     <string name="this_user_liked_your_photo">This user liked your photo</string>
     <string name="no_one_has_liked_your_photos_yet">No one has liked your photos yet</string>
+    <string name="nobody_voted_for_you_yet">Nobody voted for you yet</string>
+    <string name="who_voted_for_me">Who voted for me</string>
+    <string name="you_were_voted_for">You were voted for: %s</string>
+    <string name="winner">Winner</string>
+    <string name="loser">Loser</string>
+    <string name="duel_colorfull"><font color="#beefff">Du</font><font color="#f28ae5">el</font></string>
 
 </resources>

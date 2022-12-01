@@ -50,6 +50,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.likeListButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToLikesList())
         }
+        binding.myDuelsButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToMyDuels())
+        }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
                 imageListSheet.show(childFragmentManager, imageListSheet.tag)

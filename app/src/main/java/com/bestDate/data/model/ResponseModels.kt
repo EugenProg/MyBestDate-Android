@@ -44,6 +44,10 @@ data class LikesListResponse(
     val data: MutableList<Like>
 ): BaseResponse()
 
+data class MyDuelsResponse(
+    val data: MutableList<MyDuel>
+): BaseResponse()
+
 data class ShortUserDataResponse(
     val data: ShortUserData
 ): BaseResponse()
@@ -78,3 +82,11 @@ data class Like(
         return ""
     }
 }
+
+data class MyDuel(
+    val id: Int? = null,
+    val created_at: String? = null,
+    val winning_photo: ProfileImage? = null,
+    val loser_photo: ProfileImage? = null,
+    val voter: ShortUserData? = null
+)
