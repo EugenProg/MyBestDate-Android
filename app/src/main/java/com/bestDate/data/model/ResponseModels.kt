@@ -2,6 +2,9 @@ package com.bestDate.data.model
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import com.bestDate.data.extension.getTime
+import com.bestDate.data.extension.getWeekdayWithTime
+import com.bestDate.data.extension.isToday
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 
@@ -44,6 +47,10 @@ data class LikesListResponse(
     val data: MutableList<Like>
 ): BaseResponse()
 
+data class MatchesListResponse(
+    val data: MutableList<Match>
+): BaseResponse()
+
 data class ShortUserDataResponse(
     val data: ShortUserData
 ): BaseResponse()
@@ -66,7 +73,11 @@ data class ShortUserData(
     var main_photo: ProfileImage? = null,
     @Embedded
     var location: LocationDB? = null
-)
+) {
+    fun getLocation(): String {
+        return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
+    }
+}
 
 data class Like(
     val id: Int? = null,
@@ -75,6 +86,18 @@ data class Like(
     val user: ShortUserData? = null
 ) {
     fun getLikeTime(): String {
-        return ""
+        return if (created_at.isToday()) created_at.getTime() else created_at.getWeekdayWithTime()
+    }
+}
+
+data class Match(
+    val id: Int? = null,
+    val viewed: Boolean? = null,
+    val matched: Boolean? = null,
+    val user: ShortUserData? = null,
+    val created_at: String? = null
+) {
+    fun getTime(): String {
+        return if (created_at.isToday()) created_at.getTime() else created_at.getWeekdayWithTime()
     }
 }

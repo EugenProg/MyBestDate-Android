@@ -22,6 +22,13 @@
             app:exitAnim="@anim/push_up_out"
             app:popEnterAnim="@anim/push_down_in"
             app:popExitAnim="@anim/push_down_out" />
+        <action
+            android:id="@+id/action_profile_to_matchesList"
+            app:destination="@id/matchesListFragment"
+            app:enterAnim="@anim/push_up_in"
+            app:exitAnim="@anim/push_up_out"
+            app:popEnterAnim="@anim/push_down_in"
+            app:popExitAnim="@anim/push_down_out"/>
     </fragment>
     <fragment
         android:id="@+id/userProfilePhotoEditorFragment"
@@ -35,4 +42,12 @@
         android:id="@+id/likesListFragment"
         android:name="com.bestDate.presentation.main.userProfile.likesList.LikesListFragment"
         android:label="LikesListFragment" />
+    <fragment
+        android:id="@+id/matchesListFragment"
+        android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
+        android:label="MatchesListFragment" >
+        <argument
+            android:name="myPhoto"
+            app:argType="string" />
+    </fragment>
 </navigation>
