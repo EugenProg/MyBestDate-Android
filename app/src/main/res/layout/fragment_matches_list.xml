@@ -13,17 +13,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:toolbar_action_visible="false"
-        app:toolbar_title="@string/likes" />
+        app:toolbar_title="@string/matches_list" />
 
     <com.bestDate.view.NoDataViewWithLoading
         android:id="@+id/noDataView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:no_data_text="@string/no_one_has_liked_your_photos_yet"
-        app:start_with_loading="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:no_data_text="@string/you_dont_have_a_match_yet"
+        app:start_with_loading="true" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshView"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/likesListView"
+            android:id="@+id/matchesListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

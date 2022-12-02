@@ -22,6 +22,10 @@ interface UserService {
     @GET("/api/v1/likes")
     suspend fun getLikesList(): Response<LikesListResponse>
 
+    /**Get user matches list*/
+    @GET("/api/v1/match")
+    suspend fun getMatchesList(): Response<MatchesListResponse>
+
     /**Get user duels*/
     @GET("/api/v1/voting")
     suspend fun getMyDuels(): Response<MyDuelsResponse>
