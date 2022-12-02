@@ -129,6 +129,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView12" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/voterBox"
         android:layout_width="match_parent"
         android:layout_height="84dp"
         android:background="#293236"
@@ -170,7 +171,7 @@
             android:id="@+id/age"
             style="@style/component_title"
             android:layout_width="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="8dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/name"
             app:layout_constraintStart_toEndOf="@+id/imageView10"
@@ -180,6 +181,7 @@
             style="@style/component_title"
             android:layout_width="wrap_content"
             android:textSize="10sp"
+            android:text="@string/years_short"
             app:layout_constraintBottom_toBottomOf="@+id/age"
             app:layout_constraintStart_toEndOf="@+id/age"
             tools:ignore="SmallSp" />
@@ -206,6 +208,7 @@
             app:layout_constraintTop_toBottomOf="@+id/location" />
 
         <TextView
+            android:id="@+id/time"
             style="@style/component_text"
             android:layout_width="0dp"
             android:layout_marginStart="4dp"

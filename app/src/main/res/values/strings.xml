@@ -464,5 +464,9 @@
     <string name="winner">Winner</string>
     <string name="loser">Loser</string>
     <string name="duel_colorfull"><font color="#beefff">Du</font><font color="#f28ae5">el</font></string>
+    <string name="was_n_days_ago">%d d ago</string>
+    <string name="was_n_hours_ago">%d h ago</string>
+    <string name="was_n_min_ago">%d min ago</string>
+    <string name="years_short">y</string>
 
 </resources>

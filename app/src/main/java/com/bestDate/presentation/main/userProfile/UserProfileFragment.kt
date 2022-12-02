@@ -82,7 +82,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         super.onViewLifecycle()
         viewModel.user.observe(viewLifecycleOwner) {
             it.let { user ->
-                user?.photos?.firstOrNull { it.main == true }.let { image ->
+                user?.getMainPhoto()?.let { image ->
                     setMainImage(image)
                 }
                 binding.name.text = user?.name
