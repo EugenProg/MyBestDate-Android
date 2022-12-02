@@ -15,4 +15,6 @@ class UserRemoteData @Inject constructor(
         service.saveQuestionnaire(questionnaire)
 
     suspend fun getUserLikes() = service.getLikesList()
+
+    suspend fun getUserMatches() = service.getMatchesList()
 }

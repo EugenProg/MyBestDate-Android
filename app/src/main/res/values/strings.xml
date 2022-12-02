@@ -457,5 +457,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="this_user_liked_your_photo">This user liked your photo</string>
     <string name="no_one_has_liked_your_photos_yet">No one has liked your photos yet</string>
+    <string name="you_dont_have_a_match_yet">You don\'t have a match yet</string>
 
 </resources>
