@@ -27,6 +27,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
+    private var mainPhotoUrl: String = ""
 
     override fun onInit() {
         super.onInit()
@@ -49,6 +50,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
         binding.likeListButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToLikesList())
+        }
+        binding.matchesListButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToMatchesList(mainPhotoUrl))
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
@@ -102,6 +106,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private fun setMainImage(image: ProfileImage?) {
         if (image == null) return
+        mainPhotoUrl = image.thumb_url.orEmpty()
         makeStatusBarTransparent(binding.refreshView)
 
         Glide.with(requireContext())

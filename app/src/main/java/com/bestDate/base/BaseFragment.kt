@@ -11,7 +11,6 @@ import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -23,6 +22,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
 import com.bestDate.data.extension.setMarginTop
+import com.bestDate.view.alerts.showDefaultDialog
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
 abstract class BaseFragment<VB: ViewBinding>: Fragment() {
@@ -149,8 +149,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     open fun hideAction() {}
 
     open fun showMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-        //requireActivity().showStandardMessage(message)
+        requireActivity().showDefaultDialog(message)
     }
 
     open fun showMessage(@StringRes message: Int) {

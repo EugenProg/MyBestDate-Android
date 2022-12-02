@@ -19,4 +19,6 @@ class UserRemoteData @Inject constructor(
 
     suspend fun getUsers(filters: FilterOptions) =
         service.getUsers(filters)
+
+    suspend fun getUserMatches() = service.getMatchesList()
 }

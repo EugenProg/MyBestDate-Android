@@ -5,6 +5,7 @@ import com.bestDate.data.model.LikesListResponse
 import com.bestDate.data.model.ShortUserDataResponse
 import com.bestDate.data.model.UserDataResponse
 import com.bestDate.data.model.*
+import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
 import retrofit2.Response
 import retrofit2.http.*
@@ -25,6 +26,10 @@ interface UserService {
     /**Get user likes list*/
     @GET("/api/v1/likes")
     suspend fun getLikesList(): Response<LikesListResponse>
+
+    /**Get user matches list*/
+    @GET("/api/v1/match")
+    suspend fun getMatchesList(): Response<MatchesListResponse>
 
     /**Get users*/
     @POST("/api/v1/users")
