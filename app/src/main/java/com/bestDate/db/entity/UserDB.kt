@@ -35,6 +35,7 @@ data class UserDB(
     var location: LocationDB? = null,
     var block_messages: Boolean? = null,
     var blocked: Boolean? = null,
+    var blocked_me: Boolean? = null,
     @Embedded
     var questionnaire: QuestionnaireDB? = null
 ) {

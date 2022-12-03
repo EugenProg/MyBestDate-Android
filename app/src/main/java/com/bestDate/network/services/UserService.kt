@@ -11,8 +11,8 @@ interface UserService {
     suspend fun getUserData(): Response<UserDataResponse>
 
     /**Get user by id*/
-    @GET("/api/v1/user/{id}")
-    suspend fun getUserById(@Path("id") userId: Int): Response<ShortUserDataResponse>
+    @GET("/api/v1/users/{id}")
+    suspend fun getUserById(@Path("id") userId: Int): Response<UserDataResponse>
 
     /**Save questionnaire*/
     @PUT("/api/v1/user/questionnaire")

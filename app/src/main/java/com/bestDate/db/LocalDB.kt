@@ -9,7 +9,7 @@ import com.bestDate.db.dao.UserDao
 import com.bestDate.db.entity.UserDB
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [
         UserDB::class
     ]
