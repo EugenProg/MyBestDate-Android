@@ -29,6 +29,13 @@
             app:exitAnim="@anim/push_up_out"
             app:popEnterAnim="@anim/push_down_in"
             app:popExitAnim="@anim/push_down_out"/>
+        <action
+            android:id="@+id/action_profile_to_myDuels"
+            app:destination="@id/myDuelsFragment"
+            app:enterAnim="@anim/push_up_in"
+            app:exitAnim="@anim/push_up_out"
+            app:popEnterAnim="@anim/push_down_in"
+            app:popExitAnim="@anim/push_down_out" />
     </fragment>
     <fragment
         android:id="@+id/userProfilePhotoEditorFragment"
@@ -50,4 +57,8 @@
             android:name="myPhoto"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/myDuelsFragment"
+        android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
+        android:label="MyDuelsFragment" />
 </navigation>

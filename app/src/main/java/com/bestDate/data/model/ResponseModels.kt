@@ -1,12 +1,11 @@
 package com.bestDate.data.model
 
-import androidx.room.Embedded
+import android.content.Context
 import androidx.room.Entity
-import com.bestDate.data.extension.getTime
-import com.bestDate.data.extension.getWeekdayWithTime
-import com.bestDate.data.extension.isToday
+import com.bestDate.data.extension.*
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
+import java.util.*
 
 open class BaseResponse {
     var success: Boolean = false
@@ -37,6 +36,11 @@ data class ProfileImage(
     fun copy(): ProfileImage {
         return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes)
     }
+
+    fun getDefaultPhoto() = ProfileImage(
+        full_url = "https://as2.ftcdn.net/jpg/03/46/93/61/220_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg",
+        thumb_url = "https://as2.ftcdn.net/jpg/03/46/93/61/220_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg"
+    )
 }
 
 data class UserDataResponse(
@@ -49,6 +53,10 @@ data class LikesListResponse(
 
 data class MatchesListResponse(
     val data: MutableList<Match>
+): BaseResponse()
+
+data class MyDuelsResponse(
+    val data: MutableList<MyDuel>
 ): BaseResponse()
 
 data class ShortUserDataResponse(
@@ -69,11 +77,18 @@ data class ShortUserData(
     var is_online: Boolean? = null,
     var last_online_at: String? = null,
     var distance: Double? = null,
-    @Embedded
     var main_photo: ProfileImage? = null,
-    @Embedded
     var location: LocationDB? = null
 ) {
+    fun getMainPhoto(): ProfileImage {
+        return main_photo ?: ProfileImage().getDefaultPhoto()
+    }
+
+    fun getAge(): String {
+        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return ""
+        return getDiffYears(yourDate, Date()).toString()
+    }
+
     fun getLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
@@ -99,5 +114,17 @@ data class Match(
 ) {
     fun getTime(): String {
         return if (created_at.isToday()) created_at.getTime() else created_at.getWeekdayWithTime()
+    }
+}
+
+data class MyDuel(
+    val id: Int? = null,
+    val created_at: String? = null,
+    val winning_photo: ProfileImage? = null,
+    val loser_photo: ProfileImage? = null,
+    val voter: ShortUserData? = null
+) {
+    fun getVisitPeriod(context: Context): String {
+        return created_at.getVisitPeriod(context)
     }
 }
