@@ -54,6 +54,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.matchesListButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToMatchesList(mainPhotoUrl))
         }
+        binding.myDuelsButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToMyDuels())
+        }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
                 imageListSheet.show(childFragmentManager, imageListSheet.tag)
@@ -79,7 +82,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         super.onViewLifecycle()
         viewModel.user.observe(viewLifecycleOwner) {
             it.let { user ->
-                user?.photos?.firstOrNull { it.main == true }.let { image ->
+                user?.getMainPhoto()?.let { image ->
                     setMainImage(image)
                 }
                 binding.name.text = user?.name

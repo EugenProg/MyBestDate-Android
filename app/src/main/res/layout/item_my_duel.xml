@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp">
+
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
+        android:id="@+id/winnerBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toStartOf="@+id/loserBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/winnerImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
+
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
+        android:id="@+id/loserBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/winnerBox"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/loserImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/bg_left_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/winnerBox"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_winner"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintStart_toStartOf="@+id/imageView13" />
+
+    <TextView
+        style="@style/component_title"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/winner"
+        android:textAllCaps="true"
+        android:textColor="@color/bg_light_blue"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView13"
+        app:layout_constraintEnd_toEndOf="@+id/imageView13"
+        app:layout_constraintStart_toStartOf="@+id/imageView14"
+        app:layout_constraintTop_toTopOf="@+id/imageView13"
+        tools:ignore="SmallSp" />
+
+    <ImageView
+        android:id="@+id/imageView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/bg_top_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/winnerBox"
+        app:layout_constraintEnd_toStartOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/imageView13" />
+
+    <TextView
+        style="@style/component_title"
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/duel_colorfull"
+        android:textAllCaps="true"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView16"
+        app:layout_constraintEnd_toEndOf="@+id/imageView16"
+        app:layout_constraintStart_toStartOf="@+id/imageView16"
+        app:layout_constraintTop_toTopOf="@+id/imageView16"
+        tools:ignore="AllCaps" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/bg_right_rectangle"
+        app:layout_constraintBottom_toBottomOf="@+id/winnerBox"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        style="@style/component_title"
+        android:layout_width="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/loser"
+        android:textAllCaps="true"
+        android:textColor="@color/bg_pink"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintEnd_toEndOf="@+id/imageView15"
+        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintTop_toTopOf="@+id/imageView12"
+        tools:ignore="SmallSp" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/ic_loser"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintEnd_toEndOf="@+id/imageView12" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/voterBox"
+        android:layout_width="match_parent"
+        android:layout_height="84dp"
+        android:background="#293236"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/winnerBox">
+
+        <ImageView
+            android:id="@+id/voterImage"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/voterImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="7dp"
+            android:src="@drawable/ic_verify"
+            app:layout_constraintBottom_toBottomOf="@+id/name"
+            app:layout_constraintStart_toEndOf="@+id/name"
+            app:layout_constraintTop_toTopOf="@+id/name" />
+
+        <TextView
+            android:id="@+id/age"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="8dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/name"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toTopOf="@+id/name" />
+
+        <TextView
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:textSize="10sp"
+            android:text="@string/years_short"
+            app:layout_constraintBottom_toBottomOf="@+id/age"
+            app:layout_constraintStart_toEndOf="@+id/age"
+            tools:ignore="SmallSp" />
+
+        <TextView
+            android:id="@+id/location"
+            style="@style/component_text"
+            android:layout_width="0dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white_50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/voterImage"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_time"
+            app:layout_constraintStart_toEndOf="@+id/voterImage"
+            app:layout_constraintTop_toBottomOf="@+id/location" />
+
+        <TextView
+            android:id="@+id/time"
+            style="@style/component_text"
+            android:layout_width="0dp"
+            android:layout_marginStart="4dp"
+            android:text="@string/you_were_voted_for"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView11"
+            app:layout_constraintTop_toTopOf="@+id/imageView11" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

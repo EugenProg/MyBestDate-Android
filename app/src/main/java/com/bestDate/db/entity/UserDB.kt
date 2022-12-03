@@ -56,4 +56,8 @@ data class UserDB(
 
         return incomingFormatter.parse(birthday.orEmpty())?.let { dateFormatter.format(it) }
     }
+
+    fun getMainPhoto(): ProfileImage {
+        return photos?.firstOrNull { it.main == true } ?: ProfileImage().getDefaultPhoto()
+    }
 }

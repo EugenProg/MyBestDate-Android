@@ -1,6 +1,8 @@
 package com.bestDate.data.extension
 
 import android.annotation.SuppressLint
+import android.content.Context
+import com.bestDate.R
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,7 +40,13 @@ fun String?.getDateWithTimeOffset(): Date {
     val calendar = Calendar.getInstance()
     val date = this.substring(0, 10).split("-")
     val time = this.substring(11, 16).split(":")
-    calendar.set(date[0].toInt(), date[1].toInt() - 1, date[2].toInt(), time[0].toInt(), time[1].toInt())
+    calendar.set(
+        date[0].toInt(),
+        date[1].toInt() - 1,
+        date[2].toInt(),
+        time[0].toInt(),
+        time[1].toInt()
+    )
     calendar.add(Calendar.HOUR_OF_DAY, offset)
 
     return calendar.time
@@ -60,4 +68,29 @@ fun String?.getTime(): String {
 fun String?.isToday(): Boolean {
     val formatter = SimpleDateFormat("yyyy-MM-dd")
     return formatter.format(Date()) == this?.substring(0..9)
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String?.toShortString(): String {
+    val formatter = SimpleDateFormat("dd MMM")
+    return formatter.format(this.getDateWithTimeOffset())
+}
+
+fun String?.getVisitPeriod(context: Context): String {
+    if (this.isNullOrBlank()) return ""
+    val now = Date()
+    val date = this.getDateWithTimeOffset()
+    return if (this.isToday()) {
+        val hours = getHoursBetween(date, now)
+        val minutes = getMinutesBetween(date, now)
+        when {
+            hours > 0 -> context.getString(R.string.was_n_hours_ago, hours)
+            minutes > 0 -> context.getString(R.string.was_n_min_ago, minutes)
+            else -> ""
+        }
+    } else {
+        val days = getDaysBetween(date, now)
+        if (days > 6) date.toShortString()
+        else context.getString(R.string.was_n_days_ago, days)
+    }
 }
