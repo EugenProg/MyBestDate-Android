@@ -19,4 +19,8 @@ class UserRemoteData @Inject constructor(
     suspend fun getUserMatches() = service.getMatchesList()
 
     suspend fun getMyDuels() = service.getMyDuels()
+
+    suspend fun blockUser(id: Int) = service.blockUser(id)
+
+    suspend fun unlockUser(id: Int) = service.unlockUser(id)
 }

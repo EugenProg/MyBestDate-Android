@@ -23,4 +23,14 @@ class AnotherProfileUseCase @Inject constructor(
             }
         } else throw InternalException.OperationException(response.message())
     }
+
+    suspend fun blockUser(id: Int?) {
+        val response = userRemoteData.blockUser(id.orZero)
+        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+    }
+
+    suspend fun unlockUser(id: Int?) {
+        val response = userRemoteData.unlockUser(id.orZero)
+        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+    }
 }

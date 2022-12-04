@@ -485,5 +485,11 @@
     <string name="blacklist">blacklist</string>
     <string name="ooops_sorry">Ooops! Sorry</string>
     <string name="you_have_been_added_to_the_nblacklist">You have been added to the\nblacklist</string>
+    <string name="additionally">Additionally</string>
+    <string name="share">Share</string>
+    <string name="block_profile">Block Profile</string>
+    <string name="unblock_profile">Unlock Profile</string>
+    <string name="user_is_blocked_successful">User is blocked successful</string>
+    <string name="user_is_unlocked_successful">User is unlocked successful</string>
 
 </resources>

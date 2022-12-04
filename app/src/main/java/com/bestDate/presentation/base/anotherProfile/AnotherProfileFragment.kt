@@ -4,14 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
-import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentAnotherProfileBinding
-import com.bestDate.db.entity.UserDB
-import dagger.hilt.android.AndroidEntryPoint
+import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 
 abstract class AnotherProfileFragment :
     BaseVMFragment<FragmentAnotherProfileBinding, AnotherProfileViewModel>() {
@@ -25,6 +22,7 @@ abstract class AnotherProfileFragment :
         }
     override val viewModelClass: Class<AnotherProfileViewModel> = AnotherProfileViewModel::class.java
     override val statusBarLight = true
+    var isBlocked: Boolean = false
 
     protected var user: ShortUserData? = null
 
@@ -40,6 +38,7 @@ abstract class AnotherProfileFragment :
         binding.userInfoView.setUserInfo(user)
         binding.userBlockedView.setUserInfo(user)
         binding.navBox.isVisible = user?.blocked_me != true
+        isBlocked = user?.blocked == true
     }
 
     private fun setBackground(isBlocked: Boolean?) {
@@ -52,6 +51,19 @@ abstract class AnotherProfileFragment :
         customBackNavigation = true
         binding.header.clickBack = {
             goBack()
+        }
+        binding.header.clickAdditionally = {
+            val sheet = AnotherProfileAdditionalBottomSheet(isBlocked)
+            sheet.show(childFragmentManager, sheet.tag)
+
+            sheet.shareClick = {
+
+            }
+
+            sheet.blockClick = {
+                if (isBlocked) viewModel.unlockUser(user?.id)
+                else viewModel.blockUser(user?.id)
+            }
         }
     }
 
@@ -68,6 +80,13 @@ abstract class AnotherProfileFragment :
             binding.userInfoView.setUserInfo(it)
             binding.userBlockedView.setUserInfo(it)
             binding.navBox.isVisible = it?.blocked_me != true
+            isBlocked = it?.blocked == true
+        }
+
+        viewModel.blockLiveData.observe(viewLifecycleOwner) {
+            val message = if (it) R.string.user_is_blocked_successful
+                            else R.string.user_is_unlocked_successful
+            showMessage(getString(message))
         }
     }
 }
