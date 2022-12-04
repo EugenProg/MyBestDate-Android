@@ -21,15 +21,28 @@
             <com.bestDate.view.anotherProfile.AnotherProfileHeaderView
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
-            <com.bestDate.view.button.DirectionLineButtonView
+            <com.bestDate.view.anotherProfile.AnotherProfileInfoView
+                android:id="@+id/userInfoView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:button_image="@drawable/ic_questionnaire"
-                app:button_name="@string/questionnaire"
-                app:button_background="@drawable/buttons_box_pink"/>
+                android:layout_marginTop="8dp" />
+
+            <com.bestDate.view.anotherProfile.AnotherProfileBlockedView
+                android:id="@+id/userBlockedView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.bestDate.view.anotherProfile.AnotherProfileBottomBoxView
+        android:id="@+id/navBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

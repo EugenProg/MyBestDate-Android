@@ -76,5 +76,9 @@
     <fragment
         android:id="@+id/myDuelsFragment"
         android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
-        android:label="MyDuelsFragment" />
+        android:label="MyDuelsFragment" >
+        <action
+            android:id="@+id/action_myDuels_to_another_profile"
+            app:destination="@id/userProfileToAnotherProfileFragment" />
+    </fragment>
 </navigation>

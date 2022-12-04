@@ -16,7 +16,7 @@ import com.bestDate.databinding.ItemAddImageBinding
 import com.bestDate.databinding.ItemImageListBinding
 import com.bumptech.glide.Glide
 
-class ImageLineAdapter(var viewHeight: Int):
+class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean):
     ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils()) {
 
     var imageClick: ((ProfileImage) -> Unit)? = null
@@ -32,7 +32,8 @@ class ImageLineAdapter(var viewHeight: Int):
         }
     }
 
-    class ImageListViewHolder(override val binding: ItemImageListBinding, private val viewHeight: Int):
+    class ImageListViewHolder(override val binding: ItemImageListBinding,
+                              private val viewHeight: Int, private val showTop: Boolean):
         BaseClickViewHolder<ProfileImage, ((ProfileImage) -> Unit)?, ItemImageListBinding>(binding) {
 
         override fun bindView(item: ProfileImage, itemClick: ((ProfileImage) -> Unit)?) {
@@ -43,7 +44,7 @@ class ImageLineAdapter(var viewHeight: Int):
                     .load(item.thumb_url)
                     .into(binding.image)
 
-                binding.top.isVisible = item.top == true
+                binding.top.isVisible = item.top == true && showTop
 
                 setOnSaveClickListener { itemClick?.invoke(item) }
             }
@@ -75,7 +76,7 @@ class ImageLineAdapter(var viewHeight: Int):
         } else {
             ImageListViewHolder(ItemImageListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false),
-                viewHeight
+                viewHeight, showTop
             )
         }
     }

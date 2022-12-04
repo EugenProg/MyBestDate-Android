@@ -6,10 +6,13 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.bestDate.R
+import com.bestDate.data.extension.getDateWithTimeOffset
+import com.bestDate.data.extension.getDiffYears
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
 import java.text.SimpleDateFormat
+import java.util.*
 
 @Entity
 data class UserDB(
@@ -59,5 +62,14 @@ data class UserDB(
 
     fun getMainPhoto(): ProfileImage {
         return photos?.firstOrNull { it.main == true } ?: ProfileImage().getDefaultPhoto()
+    }
+
+    fun getAge(): String {
+        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return ""
+        return getDiffYears(yourDate, Date()).toString()
+    }
+
+    fun getUserLocation(): String {
+        return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
 }

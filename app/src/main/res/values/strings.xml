@@ -482,5 +482,8 @@
     <string name="was_n_min_ago">%d min ago</string>
     <string name="years_short">y</string>
     <string name="distance_unit">%d km</string>
+    <string name="blacklist">blacklist</string>
+    <string name="ooops_sorry">Ooops! Sorry</string>
+    <string name="you_have_been_added_to_the_nblacklist">You have been added to the\nblacklist</string>
 
 </resources>

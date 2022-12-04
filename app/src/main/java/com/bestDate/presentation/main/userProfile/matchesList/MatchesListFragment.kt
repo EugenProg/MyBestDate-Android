@@ -29,7 +29,7 @@ class MatchesListFragment: BaseVMFragment<FragmentMatchesListBinding, MatchesLis
 
         adapter.itemClick = { item, type ->
             if (type == MatchesSelectType.USER) {
-                showMessage("user")
+                navController.navigate(MatchesListFragmentDirections.actionMatchesListToAnotherProfile(item.user))
             } else {
                 showMessage("match")
             }

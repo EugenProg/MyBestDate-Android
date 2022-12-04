@@ -10,10 +10,12 @@ import com.bestDate.R
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.utils.Logger
 import com.bestDate.data.utils.ZodiacSign
 import com.bestDate.data.utils.ZodiacUtils
 import com.bestDate.databinding.ViewAnotherProfileHeaderBinding
+import com.bestDate.db.entity.UserDB
 import com.bumptech.glide.Glide
 import kotlin.math.roundToInt
 
@@ -38,21 +40,22 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
 
     fun getTopBoxView(): View = binding.topBox
 
-    fun setImage(image: ProfileImage?) {
-        Glide.with(context).load(image?.full_url).into(binding.avatar)
-    }
-
-    fun isOnline(isOnline: Boolean?) {
-        binding.online.isVisible = isOnline == true
-    }
-
-    fun setDistance(distance: Double?) {
+    fun setUserInfo(user: ShortUserData?) {
+        Glide.with(context).load(user?.getMainPhoto()?.full_url).into(binding.avatar)
+        binding.online.isVisible = user?.is_online == true
         binding.distance.text =
-            context.getString(R.string.distance_unit, distance?.roundToInt().orZero)
+            context.getString(R.string.distance_unit, user?.distance?.roundToInt().orZero)
+        binding.zodiac.text = context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
+        isBlocked(user?.blocked_me)
     }
 
-    fun setZodiac(birthday: String?) {
-        binding.zodiac.text = context.getString(ZodiacUtils().getZodiacSignByDate(birthday).title)
+    fun setUserInfo(user: UserDB?) {
+        Glide.with(context).load(user?.getMainPhoto()?.full_url).into(binding.avatar)
+        binding.online.isVisible = user?.is_online == true
+        binding.distance.text =
+            context.getString(R.string.distance_unit, user?.distance?.roundToInt().orZero)
+        binding.zodiac.text = context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
+        isBlocked(user?.blocked_me)
     }
 
     fun isBlocked(blocked: Boolean?) {

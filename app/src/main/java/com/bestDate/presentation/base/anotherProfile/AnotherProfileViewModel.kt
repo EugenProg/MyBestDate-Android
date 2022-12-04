@@ -18,4 +18,8 @@ class AnotherProfileViewModel @Inject constructor(
             anotherProfileUseCase.getUserById(id)
         }
     }
+
+    fun clearUserData() {
+        anotherProfileUseCase.user.postValue(null)
+    }
 }
