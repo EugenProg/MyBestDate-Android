@@ -21,18 +21,14 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private val adapter: SearchAdapter = SearchAdapter()
     private lateinit var locationOptionsSheet: OptionsSheet
     private lateinit var statusOptionsSheet: OptionsSheet
-    private lateinit var locationMap: HashMap<String, String>
-    private lateinit var statusesMap: HashMap<String, String>
+    private lateinit var locationMap: MutableList<Pair<String, String>>
+    private lateinit var statusesMap: MutableList<Pair<String, String>>
 
     override val statusBarLight = false
     override val navBarLight = false
 
     override fun onInit() {
         super.onInit()
-        locationMap = viewModel.getLocationMap(requireContext())
-        statusesMap = viewModel.getStatusesMap(requireContext())
-        setUpLocationSheet()
-        setUpStatusSheet()
         setUpSwipe()
         setUpToolbar()
         setUpRV()
@@ -41,20 +37,40 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        getUsersByFilter()
+        clearData()
+        getAllUsers()
         viewModel.usersListLiveData.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
-            binding.swipeRefresh.isRefreshing = false
+            adapter.perPage = viewModel.perPage
+            adapter.total = viewModel.total
+            adapter.submitList(it) {
+                binding.swipeRefresh.isRefreshing = false
+                binding.noDataViewWithLoading.noData = it.isEmpty()
+            }
+        }
+
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            if (!binding.swipeRefresh.isRefreshing &&
+                viewModel.usersListLiveData.value.isNullOrEmpty()
+            ) binding.noDataViewWithLoading.toggleLoading(it)
+        }
+        viewModel.user.observe(viewLifecycleOwner) {
+            binding.toolbar.photo = it?.photos?.first { it.main == true }?.thumb_url
+            locationMap = viewModel.getLocationMap(requireContext())
+            statusesMap = viewModel.getStatusesMap(requireContext())
+            setUpLocationSheet()
+            setUpStatusSheet()
         }
     }
 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.search)
-        //binding.toolbar.photo = viewModel.user.value?.photos?.first { it.main == true }?.thumb_url
     }
 
     private fun setUpSwipe() {
-        binding.swipeRefresh.setOnRefreshListener { getUsersByFilter() }
+        binding.swipeRefresh.setOnRefreshListener {
+            clearData()
+            getUsersByFilter()
+        }
     }
 
     private fun setUpLocationSheet() {
@@ -79,6 +95,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun setUpRV() {
         binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter.loadMoreItems = {
+            getUsersByFilter()
+        }
         binding.recyclerViewSearches.adapter = adapter
     }
 
@@ -98,11 +117,27 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     }
 
     private fun getUsersByFilter() {
-        viewModel.getUsers(
+        viewModel.getUsersPaged(
             FilterOptions(
-                locationMap[binding.locationFilterButton.label]?.lowercase() ?: "",
-                statusesMap[binding.statusFilterButton.label]?.lowercase() ?: ""
+                locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
+                    ?: "",
+                statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
+                    ?: ""
             )
         )
     }
+
+    private fun getAllUsers() {
+        viewModel.getUsers(
+            FilterOptions(
+                "all",
+                "all"
+            )
+        )
+    }
+
+    private fun clearData(){
+        viewModel.clearData()
+    }
+
 }

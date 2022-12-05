@@ -17,8 +17,8 @@ class UserRemoteData @Inject constructor(
 
     suspend fun getUserLikes() = service.getLikesList()
 
-    suspend fun getUsers(filters: FilterOptions) =
-        service.getUsers(filters)
+    suspend fun getUsers(filters: FilterOptions, page: Int) =
+        service.getUsers(filters, page)
 
     suspend fun getUserMatches() = service.getMatchesList()
 }

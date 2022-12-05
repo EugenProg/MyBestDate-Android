@@ -24,8 +24,8 @@ class ToolbarProfile @JvmOverloads constructor(
         set(value) {
             Glide.with(binding.root.context)
                 .load(value)
+                .circleCrop()
                 .into(binding.profileImageView)
-            binding.pageTitleTextView.text = value
             field = value
         }
 

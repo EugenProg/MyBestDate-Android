@@ -18,21 +18,38 @@ class SearchViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
+    var perPage: Int = 0
+    var total: Int = 0
 
     private var _usersListLiveData = MutableLiveData<MutableList<ShortUserData>>()
     var usersListLiveData: LiveData<MutableList<ShortUserData>> = _usersListLiveData
 
+    private var _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
     fun getUsers(filters: FilterOptions) {
+        _loadingLiveData.postValue(true)
         doAsync {
             userUseCase.getUsers(filters)
+            perPage = userUseCase.perPage
             _usersListLiveData.postValue(userUseCase.usersList)
+            _loadingLiveData.postValue(false)
         }
     }
 
-    fun getLocationMap(context: Context): HashMap<String, String> {
+    fun getUsersPaged(filters: FilterOptions) {
+        _loadingLiveData.postValue(true)
+        doAsync {
+            userUseCase.getUsersPaged(filters)
+            _usersListLiveData.postValue(userUseCase.usersList)
+            _loadingLiveData.postValue(false)
+        }
+    }
+
+    fun getLocationMap(context: Context): MutableList<Pair<String, String>> {
         val country = user.value?.location?.country ?: ""
         val city = user.value?.location?.city ?: ""
-        return hashMapOf(
+        return mutableListOf(
             context.getString(R.string.next_to_me) to "nearby",
             context.getString(R.string.all_world) to "all",
             country to "country",
@@ -40,10 +57,14 @@ class SearchViewModel @Inject constructor(
         )
     }
 
-    fun getStatusesMap(context: Context) = hashMapOf(
+    fun getStatusesMap(context: Context) = mutableListOf(
         context.getString(R.string.online) to "online",
         context.getString(R.string.not_selected) to "all",
         context.getString(R.string.was_recently) to "recently"
     )
+
+    fun clearData(){
+        userUseCase.clearPagingData()
+    }
 
 }

@@ -8,6 +8,7 @@ import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,7 +20,10 @@ class UserUseCase @Inject constructor(
 ) {
 
     val getMyUser = userDao.getUserFlow()
-    var usersList: MutableList<ShortUserData>? = null
+    var usersList: MutableList<ShortUserData>? = mutableListOf()
+    var perPage: Int = 10
+    var currentPage: Int = 1
+    var lastPage: Int = 1
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -47,11 +51,36 @@ class UserUseCase @Inject constructor(
     }
 
     suspend fun getUsers(filters: FilterOptions) {
-        val response = userRemoteData.getUsers(filters)
+        val response = userRemoteData.getUsers(filters, 1)
         if (response.isSuccessful) {
             usersList = response.body()?.data
+            perPage = response.body()?.meta?.per_page ?: 0
+            currentPage = response.body()?.meta?.current_page ?: 0
+            lastPage = response.body()?.meta?.last_page ?: 0
         } else {
             throw InternalException.OperationException(response.message())
         }
+    }
+
+    suspend fun getUsersPaged(filters: FilterOptions) {
+        currentPage++
+
+        if (lastPage < currentPage) return
+        val response = userRemoteData.getUsers(filters, currentPage)
+        if (response.isSuccessful) {
+            val list = mutableListOf<ShortUserData>()
+            usersList?.let { list.addAll(it) }
+            list.addAll(response.body()?.data ?: mutableListOf())
+            usersList = list
+        } else {
+            throw InternalException.OperationException(response.message())
+        }
+    }
+
+    fun clearPagingData() {
+        usersList = mutableListOf()
+        perPage = 10
+        currentPage = 1
+        lastPage = 1
     }
 }

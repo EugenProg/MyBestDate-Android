@@ -7,7 +7,7 @@ import com.bestDate.databinding.SheetImageListBinding
 import com.bestDate.view.base.BaseBottomSheet
 
 class OptionsSheet(
-    private var optionsList: HashMap<String, String>,
+    private var optionsList: MutableList<Pair<String, String>>,
     var title: String
 ) : BaseBottomSheet<SheetImageListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
@@ -18,7 +18,7 @@ class OptionsSheet(
 
     override fun onInit() {
         super.onInit()
-        adapter = StringListAdapter(optionsList.keys.toMutableList()) {
+        adapter = StringListAdapter(optionsList.map { it.first }.toMutableList()) {
             dismiss()
             itemClick?.invoke(it)
         }

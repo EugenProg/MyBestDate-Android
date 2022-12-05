@@ -35,6 +35,6 @@ interface UserService {
     @POST("/api/v1/users")
     suspend fun getUsers(
         @Body filters: FilterOptions,
-        @Query("page") page: Int = 2
+        @Query("page") page: Int
     ): Response<ShortUserListDataResponse>
 }
