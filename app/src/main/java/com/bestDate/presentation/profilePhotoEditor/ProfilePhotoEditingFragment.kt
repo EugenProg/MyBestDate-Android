@@ -98,7 +98,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
                 email.text = if (it?.email_verification == true) it.email else it?.phone
 
                 imageList.value = it?.photos
-                it?.photos?.firstOrNull { it.main == true }?.let { photo -> setMainImage(photo) }
+                it?.getMainPhoto()?.let { photo -> setMainImage(photo) }
 
                 binding.nextButton.isVisible = !it?.photos.isNullOrEmpty()
             }

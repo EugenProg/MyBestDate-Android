@@ -21,4 +21,6 @@ class UserRemoteData @Inject constructor(
         service.getUsers(filters, page)
 
     suspend fun getUserMatches() = service.getMatchesList()
+
+    suspend fun getMyDuels() = service.getMyDuels()
 }
