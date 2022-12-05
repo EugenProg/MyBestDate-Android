@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.databinding.FragmentMatchesListBinding
-import com.bestDate.presentation.main.userProfile.likesList.LikesListAdapter
+import com.bestDate.view.alerts.showMatchActionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MatchesListFragment: BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
+class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMatchesListBinding =
         { inflater, parent, attach -> FragmentMatchesListBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MatchesListViewModel> = MatchesListViewModel::class.java
@@ -31,7 +31,11 @@ class MatchesListFragment: BaseVMFragment<FragmentMatchesListBinding, MatchesLis
             if (type == MatchesSelectType.USER) {
                 showMessage("user")
             } else {
-                showMessage("match")
+                requireActivity().showMatchActionDialog(item, args.myPhoto, {
+                    showMessage("open profile")
+                }, {
+                    showMessage("open chat")
+                })
             }
         }
 
@@ -60,7 +64,8 @@ class MatchesListFragment: BaseVMFragment<FragmentMatchesListBinding, MatchesLis
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             if (!binding.refreshView.isRefreshing &&
-                viewModel.matchesList.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
+                viewModel.matchesList.value.isNullOrEmpty()
+            ) binding.noDataView.toggleLoading(it)
         }
         viewModel.errorLive.observe(viewLifecycleOwner) {
             binding.refreshView.isRefreshing = false
