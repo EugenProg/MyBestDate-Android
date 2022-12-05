@@ -108,12 +108,6 @@ data class ShortUserData(
     fun getLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
-
-    fun getAge(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
-        val yourDate = birthday?.let { sdf.parse(it) } ?: return ""
-        return CalendarUtils.getDiffYears(yourDate, getInstance().time).toString()
-    }
 }
 
 data class FilterOptions(
