@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/profile_nav_graph">
+    app:startDestination="@id/search_nav_graph">
 
     <navigation
         android:id="@+id/profile_nav_graph"
@@ -11,14 +11,14 @@
         <fragment
             android:id="@+id/userProfileFragment2"
             android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
-            android:label="UserProfileFragment" >
+            android:label="UserProfileFragment">
             <action
                 android:id="@+id/action_profile_to_photoEditor"
                 app:destination="@id/userProfilePhotoEditorFragment"
                 app:enterAnim="@anim/push_up_in"
                 app:exitAnim="@anim/push_up_out"
                 app:popEnterAnim="@anim/fade_in"
-                app:popExitAnim="@anim/fade_out"/>
+                app:popExitAnim="@anim/fade_out" />
             <action
                 android:id="@+id/action_profile_to_likesList"
                 app:destination="@id/likesListFragment"
@@ -32,7 +32,7 @@
                 app:enterAnim="@anim/push_up_in"
                 app:exitAnim="@anim/push_up_out"
                 app:popEnterAnim="@anim/push_down_in"
-                app:popExitAnim="@anim/push_down_out"/>
+                app:popExitAnim="@anim/push_down_out" />
             <action
                 android:id="@+id/action_profile_to_myDuels"
                 app:destination="@id/myDuelsFragment"
@@ -44,7 +44,7 @@
         <fragment
             android:id="@+id/userProfilePhotoEditorFragment"
             android:name="com.bestDate.presentation.main.userProfile.UserProfilePhotoEditorFragment"
-            android:label="UserProfilePhotoEditorFragment" >
+            android:label="UserProfilePhotoEditorFragment">
             <argument
                 android:name="selectedImage"
                 app:argType="com.bestDate.data.model.Image" />
@@ -56,7 +56,7 @@
         <fragment
             android:id="@+id/matchesListFragment"
             android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
-            android:label="MatchesListFragment" >
+            android:label="MatchesListFragment">
             <argument
                 android:name="myPhoto"
                 app:argType="string" />
@@ -70,62 +70,67 @@
             app:destination="@id/another_profile_nav_graph" />
     </navigation>
 
-    <navigation android:id="@+id/another_profile_nav_graph"
+    <navigation
+        android:id="@+id/another_profile_nav_graph"
         app:startDestination="@id/anotherProfile">
         <argument
-        android:name="user"
-        app:argType="com.bestDate.data.model.ShortUserData"
-        app:nullable="true" />
+            android:name="user"
+            app:argType="com.bestDate.data.model.ShortUserData"
+            app:nullable="true" />
         <fragment
             android:id="@+id/anotherProfile"
             android:name="com.bestDate.presentation.base.anotherProfile.AnotherProfileFragment"
-            android:label="AnotherProfileFragment" >
+            android:label="AnotherProfileFragment">
             <argument
                 android:name="user"
                 app:argType="com.bestDate.data.model.ShortUserData"
                 app:nullable="true" />
         </fragment>
     </navigation>
-    <navigation android:id="@+id/search_nav_graph"
+    <navigation
+        android:id="@+id/search_nav_graph"
         app:startDestination="@id/searchFragment">
         <fragment
             android:id="@+id/searchFragment"
             android:name="com.bestDate.presentation.main.search.SearchFragment"
             android:label="SearchFragment" />
         <action
-            android:id="@+id/action_global_profile_nav_graph"
+            android:id="@+id/action_global_profile_nav_graph_from_search"
             app:destination="@id/profile_nav_graph" />
         <action
             android:id="@+id/action_global_another_profile_nav_graph2"
             app:destination="@id/another_profile_nav_graph" />
     </navigation>
-    <navigation android:id="@+id/matches_nav_graph"
+    <navigation
+        android:id="@+id/matches_nav_graph"
         app:startDestination="@id/matchesFragment">
         <fragment
             android:id="@+id/matchesFragment"
             android:name="com.bestDate.presentation.main.matches.MatchesFragment"
             android:label="MatchesFragment" />
         <action
-            android:id="@+id/action_global_profile_nav_graph2"
+            android:id="@+id/action_global_profile_nav_graph_from_matches"
             app:destination="@id/profile_nav_graph" />
         <action
             android:id="@+id/action_global_another_profile_nav_graph3"
             app:destination="@id/another_profile_nav_graph" />
     </navigation>
-    <navigation android:id="@+id/chats_nav_graph"
+    <navigation
+        android:id="@+id/chats_nav_graph"
         app:startDestination="@id/chatsFragment">
         <fragment
             android:id="@+id/chatsFragment"
             android:name="com.bestDate.presentation.main.chats.ChatsFragment"
             android:label="ChatsFragment" />
         <action
-            android:id="@+id/action_global_profile_nav_graph3"
+            android:id="@+id/action_global_profile_nav_graph_from_chats"
             app:destination="@id/profile_nav_graph" />
         <action
             android:id="@+id/action_global_another_profile_nav_graph4"
             app:destination="@id/another_profile_nav_graph" />
     </navigation>
-    <navigation android:id="@+id/guests_nav_graph"
+    <navigation
+        android:id="@+id/guests_nav_graph"
         app:startDestination="@id/guestsFragment">
         <fragment
             android:id="@+id/guestsFragment"
@@ -135,17 +140,18 @@
             android:id="@+id/action_global_another_profile_nav_graph5"
             app:destination="@id/another_profile_nav_graph" />
         <action
-            android:id="@+id/action_global_profile_nav_graph4"
+            android:id="@+id/action_global_profile_nav_graph_from_guests"
             app:destination="@id/profile_nav_graph" />
     </navigation>
-    <navigation android:id="@+id/top_nav_graph"
+    <navigation
+        android:id="@+id/top_nav_graph"
         app:startDestination="@id/topFragment">
         <fragment
             android:id="@+id/topFragment"
             android:name="com.bestDate.presentation.main.top.TopFragment"
             android:label="TopFragment" />
         <action
-            android:id="@+id/action_global_profile_nav_graph5"
+            android:id="@+id/action_global_profile_nav_graph_from_top"
             app:destination="@id/profile_nav_graph" />
         <action
             android:id="@+id/action_global_another_profile_nav_graph6"

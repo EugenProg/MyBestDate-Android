@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
@@ -54,7 +55,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
         viewModel.user.observe(viewLifecycleOwner) {
-            binding.toolbar.photo = it?.photos?.first { it.main == true }?.thumb_url
+            binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             locationMap = viewModel.getLocationMap(requireContext())
             statusesMap = viewModel.getStatusesMap(requireContext())
             setUpLocationSheet()
@@ -65,6 +66,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.search)
+        binding.toolbar.onProfileClick = {
+            findNavController().navigate(R.id.action_global_profile_nav_graph_from_search)
+        }
     }
 
     private fun setUpSwipe() {

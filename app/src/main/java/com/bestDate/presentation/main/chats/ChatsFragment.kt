@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.chats
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.databinding.FragmentChatsBinding
@@ -14,7 +15,7 @@ class ChatsFragment : BaseVMFragment<FragmentChatsBinding, ChatsViewModel>() {
     override val viewModelClass: Class<ChatsViewModel> = ChatsViewModel::class.java
 
     override val navBarColor = R.color.main_dark
-    override val statusBarColor= R.color.main_dark
+    override val statusBarColor = R.color.main_dark
 
     override val statusBarLight = false
     override val navBarLight = false
@@ -26,5 +27,15 @@ class ChatsFragment : BaseVMFragment<FragmentChatsBinding, ChatsViewModel>() {
 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.chats)
+        binding.toolbar.onProfileClick = {
+            findNavController().navigate(R.id.action_global_profile_nav_graph_from_chats)
+        }
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.user.observe(viewLifecycleOwner) {
+            binding.toolbar.photo = it?.getMainPhotoThumbUrl()
+        }
     }
 }

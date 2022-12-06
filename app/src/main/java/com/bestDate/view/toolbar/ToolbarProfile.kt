@@ -30,4 +30,12 @@ class ToolbarProfile @JvmOverloads constructor(
             field = value
         }
 
+    var onProfileClick: (() -> Unit)? = null
+        set(value) {
+            binding.profileImageView.setOnSaveClickListener {
+                value?.invoke()
+            }
+            field = value
+        }
+
 }

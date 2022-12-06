@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.guests
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.databinding.FragmentGuestsBinding
@@ -14,7 +15,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     override val viewModelClass: Class<GuestsViewModel> = GuestsViewModel::class.java
 
     override val navBarColor = R.color.main_dark
-    override val statusBarColor= R.color.main_dark
+    override val statusBarColor = R.color.main_dark
 
     override val statusBarLight = false
     override val navBarLight = false
@@ -27,5 +28,15 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.guests)
+        binding.toolbar.onProfileClick = {
+            findNavController().navigate(R.id.action_global_profile_nav_graph_from_guests)
+        }
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        viewModel.user.observe(viewLifecycleOwner) {
+            binding.toolbar.photo = it?.getMainPhotoThumbUrl()
+        }
     }
 }
