@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
+import dagger.hilt.android.AndroidEntryPoint
 
-abstract class AnotherProfileFragment :
+@AndroidEntryPoint
+class AnotherProfileFragment :
     BaseVMFragment<FragmentAnotherProfileBinding, AnotherProfileViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileBinding =
         { inflater, parent, attach ->
@@ -23,15 +26,14 @@ abstract class AnotherProfileFragment :
     override val viewModelClass: Class<AnotherProfileViewModel> = AnotherProfileViewModel::class.java
     override val statusBarLight = true
     var isBlocked: Boolean = false
+    private val args by navArgs<AnotherProfileFragmentArgs>()
 
-    protected var user: ShortUserData? = null
-
-    abstract fun getUserInfo(): ShortUserData?
+    private var user: ShortUserData? = null
 
     override fun onInit() {
         super.onInit()
         makeStatusBarTransparent(binding.header.getTopBoxView())
-        user = getUserInfo()
+        user = args.user
         viewModel.getUserById(user?.id)
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)

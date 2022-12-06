@@ -45,6 +45,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     override fun onViewClickListener() {
         super.onViewClickListener()
+        binding.backButton.onClick = {
+            navController.popBackStack()
+        }
         binding.signOutButton.root.setOnSaveClickListener {
             viewModel.signOut()
         }
