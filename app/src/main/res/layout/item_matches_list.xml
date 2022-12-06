@@ -33,9 +33,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="80dp"
+            android:layout_marginEnd="5dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/matchesBox"
+            app:layout_constraintEnd_toStartOf="@id/matchesBox"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -126,10 +127,11 @@
             style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="71dp"
+            android:layout_marginEnd="61dp"
             android:rotation="-45"
+            android:background="@drawable/bg_pink_blur_circle"
             android:text="Match!"
+            android:gravity="center"
             android:textColor="@color/bg_pink"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

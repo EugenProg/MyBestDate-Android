@@ -26,7 +26,7 @@ class LikesListFragment: BaseVMFragment<FragmentLikesListBinding, LikesListViewM
         binding.likesListView.adapter = adapter
 
         adapter.itemClick = {
-
+            navController.navigate(LikesListFragmentDirections.actionLikesListToAnotherProfile(it.user))
         }
 
         binding.refreshView.setOnRefreshListener {

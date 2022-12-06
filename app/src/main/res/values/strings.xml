@@ -449,6 +449,19 @@
     <string name="personal_data">Personal data</string>
     <string name="settings">Settings</string>
 
+    <!--Zodiac-->
+    <string name="aries">Aries</string>
+    <string name="taurus">Taurus</string>
+    <string name="gemini">Gemini</string>
+    <string name="cancer">Cancer</string>
+    <string name="leo">Leo</string>
+    <string name="virgo">Virgo</string>
+    <string name="libra">Libra</string>
+    <string name="scorpio">Scorpio</string>
+    <string name="sagittarius">Sagittarius</string>
+    <string name="capricorn">Capricorn</string>
+    <string name="aquarius">Aquarius</string>
+    <string name="pisces">Pisces</string>
 
     <string name="search">Search</string>
     <string name="matches">Matches</string>
@@ -468,6 +481,16 @@
     <string name="was_n_hours_ago">%d h ago</string>
     <string name="was_n_min_ago">%d min ago</string>
     <string name="years_short">y</string>
+    <string name="distance_unit">%d km</string>
+    <string name="blacklist">blacklist</string>
+    <string name="ooops_sorry">Ooops! Sorry</string>
+    <string name="you_have_been_added_to_the_nblacklist">You have been added to the\nblacklist</string>
+    <string name="additionally">Additionally</string>
+    <string name="share">Share</string>
+    <string name="block_profile">Block Profile</string>
+    <string name="unblock_profile">Unlock Profile</string>
+    <string name="user_is_blocked_successful">User is blocked successful</string>
+    <string name="user_is_unlocked_successful">User is unlocked successful</string>
     <string name="matching_you">Matching You!</string>
     <string name="congratulations">Congratulations</string>
     <string name="you_have_a_match_write_to_the_user_you_liked_each_other">You have a match, write to the\nuser, you liked each other</string>

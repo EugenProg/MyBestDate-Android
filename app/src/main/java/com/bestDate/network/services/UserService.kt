@@ -11,8 +11,8 @@ interface UserService {
     suspend fun getUserData(): Response<UserDataResponse>
 
     /**Get user by id*/
-    @GET("/api/v1/user/{id}")
-    suspend fun getUserById(@Path("id") userId: Int): Response<ShortUserDataResponse>
+    @GET("/api/v1/users/{id}")
+    suspend fun getUserById(@Path("id") userId: Int): Response<UserDataResponse>
 
     /**Save questionnaire*/
     @PUT("/api/v1/user/questionnaire")
@@ -29,4 +29,12 @@ interface UserService {
     /**Get user duels*/
     @GET("/api/v1/voting")
     suspend fun getMyDuels(): Response<MyDuelsResponse>
+
+    /**Block user*/
+    @POST("/api/v1/block-user/{id}")
+    suspend fun blockUser(@Path("id") userId: Int): Response<BaseResponse>
+
+    /**Unlock user*/
+    @POST("/api/v1/unlock-user/{id}")
+    suspend fun unlockUser(@Path("id") userId: Int): Response<BaseResponse>
 }

@@ -48,7 +48,11 @@
     <fragment
         android:id="@+id/likesListFragment"
         android:name="com.bestDate.presentation.main.userProfile.likesList.LikesListFragment"
-        android:label="LikesListFragment" />
+        android:label="LikesListFragment" >
+        <action
+            android:id="@+id/action_likesList_to_another_profile"
+            app:destination="@id/userProfileToAnotherProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/matchesListFragment"
         android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
@@ -56,9 +60,25 @@
         <argument
             android:name="myPhoto"
             app:argType="string" />
+        <action
+            android:id="@+id/action_matchesList_to_another_profile"
+            app:destination="@id/userProfileToAnotherProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileToAnotherProfileFragment"
+        android:name="com.bestDate.presentation.main.userProfile.likesList.UserProfileToAnotherProfileFragment"
+        android:label="UserProfileToAnotherProfileFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.bestDate.data.model.ShortUserData"
+            app:nullable="true"/>
     </fragment>
     <fragment
         android:id="@+id/myDuelsFragment"
         android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
-        android:label="MyDuelsFragment" />
+        android:label="MyDuelsFragment" >
+        <action
+            android:id="@+id/action_myDuels_to_another_profile"
+            app:destination="@id/userProfileToAnotherProfileFragment" />
+    </fragment>
 </navigation>

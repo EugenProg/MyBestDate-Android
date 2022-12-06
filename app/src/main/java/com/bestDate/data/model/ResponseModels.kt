@@ -1,10 +1,14 @@
 package com.bestDate.data.model
 
+import android.os.Parcelable
+import com.bestDate.data.extension.getTime
+import com.bestDate.data.extension.getWeekdayWithTime
+import com.bestDate.data.extension.isToday
 import android.content.Context
-import androidx.room.Entity
 import com.bestDate.data.extension.*
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
+import kotlinx.parcelize.Parcelize
 import java.util.*
 
 open class BaseResponse {
@@ -23,6 +27,7 @@ data class ProfileImageResponse(
     var data: ProfileImage? = null
 ): BaseResponse()
 
+@Parcelize
 data class ProfileImage(
     var id: Int? = null,
     var full_url: String? = null,
@@ -32,7 +37,7 @@ data class ProfileImage(
     var top_place: Int? = null,
     var liked: Boolean? = null,
     var likes: Int? = null
-) {
+): Parcelable {
     fun copy(): ProfileImage {
         return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes)
     }
@@ -63,7 +68,7 @@ data class ShortUserDataResponse(
     val data: ShortUserData
 ): BaseResponse()
 
-@Entity
+@Parcelize
 data class ShortUserData(
     var id: Int? = null,
     var name: String? = null,
@@ -73,13 +78,14 @@ data class ShortUserData(
     var full_questionnaire: Boolean? = null,
     var role: String? = null,
     var blocked: Boolean? = null,
+    var blocked_me: Boolean? = null,
     var allow_chat: Boolean? = null,
     var is_online: Boolean? = null,
     var last_online_at: String? = null,
     var distance: Double? = null,
     var main_photo: ProfileImage? = null,
     var location: LocationDB? = null
-) {
+): Parcelable {
     fun getMainPhoto(): ProfileImage {
         return main_photo ?: ProfileImage().getDefaultPhoto()
     }
