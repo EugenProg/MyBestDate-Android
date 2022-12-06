@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="18dp"
+        android:background="@drawable/matches_list_item_box">
+
+        <FrameLayout
+            android:id="@+id/avatarBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bg_avatar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="41dp"
+                android:layout_height="41dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/avatarBox"
+            app:layout_constraintEnd_toStartOf="@+id/closeBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/avatarBox">
+
+            <TextView
+                android:id="@+id/name"
+                style="@style/component_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_verify"
+                app:layout_constraintBottom_toBottomOf="@id/name"
+                app:layout_constraintStart_toEndOf="@id/name"
+                app:layout_constraintTop_toTopOf="@id/name" />
+
+            <TextView
+                android:id="@+id/location"
+                style="@style/component_text"
+                android:layout_width="wrap_content"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/closeBtn"
+            android:layout_width="48dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/buttons_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_close" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView13"
+            style="@style/component_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="41dp"
+            android:gravity="center_horizontal"
+            android:text="@string/matching_you"
+            android:textAllCaps="true"
+            android:textColor="@color/bg_pink"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatarBox" />
+
+        <TextView
+            android:id="@+id/textView14"
+            style="@style/component_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center_horizontal"
+            android:text="@string/congratulations"
+            android:textAllCaps="true"
+            android:textColor="#c6deeb"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <FrameLayout
+            android:id="@+id/matchesBox"
+            android:layout_width="220dp"
+            android:layout_height="200dp"
+            android:padding="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView14">
+
+            <View
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="@drawable/small_box"
+                android:layout_gravity="top|end"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_gravity="top|end">
+
+                <ImageView
+                    android:id="@+id/matchPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
+            <View
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:background="@drawable/small_box"
+                android:layout_gravity="bottom|start"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="51dp"
+                android:layout_height="51dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="4dp"
+                android:layout_gravity="bottom|start">
+
+                <ImageView
+                    android:id="@+id/myPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"/>
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:layout_width="73dp"
+                android:layout_height="74dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="2dp"
+                android:src="@drawable/ic_matches_list"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/textView15"
+            style="@style/component_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/you_have_a_match_write_to_the_user_you_liked_each_other"
+            android:textColor="#c6deeb"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/matchesBox" />
+
+        <LinearLayout
+            android:id="@+id/writeMessageBtn"
+            android:layout_width="248dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/white_rectangle"
+            android:backgroundTint="@color/bg_pink"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="34dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_messages" />
+
+            <TextView
+                style="@style/component_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="13dp"
+                android:text="@string/write_a_message"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

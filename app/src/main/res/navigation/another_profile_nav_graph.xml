@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/another_profile_nav_graph"
+    app:startDestination="@id/anotherProfileFragment">
+
+    <fragment
+        android:id="@+id/anotherProfileFragment"
+        android:name="com.bestDate.presentation.base.anotherProfile.AnotherProfileFragment"
+        android:label="AnotherProfileFragment" >
+        <argument
+            android:name="user"
+            app:argType="com.bestDate.data.model.ShortUserData" />
+    </fragment>
+</navigation>

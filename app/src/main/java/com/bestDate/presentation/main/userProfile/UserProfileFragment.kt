@@ -33,7 +33,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         super.onInit()
 
         val height = (resources.displayMetrics.widthPixels - 42.toPx()) / 3
-        adapter = ImageLineAdapter(height)
+        adapter = ImageLineAdapter(height, false)
         binding.imagesCarousel.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.imagesCarousel.adapter = adapter

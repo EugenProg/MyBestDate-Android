@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.LifecycleOwner
 import com.bestDate.R
 
 fun DialogFragment?.show(fragmentManager: FragmentManager) {
@@ -18,6 +19,17 @@ fun DialogFragment?.show(fragmentManager: FragmentManager) {
     } else {
         return
     }
+}
+
+fun Dialog.closeWithAnimation(rootView: View, owner: LifecycleOwner) {
+    rootView.animate()
+        .alpha(0f)
+        .setDuration(300)
+        .start()
+
+    owner.postDelayed({
+        this@closeWithAnimation.dismiss()
+    }, 200)
 }
 
 fun getDialog(
