@@ -29,10 +29,12 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
 
         adapter.itemClick = { item, type ->
             if (type == MatchesSelectType.USER) {
-                navController.navigate(MatchesListFragmentDirections.actionMatchesListToAnotherProfile(item.user))
+                navController.navigate(
+                    MatchesListFragmentDirections.actionGlobalAnotherProfile(item.user))
             } else {
                 requireActivity().showMatchActionDialog(item, args.myPhoto, {
-                    showMessage("open profile")
+                    navController.navigate(
+                        MatchesListFragmentDirections.actionGlobalAnotherProfile(it))
                 }, {
                     showMessage("open chat")
                 })
