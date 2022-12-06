@@ -1,7 +1,9 @@
 package com.bestDate.view.alerts
 
 import android.view.Gravity
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
+import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.Match
 import com.bestDate.data.model.ShortUserData
@@ -63,6 +65,14 @@ fun FragmentActivity.showMatchActionDialog(
         closeBtn.setOnSaveClickListener {
             dialog.closeWithAnimation(root, owner = this@showMatchActionDialog)
         }
+
+        postDelayed({
+            animationView.setAnimation(R.raw.match_action_anim)
+            animationView.playAnimation()
+        }, 300)
+        postDelayed({
+            animationView.isVisible = false
+        }, 2700)
     }
 }
 

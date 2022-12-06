@@ -26,7 +26,7 @@ class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>(
         binding.myDuelsView.adapter = adapter
 
         adapter.itemClick = {
-            navController.navigate(MyDuelsFragmentDirections.actionMyDuelsToAnotherProfile(it))
+            navController.navigate(MyDuelsFragmentDirections.actionGlobalAnotherProfile(it))
         }
 
         binding.refreshView.setOnRefreshListener {
