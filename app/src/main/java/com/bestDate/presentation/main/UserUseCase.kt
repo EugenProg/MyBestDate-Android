@@ -8,7 +8,6 @@ import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 

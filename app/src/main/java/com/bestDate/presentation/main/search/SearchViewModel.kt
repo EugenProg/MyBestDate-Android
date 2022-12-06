@@ -8,13 +8,16 @@ import com.bestDate.R
 import com.bestDate.base.BaseViewModel
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
@@ -63,8 +66,16 @@ class SearchViewModel @Inject constructor(
         context.getString(R.string.was_recently) to "recently"
     )
 
-    fun clearData(){
+    fun clearData() {
         userUseCase.clearPagingData()
     }
 
+    fun saveFilter(type: Preferences, value: String) {
+        preferencesUtils.saveString(type, value)
+    }
+
+    fun getFilter(type: Preferences): String {
+        val value = preferencesUtils.getString(type)
+        return value.ifEmpty { "all" }
+    }
 }

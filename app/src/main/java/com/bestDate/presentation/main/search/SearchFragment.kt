@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.preferences.Preferences
 import com.bestDate.databinding.FragmentSearchBinding
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +33,6 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         setUpSwipe()
         setUpToolbar()
         setUpRV()
-        setUpFilters()
     }
 
     override fun onViewLifecycle() {
@@ -59,6 +59,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             statusesMap = viewModel.getStatusesMap(requireContext())
             setUpLocationSheet()
             setUpStatusSheet()
+            setUpFilters()
         }
     }
 
@@ -69,7 +70,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpSwipe() {
         binding.swipeRefresh.setOnRefreshListener {
             clearData()
-            getUsersByFilter()
+            getUsersByFilterInitial()
         }
     }
 
@@ -78,8 +79,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             locationMap, getString(R.string.location)
         )
         locationOptionsSheet.itemClick = {
-            binding.locationFilterButton.label = it
-            getUsersByFilter()
+            binding.locationFilterButton.label = it?.first ?: getString(R.string.all_world)
+            saveFilters(Preferences.FILTER_LOCATION, it?.second ?: "all")
+            clearData()
+            getUsersByFilterInitial()
         }
     }
 
@@ -88,8 +91,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             statusesMap, getString(R.string.online)
         )
         statusOptionsSheet.itemClick = {
-            binding.statusFilterButton.label = it
-            getUsersByFilter()
+            binding.statusFilterButton.label = it?.first ?: getString(R.string.not_selected)
+            saveFilters(Preferences.FILTER_STATUS, it?.second ?: "all")
+            clearData()
+            getUsersByFilterInitial()
         }
     }
 
@@ -103,12 +108,16 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun setUpFilters() {
         binding.run {
-            locationFilterButton.label = getString(R.string.all_world)
+            locationFilterButton.label =
+                locationMap.find { it.second == viewModel.getFilter(Preferences.FILTER_LOCATION) }?.first
+                    ?: getString(R.string.all_world)
             locationFilterButton.isActive = true
             locationFilterButton.onClick = {
                 locationOptionsSheet.show(childFragmentManager, locationOptionsSheet.tag)
             }
-            statusFilterButton.label = getString(R.string.not_selected)
+            statusFilterButton.label =
+                statusesMap.find { it.second == viewModel.getFilter(Preferences.FILTER_STATUS) }?.first
+                    ?: getString(R.string.not_selected)
             statusFilterButton.isActive = false
             statusFilterButton.onClick = {
                 statusOptionsSheet.show(childFragmentManager, statusOptionsSheet.tag)
@@ -127,16 +136,31 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         )
     }
 
-    private fun getAllUsers() {
+    private fun getUsersByFilterInitial() {
         viewModel.getUsers(
             FilterOptions(
-                "all",
-                "all"
+                locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
+                    ?: "",
+                statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
+                    ?: ""
             )
         )
     }
 
-    private fun clearData(){
+    private fun getAllUsers() {
+        viewModel.getUsers(
+            FilterOptions(
+                viewModel.getFilter(Preferences.FILTER_LOCATION),
+                viewModel.getFilter(Preferences.FILTER_STATUS)
+            )
+        )
+    }
+
+    private fun saveFilters(type: Preferences, value: String) {
+        viewModel.saveFilter(type, value)
+    }
+
+    private fun clearData() {
         viewModel.clearData()
     }
 

@@ -18,4 +18,13 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
 
     override val statusBarLight = false
     override val navBarLight = false
+
+    override fun onInit() {
+        super.onInit()
+        setUpToolbar()
+    }
+
+    private fun setUpToolbar() {
+        binding.toolbar.title = getString(R.string.top_50)
+    }
 }

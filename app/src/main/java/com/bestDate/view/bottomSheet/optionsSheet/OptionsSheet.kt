@@ -14,13 +14,15 @@ class OptionsSheet(
         { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: StringListAdapter
-    var itemClick: ((String) -> Unit)? = null
+    var itemClick: ((Pair<String, String>?) -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
         adapter = StringListAdapter(optionsList.map { it.first }.toMutableList()) {
             dismiss()
-            itemClick?.invoke(it)
+            itemClick?.invoke(optionsList.find { pair ->
+                pair.first == it
+            })
         }
 
         binding.title.text = title
