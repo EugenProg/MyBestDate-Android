@@ -37,4 +37,8 @@ interface UserService {
     /**Unlock user*/
     @POST("/api/v1/unlock-user/{id}")
     suspend fun unlockUser(@Path("id") userId: Int): Response<BaseResponse>
+
+    /**Get user invitations*/
+    @GET("/api/v1/user/invitations")
+    suspend fun getInvitations(): Response<InvitationsListResponse>
 }

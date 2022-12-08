@@ -65,3 +65,8 @@ data class PhotoStatusUpdateRequest(
     var top: Boolean,
     var match: Boolean = false
 )
+
+data class SendInvitationRequest(
+    var invitation_id: Int,
+    var user_id: Int
+)

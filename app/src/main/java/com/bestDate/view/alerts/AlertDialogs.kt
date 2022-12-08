@@ -7,7 +7,6 @@ import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.Match
 import com.bestDate.data.model.ShortUserData
-import com.bestDate.databinding.DialogCreateInvitationBinding
 import com.bestDate.databinding.DialogDefaultBinding
 import com.bestDate.databinding.DialogMatchActionBinding
 import com.bumptech.glide.Glide
@@ -34,7 +33,7 @@ fun FragmentActivity.showMatchActionDialog(
     val dialog = getDialog(binding.root)
 
     with(binding) {
-        root.showWithSlideTopAnimation {
+        box.showWithSlideTopAnimation {
             Glide.with(this@showMatchActionDialog)
                 .load(match.user?.getMainPhoto()?.thumb_url)
                 .circleCrop()
@@ -74,10 +73,4 @@ fun FragmentActivity.showMatchActionDialog(
             animationView.isVisible = false
         }, 2700)
     }
-}
-
-fun FragmentActivity.showCreateInvitationDialog() {
-    val binding = DialogCreateInvitationBinding.inflate(layoutInflater)
-
-    val dialog = getDialog(binding.root)
 }

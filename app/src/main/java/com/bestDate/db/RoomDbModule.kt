@@ -2,6 +2,7 @@ package com.bestDate.db
 
 import android.content.Context
 import androidx.room.Room
+import com.bestDate.db.dao.InvitationDao
 import com.bestDate.db.dao.UserDao
 import dagger.Module
 import dagger.Provides
@@ -24,4 +25,7 @@ class RoomDbModule {
 
     @Provides
     fun provideUserDao(db: LocalDB): UserDao { return db.userDao() }
+
+    @Provides
+    fun provideInvitationDao(db: LocalDB): InvitationDao { return db.invitationDao() }
 }

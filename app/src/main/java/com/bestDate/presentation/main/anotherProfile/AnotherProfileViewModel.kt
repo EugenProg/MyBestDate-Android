@@ -1,21 +1,28 @@
-package com.bestDate.presentation.base.anotherProfile
+package com.bestDate.presentation.main.anotherProfile
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.bestDate.base.BaseViewModel
 import com.bestDate.db.entity.UserDB
+import com.bestDate.presentation.main.InvitationUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AnotherProfileViewModel @Inject constructor(
-    private val anotherProfileUseCase: AnotherProfileUseCase
+    private val anotherProfileUseCase: AnotherProfileUseCase,
+    private val invitationUseCase: InvitationUseCase
 ): BaseViewModel() {
 
     var user: MutableLiveData<UserDB> = anotherProfileUseCase.user
+    var invitations = invitationUseCase.invitations.asLiveData()
 
     private var _blockLiveData: LiveEvent<Boolean> = LiveEvent()
     var blockLiveData: LiveEvent<Boolean> = _blockLiveData
+
+    private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
+    var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
 
     fun getUserById(id: Int?) {
         doAsync {
@@ -40,6 +47,19 @@ class AnotherProfileViewModel @Inject constructor(
             anotherProfileUseCase.unlockUser(id)
             anotherProfileUseCase.getUserById(id)
             blockLiveData.postValue(false)
+        }
+    }
+
+    fun refreshInvitations() {
+        doAsync {
+            invitationUseCase.refreshInvitations()
+        }
+    }
+
+    fun sendInvitation(userId: Int?, invitationId: Int) {
+        doAsync {
+            invitationUseCase.sendInvitation(userId, invitationId)
+            _sendInvitationLiveData.postValue(true)
         }
     }
 }

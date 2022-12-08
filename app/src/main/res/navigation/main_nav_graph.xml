@@ -78,7 +78,7 @@
         app:nullable="true" />
         <fragment
             android:id="@+id/anotherProfile"
-            android:name="com.bestDate.presentation.base.anotherProfile.AnotherProfileFragment"
+            android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileFragment"
             android:label="AnotherProfileFragment" >
             <argument
                 android:name="user"

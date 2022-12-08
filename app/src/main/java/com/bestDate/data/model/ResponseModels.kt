@@ -6,6 +6,7 @@ import com.bestDate.data.extension.getWeekdayWithTime
 import com.bestDate.data.extension.isToday
 import android.content.Context
 import com.bestDate.data.extension.*
+import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import kotlinx.parcelize.Parcelize
@@ -66,6 +67,10 @@ data class MyDuelsResponse(
 
 data class ShortUserDataResponse(
     val data: ShortUserData
+): BaseResponse()
+
+data class InvitationsListResponse(
+    val data: MutableList<Invitation>
 ): BaseResponse()
 
 @Parcelize

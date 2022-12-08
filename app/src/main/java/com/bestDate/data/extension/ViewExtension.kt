@@ -1,9 +1,12 @@
 package com.bestDate.data.extension
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -65,14 +68,14 @@ inline fun View.setAttrs(attrs: AttributeSet?, styleable: IntArray, crossinline 
         }
 }
 
-inline fun View.showWithSlideTopAnimation(crossinline body: () -> Unit) {
+fun View.showWithSlideTopAnimation(showViews: (() -> Unit)? = null) {
     this.isVisible = false
     this.animate()
         .translationY(600f)
         .setDuration(100)
         .start()
 
-    body.invoke()
+    showViews?.invoke()
 
     postDelayed({
         this.isVisible = true
@@ -81,4 +84,38 @@ inline fun View.showWithSlideTopAnimation(crossinline body: () -> Unit) {
             .setDuration(300)
             .start()
     }, 100)
+}
+
+fun View.showWithSlideTopAndRotateAnimation(showViews: (() -> Unit)? = null) {
+    this.isVisible = false
+    this.animate()
+        .translationY(800f)
+        .rotationY(-180f)
+        .setDuration(100)
+        .start()
+
+    showViews?.invoke()
+
+    postDelayed({
+        this.isVisible = true
+        this.animate()
+            .translationY(0f)
+            .rotationY(0f)
+            .setDuration(450)
+            .start()
+    }, 100)
+}
+
+fun View.rotateHorizontally(toggleVisibility: () -> Unit) {
+    val animator = AnimatorSet()
+
+    val rotation = ObjectAnimator.ofFloat(this, View.ROTATION_Y, 180f)
+    animator.duration = 300
+    animator.interpolator = AccelerateDecelerateInterpolator()
+    animator.play(rotation)
+    animator.start()
+
+    postDelayed({
+        toggleVisibility.invoke()
+    }, 150)
 }
