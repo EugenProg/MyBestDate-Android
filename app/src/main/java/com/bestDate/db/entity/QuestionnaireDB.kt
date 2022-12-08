@@ -54,4 +54,12 @@ data class QuestionnaireDB(
         search_age_max = range.max
         search_age_min = range.min
     }
+
+    fun isEmpty(): Boolean {
+        for (f in javaClass.declaredFields) {
+            f.isAccessible = true
+            if (f[this] != null) return false
+        }
+        return true
+    }
 }

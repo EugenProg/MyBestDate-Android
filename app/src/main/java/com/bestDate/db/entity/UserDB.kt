@@ -72,4 +72,7 @@ data class UserDB(
     fun getUserLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
+
+    fun hasNoPhotos() = photos.isNullOrEmpty()
+    fun questionnaireEmpty() = questionnaire?.isEmpty()
 }
