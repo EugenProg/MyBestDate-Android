@@ -2,6 +2,7 @@ package com.bestDate.network.remote
 
 import com.bestDate.data.model.RequestLanguage
 import com.bestDate.db.entity.QuestionnaireDB
+import com.bestDate.data.model.FilterOptions
 import com.bestDate.network.services.UserService
 import javax.inject.Inject
 
@@ -16,6 +17,9 @@ class UserRemoteData @Inject constructor(
         service.saveQuestionnaire(questionnaire)
 
     suspend fun getUserLikes() = service.getLikesList()
+
+    suspend fun getUsers(filters: FilterOptions, page: Int) =
+        service.getUsers(filters, page)
 
     suspend fun getUserMatches() = service.getMatchesList()
 

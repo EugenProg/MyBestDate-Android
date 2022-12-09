@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/vgProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_shadow_gradient_circular"
+            app:layout_constraintBottom_toBottomOf="@+id/profileDecorView"
+            app:layout_constraintEnd_toEndOf="@+id/profileDecorView"
+            app:layout_constraintStart_toStartOf="@+id/profileDecorView"
+            app:layout_constraintTop_toTopOf="@+id/profileDecorView" />
+
+        <View
+            android:id="@+id/profileDecorView"
+            android:layout_width="70dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="-35dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_decor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/profileCircleView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginBottom="4dp"
+            android:elevation="4dp"
+            android:src="@drawable/ic_arrow_right_blue"
+            app:layout_constraintBottom_toBottomOf="@+id/profileDecorView"
+            app:layout_constraintEnd_toEndOf="@+id/profileDecorView"
+            app:layout_constraintTop_toTopOf="@+id/profileDecorView" />
+
+        <View
+            android:id="@+id/profileCircleView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_dark_circle"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:elevation="5dp"
+            android:src="@drawable/bg_pink_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/viewBadge"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="-4dp"
+            android:background="@drawable/bg_pink_circle"
+            android:elevation="5dp"
+            app:layout_constraintStart_toStartOf="@+id/profileCircleView"
+            app:layout_constraintTop_toTopOf="@+id/profileCircleView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
