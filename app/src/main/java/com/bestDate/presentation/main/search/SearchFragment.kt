@@ -34,7 +34,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         viewModel.setNotFirstEnter()
         setUpSwipe()
         setUpToolbar()
-        setUpRV()
+        setUpUsersList()
     }
 
     override fun onViewLifecycle() {
@@ -103,8 +103,11 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         }
     }
 
-    private fun setUpRV() {
+    private fun setUpUsersList() {
         binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
+        adapter.itemClick = {
+            navController.navigate(SearchFragmentDirections.actionGlobalAnotherProfileNavGraph2(it))
+        }
         adapter.loadMoreItems = {
             getUsersByFilter()
         }
