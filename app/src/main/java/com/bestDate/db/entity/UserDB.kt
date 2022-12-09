@@ -64,6 +64,10 @@ data class UserDB(
         return photos?.firstOrNull { it.main == true } ?: ProfileImage().getDefaultPhoto()
     }
 
+    fun getMainPhotoThumbUrl(): String? {
+        return getMainPhoto().thumb_url
+    }
+
     fun getAge(): String {
         val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return ""
         return getDiffYears(yourDate, Date()).toString()
@@ -72,4 +76,7 @@ data class UserDB(
     fun getUserLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
+
+    fun hasNoPhotos() = photos.isNullOrEmpty()
+    fun questionnaireEmpty() = questionnaire?.isEmpty()
 }

@@ -26,7 +26,7 @@ data class AuthResponse(
 
 data class ProfileImageResponse(
     var data: ProfileImage? = null
-): BaseResponse()
+) : BaseResponse()
 
 @Parcelize
 data class ProfileImage(
@@ -67,7 +67,19 @@ data class MyDuelsResponse(
 
 data class ShortUserDataResponse(
     val data: ShortUserData
-): BaseResponse()
+) : BaseResponse()
+
+data class ShortUserListDataResponse(
+    val data: MutableList<ShortUserData>? = null,
+    val meta: Meta? = null
+) : BaseResponse()
+
+data class Meta(
+    val per_page: Int? = null,
+    var total: Int? = null,
+    var current_page: Int? = null,
+    var last_page: Int? = null
+)
 
 data class InvitationsListResponse(
     val data: MutableList<Invitation>
@@ -104,6 +116,11 @@ data class ShortUserData(
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
 }
+
+data class FilterOptions(
+    val location: String = "all",
+    val online: String = "all"
+)
 
 data class Like(
     val id: Int? = null,
