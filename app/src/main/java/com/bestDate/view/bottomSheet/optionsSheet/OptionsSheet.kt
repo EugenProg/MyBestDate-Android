@@ -8,7 +8,7 @@ import com.bestDate.view.base.BaseBottomSheet
 
 class OptionsSheet(
     private var optionsList: MutableList<Pair<String, String>>,
-    var title: String
+    private var title: String
 ) : BaseBottomSheet<SheetImageListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
         { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }

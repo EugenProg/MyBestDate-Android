@@ -39,7 +39,7 @@
 
                 <TextView
                     android:id="@+id/nameTextView"
-                    style="@style/text_no_margin_16"
+                    style="@style/component_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -61,7 +61,7 @@
 
         <TextView
             android:id="@+id/locationTextView"
-            style="@style/text_no_margin_16"
+            style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
@@ -75,7 +75,7 @@
 
         <TextView
             android:id="@+id/ageTextView"
-            style="@style/text_no_margin_16"
+            style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -88,11 +88,11 @@
 
         <TextView
             android:id="@+id/yearTextView"
-            style="@style/text_no_margin_16"
+            style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:text="y"
+            android:text="@string/years_old"
             android:textColor="@color/white"
             android:textSize="10sp"
             android:textStyle="bold"
@@ -139,7 +139,7 @@
 
     <TextView
         android:id="@+id/distanceTextView"
-        style="@style/text_no_margin_16"
+        style="@style/component_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"

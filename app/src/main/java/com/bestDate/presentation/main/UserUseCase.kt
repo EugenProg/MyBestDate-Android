@@ -23,6 +23,7 @@ class UserUseCase @Inject constructor(
     var perPage: Int = 10
     var currentPage: Int = 1
     var lastPage: Int = 1
+    var total: Int = 0
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -56,6 +57,7 @@ class UserUseCase @Inject constructor(
             perPage = response.body()?.meta?.per_page ?: 0
             currentPage = response.body()?.meta?.current_page ?: 0
             lastPage = response.body()?.meta?.last_page ?: 0
+            total = response.body()?.meta?.total ?: 0
         } else {
             throw InternalException.OperationException(response.message())
         }
@@ -81,6 +83,7 @@ class UserUseCase @Inject constructor(
         perPage = 10
         currentPage = 1
         lastPage = 1
+        total = 0
     }
 
     suspend fun changeLanguage(language: String){

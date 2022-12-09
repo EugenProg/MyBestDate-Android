@@ -35,6 +35,7 @@ class SearchViewModel @Inject constructor(
         doAsync {
             userUseCase.getUsers(filters)
             perPage = userUseCase.perPage
+            total = userUseCase.total
             _usersListLiveData.postValue(userUseCase.usersList)
             _loadingLiveData.postValue(false)
         }
