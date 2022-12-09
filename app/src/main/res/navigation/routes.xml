@@ -2,17 +2,37 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/main_nav_graph">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.bestDate.presentation.StartFragment"
+        android:name="com.bestDate.presentation.start.StartFragment"
         android:label="StartFragment" >
         <action
-            android:id="@+id/action_startFragment_to_onboardStartFragment"
+            android:id="@+id/action_start_to_onboardStart"
             app:destination="@id/onboardStartFragment"
             app:popUpTo="@id/onboardStartFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_start_to_auth"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_start_to_profilePhotoEditing"
+            app:destination="@id/profilePhotoEditingFragment"
+            app:popUpTo="@id/profilePhotoEditingFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_start_to_questionnaire"
+            app:destination="@id/questionnaireFragment"
+            app:popUpTo="@id/questionnaireFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_start_to_main_graph"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/onboardStartFragment"
@@ -81,6 +101,11 @@
             app:destination="@id/questionnaireFragment"
             app:popUpTo="@id/questionnaireFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_authFragmen_to_main"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/main_nav_graph"
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/geoEnableFragment"
@@ -158,7 +183,9 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/geoEnableFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registrationOtpFragment"

@@ -18,4 +18,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     override val statusBarLight = false
     override val navBarLight = false
+
+    override fun onInit() {
+        super.onInit()
+        viewModel.setNotFirstEnter()
+        //todo move to geo loc
+    }
 }

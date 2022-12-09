@@ -1,5 +1,6 @@
 package com.bestDate.network.remote
 
+import com.bestDate.data.model.RequestLanguage
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.network.services.UserService
 import javax.inject.Inject
@@ -23,4 +24,6 @@ class UserRemoteData @Inject constructor(
     suspend fun blockUser(id: Int) = service.blockUser(id)
 
     suspend fun unlockUser(id: Int) = service.unlockUser(id)
+
+    suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
 }

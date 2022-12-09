@@ -41,4 +41,12 @@ class UserUseCase @Inject constructor(
         val response = userRemoteData.saveQuestionnaire(questionnaire)
         if (!response.isSuccessful) throw InternalException.OperationException(response.message())
     }
+
+    suspend fun changeLanguage(language: String){
+        val response = userRemoteData.changeLanguage(language)
+        if (response.isSuccessful) {
+            val user = response.body()?.data
+            userDao.validate(user ?: UserDB(id = 0))
+        } else throw InternalException.OperationException(response.message())
+    }
 }

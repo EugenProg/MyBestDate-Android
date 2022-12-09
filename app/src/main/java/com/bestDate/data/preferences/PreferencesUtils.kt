@@ -16,6 +16,10 @@ class PreferencesUtils(private var preferences: SharedPreferences) {
         return preferences.getBoolean(key.name, false)
     }
 
+    fun getBooleanWithDefault(key: Preferences, default: Boolean): Boolean {
+        return preferences.getBoolean(key.name, default)
+    }
+
     fun saveString(key: Preferences, value: String) {
         val editor = preferences.edit()
         editor.putString(key.name, value)
