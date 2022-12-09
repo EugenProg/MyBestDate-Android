@@ -6,6 +6,7 @@ import com.bestDate.data.extension.getWeekdayWithTime
 import com.bestDate.data.extension.isToday
 import android.content.Context
 import com.bestDate.data.extension.*
+import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import kotlinx.parcelize.Parcelize
@@ -79,6 +80,10 @@ data class Meta(
     var current_page: Int? = null,
     var last_page: Int? = null
 )
+
+data class InvitationsListResponse(
+    val data: MutableList<Invitation>
+): BaseResponse()
 
 @Parcelize
 data class ShortUserData(

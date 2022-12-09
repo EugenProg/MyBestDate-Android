@@ -33,7 +33,7 @@ fun FragmentActivity.showMatchActionDialog(
     val dialog = getDialog(binding.root)
 
     with(binding) {
-        root.showWithSlideTopAnimation {
+        box.showWithSlideTopAnimation {
             Glide.with(this@showMatchActionDialog)
                 .load(match.user?.getMainPhoto()?.thumb_url)
                 .circleCrop()

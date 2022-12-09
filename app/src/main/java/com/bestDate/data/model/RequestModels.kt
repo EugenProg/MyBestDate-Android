@@ -69,3 +69,8 @@ data class PhotoStatusUpdateRequest(
 data class RequestLanguage(
     var language: String
 )
+
+data class SendInvitationRequest(
+    var invitation_id: Int,
+    var user_id: Int
+)

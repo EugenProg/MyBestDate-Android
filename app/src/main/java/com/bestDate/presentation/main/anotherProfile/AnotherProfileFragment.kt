@@ -1,4 +1,4 @@
-package com.bestDate.presentation.base.anotherProfile
+package com.bestDate.presentation.main.anotherProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +9,8 @@ import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
+import com.bestDate.db.entity.Invitation
+import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,12 +31,14 @@ class AnotherProfileFragment :
     private val args by navArgs<AnotherProfileFragmentArgs>()
 
     private var user: ShortUserData? = null
+    private var invitationList: MutableList<Invitation> = mutableListOf()
 
     override fun onInit() {
         super.onInit()
         makeStatusBarTransparent(binding.header.getTopBoxView())
         user = args.user
         viewModel.getUserById(user?.id)
+        viewModel.refreshInvitations()
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)
         binding.userInfoView.setUserInfo(user)
@@ -53,6 +57,11 @@ class AnotherProfileFragment :
         customBackNavigation = true
         binding.header.clickBack = {
             goBack()
+        }
+        binding.navBox.cardClick = {
+            requireActivity().showCreateInvitationDialog(invitationList) {
+                viewModel.sendInvitation(user?.id, it.id)
+            }
         }
         binding.header.clickAdditionally = {
             val sheet = AnotherProfileAdditionalBottomSheet(isBlocked)
@@ -89,6 +98,13 @@ class AnotherProfileFragment :
             val message = if (it) R.string.user_is_blocked_successful
                             else R.string.user_is_unlocked_successful
             showMessage(getString(message))
+        }
+
+        viewModel.invitations.observe(viewLifecycleOwner) {
+            invitationList = it
+        }
+        viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
+            showMessage("Invitation is send successfully")
         }
     }
 }

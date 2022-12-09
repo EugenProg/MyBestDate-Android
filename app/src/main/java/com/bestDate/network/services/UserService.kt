@@ -53,4 +53,8 @@ interface UserService {
         @Body filters: FilterOptions,
         @Query("page") page: Int
     ): Response<ShortUserListDataResponse>
+
+    /**Get user invitations*/
+    @GET("/api/v1/user/invitations")
+    suspend fun getInvitations(): Response<InvitationsListResponse>
 }

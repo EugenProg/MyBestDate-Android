@@ -79,8 +79,8 @@
             app:nullable="true" />
         <fragment
             android:id="@+id/anotherProfile"
-            android:name="com.bestDate.presentation.base.anotherProfile.AnotherProfileFragment"
-            android:label="AnotherProfileFragment">
+            android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileFragment"
+            android:label="AnotherProfileFragment" >
             <argument
                 android:name="user"
                 app:argType="com.bestDate.data.model.ShortUserData"
