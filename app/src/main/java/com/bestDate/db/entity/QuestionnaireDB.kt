@@ -39,7 +39,12 @@ data class QuestionnaireDB(
 
     fun getAgeRange(): String {
         val gson = Gson()
-        return gson.toJson(RangeBarView.Range(min = search_age_min ?: 27, max = search_age_max ?: 81))
+        return gson.toJson(
+            RangeBarView.Range(
+                min = search_age_min ?: 27,
+                max = search_age_max ?: 81
+            )
+        )
     }
 
     fun setLocation(answer: String?) {
@@ -58,8 +63,10 @@ data class QuestionnaireDB(
     fun isEmpty(): Boolean {
         for (f in javaClass.declaredFields) {
             f.isAccessible = true
+            if (f.name == "socials" || f.name == "hobby" || f.name == "sport") continue
             if (f[this] != null) return false
         }
+        if (!socials.isNullOrEmpty() || !hobby.isNullOrEmpty() || !sport.isNullOrEmpty()) return false
         return true
     }
 }
