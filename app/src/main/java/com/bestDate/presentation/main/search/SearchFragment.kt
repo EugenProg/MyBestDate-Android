@@ -31,6 +31,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     override fun onInit() {
         super.onInit()
+        viewModel.setNotFirstEnter()
         setUpSwipe()
         setUpToolbar()
         setUpRV()

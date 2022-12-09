@@ -43,6 +43,10 @@ interface UserService {
     @POST("/api/v1/unlock-user/{id}")
     suspend fun unlockUser(@Path("id") userId: Int): Response<BaseResponse>
 
+    /**Change language*/
+    @PUT("/api/v1/settings/language")
+    suspend fun changeLanguage(@Body body: RequestLanguage): Response<UserDataResponse>
+
     /**Get users*/
     @POST("/api/v1/users")
     suspend fun getUsers(

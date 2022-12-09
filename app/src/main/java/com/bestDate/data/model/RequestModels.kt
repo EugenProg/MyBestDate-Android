@@ -65,3 +65,7 @@ data class PhotoStatusUpdateRequest(
     var top: Boolean,
     var match: Boolean = false
 )
+
+data class RequestLanguage(
+    var language: String
+)

@@ -53,8 +53,8 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnClickListener {
-                navController.popBackStack()
+            backButton.setOnSaveClickListener {
+                goBack()
             }
             progressBar.onProgressChanged = {
                 if (it > 46) centerSurprise.hideSurprise()

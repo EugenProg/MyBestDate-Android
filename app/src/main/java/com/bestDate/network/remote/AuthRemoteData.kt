@@ -14,8 +14,7 @@ class AuthRemoteData @Inject constructor(private val service: CoreAuthService) {
     suspend fun loginSocial(provider: SocialProvider, token: String) =
         service.loginSocial(SocialAuthRequest(provider.serverName, token))
 
-    suspend fun refreshToken(token: String) =
-        service.refreshToken(RefreshRequest(token))
+    suspend fun refreshToken(token: String) = service.refreshToken(RefreshRequest(token))
 
     suspend fun logout() = service.logout()
 

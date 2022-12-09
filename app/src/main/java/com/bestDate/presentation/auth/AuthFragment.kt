@@ -37,12 +37,16 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 showMessage("facebook")
             }
             passForgotButton.setOnClickListener {
-                navController.navigate(AuthFragmentDirections
-                    .actionAuthFragmentToPassRecoveryFragment())
+                navController.navigate(
+                    AuthFragmentDirections
+                        .actionAuthFragmentToPassRecoveryFragment()
+                )
             }
             signUpButton.setOnClickListener {
-                navController.navigate(AuthFragmentDirections
-                    .actionAuthFragmentToStartRegistrationFragment())
+                navController.navigate(
+                    AuthFragmentDirections
+                        .actionAuthFragmentToStartRegistrationFragment()
+                )
             }
         }
     }
@@ -52,16 +56,38 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.authButton.toggleActionEnabled(it)
         }
-        viewModel.loginLiveData.observe(viewLifecycleOwner) {
-            navController.navigate(AuthFragmentDirections
-                .actionAuthFragmentToProfilePhotoEditingFragment()
-            )
+        viewModel.user.observe(viewLifecycleOwner) {
+            if (viewModel.user.value != null) {
+                val language = getString(R.string.app_language)
+                if (language != viewModel.user.value?.language) {
+                    viewModel.changeLanguage(language)
+                } else {
+                    chooseRoute()
+                }
+            }
         }
         viewModel.errorLive.observe(viewLifecycleOwner) {
             showMessage(getString(R.string.wrong_auth_data))
         }
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             showMessage(it)
+        }
+        viewModel.updateLanguageSuccessLiveData.observe(viewLifecycleOwner) {
+            chooseRoute()
+        }
+    }
+
+    private fun chooseRoute() {
+        when {
+            viewModel.user.value?.hasNoPhotos() == true -> {
+                navController.navigate(AuthFragmentDirections.actionAuthFragmentToProfilePhotoEditingFragment())
+            }
+            viewModel.user.value?.questionnaireEmpty() == true -> {
+                navController.navigate(AuthFragmentDirections.actionAuthFragmentToQuestionnaireFragment())
+            }
+            else -> {
+                navController.navigate(AuthFragmentDirections.actionAuthFragmenToMain())
+            }
         }
     }
 

@@ -11,7 +11,8 @@ import javax.inject.Singleton
 @Singleton
 class AuthUseCase @Inject constructor(
     private val authRemoteData: AuthRemoteData,
-    private val preferencesUtils: PreferencesUtils) {
+    private val preferencesUtils: PreferencesUtils
+) {
 
     suspend fun loginByEmail(email: String, password: String) {
         val response = authRemoteData.loginByEmail(email, password)
@@ -27,8 +28,22 @@ class AuthUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.message())
     }
 
+    suspend fun refreshToken() {
+        val response = authRemoteData.refreshToken(preferencesUtils.getString(Preferences.REFRESH_TOKEN))
+        if (response.isSuccessful) {
+            saveTokens(response.body())
+        } else throw InternalException.OperationException(response.message())
+    }
+
     private fun saveTokens(response: AuthResponse?) {
-        preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "Bearer ${response?.access_token.orEmpty()}")
+        preferencesUtils.saveString(
+            Preferences.ACCESS_TOKEN,
+            "Bearer ${response?.access_token.orEmpty()}"
+        )
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
+    }
+
+    fun saveFirstEnterInfo(isFirst: Boolean){
+        preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, isFirst)
     }
 }

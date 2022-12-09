@@ -5,5 +5,6 @@ enum class Preferences {
     ACCESS_TOKEN,
     REFRESH_TOKEN,
     FILTER_LOCATION,
-    FILTER_STATUS
+    FILTER_STATUS,
+    FIRST_ENTER
 }

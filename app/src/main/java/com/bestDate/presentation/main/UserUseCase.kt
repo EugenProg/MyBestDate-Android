@@ -82,4 +82,12 @@ class UserUseCase @Inject constructor(
         currentPage = 1
         lastPage = 1
     }
+
+    suspend fun changeLanguage(language: String){
+        val response = userRemoteData.changeLanguage(language)
+        if (response.isSuccessful) {
+            val user = response.body()?.data
+            userDao.validate(user ?: UserDB(id = 0))
+        } else throw InternalException.OperationException(response.message())
+    }
 }
