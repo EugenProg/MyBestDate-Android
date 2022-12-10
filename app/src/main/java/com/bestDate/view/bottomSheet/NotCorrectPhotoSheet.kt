@@ -10,11 +10,6 @@ class NotCorrectPhotoSheet: BaseBottomSheet<SheetNotCorrectPhotoBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetNotCorrectPhotoBinding =
         { inflater, parent, attach -> SheetNotCorrectPhotoBinding.inflate(inflater, parent, attach) }
 
-    override fun onInit() {
-        super.onInit()
-        binding.clearButton.title = getString(R.string.ok)
-    }
-
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.clearButton.onClick = {

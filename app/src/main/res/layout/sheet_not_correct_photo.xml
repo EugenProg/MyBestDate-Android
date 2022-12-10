@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:background="@color/bg_main">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         style="@style/title"
@@ -47,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_close"
+            app:tint="@color/bg_pink"
             app:layout_constraintBottom_toBottomOf="@+id/textView9"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView9" />
@@ -86,6 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_close"
+            app:tint="@color/bg_pink"
             app:layout_constraintBottom_toBottomOf="@+id/textView10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView10" />
@@ -125,6 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_close"
+            app:tint="@color/bg_pink"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView11" />
@@ -167,6 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_close"
+            app:tint="@color/bg_pink"
             app:layout_constraintBottom_toBottomOf="@+id/textView12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView12" />
@@ -208,6 +210,7 @@
     <com.bestDate.view.button.WhiteButton
         android:id="@+id/clearButton"
         style="@style/standard_button"
+        app:title="@string/ok"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp" />
 </LinearLayout>
