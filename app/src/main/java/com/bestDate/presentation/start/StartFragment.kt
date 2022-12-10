@@ -15,6 +15,9 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
         { inflater, parent, attach -> FragmentStartBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<StartViewModel> = StartViewModel::class.java
 
+    private var tokenIsRefreshed: Boolean = false
+    override val statusBarColor = R.color.bg_main
+
     override fun onInit() {
         super.onInit()
         when {
@@ -33,6 +36,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         viewModel.refreshSuccessLiveData.observe(viewLifecycleOwner) {
+            tokenIsRefreshed = true
             viewModel.refreshUser()
         }
         viewModel.errorLive.observe(viewLifecycleOwner) {
@@ -40,7 +44,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
             navController.navigate(StartFragmentDirections.actionStartToAuth())
         }
         viewModel.user.observe(viewLifecycleOwner) {
-            if (it != null) {
+            if (it != null && tokenIsRefreshed) {
                 val language = getString(R.string.app_language)
                 if (language != it.language) {
                     viewModel.changeLanguage(language)
@@ -57,13 +61,13 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
     private fun chooseRoute() {
         when {
             viewModel.user.value?.hasNoPhotos() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmentToProfilePhotoEditingFragment())
+                navController.navigate(StartFragmentDirections.actionStartToProfilePhotoEditing())
             }
             viewModel.user.value?.questionnaireEmpty() == true -> {
                 navController.navigate(AuthFragmentDirections.actionAuthFragmentToQuestionnaireFragment())
             }
             else -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmenToMain())
+                navController.navigate(StartFragmentDirections.actionStartToMainGraph())
             }
         }
     }
