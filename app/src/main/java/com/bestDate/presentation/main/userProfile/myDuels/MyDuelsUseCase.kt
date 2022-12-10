@@ -22,4 +22,8 @@ class MyDuelsUseCase @Inject constructor(
             }
         } else throw InternalException.OperationException(response.message())
     }
+
+    fun clearData() {
+        myDuels.postValue(mutableListOf())
+    }
 }
