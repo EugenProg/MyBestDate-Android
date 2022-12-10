@@ -85,6 +85,18 @@
                 android:name="user"
                 app:argType="com.bestDate.data.model.ShortUserData"
                 app:nullable="true" />
+            <action
+                android:id="@+id/action_anotherProfile_to_Questionnaire"
+                app:destination="@id/anotherQuestionnaireFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/anotherQuestionnaireFragment"
+            android:name="com.bestDate.presentation.main.anotherProfile.questionnaire.AnotherProfileQuestionnaireFragment"
+            android:label="AnotherProfileQuestionnaireFragment" >
+            <argument
+                android:name="user"
+                app:argType="com.bestDate.db.entity.UserDB"
+                app:nullable="true" />
         </fragment>
     </navigation>
     <navigation

@@ -1,6 +1,7 @@
 package com.bestDate.db.entity
 
 import android.annotation.SuppressLint
+import android.os.Parcelable
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,10 +12,12 @@ import com.bestDate.data.extension.getDiffYears
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
+import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity
+@Parcelize
 data class UserDB(
     @PrimaryKey val id: Int,
     var name: String? = null,
@@ -41,7 +44,7 @@ data class UserDB(
     var blocked_me: Boolean? = null,
     @Embedded
     var questionnaire: QuestionnaireDB? = null
-) {
+): Parcelable {
     fun getLocalizeGender(): Int {
         return when {
             gender == "male" && look_for?.contains("male") == true -> R.string.man_looking_for_a_man

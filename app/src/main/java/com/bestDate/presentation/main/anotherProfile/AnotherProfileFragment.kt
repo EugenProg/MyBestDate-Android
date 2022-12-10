@@ -10,6 +10,7 @@ import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
+import com.bestDate.db.entity.UserDB
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,7 @@ class AnotherProfileFragment :
     private val args by navArgs<AnotherProfileFragmentArgs>()
 
     private var user: ShortUserData? = null
+    private var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
 
     override fun onInit() {
@@ -76,6 +78,10 @@ class AnotherProfileFragment :
                 else viewModel.blockUser(user?.id)
             }
         }
+        binding.userInfoView.openQuestionnaire = {
+            navController.navigate(AnotherProfileFragmentDirections
+                .actionAnotherProfileToQuestionnaire(fullUser))
+        }
     }
 
     override fun goBack() {
@@ -92,6 +98,7 @@ class AnotherProfileFragment :
             binding.userBlockedView.setUserInfo(it)
             binding.navBox.isVisible = it?.blocked_me != true
             isBlocked = it?.blocked == true
+            fullUser = it
         }
 
         viewModel.blockLiveData.observe(viewLifecycleOwner) {

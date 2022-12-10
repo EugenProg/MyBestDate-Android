@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bestDate.view.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_decor_message">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_title="@string/general_information"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/aboutMe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/about_me"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/myHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/height"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/myWeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/weight"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/eyeColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/eye_color"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/hairColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/hair_color"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/hairLength"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/hair_length"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_title="@string/personal_information"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/maritalStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/marital_status"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/havingKids"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/having_kids"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/placeOfResidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/plase_of_residence"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/education"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/education"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/occupationalStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/occupational_status"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_title="@string/your_free_time"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/hobby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/hobby"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/typesOfSports"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/types_of_sports"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/eveningTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/evening_time"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireSocialView
+                android:id="@+id/socials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
