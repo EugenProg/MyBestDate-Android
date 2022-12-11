@@ -1,14 +1,17 @@
 package com.bestDate.view.filter
 
 import android.content.Context
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewFilterButtonBinding
+
 
 class FilterButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -18,7 +21,7 @@ class FilterButton @JvmOverloads constructor(
 
     var onClick: (() -> Unit)? = null
 
-    init{
+    init {
         binding.root.setOnSaveClickListener {
             onClick?.invoke()
         }
@@ -29,9 +32,11 @@ class FilterButton @JvmOverloads constructor(
             if (value) {
                 binding.textView.setTextColor(ContextCompat.getColor(context, R.color.blue))
                 binding.bgView.setBackgroundResource(R.drawable.bg_dark_solid_light_blue_stroke)
+                setTextViewDrawableColor(binding.textView, R.color.blue)
             } else {
-                binding.textView.setTextColor(ContextCompat.getColor(context, R.color.white))
+                binding.textView.setTextColor(ContextCompat.getColor(context, R.color.white_30))
                 binding.bgView.setBackgroundResource(R.drawable.bg_dark_solid_light_stroke)
+                setTextViewDrawableColor(binding.textView, R.color.white_6)
             }
             field = value
         }
@@ -42,4 +47,15 @@ class FilterButton @JvmOverloads constructor(
             field = value
         }
 
+    private fun setTextViewDrawableColor(textView: TextView, color: Int) {
+        for (drawable in textView.compoundDrawablesRelative) {
+            if (drawable != null) {
+                drawable.colorFilter =
+                    PorterDuffColorFilter(
+                        ContextCompat.getColor(textView.context, color),
+                        PorterDuff.Mode.SRC_IN
+                    )
+            }
+        }
+    }
 }
