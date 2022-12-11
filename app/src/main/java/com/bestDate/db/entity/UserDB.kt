@@ -72,7 +72,7 @@ data class UserDB(
     }
 
     fun getAge(): String {
-        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return ""
+        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return "18"
         return getDiffYears(yourDate, Date()).toString()
     }
 
@@ -82,4 +82,5 @@ data class UserDB(
 
     fun hasNoPhotos() = photos.isNullOrEmpty()
     fun questionnaireEmpty() = questionnaire?.isEmpty()
+    fun questionnaireFull() = questionnaire?.isFull()
 }

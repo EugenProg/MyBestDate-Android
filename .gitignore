@@ -24,3 +24,6 @@ local.properties
 *.log
 captures/
 .idea
+/best_date_key.jks
+/info.txt
+/app/release/

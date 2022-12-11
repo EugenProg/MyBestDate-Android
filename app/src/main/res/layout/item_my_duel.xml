@@ -157,12 +157,11 @@
             app:layout_constraintStart_toEndOf="@+id/voterImage"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView10"
+        <com.bestDate.view.verification.VerifyView
+            android:id="@+id/verifyView"
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_marginStart="7dp"
-            android:src="@drawable/ic_verify"
             app:layout_constraintBottom_toBottomOf="@+id/name"
             app:layout_constraintStart_toEndOf="@+id/name"
             app:layout_constraintTop_toTopOf="@+id/name" />
@@ -174,7 +173,7 @@
             android:layout_marginStart="8dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/name"
-            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintStart_toEndOf="@+id/verifyView"
             app:layout_constraintTop_toTopOf="@+id/name" />
 
         <TextView

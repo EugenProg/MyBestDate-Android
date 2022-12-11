@@ -108,7 +108,7 @@ data class ShortUserData(
     }
 
     fun getAge(): String {
-        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return ""
+        val yourDate = birthday?.let { it.getDateWithTimeOffset() } ?: return "18"
         return getDiffYears(yourDate, Date()).toString()
     }
 
