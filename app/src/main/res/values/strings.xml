@@ -506,5 +506,6 @@
     <string name="years_old">y</string>
     <string name="invitation_card">Invitation card</string>
     <string name="invite">To invite</string>
+    <string name="top_position">№%d</string>
 
 </resources>

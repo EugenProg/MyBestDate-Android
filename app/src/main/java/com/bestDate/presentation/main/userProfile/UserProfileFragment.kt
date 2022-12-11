@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.base.BasePhotoEditorFragment
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentUserProfileBinding
-import com.bestDate.base.BasePhotoEditorFragment
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -55,10 +55,19 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             navController.navigate(UserProfileFragmentDirections.actionProfileToLikesList())
         }
         binding.matchesListButton.click = {
-            navController.navigate(UserProfileFragmentDirections.actionProfileToMatchesList(mainPhotoUrl))
+            navController.navigate(
+                UserProfileFragmentDirections.actionProfileToMatchesList(
+                    mainPhotoUrl
+                )
+            )
         }
         binding.myDuelsButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToMyDuels())
+        }
+        binding.avatarContainer.setOnSaveClickListener {
+            viewModel.user.value?.photos?.toTypedArray()?.let {
+                navController.navigate(UserProfileFragmentDirections.actionProfileToSlider(it))
+            }
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
