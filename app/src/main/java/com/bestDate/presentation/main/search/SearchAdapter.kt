@@ -2,6 +2,8 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,10 @@ import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemLoadingSearchElementBinding
 import com.bestDate.databinding.ItemSearchProfilesElementBinding
 import com.bumptech.glide.Glide
+import kotlin.Boolean
+import kotlin.Int
+import kotlin.Unit
+import kotlin.run
 
 const val LOADING = 0
 const val ITEM = 1
@@ -89,6 +95,7 @@ class SearchAdapter : ListAdapter<ShortUserData, RecyclerView.ViewHolder>(Search
                     .load(item?.main_photo?.thumb_url)
                     .placeholder(R.drawable.ic_default_photo)
                     .into(binding.profileImageView)
+                onlineView.isVisible = item?.is_online == true
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)

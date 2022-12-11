@@ -118,36 +118,52 @@
     </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
 
     <View
-        android:id="@+id/_transparentCircleView"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/overlay_layout"
+        android:rotation="180"
+        app:layout_constraintBottom_toBottomOf="@+id/avatarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="12dp"
-        android:background="@drawable/bg_circle_transparent_white"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="@+id/avatarView"
-        app:layout_constraintStart_toStartOf="@+id/avatarView" />
+        app:layout_constraintStart_toStartOf="@+id/avatarView">
 
-    <View
-        android:id="@+id/_greenCircleView"
-        android:layout_width="6dp"
-        android:layout_height="6dp"
-        android:background="@drawable/bg_circle_green"
-        app:layout_constraintBottom_toBottomOf="@+id/_transparentCircleView"
-        app:layout_constraintEnd_toEndOf="@+id/_transparentCircleView"
-        app:layout_constraintStart_toStartOf="@+id/_transparentCircleView"
-        app:layout_constraintTop_toTopOf="@+id/_transparentCircleView" />
+        <FrameLayout
+            android:id="@+id/onlineView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/distanceTextView"
-        style="@style/component_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/_transparentCircleView"
-        app:layout_constraintStart_toEndOf="@+id/_transparentCircleView"
-        app:layout_constraintTop_toTopOf="@+id/_transparentCircleView"
-        tools:text="2.1 km" />
+            <View
+                android:id="@+id/_transparentCircleView"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle_transparent_white" />
 
+            <View
+                android:id="@+id/_greenCircleView"
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_circle_green" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/distanceTextView"
+            style="@style/component_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            tools:text="2.1 km" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

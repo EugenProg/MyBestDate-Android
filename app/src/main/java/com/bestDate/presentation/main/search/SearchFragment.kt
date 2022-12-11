@@ -18,8 +18,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         { inflater, parent, attach -> FragmentSearchBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<SearchViewModel> = SearchViewModel::class.java
 
-    override val navBarColor = R.color.main_dark
-    override val statusBarColor = R.color.main_dark
+    override val navBarColor = R.color.bg_main
+    override val statusBarColor = R.color.bg_main
     private val adapter: SearchAdapter = SearchAdapter()
     private lateinit var locationOptionsSheet: OptionsSheet
     private lateinit var statusOptionsSheet: OptionsSheet
