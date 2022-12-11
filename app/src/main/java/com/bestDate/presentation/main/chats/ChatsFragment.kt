@@ -14,8 +14,8 @@ class ChatsFragment : BaseVMFragment<FragmentChatsBinding, ChatsViewModel>() {
         { inflater, parent, attach -> FragmentChatsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<ChatsViewModel> = ChatsViewModel::class.java
 
-    override val navBarColor = R.color.main_dark
-    override val statusBarColor = R.color.main_dark
+    override val navBarColor = R.color.bg_main
+    override val statusBarColor = R.color.bg_main
 
     override val statusBarLight = false
     override val navBarLight = false

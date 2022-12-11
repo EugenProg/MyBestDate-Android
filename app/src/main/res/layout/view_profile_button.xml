@@ -67,11 +67,9 @@
 
         <View
             android:id="@+id/viewBadge"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="-4dp"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="2dp"
             android:background="@drawable/bg_pink_circle"
             android:elevation="5dp"
             app:layout_constraintStart_toStartOf="@+id/profileCircleView"
