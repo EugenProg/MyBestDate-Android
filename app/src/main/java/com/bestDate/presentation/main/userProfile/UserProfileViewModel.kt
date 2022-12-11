@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.userProfile
 import androidx.lifecycle.asLiveData
 import com.bestDate.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,6 +14,9 @@ class UserProfileViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
+    private var _signOutLiveData: LiveEvent<Boolean> = LiveEvent()
+    var signOutLiveData: LiveEvent<Boolean> = _signOutLiveData
+
     fun updateUserData() {
         doAsync {
             userUseCase.refreshUser()
@@ -22,6 +26,7 @@ class UserProfileViewModel @Inject constructor(
     fun signOut() {
         doAsync {
             userUseCase.logout()
+            _signOutLiveData.postValue(true)
         }
     }
 }

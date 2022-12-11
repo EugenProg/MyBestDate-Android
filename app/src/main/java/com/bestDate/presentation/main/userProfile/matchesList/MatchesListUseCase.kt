@@ -22,4 +22,8 @@ class MatchesListUseCase @Inject constructor(
             }
         } else throw InternalException.OperationException(response.message())
     }
+
+    fun clearData() {
+        matchesList.postValue(mutableListOf())
+    }
 }
