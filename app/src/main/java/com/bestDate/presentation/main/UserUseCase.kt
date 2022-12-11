@@ -3,11 +3,16 @@ package com.bestDate.presentation.main
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.dao.UserDao
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
+import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
+import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
+import com.bestDate.presentation.main.userProfile.myDuels.MyDuelsUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,7 +20,11 @@ import javax.inject.Singleton
 class UserUseCase @Inject constructor(
     private val userDao: UserDao,
     private val authRemoteData: AuthRemoteData,
-    private val userRemoteData: UserRemoteData
+    private val userRemoteData: UserRemoteData,
+    private val likesListUseCase: LikesListUseCase,
+    private val matchesListUseCase: MatchesListUseCase,
+    private val myDuelsUseCase: MyDuelsUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) {
 
     val getMyUser = userDao.getUserFlow()
@@ -33,16 +42,16 @@ class UserUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.message())
     }
 
-    suspend fun getUserById(id: Int) {
-        val response = userRemoteData.getUserById(id)
-        if (response.isSuccessful) {
-
-        } else throw InternalException.OperationException(response.message())
-    }
-
     suspend fun logout() {
         authRemoteData.logout()
         userDao.delete()
+        likesListUseCase.clearData()
+        matchesListUseCase.clearData()
+        myDuelsUseCase.clearData()
+        preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
+        preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
+        preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")
+        preferencesUtils.saveString(Preferences.FILTER_STATUS, "all")
     }
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {

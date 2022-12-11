@@ -23,4 +23,8 @@ class LikesListUseCase @Inject constructor(
             }
         } else throw InternalException.OperationException(response.message())
     }
+
+    fun clearData() {
+        likesList.postValue(mutableListOf())
+    }
 }

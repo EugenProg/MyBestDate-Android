@@ -86,7 +86,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 navController.navigate(AuthFragmentDirections.actionAuthFragmentToQuestionnaireFragment())
             }
             else -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmenToMain())
+                navController.navigate(AuthFragmentDirections.actionAuthToMain())
             }
         }
     }
