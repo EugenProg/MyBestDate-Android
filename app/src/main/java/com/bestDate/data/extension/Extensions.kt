@@ -2,6 +2,7 @@ package com.bestDate.data.extension
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -152,4 +153,9 @@ fun CropLayout.cropListener(success: ((Bitmap) -> Unit)? = null,
             success?.invoke(bitmap)
         }
     })
+}
+
+fun Context.openWebAddress(address: String?) {
+    if (address.isNullOrEmpty() || !address.contains("http")) return
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(address)))
 }
