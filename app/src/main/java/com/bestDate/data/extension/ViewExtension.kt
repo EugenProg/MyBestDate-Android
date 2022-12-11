@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.viewpager2.widget.ViewPager2
 import com.bestDate.R
 
 fun View.setMarginTop(marginTop: Int) {
@@ -118,4 +119,25 @@ fun View.rotateHorizontally(toggleVisibility: () -> Unit) {
     postDelayed({
         toggleVisibility.invoke()
     }, 150)
+}
+
+fun ViewPager2?.onPageChanged(onScrolled: ((position: Int,
+                                           positionOffset: Float,
+                                           positionOffsetPixels: Int) -> Unit)? = null,
+                             onSelected: ((position: Int) -> Unit)? = null) {
+    this?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            onScrolled?.invoke(position, positionOffset, positionOffsetPixels)
+        }
+
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            onSelected?.invoke(position)
+        }
+    })
 }

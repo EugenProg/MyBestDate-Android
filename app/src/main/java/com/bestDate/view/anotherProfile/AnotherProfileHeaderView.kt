@@ -28,6 +28,7 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
 
     var clickBack: (() -> Unit)? = null
     var clickAdditionally: (() -> Unit)? = null
+    var clickAvatar: (() -> Unit)? = null
 
     init {
         binding.back.onClick = {
@@ -35,6 +36,9 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
         }
         binding.additionalAction.setOnSaveClickListener {
             clickAdditionally?.invoke()
+        }
+        binding.avatar.setOnSaveClickListener {
+            clickAvatar?.invoke()
         }
     }
 

@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
@@ -26,11 +27,12 @@ class AnotherProfileFragment :
                 attach
             )
         }
-    override val viewModelClass: Class<AnotherProfileViewModel> = AnotherProfileViewModel::class.java
+    override val viewModelClass: Class<AnotherProfileViewModel> =
+        AnotherProfileViewModel::class.java
     override val statusBarLight = true
-    var isBlocked: Boolean = false
     private val args by navArgs<AnotherProfileFragmentArgs>()
 
+    var isBlocked: Boolean = false
     private var user: ShortUserData? = null
     private var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
@@ -51,7 +53,12 @@ class AnotherProfileFragment :
 
     private fun setBackground(isBlocked: Boolean?) {
         if (isBlocked == true) binding.root.setBackgroundResource(R.drawable.bg_blocked_profile)
-        else binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.bg_main))
+        else binding.root.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.bg_main
+            )
+        )
     }
 
     override fun onViewClickListener() {
@@ -76,6 +83,25 @@ class AnotherProfileFragment :
             sheet.blockClick = {
                 if (isBlocked) viewModel.unlockUser(user?.id)
                 else viewModel.blockUser(user?.id)
+            }
+        }
+        binding.header.clickAvatar = {
+            fullUser?.photos?.toTypedArray()?.let {
+                if (it.firstOrNull()?.id.orZero > 0) {
+                    navController.navigate(
+                        AnotherProfileFragmentDirections
+                            .actionAnotherProfileToSlider(it)
+                    )
+                }
+            }
+        }
+        binding.userInfoView.imageClick = { photo ->
+            val position = fullUser?.photos?.indexOfFirst { it.id == photo?.id } ?: 0
+            fullUser?.photos?.toTypedArray()?.let {
+                navController.navigate(
+                    AnotherProfileFragmentDirections
+                        .actionAnotherProfileToSlider(it, position)
+                )
             }
         }
         binding.userInfoView.openQuestionnaire = {
@@ -103,7 +129,7 @@ class AnotherProfileFragment :
 
         viewModel.blockLiveData.observe(viewLifecycleOwner) {
             val message = if (it) R.string.user_is_blocked_successful
-                            else R.string.user_is_unlocked_successful
+            else R.string.user_is_unlocked_successful
             showMessage(getString(message))
         }
 
@@ -111,7 +137,7 @@ class AnotherProfileFragment :
             invitationList = it
         }
         viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
-            showMessage("Invitation is send successfully")
+            showMessage(R.string.invitation_is_send_successful)
         }
     }
 }
