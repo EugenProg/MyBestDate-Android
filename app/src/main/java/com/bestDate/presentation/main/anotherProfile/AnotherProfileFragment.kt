@@ -30,9 +30,9 @@ class AnotherProfileFragment :
     override val viewModelClass: Class<AnotherProfileViewModel> =
         AnotherProfileViewModel::class.java
     override val statusBarLight = true
-    var isBlocked: Boolean = false
     private val args by navArgs<AnotherProfileFragmentArgs>()
 
+    var isBlocked: Boolean = false
     private var user: ShortUserData? = null
     private var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
@@ -133,7 +133,7 @@ class AnotherProfileFragment :
             invitationList = it
         }
         viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
-            showMessage("Invitation is send successfully")
+            showMessage(R.string.invitation_is_send_successful)
         }
     }
 }

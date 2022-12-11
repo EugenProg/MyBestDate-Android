@@ -17,13 +17,13 @@
         android:id="@+id/sliderView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/actionView"
+        app:layout_constraintBottom_toTopOf="@+id/navBox"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back" />
 
     <com.bestDate.view.anotherProfile.AnotherProfileBottomBoxView
-        android:id="@+id/actionView"
+        android:id="@+id/navBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
