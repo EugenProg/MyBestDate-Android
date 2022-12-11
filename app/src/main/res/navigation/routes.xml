@@ -170,10 +170,10 @@
 
         <navigation
             android:id="@+id/profile_nav_graph"
-            app:startDestination="@id/userProfileFragment2">
+            app:startDestination="@id/userProfileFragment">
 
             <fragment
-                android:id="@+id/userProfileFragment2"
+                android:id="@+id/userProfileFragment"
                 android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
                 android:label="UserProfileFragment">
                 <action
@@ -204,6 +204,9 @@
                     app:exitAnim="@anim/push_up_out"
                     app:popEnterAnim="@anim/push_down_in"
                     app:popExitAnim="@anim/push_down_out" />
+                <action
+                    android:id="@+id/action_profile_to_slider"
+                    app:destination="@id/userProfileSliderFragment" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -229,9 +232,18 @@
                 android:id="@+id/myDuelsFragment"
                 android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
                 android:label="MyDuelsFragment" />
+            <fragment
+                android:id="@+id/userProfileSliderFragment"
+                android:name="com.bestDate.presentation.main.userProfile.UserProfileSliderFragment"
+                android:label="UserProfileSliderFragment">
+                <argument
+                    android:name="photos"
+                    app:argType="com.bestDate.data.model.ProfileImage[]" />
+            </fragment>
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+
         </navigation>
 
         <navigation
@@ -252,6 +264,9 @@
                 <action
                     android:id="@+id/action_anotherProfile_to_questionnaire"
                     app:destination="@id/anotherProfileQuestionnaire" />
+                <action
+                    android:id="@+id/action_anotherProfile_to_slider"
+                    app:destination="@id/anotherProfileSliderFragment" />
             </fragment>
             <fragment
                 android:id="@+id/anotherProfileQuestionnaire"
@@ -261,6 +276,18 @@
                     android:name="user"
                     app:argType="com.bestDate.db.entity.UserDB"
                     app:nullable="true" />
+            </fragment>
+            <fragment
+                android:id="@+id/anotherProfileSliderFragment"
+                android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileSliderFragment"
+                android:label="AnotherProfileSliderFragment">
+                <argument
+                    android:name="photos"
+                    app:argType="com.bestDate.data.model.ProfileImage[]" />
+                <argument
+                    android:name="position"
+                    android:defaultValue="0"
+                    app:argType="integer" />
             </fragment>
         </navigation>
         <navigation

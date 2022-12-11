@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BasePhotoEditorFragment
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentUserProfileBinding
