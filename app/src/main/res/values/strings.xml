@@ -508,5 +508,6 @@
     <string name="invite">To invite</string>
     <string name="top_position">№%d</string>
     <string name="invitation_is_send_successful">Invitation is send successfully</string>
+    <string name="general_information">General information</string>
 
 </resources>

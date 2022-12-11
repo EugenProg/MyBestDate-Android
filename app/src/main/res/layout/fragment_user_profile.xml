@@ -214,9 +214,8 @@
                             app:button_image="@drawable/ic_setting"
                             app:button_name="@string/settings" />
 
-                        <include
+                        <com.bestDate.view.button.SignOutButtonView
                             android:id="@+id/signOutButton"
-                            layout="@layout/view_sign_out_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="18dp"

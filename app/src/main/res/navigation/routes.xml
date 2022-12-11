@@ -2,12 +2,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/routes"
-    app:startDestination="@id/main_nav_graph">
+    app:startDestination="@id/startFragment">
 
     <fragment
         android:id="@+id/startFragment"
         android:name="com.bestDate.presentation.start.StartFragment"
-        android:label="StartFragment" >
+        android:label="StartFragment">
         <action
             android:id="@+id/action_start_to_onboardStart"
             app:destination="@id/onboardStartFragment"
@@ -32,12 +32,12 @@
             android:id="@+id/action_start_to_main_graph"
             app:destination="@id/main_nav_graph"
             app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/onboardStartFragment"
         android:name="com.bestDate.presentation.onboarding.OnboardStartFragment"
-        android:label="OnboardStartFragment" >
+        android:label="OnboardStartFragment">
         <action
             android:id="@+id/action_onboardStartFragment_to_onboardSecondFragment"
             app:destination="@id/onboardSecondFragment"
@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/onboardSecondFragment"
         android:name="com.bestDate.presentation.onboarding.OnboardSecondFragment"
-        android:label="OnboardSecondFragment" >
+        android:label="OnboardSecondFragment">
         <action
             android:id="@+id/action_onboardSecondFragment_to_authFragment"
             app:destination="@id/authFragment"
@@ -72,10 +72,10 @@
     <fragment
         android:id="@+id/authFragment"
         android:name="com.bestDate.presentation.auth.AuthFragment"
-        android:label="AuthFragment" >
+        android:label="AuthFragment">
         <action
             android:id="@+id/action_authFragment_to_passRecoveryFragment"
-            app:destination="@id/passRecoveryFragment"
+            app:destination="@id/recovery_nev_graph"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -102,31 +102,19 @@
             app:popUpTo="@id/questionnaireFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_authFragmen_to_main"
+            android:id="@+id/action_auth_to_main"
             app:destination="@id/main_nav_graph"
             app:popUpTo="@id/main_nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/geoEnableFragment"
         android:name="com.bestDate.presentation.GeoEnableFragment"
         android:label="GeoEnableFragment" />
     <fragment
-        android:id="@+id/passRecoveryFragment"
-        android:name="com.bestDate.presentation.passRecovery.PassRecoveryFragment"
-        android:label="PassRecoveryFragment" >
-        <action
-            android:id="@+id/action_passRecoveryFragment_to_passRecoveryOtpFragment"
-            app:destination="@id/passRecoveryOtpFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
         android:id="@+id/startRegistrationFragment"
         android:name="com.bestDate.presentation.registration.StartRegistrationFragment"
-        android:label="StartRegistrationFragment" >
+        android:label="StartRegistrationFragment">
         <action
             android:id="@+id/action_startRegistrationFragment_to_authFragment"
             app:destination="@id/authFragment"
@@ -136,19 +124,7 @@
             app:popExitAnim="@anim/slide_out_left" />
         <action
             android:id="@+id/action_startRegistrationFragment_to_continueRegistrationFragment"
-            app:destination="@id/continueRegistrationFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/continueRegistrationFragment"
-        android:name="com.bestDate.presentation.registration.ContinueRegistrationFragment"
-        android:label="ContinueRegistrationFragment" >
-        <action
-            android:id="@+id/action_continueRegistrationFragment_to_registrationOtpFragment"
-            app:destination="@id/registrationOtpFragment"
+            app:destination="@id/registration_nav_graph"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -157,7 +133,7 @@
     <fragment
         android:id="@+id/profilePhotoEditingFragment"
         android:name="com.bestDate.presentation.profilePhotoEditor.ProfilePhotoEditingFragment"
-        android:label="ProfilePhotoEditingFragment" >
+        android:label="ProfilePhotoEditingFragment">
         <action
             android:id="@+id/action_profilePhotoEditingFragment_to_photoEditorFragment"
             app:destination="@id/registrationPhotoEditorFragment"
@@ -176,7 +152,7 @@
     <fragment
         android:id="@+id/questionnaireFragment"
         android:name="com.bestDate.presentation.questionnarie.QuestionnaireFragment"
-        android:label="QuestionnaireFragment" >
+        android:label="QuestionnaireFragment">
         <action
             android:id="@+id/action_questionnaireFragment_to_geoEnableFragment"
             app:destination="@id/geoEnableFragment"
@@ -187,53 +163,256 @@
             app:popUpTo="@id/geoEnableFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/registrationOtpFragment"
-        android:name="com.bestDate.presentation.registration.RegistrationOtpFragment"
-        android:label="RegistrationOtpFragment" >
-        <action
-            android:id="@+id/action_registrationOtpFragment_to_profilePhotoEditingFragment"
-            app:destination="@id/profilePhotoEditingFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/passRecoveryOtpFragment"
-        android:name="com.bestDate.presentation.passRecovery.PassRecoveryOtpFragment"
-        android:label="PassRecoveryOtpFragment" >
-        <action
-            android:id="@+id/action_passRecoveryOtpFragment_to_passRecoverySetNewFragment"
-            app:destination="@id/passRecoverySetNewFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/passRecoverySetNewFragment"
-        android:name="com.bestDate.presentation.passRecovery.PassRecoverySetNewFragment"
-        android:label="PassRecoverySetNewFragment" >
-        <action
-            android:id="@+id/action_passRecoverySetNewFragment_to_geoEnableFragment"
-            app:destination="@id/geoEnableFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
 
-    <include
+    <navigation
         android:id="@+id/main_nav_graph"
-        app:graph="@navigation/main_nav_graph" />
+        app:startDestination="@id/search_nav_graph">
+
+        <navigation
+            android:id="@+id/profile_nav_graph"
+            app:startDestination="@id/userProfileFragment2">
+
+            <fragment
+                android:id="@+id/userProfileFragment2"
+                android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
+                android:label="UserProfileFragment">
+                <action
+                    android:id="@+id/action_profile_to_photoEditor"
+                    app:destination="@id/userProfilePhotoEditorFragment"
+                    app:enterAnim="@anim/push_up_in"
+                    app:exitAnim="@anim/push_up_out"
+                    app:popEnterAnim="@anim/fade_in"
+                    app:popExitAnim="@anim/fade_out" />
+                <action
+                    android:id="@+id/action_profile_to_likesList"
+                    app:destination="@id/likesListFragment"
+                    app:enterAnim="@anim/push_up_in"
+                    app:exitAnim="@anim/push_up_out"
+                    app:popEnterAnim="@anim/push_down_in"
+                    app:popExitAnim="@anim/push_down_out" />
+                <action
+                    android:id="@+id/action_profile_to_matchesList"
+                    app:destination="@id/matchesListFragment"
+                    app:enterAnim="@anim/push_up_in"
+                    app:exitAnim="@anim/push_up_out"
+                    app:popEnterAnim="@anim/push_down_in"
+                    app:popExitAnim="@anim/push_down_out" />
+                <action
+                    android:id="@+id/action_profile_to_myDuels"
+                    app:destination="@id/myDuelsFragment"
+                    app:enterAnim="@anim/push_up_in"
+                    app:exitAnim="@anim/push_up_out"
+                    app:popEnterAnim="@anim/push_down_in"
+                    app:popExitAnim="@anim/push_down_out" />
+            </fragment>
+            <fragment
+                android:id="@+id/userProfilePhotoEditorFragment"
+                android:name="com.bestDate.presentation.main.userProfile.UserProfilePhotoEditorFragment"
+                android:label="UserProfilePhotoEditorFragment">
+                <argument
+                    android:name="selectedImage"
+                    app:argType="com.bestDate.data.model.Image" />
+            </fragment>
+            <fragment
+                android:id="@+id/likesListFragment"
+                android:name="com.bestDate.presentation.main.userProfile.likesList.LikesListFragment"
+                android:label="LikesListFragment" />
+            <fragment
+                android:id="@+id/matchesListFragment"
+                android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
+                android:label="MatchesListFragment">
+                <argument
+                    android:name="myPhoto"
+                    app:argType="string" />
+            </fragment>
+            <fragment
+                android:id="@+id/myDuelsFragment"
+                android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
+                android:label="MyDuelsFragment" />
+            <action
+                android:id="@+id/action_global_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+        </navigation>
+
+        <navigation
+            android:id="@+id/another_profile_nav_graph"
+            app:startDestination="@id/anotherProfile">
+            <argument
+                android:name="user"
+                app:argType="com.bestDate.data.model.ShortUserData"
+                app:nullable="true" />
+            <fragment
+                android:id="@+id/anotherProfile"
+                android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileFragment"
+                android:label="AnotherProfileFragment">
+                <argument
+                    android:name="user"
+                    app:argType="com.bestDate.data.model.ShortUserData"
+                    app:nullable="true" />
+                <action
+                    android:id="@+id/action_anotherProfile_to_questionnaire"
+                    app:destination="@id/anotherProfileQuestionnaire" />
+            </fragment>
+            <fragment
+                android:id="@+id/anotherProfileQuestionnaire"
+                android:name="com.bestDate.presentation.main.anotherProfile.questionnaire.AnotherProfileQuestionnaireFragment"
+                android:label="AnotherProfileQuestionnaireFragment">
+                <argument
+                    android:name="user"
+                    app:argType="com.bestDate.db.entity.UserDB"
+                    app:nullable="true" />
+            </fragment>
+        </navigation>
+        <navigation
+            android:id="@+id/search_nav_graph"
+            app:startDestination="@id/searchFragment">
+            <fragment
+                android:id="@+id/searchFragment"
+                android:name="com.bestDate.presentation.main.search.SearchFragment"
+                android:label="SearchFragment" />
+            <action
+                android:id="@+id/action_global_profile_nav_graph_from_search"
+                app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_another_profile_nav_graph2"
+                app:destination="@id/another_profile_nav_graph" />
+        </navigation>
+        <navigation
+            android:id="@+id/matches_nav_graph"
+            app:startDestination="@id/matchesFragment">
+            <fragment
+                android:id="@+id/matchesFragment"
+                android:name="com.bestDate.presentation.main.matches.MatchesFragment"
+                android:label="MatchesFragment" />
+            <action
+                android:id="@+id/action_global_profile_nav_graph_from_matches"
+                app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_another_profile_nav_graph3"
+                app:destination="@id/another_profile_nav_graph" />
+        </navigation>
+        <navigation
+            android:id="@+id/chats_nav_graph"
+            app:startDestination="@id/chatsFragment">
+            <fragment
+                android:id="@+id/chatsFragment"
+                android:name="com.bestDate.presentation.main.chats.ChatsFragment"
+                android:label="ChatsFragment" />
+            <action
+                android:id="@+id/action_global_profile_nav_graph_from_chats"
+                app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_another_profile_nav_graph4"
+                app:destination="@id/another_profile_nav_graph" />
+        </navigation>
+        <navigation
+            android:id="@+id/guests_nav_graph"
+            app:startDestination="@id/guestsFragment">
+            <fragment
+                android:id="@+id/guestsFragment"
+                android:name="com.bestDate.presentation.main.guests.GuestsFragment"
+                android:label="GuestsFragment" />
+            <action
+                android:id="@+id/action_global_another_profile_nav_graph5"
+                app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_nav_graph_from_guests"
+                app:destination="@id/profile_nav_graph" />
+        </navigation>
+        <navigation
+            android:id="@+id/top_nav_graph"
+            app:startDestination="@id/topFragment">
+            <fragment
+                android:id="@+id/topFragment"
+                android:name="com.bestDate.presentation.main.top.TopFragment"
+                android:label="TopFragment" />
+            <action
+                android:id="@+id/action_global_profile_nav_graph_from_top"
+                app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_another_profile_nav_graph6"
+                app:destination="@id/another_profile_nav_graph" />
+        </navigation>
+        <action
+            android:id="@+id/action_global_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/authFragment"
+            app:popUpToInclusive="true" />
+
+    </navigation>
 
     <fragment
         android:id="@+id/registrationPhotoEditorFragment"
         android:name="com.bestDate.presentation.profilePhotoEditor.RegistrationPhotoEditorFragment"
-        android:label="RegistrationPhotoEditorFragment" >
+        android:label="RegistrationPhotoEditorFragment">
         <argument
             android:name="selectedImage"
             app:argType="com.bestDate.data.model.Image" />
     </fragment>
+    <navigation
+        android:id="@+id/recovery_nev_graph"
+        app:startDestination="@id/passRecoveryFragment">
+        <fragment
+            android:id="@+id/passRecoverySetNewFragment"
+            android:name="com.bestDate.presentation.passRecovery.PassRecoverySetNewFragment"
+            android:label="PassRecoverySetNewFragment" />
+        <fragment
+            android:id="@+id/passRecoveryFragment"
+            android:name="com.bestDate.presentation.passRecovery.PassRecoveryFragment"
+            android:label="PassRecoveryFragment">
+            <action
+                android:id="@+id/action_passRecoveryFragment_to_passRecoveryOtpFragment"
+                app:destination="@id/passRecoveryOtpFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
+        </fragment>
+        <fragment
+            android:id="@+id/passRecoveryOtpFragment"
+            android:name="com.bestDate.presentation.passRecovery.PassRecoveryOtpFragment"
+            android:label="PassRecoveryOtpFragment">
+            <action
+                android:id="@+id/action_passRecoveryOtpFragment_to_passRecoverySetNewFragment"
+                app:destination="@id/passRecoverySetNewFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_geoEnableFragment"
+            app:destination="@id/geoEnableFragment"
+            app:popUpTo="@id/geoEnableFragment"
+            app:popUpToInclusive="true" />
+    </navigation>
+    <navigation
+        android:id="@+id/registration_nav_graph"
+        app:startDestination="@id/continueRegistrationFragment">
+        <fragment
+            android:id="@+id/continueRegistrationFragment"
+            android:name="com.bestDate.presentation.registration.ContinueRegistrationFragment"
+            android:label="ContinueRegistrationFragment">
+            <action
+                android:id="@+id/action_continueRegistrationFragment_to_registrationOtpFragment"
+                app:destination="@id/registrationOtpFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
+        </fragment>
+        <fragment
+            android:id="@+id/registrationOtpFragment"
+            android:name="com.bestDate.presentation.registration.RegistrationOtpFragment"
+            android:label="RegistrationOtpFragment"></fragment>
+        <action
+            android:id="@+id/action_global_profilePhotoEditingFragment"
+            app:destination="@id/profilePhotoEditingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/profilePhotoEditingFragment"
+            app:popUpToInclusive="true" />
+    </navigation>
 </navigation>

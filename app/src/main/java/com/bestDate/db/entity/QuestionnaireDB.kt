@@ -1,11 +1,14 @@
 package com.bestDate.db.entity
 
+import android.os.Parcelable
 import androidx.room.Entity
 import com.bestDate.data.extension.orZero
 import com.bestDate.view.seekBar.RangeBarView
 import com.google.gson.Gson
+import kotlinx.parcelize.Parcelize
 
 @Entity
+@Parcelize
 data class QuestionnaireDB(
     var purpose: String? = null,
     var expectations: String? = null,
@@ -28,7 +31,7 @@ data class QuestionnaireDB(
     var hobby: MutableList<String>? = mutableListOf(),
     var sport: MutableList<String>? = mutableListOf(),
     var evening_time: String? = null
-) {
+): Parcelable {
     fun getLocation(): String {
         if (search_country == null && search_city == null) return ""
 

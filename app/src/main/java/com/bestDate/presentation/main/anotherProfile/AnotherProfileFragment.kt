@@ -104,6 +104,10 @@ class AnotherProfileFragment :
                 )
             }
         }
+        binding.userInfoView.openQuestionnaire = {
+            navController.navigate(AnotherProfileFragmentDirections
+                .actionAnotherProfileToQuestionnaire(fullUser))
+        }
     }
 
     override fun goBack() {

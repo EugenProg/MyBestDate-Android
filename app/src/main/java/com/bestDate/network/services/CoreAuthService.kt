@@ -22,7 +22,7 @@ interface CoreAuthService {
 
     /**refresh token*/
     @Headers("isAuthorize: false")
-    @GET("/api/v1/refresh-token")
+    @POST("/api/v1/refresh-token")
     suspend fun refreshToken(@Body request: RefreshRequest): Response<AuthResponse>
 
     /**logout*/
