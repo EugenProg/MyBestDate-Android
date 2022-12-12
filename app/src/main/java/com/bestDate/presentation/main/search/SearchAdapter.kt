@@ -96,6 +96,7 @@ class SearchAdapter : ListAdapter<ShortUserData, RecyclerView.ViewHolder>(Search
                     .placeholder(R.drawable.ic_default_photo)
                     .into(binding.profileImageView)
                 onlineView.isVisible = item?.is_online == true
+                verifyView.isVerified = item?.full_questionnaire
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)

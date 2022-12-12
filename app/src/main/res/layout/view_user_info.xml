@@ -71,13 +71,12 @@
                     android:textSize="26sp"
                     tools:text="Safira Artemeva" />
 
-                <ImageView
-                    android:id="@+id/isFull"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.bestDate.view.verification.VerifyView
+                    android:id="@+id/verifyView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="12dp"
-                    android:src="@drawable/ic_verify"
                     app:layout_constraintBottom_toBottomOf="@+id/frameLayout"
                     app:layout_constraintStart_toEndOf="@+id/frameLayout"
                     app:layout_constraintTop_toTopOf="@+id/frameLayout" />

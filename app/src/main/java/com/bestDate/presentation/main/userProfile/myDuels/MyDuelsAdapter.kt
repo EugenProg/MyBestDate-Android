@@ -39,6 +39,7 @@ class MyDuelsAdapter: ListAdapter<MyDuel, MyDuelsAdapter.MyDuelsViewHolder>(MyDu
                 location.text = item.voter?.getLocation()
                 time.text = itemView.context.getString(R.string.you_were_voted_for,
                     item.getVisitPeriod(itemView.context))
+                verifyView.isVerified = item.voter?.full_questionnaire
 
                 voterBox.setOnSaveClickListener {
                     itemClick?.invoke(item.voter)

@@ -43,6 +43,7 @@ class MatchesListAdapter(private val myPhotoUrl: String) :
                 name.text = item.user?.name
                 location.text = item.user?.getLocation()
                 time.text = item.getTime()
+                verifyView.isVerified = item.user?.full_questionnaire
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item, MatchesSelectType.USER)

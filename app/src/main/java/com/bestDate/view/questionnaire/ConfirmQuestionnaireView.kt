@@ -42,14 +42,6 @@ class ConfirmQuestionnaireView @JvmOverloads constructor(
     get() = itemIsConfirmed
     set(value) {
         itemIsConfirmed = value
-        setConfirmationColor(value)
-    }
-
-    private fun setConfirmationColor(confirm: Boolean) {
-        val color = ContextCompat.getColor(context,
-            if (confirm) R.color.bg_pink else R.color.main_20_without_opacity
-        )
-        binding.confirmedImage.setColorFilter(color)
-        binding.confirmedText.isVisible = confirm
+        binding.confirmedImage.isVerified = isConfirm
     }
 }
