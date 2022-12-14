@@ -100,6 +100,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 }
                 binding.name.text = user?.name
                 binding.birthdate.text = user?.getFormattedBirthday()
+                binding.verifyView.isVerified = user?.questionnaireFull()
 
                 adapter.submitList(getImageList(user?.photos)) {
                     binding.refreshView.isRefreshing = false

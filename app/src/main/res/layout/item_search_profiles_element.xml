@@ -48,10 +48,10 @@
                     android:textStyle="bold"
                     tools:text="Alice Lebedeva Pavlovna Lalalalalallalaallaallalalalalalallalalalalallala" />
 
-                <com.bestDate.view.verification.VerifyItem
+                <com.bestDate.view.verification.VerifyView
                     android:id="@+id/verifyView"
-                    android:layout_width="14dp"
-                    android:layout_height="14dp"
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
                     android:layout_marginStart="7dp" />
 
             </TableRow>

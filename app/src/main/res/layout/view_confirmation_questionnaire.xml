@@ -55,13 +55,11 @@
         app:layout_constraintEnd_toStartOf="@+id/confirmedImage"
         app:layout_constraintTop_toTopOf="@+id/confirmedImage" />
 
-    <ImageView
+    <com.bestDate.view.verification.VerifyView
         android:id="@+id/confirmedImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="34dp"
-        android:src="@drawable/ic_verify"
-        app:tint="@color/main_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

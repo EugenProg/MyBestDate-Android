@@ -49,6 +49,7 @@ class AnotherProfileInfoView @JvmOverloads constructor(
                 name.text = user?.name
                 age.text = user?.getAge()
                 location.text = user?.getLocation()
+                verifyView.isVerified = user?.full_questionnaire
             }
         }
     }
@@ -62,6 +63,7 @@ class AnotherProfileInfoView @JvmOverloads constructor(
                 name.text = user?.name
                 age.text = user?.getAge()
                 location.text = user?.getUserLocation()
+                verifyView.isVerified = user?.questionnaireFull()
             }
         }
     }

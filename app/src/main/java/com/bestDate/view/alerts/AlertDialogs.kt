@@ -47,6 +47,7 @@ fun FragmentActivity.showMatchActionDialog(
 
             name.text = match.user?.name
             location.text = match.user?.getLocation()
+            verifyView.isVerified = match.user?.full_questionnaire
         }
 
         avatarBox.setOnSaveClickListener {
