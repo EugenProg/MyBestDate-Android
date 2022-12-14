@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setAttrs
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -23,6 +24,8 @@ class ToolbarView  @JvmOverloads constructor(
             binding.additionalAction.visibility =
                 if (it.getBoolean(R.styleable.ToolbarView_toolbar_action_visible, false)) VISIBLE
                 else INVISIBLE
+            binding.line.isVisible =
+                it.getBoolean(R.styleable.ToolbarView_toolbar_line_visibility, true)
         }
 
         binding.back.onClick = {

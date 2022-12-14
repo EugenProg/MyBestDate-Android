@@ -1,5 +1,9 @@
 package com.bestDate.data.model
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.bestDate.R
+
 data class EmailAuthRequest(
     val username: String,
     val password: String,
@@ -74,3 +78,24 @@ data class SendInvitationRequest(
     var invitation_id: Int,
     var user_id: Int
 )
+data class InvitationAnswerRequest(
+    var answer_id: Int
+)
+
+data class UserInvitationRequest(
+    var filter: String
+)
+
+enum class InvitationAnswer(var id: Int, @StringRes var title: Int, @DrawableRes val button: Int) {
+    YES(1, R.string.yes_i_agree, R.drawable.positive_answer_btn),
+    YES_NEXT_TIME(2, R.string.yes_i_will_but_next_time, R.drawable.positive_answer_btn),
+    NO(3, R.string.no, R.drawable.negative_answer_btn),
+    NOT_YET(4, R.string.thanks_but_i_cant_yet, R.drawable.negative_answer_btn),
+    NONE(0, R.string.no, R.drawable.negative_answer_btn)
+}
+
+enum class InvitationFilter(var serverName: String) {
+    NEW("new"),
+    ANSWERED("answered"),
+    SENT("sent")
+}

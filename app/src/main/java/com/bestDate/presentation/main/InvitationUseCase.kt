@@ -28,9 +28,4 @@ class InvitationUseCase @Inject constructor(
         val response = remoteData.sendInvitation(userId.orZero, invitationId)
         if (!response.isSuccessful) throw InternalException.OperationException(response.message())
     }
-
-    suspend fun answerToInvitation(invitationId: Int) {
-        val response = remoteData.answerToInvitation(invitationId)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
-    }
 }
