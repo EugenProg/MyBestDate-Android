@@ -12,15 +12,15 @@ class GuestsUseCase @Inject constructor(
 ) {
     var guestsListNew: MutableLiveData<MutableList<Guest>> = MutableLiveData()
     var guestsListPrev: MutableLiveData<MutableList<Guest>> = MutableLiveData()
-    var guestsListIsEmpty: MutableLiveData<Boolean> = MutableLiveData(false)
+    var guestsListIsEmpty: MutableLiveData<Boolean> = MutableLiveData()
 
     suspend fun getGuestsList() {
         val response = guestsRemoteData.getGuestsList()
         if (response.isSuccessful) {
             response.body()?.let {
-                guestsListIsEmpty.postValue(it.data.isEmpty())
                 guestsListNew.postValue(it.data.filter { !it.viewed }.toMutableList())
                 guestsListPrev.postValue(it.data.filter { it.viewed }.toMutableList())
+                guestsListIsEmpty.postValue(it.data.isEmpty())
             }
         } else throw InternalException.OperationException(response.message())
     }

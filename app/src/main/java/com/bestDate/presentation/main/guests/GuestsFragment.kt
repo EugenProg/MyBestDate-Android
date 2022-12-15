@@ -85,6 +85,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             adapterNew.submitList(guestsList) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.newHeader.root.isVisible = guestsList.isNotEmpty()
+                binding.noDataViewWithLoading.noData = viewModel.guestsListIsEmpty.value == true
             }
             viewModel.markGuestsViewed(guestsList.map {
                 it.id
@@ -95,17 +96,13 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             adapterPrev.submitList(it) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.prevHeader.root.isVisible = it.isNotEmpty()
+                binding.noDataViewWithLoading.noData = viewModel.guestsListIsEmpty.value == true
             }
-        }
-
-        viewModel.guestsListIsEmpty.observe(viewLifecycleOwner) {
-            if (!it) binding.swipeRefresh.isRefreshing = false
-            binding.noDataViewWithLoading.noData = it
         }
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) {
             if (!binding.swipeRefresh.isRefreshing &&
-                viewModel.guestsListIsEmpty.value == true
+                viewModel.guestsListIsEmpty.value != true
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
     }
