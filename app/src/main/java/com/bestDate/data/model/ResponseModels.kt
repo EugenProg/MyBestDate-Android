@@ -89,7 +89,7 @@ data class InvitationsListResponse(
 
 data class UserInvitationsResponse(
     val data: MutableList<InvitationCard>
-): BaseResponse()
+) : BaseResponse()
 
 @Parcelize
 data class ShortUserData(
@@ -164,14 +164,14 @@ data class MyDuel(
 }
 
 data class GuestsResponse(
-    val data: MutableList<Guest>
+    val data: MutableList<Guest>? = null
 ) : BaseResponse()
 
 data class Guest(
-    val id: Int,
-    val visit_at: String,
-    val viewed: Boolean,
-    val guest: ShortUserData
+    val id: Int? = null,
+    val visit_at: String? = null,
+    val viewed: Boolean? = null,
+    val guest: ShortUserData? = null
 )
 
 
@@ -184,7 +184,7 @@ data class InvitationCard(
     var created_at: String? = null
 ) {
     fun getAnswer(): InvitationAnswer {
-        return when(answer?.id) {
+        return when (answer?.id) {
             1 -> InvitationAnswer.YES
             2 -> InvitationAnswer.YES_NEXT_TIME
             3 -> InvitationAnswer.NOT_YET

@@ -18,9 +18,9 @@ class GuestsUseCase @Inject constructor(
         val response = guestsRemoteData.getGuestsList()
         if (response.isSuccessful) {
             response.body()?.let {
-                guestsListNew.postValue(it.data.filter { !it.viewed }.toMutableList())
-                guestsListPrev.postValue(it.data.filter { it.viewed }.toMutableList())
-                guestsListIsEmpty.postValue(it.data.isEmpty())
+                guestsListNew.postValue(it.data?.filter { it.viewed == false }?.toMutableList())
+                guestsListPrev.postValue(it.data?.filter { it.viewed == true }?.toMutableList())
+                guestsListIsEmpty.postValue(it.data?.isEmpty())
             }
         } else throw InternalException.OperationException(response.message())
     }

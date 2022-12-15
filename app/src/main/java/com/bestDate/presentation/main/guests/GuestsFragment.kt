@@ -87,9 +87,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
                 binding.newHeader.root.isVisible = guestsList.isNotEmpty()
                 binding.noDataViewWithLoading.noData = viewModel.guestsListIsEmpty.value == true
             }
-            viewModel.markGuestsViewed(guestsList.map {
-                it.id
-            }.toMutableList())
+            viewModel.markGuestsViewed(guestsList.map { it.id }.toMutableList())
         }
 
         viewModel.guestsListPrev.observe(viewLifecycleOwner) {

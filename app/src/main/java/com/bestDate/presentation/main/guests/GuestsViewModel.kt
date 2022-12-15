@@ -40,7 +40,7 @@ class GuestsViewModel @Inject constructor(
         }
     }
 
-    fun markGuestsViewed(list: MutableList<Int>) {
+    fun markGuestsViewed(list: MutableList<Int?>) {
         doAsync {
             guestsUseCase.markGuestsViewed(
                 IdListRequest(list)

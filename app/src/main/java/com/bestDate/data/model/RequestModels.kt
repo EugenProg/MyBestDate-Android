@@ -61,7 +61,7 @@ data class RegistrationRequest(
 )
 
 data class IdListRequest(
-    var ids: MutableList<Int>
+    var ids: MutableList<Int?>
 )
 
 data class PhotoStatusUpdateRequest(
