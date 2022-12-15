@@ -510,5 +510,6 @@
     <string name="invitation_is_send_successful">Invitation is send successfully</string>
     <string name="general_information">General information</string>
     <string name="visited">Visited</string>
-
+    <string name="new_guests">New guests</string>
+    <string name="prev_guests">Previous guests</string>
 </resources>

@@ -39,21 +39,27 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     }
 
     private fun setUpGuestsList() {
-        binding.recyclerViewGuestsNew.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapterNew.itemClick = {
-                goToAnotherProfile(it?.guest)
-            }
-            adapter = adapterNew
+        binding.run {
+            newHeader.root.text = getString(R.string.new_guests)
+            recyclerViewGuestsNew.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapterNew.itemClick = {
+                    goToAnotherProfile(it?.guest)
+                }
+                adapter = adapterNew
 
-        }
-        binding.recyclerViewGuestsPrev.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapterPrev.itemClick = {
-                goToAnotherProfile(it?.guest)
             }
-            adapter = adapterPrev
+
+            prevHeader.root.text = getString(R.string.prev_guests)
+            recyclerViewGuestsPrev.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapterPrev.itemClick = {
+                    goToAnotherProfile(it?.guest)
+                }
+                adapter = adapterPrev
+            }
         }
+
         viewModel.getGuests()
     }
 
