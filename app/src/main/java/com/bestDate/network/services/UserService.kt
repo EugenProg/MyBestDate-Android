@@ -55,6 +55,6 @@ interface UserService {
     ): Response<ShortUserListDataResponse>
 
     /**Get user invitations*/
-    @GET("/api/v1/user/invitations")
-    suspend fun getInvitations(): Response<InvitationsListResponse>
+    @POST("/api/v1/user/invitations")
+    suspend fun getInvitations(@Body body: UserInvitationRequest): Response<UserInvitationsResponse>
 }

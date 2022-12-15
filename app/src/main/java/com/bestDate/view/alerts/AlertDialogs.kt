@@ -1,5 +1,7 @@
 package com.bestDate.view.alerts
 
+import android.app.Activity
+import android.app.Dialog
 import android.view.Gravity
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
@@ -8,6 +10,7 @@ import com.bestDate.data.extension.*
 import com.bestDate.data.model.Match
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.DialogDefaultBinding
+import com.bestDate.databinding.DialogLoadingBinding
 import com.bestDate.databinding.DialogMatchActionBinding
 import com.bumptech.glide.Glide
 
@@ -20,6 +23,20 @@ fun FragmentActivity.showDefaultDialog(message: String) {
     postDelayed({
         dialog.dismiss()
     }, 2200)
+}
+
+class LoaderDialog(val activity: Activity) {
+    private val binding: DialogLoadingBinding =
+        DialogLoadingBinding.inflate(activity.layoutInflater)
+    private var dialog: Dialog? = null
+
+    fun startLoading() {
+        dialog = getDialog(binding.root)
+    }
+
+    fun stopLoading() {
+        dialog?.dismiss()
+    }
 }
 
 fun FragmentActivity.showMatchActionDialog(

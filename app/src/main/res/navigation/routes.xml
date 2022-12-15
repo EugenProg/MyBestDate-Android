@@ -207,6 +207,9 @@
                 <action
                     android:id="@+id/action_profile_to_slider"
                     app:destination="@id/userProfileSliderFragment" />
+                <action
+                    android:id="@+id/action_profile_to_invitationList"
+                    app:destination="@id/invitationListFragment" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -240,6 +243,10 @@
                     android:name="photos"
                     app:argType="com.bestDate.data.model.ProfileImage[]" />
             </fragment>
+            <fragment
+                android:id="@+id/invitationListFragment"
+                android:name="com.bestDate.presentation.main.userProfile.invitationList.InvitationListFragment"
+                android:label="InvitationListFragment" />
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
@@ -442,4 +449,5 @@
             app:popUpTo="@id/profilePhotoEditingFragment"
             app:popUpToInclusive="true" />
     </navigation>
+
 </navigation>

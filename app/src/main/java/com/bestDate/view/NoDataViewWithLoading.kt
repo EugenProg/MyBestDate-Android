@@ -25,6 +25,10 @@ class NoDataViewWithLoading @JvmOverloads constructor(
         }
     }
 
+    fun setTitle(title: String) {
+        binding.title.text = title
+    }
+
     var noData: Boolean = false
     set(value) {
         binding.root.isVisible = value

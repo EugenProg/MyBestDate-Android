@@ -509,5 +509,20 @@
     <string name="top_position">№%d</string>
     <string name="invitation_is_send_successful">Invitation is send successfully</string>
     <string name="general_information">General information</string>
+    <string name="_new">New</string>
+    <string name="answered">Answered</string>
+    <string name="sent">Sent</string>
+    <string name="you_have_no_new_invitations">Sorry, you have no new invitations</string>
+    <string name="you_have_no_answered_invitations">Sorry, you have no answered invitations</string>
+    <string name="you_have_no_invitations_sent">Sorry, you have no invitations sent</string>
+    <string name="invitations">Invitations</string>
+    <string name="yes_i_agree">Yes I agree</string>
+    <string name="yes_i_will_but_next_time">Yes, I will, but next time</string>
+    <string name="thanks_but_i_cant_yet">Thanks, but I can’t yet</string>
+    <string name="you_have_received_an_invitation_please_give_an_answer">You have received an invitation,\nplease give an answer</string>
+    <string name="answer_choice">Answer Choice</string>
+    <string name="we_have_transmitted_your_reply_to_the_sender">We have transmitted your\nreply to the sender</string>
+    <string name="you_invited">You invited</string>
+    <string name="user_has_not_given_answer_yet">%s hasn’t given an answer yet</string>
 
 </resources>

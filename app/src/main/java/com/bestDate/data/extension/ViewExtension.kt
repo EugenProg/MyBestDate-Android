@@ -107,10 +107,10 @@ fun View.showWithSlideTopAndRotateAnimation(showViews: (() -> Unit)? = null) {
     }, 100)
 }
 
-fun View.rotateHorizontally(toggleVisibility: () -> Unit) {
+fun View.rotateHorizontally(degree: Float = 180f, toggleVisibility: () -> Unit) {
     val animator = AnimatorSet()
 
-    val rotation = ObjectAnimator.ofFloat(this, View.ROTATION_Y, 180f)
+    val rotation = ObjectAnimator.ofFloat(this, View.ROTATION_Y, degree)
     animator.duration = 300
     animator.interpolator = AccelerateDecelerateInterpolator()
     animator.play(rotation)

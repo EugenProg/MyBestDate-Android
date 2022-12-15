@@ -10,7 +10,7 @@ import com.bestDate.data.extension.setAttrs
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.BackButtonViewBinding
 
-class BackButtonView  @JvmOverloads constructor(
+class BackButtonView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): LinearLayout(context, attrs, defStyleAttr) {
 
