@@ -59,12 +59,19 @@ class CustomBottomNavView @JvmOverloads constructor(
 
     }
 
+    fun setBadge(type: BottomButton, isOn: Boolean) {
+        val button = when (type) {
+            BottomButton.CHATS -> binding.buttonChats
+            BottomButton.GUESTS -> binding.buttonGuests
+        }
+        button.hasBadge = isOn
+    }
+
     private fun setUpButton(
         button: CustomBottomNavButtonView,
         icon: Int,
         iconActive: Int,
-        label: Int,
-        hasBadge: Boolean = false
+        label: Int
     ) {
         button.icon = icon
         button.iconActive = iconActive
@@ -72,8 +79,6 @@ class CustomBottomNavView @JvmOverloads constructor(
         button.onClick = {
             handleButtonsActive(button)
         }
-        button.hasBadge = hasBadge
-
     }
 
     private fun handleButtonsActive(button: CustomBottomNavButtonView) {
@@ -127,4 +132,9 @@ class CustomBottomNavView @JvmOverloads constructor(
             }
         }
     }
+}
+
+enum class BottomButton {
+    CHATS,
+    GUESTS
 }

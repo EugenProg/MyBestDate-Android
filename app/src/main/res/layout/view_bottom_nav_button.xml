@@ -31,8 +31,9 @@
             android:id="@+id/viewBadge"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:background="@drawable/bg_pink_circle"
             android:layout_marginEnd="-4dp"
+            android:background="@drawable/bg_pink_circle"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/iconImageView"
             app:layout_constraintTop_toTopOf="parent" />
 

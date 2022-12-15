@@ -512,4 +512,5 @@
     <string name="visited">Visited</string>
     <string name="new_guests">New guests</string>
     <string name="prev_guests">Previous guests</string>
+    <string name="new_visit">New Visit</string>
 </resources>

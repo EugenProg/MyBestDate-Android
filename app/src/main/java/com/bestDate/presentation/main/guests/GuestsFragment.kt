@@ -29,6 +29,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         super.onInit()
         setUpToolbar()
         setUpGuestsList()
+        setUpSwipe()
     }
 
     private fun setUpToolbar() {
@@ -67,16 +68,27 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         navController.navigate(GuestsFragmentDirections.actionGlobalAnotherProfileNavGraph(user))
     }
 
+    private fun setUpSwipe() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.clearData()
+            viewModel.refreshUser()
+            viewModel.getGuests()
+        }
+    }
+
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         viewModel.user.observe(viewLifecycleOwner) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
         }
-        viewModel.guestsListNew.observe(viewLifecycleOwner) {
-            adapterNew.submitList(it) {
+        viewModel.guestsListNew.observe(viewLifecycleOwner) { guestsList ->
+            adapterNew.submitList(guestsList) {
                 binding.swipeRefresh.isRefreshing = false
-                binding.newHeader.root.isVisible = it.isNotEmpty()
+                binding.newHeader.root.isVisible = guestsList.isNotEmpty()
             }
+            viewModel.markGuestsViewed(guestsList.map {
+                it.id
+            }.toMutableList())
         }
 
         viewModel.guestsListPrev.observe(viewLifecycleOwner) {
@@ -86,13 +98,14 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             }
         }
 
-        viewModel.guestsList.observe(viewLifecycleOwner) {
-            binding.noDataViewWithLoading.noData = it.isEmpty()
+        viewModel.guestsListIsEmpty.observe(viewLifecycleOwner) {
+            if (!it) binding.swipeRefresh.isRefreshing = false
+            binding.noDataViewWithLoading.noData = it
         }
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) {
             if (!binding.swipeRefresh.isRefreshing &&
-                viewModel.guestsList.value.isNullOrEmpty()
+                viewModel.guestsListIsEmpty.value == true
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
     }

@@ -8,18 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.base.BaseClickViewHolder
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.data.extension.getVisitPeriod
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.Guest
-import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemGuestBinding
-import com.bestDate.databinding.ItemHeaderBinding
-import com.bestDate.databinding.ItemLoadingSearchElementBinding
-import com.bestDate.databinding.ItemSearchProfilesElementBinding
 import com.bumptech.glide.Glide
-
-const val HEADER = 0
-const val ITEM = 1
 
 class GuestsAdapter : ListAdapter<Guest, RecyclerView.ViewHolder>(GuestsDiffUtils()) {
 
@@ -56,7 +49,9 @@ class GuestsAdapter : ListAdapter<Guest, RecyclerView.ViewHolder>(GuestsDiffUtil
     ) {
         override fun bindView(item: Guest?, itemClick: ((Guest?) -> Unit)?) {
             binding.run {
+                newVisitTextView.isVisible = item?.viewed == false
                 nameTextView.text = item?.guest?.name
+                timeTextView.text = item?.visit_at.getVisitPeriod(binding.root.context)
                 locationTextView.text =
                     "${item?.guest?.location?.city}, ${item?.guest?.location?.country}"
                 ageTextView.text = item?.guest?.getAge()
@@ -64,6 +59,7 @@ class GuestsAdapter : ListAdapter<Guest, RecyclerView.ViewHolder>(GuestsDiffUtil
                     .load(item?.guest?.main_photo?.thumb_url)
                     .placeholder(R.drawable.ic_default_photo)
                     .into(binding.profileImageView)
+                verifyView.isVerified = item?.guest?.full_questionnaire
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)
