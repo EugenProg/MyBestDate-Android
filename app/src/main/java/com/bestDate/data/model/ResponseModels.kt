@@ -5,6 +5,7 @@ import com.bestDate.data.extension.getTime
 import com.bestDate.data.extension.getWeekdayWithTime
 import com.bestDate.data.extension.isToday
 import android.content.Context
+import android.provider.ContactsContract.Profile
 import com.bestDate.data.extension.*
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
@@ -37,8 +38,9 @@ data class ProfileImage(
     var top: Boolean? = null,
     var top_place: Int? = null,
     var liked: Boolean? = null,
-    var likes: Int? = null
-): Parcelable {
+    var likes: Int? = null,
+    var created_at: String? = null
+) : Parcelable {
     fun copy(): ProfileImage {
         return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes)
     }
@@ -51,19 +53,19 @@ data class ProfileImage(
 
 data class UserDataResponse(
     val data: UserDB
-): BaseResponse()
+) : BaseResponse()
 
 data class LikesListResponse(
     val data: MutableList<Like>
-): BaseResponse()
+) : BaseResponse()
 
 data class MatchesListResponse(
     val data: MutableList<Match>
-): BaseResponse()
+) : BaseResponse()
 
 data class MyDuelsResponse(
     val data: MutableList<MyDuel>
-): BaseResponse()
+) : BaseResponse()
 
 data class ShortUserDataResponse(
     val data: ShortUserData
@@ -83,7 +85,7 @@ data class Meta(
 
 data class InvitationsListResponse(
     val data: MutableList<Invitation>
-): BaseResponse()
+) : BaseResponse()
 
 @Parcelize
 data class ShortUserData(
@@ -102,7 +104,7 @@ data class ShortUserData(
     var distance: Double? = null,
     var main_photo: ProfileImage? = null,
     var location: LocationDB? = null
-): Parcelable {
+) : Parcelable {
     fun getMainPhoto(): ProfileImage {
         return main_photo ?: ProfileImage().getDefaultPhoto()
     }
@@ -156,3 +158,14 @@ data class MyDuel(
         return created_at.getVisitPeriod(context)
     }
 }
+
+data class GuestsResponse(
+    val data: MutableList<Guest>
+) : BaseResponse()
+
+data class Guest(
+    val id: Int,
+    val visit_at: String,
+    val viewed: Boolean,
+    val guest: ShortUserData
+)

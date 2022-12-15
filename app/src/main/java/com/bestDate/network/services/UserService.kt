@@ -2,9 +2,7 @@ package com.bestDate.network.services
 
 import com.bestDate.data.model.BaseResponse
 import com.bestDate.data.model.LikesListResponse
-import com.bestDate.data.model.ShortUserDataResponse
 import com.bestDate.data.model.UserDataResponse
-import com.bestDate.data.model.*
 import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
 import retrofit2.Response

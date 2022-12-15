@@ -340,7 +340,7 @@
                 android:name="com.bestDate.presentation.main.guests.GuestsFragment"
                 android:label="GuestsFragment" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph5"
+                android:id="@+id/action_global_another_profile_nav_graph"
                 app:destination="@id/another_profile_nav_graph" />
             <action
                 android:id="@+id/action_global_profile_nav_graph_from_guests"
