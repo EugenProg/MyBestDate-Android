@@ -30,10 +30,16 @@ data class UserDB(
     var look_for: MutableList<String>? = null,
     var language: String? = null,
     var birthday: String? = null,
+    var created_at: String? = null,
+    var coins: String? = null,
     var is_online: Boolean? = null,
     var last_online_at: String? = null,
     var new_likes: Int? = null,
     var new_guests: Int? = null,
+    var new_messages: Int? = null,
+    var new_invitations: Int? = null,
+    var new_duels: Int? = null,
+    var new_matches: Int? = null,
     var distance: Double? = null,
     @TypeConverters(PhotoConverter::class)
     var photos: MutableList<ProfileImage>? = null,
@@ -44,7 +50,7 @@ data class UserDB(
     var blocked_me: Boolean? = null,
     @Embedded
     var questionnaire: QuestionnaireDB? = null
-): Parcelable {
+) : Parcelable {
     fun getLocalizeGender(): Int {
         return when {
             gender == "male" && look_for?.contains("male") == true -> R.string.man_looking_for_a_man

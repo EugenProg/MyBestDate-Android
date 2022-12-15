@@ -11,7 +11,7 @@ import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [
         UserDB::class,
         Invitation::class

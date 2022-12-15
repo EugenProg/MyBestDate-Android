@@ -2,14 +2,8 @@ package com.bestDate.network
 
 import android.content.Context
 import com.bestDate.data.preferences.PreferencesUtils
-import com.bestDate.network.remote.AuthRemoteData
-import com.bestDate.network.remote.ImageRemoteData
-import com.bestDate.network.remote.InvitationsRemoteData
-import com.bestDate.network.remote.UserRemoteData
-import com.bestDate.network.services.CoreAuthService
-import com.bestDate.network.services.ImageApiService
-import com.bestDate.network.services.InvitationService
-import com.bestDate.network.services.UserService
+import com.bestDate.network.remote.*
+import com.bestDate.network.services.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +22,10 @@ object NetworkModule {
     fun providesBaseURL(): String = "https://dev-api.bestdate.info"
 
     @Provides
-    fun provideInterceptor(@ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
+    fun provideInterceptor(
+        @ApplicationContext context: Context,
+        preferences: PreferencesUtils
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
@@ -63,6 +60,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun questsApiService(retrofit: Retrofit): GuestsService =
+        retrofit.create(GuestsService::class.java)
+
+    @Provides
+    @Singleton
     fun invitationApiService(retrofit: Retrofit): InvitationService =
         retrofit.create(InvitationService::class.java)
 
@@ -80,6 +82,11 @@ object NetworkModule {
     @Singleton
     fun userRemoteData(apiService: UserService): UserRemoteData =
         UserRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun guestsRemoteData(apiService: GuestsService): GuestsRemoteData =
+        GuestsRemoteData(apiService)
 
     @Provides
     @Singleton

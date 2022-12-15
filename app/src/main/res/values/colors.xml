@@ -25,6 +25,8 @@
     <color name="bg_pink">#f28be6</color>
     <color name="bg_pink_10">#1Af28be6</color>
     <color name="bg_light_blue">#beefff</color>
+    <color name="bg_gray_gradient">#303a3e</color>
+    <color name="bg_black_gradient">#2b3438</color>
     <color name="blue">#7bd7f5</color>
     <color name="blue_90">#E67bd7f5</color>
     <color name="blue_20">#337BD7F5</color>

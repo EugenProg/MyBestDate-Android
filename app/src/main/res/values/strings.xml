@@ -509,6 +509,10 @@
     <string name="top_position">№%d</string>
     <string name="invitation_is_send_successful">Invitation is send successfully</string>
     <string name="general_information">General information</string>
+    <string name="visited">Visited</string>
+    <string name="new_guests">New guests</string>
+    <string name="prev_guests">Previous guests</string>
+    <string name="new_visit">New Visit</string>
     <string name="_new">New</string>
     <string name="answered">Answered</string>
     <string name="sent">Sent</string>
