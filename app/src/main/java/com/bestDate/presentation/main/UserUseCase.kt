@@ -10,6 +10,7 @@ import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
+import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
 import com.bestDate.presentation.main.userProfile.myDuels.MyDuelsUseCase
@@ -24,6 +25,7 @@ class UserUseCase @Inject constructor(
     private val likesListUseCase: LikesListUseCase,
     private val matchesListUseCase: MatchesListUseCase,
     private val myDuelsUseCase: MyDuelsUseCase,
+    private val invitationUseCase: InvitationListUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -48,6 +50,7 @@ class UserUseCase @Inject constructor(
         likesListUseCase.clearData()
         matchesListUseCase.clearData()
         myDuelsUseCase.clearData()
+        invitationUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")

@@ -3,6 +3,8 @@ package com.bestDate.network.remote
 import com.bestDate.data.model.RequestLanguage
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.model.InvitationFilter
+import com.bestDate.data.model.UserInvitationRequest
 import com.bestDate.network.services.UserService
 import javax.inject.Inject
 
@@ -30,4 +32,8 @@ class UserRemoteData @Inject constructor(
     suspend fun unlockUser(id: Int) = service.unlockUser(id)
 
     suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
+
+    suspend fun getUserInvitations(filter: InvitationFilter) =
+        service.getInvitations(UserInvitationRequest(filter.serverName)
+    )
 }

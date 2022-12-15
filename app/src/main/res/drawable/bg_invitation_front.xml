@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/bg_invitation_card"/>
+
+    <item
+        android:width="58dp"
+        android:height="50dp"
+        android:end="18dp"
+        android:top="17dp"
+        android:gravity="top|end"
+        android:drawable="@drawable/bg_invitation_decor_text"/>
+
+    <item android:drawable="@drawable/bg_invitation_decor"/>
+</layer-list>

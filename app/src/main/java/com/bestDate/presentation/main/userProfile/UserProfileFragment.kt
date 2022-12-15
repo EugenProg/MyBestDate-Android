@@ -62,6 +62,11 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 )
             )
         }
+        binding.invitationListButton.click = {
+            navController.navigate(
+                UserProfileFragmentDirections.actionProfileToInvitationList()
+            )
+        }
         binding.myDuelsButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToMyDuels())
         }
