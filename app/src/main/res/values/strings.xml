@@ -528,5 +528,8 @@
     <string name="we_have_transmitted_your_reply_to_the_sender">We have transmitted your\nreply to the sender</string>
     <string name="you_invited">You invited</string>
     <string name="user_has_not_given_answer_yet">%s hasn’t given an answer yet</string>
+    <string name="general_info_about_your_account">General information about your account, try to fill in the correct data.</string>
+    <string name="general_info">General info</string>
+    <string name="save_personal_data">Save personal data</string>
 
 </resources>

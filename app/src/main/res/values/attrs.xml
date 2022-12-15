@@ -43,4 +43,23 @@
     <declare-styleable name="QuestionnaireInfoView">
         <attr name="questionnaire_item_title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionView">
+        <attr name="title_description_title" format="string"/>
+        <attr name="title_description_description" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsInputView">
+        <attr name="settings_input_hint" format="string"/>
+        <attr name="settings_input_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsInfoView">
+        <attr name="settings_info_hint" format="string"/>
+        <attr name="settings_info_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsButtonView">
+        <attr name="settings_button_title" format="string"/>
+    </declare-styleable>
 </resources>

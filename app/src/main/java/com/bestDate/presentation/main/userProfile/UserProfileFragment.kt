@@ -94,6 +94,10 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
             navController.navigate(UserProfileFragmentDirections.actionProfileToPhotoEditor(it))
         }
+
+        binding.personalDataButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToPersonalData())
+        }
     }
 
     override fun onViewLifecycle() {
