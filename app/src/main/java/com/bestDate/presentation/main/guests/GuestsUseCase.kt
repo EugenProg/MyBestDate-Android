@@ -1,6 +1,7 @@
 package com.bestDate.presentation.main.guests
 
 import androidx.lifecycle.MutableLiveData
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.Guest
 import com.bestDate.data.model.IdListRequest
 import com.bestDate.data.model.InternalException
@@ -22,13 +23,13 @@ class GuestsUseCase @Inject constructor(
                 guestsListPrev.postValue(it.data?.filter { it.viewed == true }?.toMutableList())
                 guestsListIsEmpty.postValue(it.data?.isEmpty())
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun markGuestsViewed(body: IdListRequest) {
         val response = guestsRemoteData.markGuestsViewed(body)
         if (response.isSuccessful) {
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     fun clearData() {

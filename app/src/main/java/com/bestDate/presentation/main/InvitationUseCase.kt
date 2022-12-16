@@ -1,5 +1,6 @@
 package com.bestDate.presentation.main
 
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.InternalException
 import com.bestDate.db.dao.InvitationDao
@@ -26,6 +27,8 @@ class InvitationUseCase @Inject constructor(
 
     suspend fun sendInvitation(userId: Int?, invitationId: Int) {
         val response = remoteData.sendInvitation(userId.orZero, invitationId)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 }
