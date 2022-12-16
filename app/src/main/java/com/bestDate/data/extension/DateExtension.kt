@@ -7,7 +7,8 @@ import kotlin.math.max
 import kotlin.math.min
 
 fun getDaysBetween(firstDate: Date, secondDate: Date): Int {
-    return (getMillisecondsBetween(firstDate, secondDate) / (24 * 60 * 60 * 1000)).toInt()
+    val days = (getMillisecondsBetween(firstDate, secondDate) / (24 * 60 * 60 * 1000)).toInt()
+    return if (days > 0) days else 1
 }
 
 fun getHoursBetween(firstDate: Date, secondDate: Date): Int {

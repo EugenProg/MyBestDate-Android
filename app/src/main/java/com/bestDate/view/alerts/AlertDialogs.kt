@@ -31,7 +31,11 @@ class LoaderDialog(val activity: Activity) {
     private var dialog: Dialog? = null
 
     fun startLoading() {
-        dialog = getDialog(binding.root)
+        if (dialog == null) {
+            dialog = getDialog(binding.root)
+        } else {
+            dialog?.show()
+        }
     }
 
     fun stopLoading() {

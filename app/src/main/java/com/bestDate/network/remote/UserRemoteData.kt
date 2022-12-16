@@ -1,10 +1,7 @@
 package com.bestDate.network.remote
 
-import com.bestDate.data.model.RequestLanguage
+import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.data.model.FilterOptions
-import com.bestDate.data.model.InvitationFilter
-import com.bestDate.data.model.UserInvitationRequest
 import com.bestDate.network.services.UserService
 import javax.inject.Inject
 
@@ -36,4 +33,16 @@ class UserRemoteData @Inject constructor(
     suspend fun getUserInvitations(filter: InvitationFilter) =
         service.getInvitations(UserInvitationRequest(filter.serverName)
     )
+
+    suspend fun updateUserData(userRequest: UpdateUserRequest) = service.updateUserData(userRequest)
+
+    suspend fun sendEmailCode(email: String) = service.sendEmailCode(EmailRequest(email))
+
+    suspend fun saveUserEmail(email: String, code: String) =
+        service.saveUserEmail(ConfirmRequest(email = email, code = code))
+
+    suspend fun sendPhoneCode(phone: String) = service.sendPhoneCode(PhoneRequest(phone))
+
+    suspend fun saveUserPhone(phone: String, code: String) =
+        service.saveUserPhone(ConfirmRequest(phone = phone, code = code))
 }

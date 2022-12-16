@@ -16,6 +16,7 @@ class SettingsInfoView @JvmOverloads constructor(
     private val binding: ViewSettingsInfoBinding =
         ViewSettingsInfoBinding.inflate(LayoutInflater.from(context), this)
     var onClick: (() -> Unit)? = null
+    var onTextChangeListener: ((String?) -> Unit)? = null
 
     init {
         setAttrs(attrs, R.styleable.SettingsInfoView) {
@@ -35,6 +36,7 @@ class SettingsInfoView @JvmOverloads constructor(
 
     fun setText(text: String?) {
         binding.input.text = text
+        onTextChangeListener?.invoke(text)
         setDefault()
     }
 

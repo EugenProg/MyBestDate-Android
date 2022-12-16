@@ -531,5 +531,5 @@
     <string name="general_info_about_your_account">General information about your account, try to fill in the correct data.</string>
     <string name="general_info">General info</string>
     <string name="save_personal_data">Save personal data</string>
-
+    <string name="save_successfully">Changes successfully saved</string>
 </resources>

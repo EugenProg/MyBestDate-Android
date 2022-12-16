@@ -1,5 +1,6 @@
 package com.bestDate.presentation.main
 
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.ShortUserData
@@ -41,9 +42,10 @@ class UserUseCase @Inject constructor(
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
         if (response.isSuccessful) {
-            val user = response.body()?.data
-            userDao.validate(user ?: UserDB(id = 0))
-        } else throw InternalException.OperationException(response.message())
+            response.body()?.data?.let {
+                userDao.validate(it)
+            }
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun logout() {
@@ -62,7 +64,9 @@ class UserUseCase @Inject constructor(
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {
         val response = userRemoteData.saveQuestionnaire(questionnaire)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 
     suspend fun getUsers(filters: FilterOptions) {
@@ -74,7 +78,7 @@ class UserUseCase @Inject constructor(
             lastPage = response.body()?.meta?.last_page ?: 0
             total = response.body()?.meta?.total ?: 0
         } else {
-            throw InternalException.OperationException(response.message())
+            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
         }
     }
 
@@ -89,7 +93,7 @@ class UserUseCase @Inject constructor(
             list.addAll(response.body()?.data ?: mutableListOf())
             usersList = list
         } else {
-            throw InternalException.OperationException(response.message())
+            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
         }
     }
 
@@ -101,11 +105,11 @@ class UserUseCase @Inject constructor(
         total = 0
     }
 
-    suspend fun changeLanguage(language: String){
+    suspend fun changeLanguage(language: String) {
         val response = userRemoteData.changeLanguage(language)
         if (response.isSuccessful) {
             val user = response.body()?.data
             userDao.validate(user ?: UserDB(id = 0))
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 }

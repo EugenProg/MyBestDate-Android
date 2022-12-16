@@ -17,15 +17,19 @@ class SaveSettingsButtonView @JvmOverloads constructor(
     private val binding: ViewSaveSettingsButtonBinding =
         ViewSaveSettingsButtonBinding.inflate(LayoutInflater.from(context), this)
 
+    private var isActive: Boolean = true
     var onClick: (() -> Unit)? = null
 
     init {
+        setActive(false)
+
         binding.button.setOnSaveClickListener {
-            onClick?.invoke()
+            if (isActive) onClick?.invoke()
         }
     }
 
     fun setActive(active: Boolean) {
+        isActive = active
         binding.button.setTextColor(
             ContextCompat.getColor(
                 context,

@@ -12,6 +12,7 @@ import com.bestDate.data.extension.getDiffYears
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
+import com.bestDate.presentation.registration.GenderType
 import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
@@ -84,6 +85,17 @@ data class UserDB(
 
     fun getUserLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
+    }
+
+    fun getGenderType(): GenderType {
+        GenderType.values().forEach {
+            if (it.gender == gender && it.aim.firstOrNull() == look_for?.firstOrNull()) return it
+        }
+        return GenderType.WOMAN_LOOKING_MAN
+    }
+
+    fun getBirthDate(): Date {
+        return birthday?.getDateWithTimeOffset() ?: Date()
     }
 
     fun hasNoPhotos() = photos.isNullOrEmpty()
