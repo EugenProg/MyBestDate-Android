@@ -27,7 +27,7 @@ class SettingsButtonView @JvmOverloads constructor(
         }
     }
 
-    var title: String
+    var title: String?
         get() = binding.button.text.toString()
         set(value) {
             binding.button.text = value

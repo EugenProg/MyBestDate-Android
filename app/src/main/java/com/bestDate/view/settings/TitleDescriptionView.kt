@@ -21,4 +21,16 @@ class TitleDescriptionView @JvmOverloads constructor(
             binding.description.text = it.getString(R.styleable.TitleDescriptionView_title_description_description)
         }
     }
+
+    var title: String?
+    get() = binding.title.text.toString()
+    set(value) {
+        binding.title.text = value
+    }
+
+    var description: String?
+    get() = binding.description.text.toString()
+    set(value) {
+        binding.description.text = value
+    }
 }

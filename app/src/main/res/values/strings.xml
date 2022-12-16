@@ -532,4 +532,8 @@
     <string name="general_info">General info</string>
     <string name="save_personal_data">Save personal data</string>
     <string name="save_successfully">Changes successfully saved</string>
+    <string name="password_change">Password change</string>
+    <string name="changing_the_password_to_log_in">Changing the password to log in, you need to confirm via email.</string>
+    <string name="new_password">New password</string>
+    <string name="change_location">Change location</string>
 </resources>

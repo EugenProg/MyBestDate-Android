@@ -59,6 +59,12 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
                 loader.stopLoading()
                 showMessage(R.string.save_successfully)
             }
+            changePassButton.onClick = {
+
+            }
+            searchLocationButton.onClick = {
+
+            }
         }
     }
 
@@ -66,6 +72,7 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
         super.onViewLifecycle()
         viewModel.user.observe(viewLifecycleOwner) {
             binding.personalInfo.setUser(it, childFragmentManager)
+            binding.location.text = it?.getUserLocation()
         }
         viewModel.userSaveSuccessLiveData.observe(viewLifecycleOwner) {
             binding.personalInfo.userDataIsSaved()

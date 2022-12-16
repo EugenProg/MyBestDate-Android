@@ -62,4 +62,10 @@
     <declare-styleable name="SettingsButtonView">
         <attr name="settings_button_title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionButtonView">
+        <attr name="t_d_b_title" format="string"/>
+        <attr name="t_d_b_description" format="string"/>
+        <attr name="t_d_b_button_title" format="string"/>
+    </declare-styleable>
 </resources>
