@@ -92,7 +92,7 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
             loader.stopLoading()
             binding.personalInfo.phoneIsSaved()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }

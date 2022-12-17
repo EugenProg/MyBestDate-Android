@@ -62,7 +62,7 @@ class NewInvitationFragment: BaseVMFragment<FragmentInvitationBinding, Invitatio
             if (!binding.refreshView.isRefreshing &&
                 viewModel.newInvitations.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

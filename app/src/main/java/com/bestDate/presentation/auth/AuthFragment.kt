@@ -66,7 +66,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 }
             }
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(getString(R.string.wrong_auth_data))
         }
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {

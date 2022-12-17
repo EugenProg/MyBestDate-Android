@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.cropListener
 import com.bestDate.data.extension.getBitmap
@@ -88,7 +87,7 @@ abstract class BasePhotoEditorFragment :
             editorAction.value = it
             navController.popBackStack()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
         }
     }

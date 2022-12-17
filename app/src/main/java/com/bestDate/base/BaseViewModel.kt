@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel: ViewModel() {
     val loadingMode = LiveEvent<Boolean>()
-    val errorLive = LiveEvent<HandleError>()
+    val errorLiveData = LiveEvent<HandleError>()
 
     fun doAsync(
         loading: Boolean = true,
@@ -26,7 +26,7 @@ abstract class BaseViewModel: ViewModel() {
             } catch (e: Exception) {
                 val exception = if (e !is InternalException) InternalException.UnknownException(e) else e
                 onError?.invoke(exception)
-                errorLive.postValue(HandleError(exception))
+                errorLiveData.postValue(HandleError(exception))
             } finally {
                 if (loading) loadingMode.postValue(false)
             }
@@ -34,6 +34,6 @@ abstract class BaseViewModel: ViewModel() {
     }
 
     fun setError(message: String) {
-        errorLive.postValue(HandleError(InternalException.ValidationException(message)))
+        errorLiveData.postValue(HandleError(InternalException.ValidationException(message)))
     }
 }
