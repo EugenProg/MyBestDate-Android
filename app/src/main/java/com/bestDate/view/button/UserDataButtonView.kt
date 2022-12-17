@@ -31,7 +31,7 @@ class UserDataButtonView @JvmOverloads constructor(
             )
         }
 
-        binding.root.setOnSaveClickListener {
+        binding.materialButton.setOnSaveClickListener {
             click?.invoke()
         }
     }

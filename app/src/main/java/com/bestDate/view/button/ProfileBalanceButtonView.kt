@@ -20,7 +20,7 @@ class ProfileBalanceButtonView @JvmOverloads constructor(
     var click: (() -> Unit)? = null
 
     init {
-        binding.root.setOnSaveClickListener {
+        binding.materialButton.setOnSaveClickListener {
             click?.invoke()
         }
     }

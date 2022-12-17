@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="72dp"
     android:layout_marginTop="10dp"
+    android:foreground="?selectableItemBackground"
     android:background="#1c262b">
 
     <ImageView
