@@ -8,16 +8,16 @@ import android.widget.LinearLayout
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewSignOutButtonBinding
 
-class SignOutButtonView  @JvmOverloads constructor(
+class SignOutButtonView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewSignOutButtonBinding =
         ViewSignOutButtonBinding.inflate(LayoutInflater.from(context), this)
     var onClick: (() -> Unit)? = null
 
     init {
-        binding.root.setOnSaveClickListener {
+        binding.materialButton.setOnSaveClickListener {
             onClick?.invoke()
         }
     }

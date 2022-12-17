@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BasePhotoEditorFragment
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
@@ -107,9 +108,16 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 user?.getMainPhoto()?.let { image ->
                     setMainImage(image)
                 }
-                binding.name.text = user?.name
-                binding.birthdate.text = user?.getFormattedBirthday()
-                binding.verifyView.isVerified = user?.questionnaireFull()
+                with(binding) {
+                    name.text = user?.name
+                    birthdate.text = user?.getFormattedBirthday()
+                    verifyView.isVerified = user?.questionnaireFull()
+                    matchesListButton.badgeOn = user?.new_matches.orZero > 0
+                    invitationListButton.badgeOn = user?.new_invitations.orZero > 0
+                    likeListButton.badgeOn = user?.new_likes.orZero > 0
+                    myDuelsButton.badgeOn = user?.new_duels.orZero > 0
+                    balanceButton.coinsCount = user?.coins?.toInt().orZero
+                }
 
                 adapter.submitList(getImageList(user?.photos)) {
                     binding.refreshView.isRefreshing = false
