@@ -1,5 +1,6 @@
 package com.bestDate.presentation.profilePhotoEditor
 
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.network.remote.ImageRemoteData
@@ -11,7 +12,8 @@ import javax.inject.Singleton
 
 @Singleton
 class ProfilePhotoUseCase @Inject constructor(
-    private val imageRemoteData: ImageRemoteData) {
+    private val imageRemoteData: ImageRemoteData
+) {
 
     var savedImage: ProfileImage? = null
 
@@ -22,16 +24,20 @@ class ProfilePhotoUseCase @Inject constructor(
         val response = imageRemoteData.saveUserPhoto(body)
         if (response.isSuccessful) {
             savedImage = response.body()?.data
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun deletePhoto(id: Int) {
         val response = imageRemoteData.deleteUserPhoto(id)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 
     suspend fun updatePhotoStatus(id: Int, main: Boolean, top: Boolean) {
         val response = imageRemoteData.updatePhotoStatus(id, main, top)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 }

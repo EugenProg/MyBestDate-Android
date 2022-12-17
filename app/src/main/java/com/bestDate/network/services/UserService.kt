@@ -5,6 +5,7 @@ import com.bestDate.data.model.LikesListResponse
 import com.bestDate.data.model.UserDataResponse
 import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
+import com.bestDate.db.entity.UserDB
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -55,4 +56,24 @@ interface UserService {
     /**Get user invitations*/
     @POST("/api/v1/user/invitations")
     suspend fun getInvitations(@Body body: UserInvitationRequest): Response<UserInvitationsResponse>
+
+    /**Update user data*/
+    @PUT("/api/v1/user")
+    suspend fun updateUserData(@Body body: UpdateUserRequest): Response<UserDataResponse>
+
+    /**Send code to email for user*/
+    @POST("/api/v1/user/email-code")
+    suspend fun sendEmailCode(@Body body: EmailRequest): Response<BaseResponse>
+
+    /**Update user email*/
+    @PUT("/api/v1/user/email")
+    suspend fun saveUserEmail(@Body body: ConfirmRequest): Response<UserDataResponse>
+
+    /**Send code to phone for user*/
+    @POST("/api/v1/user/phone-code")
+    suspend fun sendPhoneCode(@Body body: PhoneRequest): Response<BaseResponse>
+
+    /**Update user phone*/
+    @PUT("/api/v1/user/phone")
+    suspend fun saveUserPhone(@Body body: ConfirmRequest): Response<UserDataResponse>
 }

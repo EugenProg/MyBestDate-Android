@@ -203,6 +203,7 @@
                             app:button_name="@string/questionnaire" />
 
                         <com.bestDate.view.button.DirectionLineButtonView
+                            android:id="@+id/personalDataButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:button_image="@drawable/ic_profile"

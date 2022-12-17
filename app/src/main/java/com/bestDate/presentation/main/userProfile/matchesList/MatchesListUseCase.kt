@@ -1,6 +1,7 @@
 package com.bestDate.presentation.main.userProfile.matchesList
 
 import androidx.lifecycle.MutableLiveData
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.Match
 import com.bestDate.network.remote.UserRemoteData
@@ -20,7 +21,7 @@ class MatchesListUseCase @Inject constructor(
             response.body()?.let {
                 matchesList.postValue(it.data)
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     fun clearData() {

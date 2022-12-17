@@ -1,6 +1,7 @@
 package com.bestDate.presentation.main.userProfile.myDuels
 
 import androidx.lifecycle.MutableLiveData
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.MyDuel
 import com.bestDate.network.remote.UserRemoteData
@@ -20,7 +21,7 @@ class MyDuelsUseCase @Inject constructor(
             response.body()?.let {
                 myDuels.postValue(it.data)
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     fun clearData() {

@@ -86,6 +86,13 @@ data class UserInvitationRequest(
     var filter: String
 )
 
+data class UpdateUserRequest(
+    var name: String?,
+    var gender: String?,
+    var birthday: String?,
+    var look_for: MutableList<String>?
+)
+
 enum class InvitationAnswer(var id: Int, @StringRes var title: Int, @DrawableRes val button: Int) {
     YES(1, R.string.yes_i_agree, R.drawable.positive_answer_btn),
     YES_NEXT_TIME(2, R.string.yes_i_will_but_next_time, R.drawable.positive_answer_btn),

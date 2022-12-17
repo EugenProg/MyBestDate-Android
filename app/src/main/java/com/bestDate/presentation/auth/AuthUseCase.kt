@@ -1,5 +1,6 @@
 package com.bestDate.presentation.auth
 
+import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.AuthResponse
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
@@ -18,21 +19,22 @@ class AuthUseCase @Inject constructor(
         val response = authRemoteData.loginByEmail(email, password)
         if (response.isSuccessful) {
             saveTokens(response.body())
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun loginByPhone(phone: String, password: String) {
         val response = authRemoteData.loginByPhone(phone, password)
         if (response.isSuccessful) {
             saveTokens(response.body())
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun refreshToken() {
-        val response = authRemoteData.refreshToken(preferencesUtils.getString(Preferences.REFRESH_TOKEN))
+        val response =
+            authRemoteData.refreshToken(preferencesUtils.getString(Preferences.REFRESH_TOKEN))
         if (response.isSuccessful) {
             saveTokens(response.body())
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     private fun saveTokens(response: AuthResponse?) {
@@ -43,7 +45,7 @@ class AuthUseCase @Inject constructor(
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
     }
 
-    fun saveFirstEnterInfo(isFirst: Boolean){
+    fun saveFirstEnterInfo(isFirst: Boolean) {
         preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, isFirst)
     }
 }

@@ -1,7 +1,11 @@
 package com.bestDate.presentation.main.userProfile.invitationList
 
 import androidx.lifecycle.MutableLiveData
-import com.bestDate.data.model.*
+import com.bestDate.data.extension.getErrorMessage
+import com.bestDate.data.model.InternalException
+import com.bestDate.data.model.InvitationAnswer
+import com.bestDate.data.model.InvitationCard
+import com.bestDate.data.model.InvitationFilter
 import com.bestDate.network.remote.InvitationsRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import javax.inject.Inject
@@ -23,7 +27,7 @@ class InvitationListUseCase @Inject constructor(
             response.body()?.let {
                 newInvitations.postValue(it.data)
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun refreshAnsweredInvitations() {
@@ -32,7 +36,7 @@ class InvitationListUseCase @Inject constructor(
             response.body()?.let {
                 answeredInvitations.postValue(it.data)
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun refreshSentInvitations() {
@@ -41,12 +45,14 @@ class InvitationListUseCase @Inject constructor(
             response.body()?.let {
                 sentInvitations.postValue(it.data)
             }
-        } else throw InternalException.OperationException(response.message())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun answerToInvitation(invitationId: Int?, answer: InvitationAnswer) {
         val response = invitationRemoteData.answerToInvitation(invitationId, answer)
-        if (!response.isSuccessful) throw InternalException.OperationException(response.message())
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 
     fun clearData() {

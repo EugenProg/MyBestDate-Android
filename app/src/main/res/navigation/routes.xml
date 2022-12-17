@@ -210,6 +210,9 @@
                 <action
                     android:id="@+id/action_profile_to_invitationList"
                     app:destination="@id/invitationListFragment" />
+                <action
+                    android:id="@+id/action_profile_to_personalData"
+                    app:destination="@id/personalDataFragment" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -247,6 +250,10 @@
                 android:id="@+id/invitationListFragment"
                 android:name="com.bestDate.presentation.main.userProfile.invitationList.InvitationListFragment"
                 android:label="InvitationListFragment" />
+            <fragment
+                android:id="@+id/personalDataFragment"
+                android:name="com.bestDate.presentation.main.userProfile.personalData.PersonalDataFragment"
+                android:label="PersonalDataFragment" />
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
@@ -438,7 +445,7 @@
         <fragment
             android:id="@+id/registrationOtpFragment"
             android:name="com.bestDate.presentation.registration.RegistrationOtpFragment"
-            android:label="RegistrationOtpFragment"></fragment>
+            android:label="RegistrationOtpFragment"/>
         <action
             android:id="@+id/action_global_profilePhotoEditingFragment"
             app:destination="@id/profilePhotoEditingFragment"

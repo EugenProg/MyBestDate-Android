@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <com.bestDate.view.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_title="@string/personal_data"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.bestDate.view.settings.TitleDescriptionView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_description_title="@string/general_info"
+                app:title_description_description="@string/general_info_about_your_account"/>
+
+            <com.bestDate.view.settings.PersonalInfoView
+                android:id="@+id/personalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.bestDate.view.settings.TitleDescriptionButtonView
+                android:id="@+id/changePassButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_b_title="@string/password_change"
+                app:t_d_b_description="@string/changing_the_password_to_log_in"
+                app:t_d_b_button_title="@string/new_password"/>
+
+            <com.bestDate.view.settings.TitleDescriptionView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title_description_title="@string/search_location"
+                app:title_description_description="@string/specify_the_search_location"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="32dp">
+
+                <TextView
+                    android:id="@+id/textView20"
+                    style="@style/component_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textColor="@color/white_50"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/location"
+                    style="@style/component_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView21"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Germany, Oestrich-Winkel" />
+
+                <ImageView
+                    android:id="@+id/imageView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_settings_location"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.bestDate.view.settings.SettingsButtonView
+                android:id="@+id/searchLocationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:settings_button_title="@string/change_location"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="32dp"
+                android:background="@color/white_10"
+                android:layout_marginBottom="16dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

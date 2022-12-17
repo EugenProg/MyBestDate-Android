@@ -8,26 +8,25 @@
 
     <TextView
         android:id="@+id/placeholder"
+        style="@style/component_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="27dp"
         android:layout_marginTop="18dp"
-        android:fontFamily="@font/regular"
         android:textColor="@color/white_60"
-        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Email / phone number" />
 
     <EditText
         android:id="@+id/input"
+        style="@style/component_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/bg_main"
-        android:fontFamily="@font/bold"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
         android:textColor="@color/white_90"
