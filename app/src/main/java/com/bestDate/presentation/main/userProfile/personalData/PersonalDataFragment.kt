@@ -60,7 +60,9 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
                 showMessage(R.string.save_successfully)
             }
             changePassButton.onClick = {
-
+                navController.navigate(
+                    PersonalDataFragmentDirections.actionPersonalDataToChangePassword()
+                )
             }
             searchLocationButton.onClick = {
 

@@ -68,4 +68,9 @@
         <attr name="t_d_b_description" format="string"/>
         <attr name="t_d_b_button_title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="PasswordInputView">
+        <attr name="pass_input_hint" format="string"/>
+        <attr name="show_pass" format="boolean"/>
+    </declare-styleable>
 </resources>

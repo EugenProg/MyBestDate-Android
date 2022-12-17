@@ -253,7 +253,19 @@
             <fragment
                 android:id="@+id/personalDataFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.PersonalDataFragment"
-                android:label="PersonalDataFragment" />
+                android:label="PersonalDataFragment" >
+                <action
+                    android:id="@+id/action_personalData_to_changePassword"
+                    app:destination="@id/changePasswordFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+            </fragment>
+            <fragment
+                android:id="@+id/changePasswordFragment"
+                android:name="com.bestDate.presentation.main.userProfile.personalData.changePassword.ChangePasswordFragment"
+                android:label="ChangePasswordFragment"/>
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />

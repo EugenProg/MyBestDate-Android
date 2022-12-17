@@ -23,20 +23,20 @@ class SaveSettingsButtonView @JvmOverloads constructor(
     init {
         setActive(false)
 
-        binding.button.setOnSaveClickListener {
+        binding.saveDataButton.setOnSaveClickListener {
             if (isActive) onClick?.invoke()
         }
     }
 
     fun setActive(active: Boolean) {
         isActive = active
-        binding.button.setTextColor(
+        binding.saveDataButton.setTextColor(
             ContextCompat.getColor(
                 context,
                 if (active) R.color.white else R.color.bg_main
             )
         )
-        binding.button.setBackgroundColor(
+        binding.saveDataButton.setBackgroundColor(
             ContextCompat.getColor(
                 context,
                 if (active) R.color.bg_pink else R.color.white_20
@@ -46,12 +46,12 @@ class SaveSettingsButtonView @JvmOverloads constructor(
 
     fun toggleActionEnabled(enable: Boolean) {
         if (enable) {
-            binding.button.text = ""
-            binding.button.isEnabled = false
+            binding.saveDataButton.text = ""
+            binding.saveDataButton.isEnabled = false
             binding.progress.visibility = View.VISIBLE
         } else {
-            binding.button.text = context.getString(R.string.save_personal_data)
-            binding.button.isEnabled = true
+            binding.saveDataButton.text = context.getString(R.string.save_personal_data)
+            binding.saveDataButton.isEnabled = true
             binding.progress.visibility = View.INVISIBLE
         }
     }
