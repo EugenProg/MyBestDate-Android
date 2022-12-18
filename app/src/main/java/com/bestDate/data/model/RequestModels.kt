@@ -98,6 +98,31 @@ data class UpdatePasswordRequest(
     var password: String,
     var password_confirmation: String,
 )
+data class UpdateSettingsRequest(
+   var block_messages: Boolean? = null,
+   var matches: Boolean? = null,
+   var likes_notifications: Boolean? = null,
+   var matches_notifications: Boolean? = null,
+   var invitations_notifications: Boolean? = null,
+   var messages_notifications: Boolean? = null,
+   var guests_notifications: Boolean? = null
+)
+
+enum class SettingsType {
+    MESSAGES, NOTIFY_LIKES, NOTIFY_MATCHES, NOTIFY_INVITATION, NOTIFY_MESSAGES, NOTIFY_GUESTS, MATCHES;
+
+    fun getSettingsRequest(checked: Boolean): UpdateSettingsRequest {
+        return when(this) {
+            MESSAGES -> UpdateSettingsRequest(block_messages = checked)
+            NOTIFY_LIKES -> UpdateSettingsRequest(likes_notifications = checked)
+            NOTIFY_MATCHES -> UpdateSettingsRequest(matches_notifications = checked)
+            NOTIFY_INVITATION -> UpdateSettingsRequest(invitations_notifications = checked)
+            NOTIFY_MESSAGES -> UpdateSettingsRequest(messages_notifications = checked)
+            NOTIFY_GUESTS -> UpdateSettingsRequest(guests_notifications = checked)
+            MATCHES -> UpdateSettingsRequest(matches = checked)
+        }
+    }
+}
 
 data class SaveUserLocationRequest(
     var lat: String,

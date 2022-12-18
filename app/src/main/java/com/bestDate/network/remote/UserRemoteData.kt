@@ -51,4 +51,9 @@ class UserRemoteData @Inject constructor(
 
     suspend fun saveUserLocation(locationRequest: SaveUserLocationRequest) =
         service.saveUserLocation(locationRequest)
+
+    suspend fun getUserSettings() = service.getUserSettings()
+
+    suspend fun updateUserSettings(type: SettingsType, checked: Boolean) =
+        service.updateUserSettings(type.getSettingsRequest(checked))
 }

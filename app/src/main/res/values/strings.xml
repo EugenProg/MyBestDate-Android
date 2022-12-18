@@ -539,4 +539,22 @@
     <string name="enter_a_old_pass">Enter the old password</string>
     <string name="confirm_the_new_pass">Confirm the new password</string>
     <string name="powered_by_google">powered by <font color="#ffffff"><b>Google</b></font></string>
+    <string name="main_settings">main settings</string>
+    <string name="blocked_users">Blocked users</string>
+    <string name="a_list_of_users_who_have_been_blocked_by_you">A list of users who have been blocked by you. The list can be edited</string>
+    <string name="show_the_list">Show the list</string>
+    <string name="language">Language</string>
+    <string name="here_you_can_select_the_desired_application_language">Here you can select the desired application language</string>
+    <string name="delete_profile">Delete Profile</string>
+    <string name="this_application_will_delete_all_your_data_and_account">This action will delete all your data and account</string>
+    <string name="delete">Delete</string>
+    <string name="deactive">Deactive</string>
+    <string name="active">Active</string>
+    <string name="blocking_messages">Blocking messages</string>
+    <string name="you_will_not_be_able_to_send_messages">You will not be able to send messages, but only invitations.</string>
+    <string name="messages">Messages</string>
+    <string name="participation_in_matches">Participation in matches</string>
+    <string name="the_ability_to_view_other_peoples_profiles">The ability to view other people’s profiles unnoticed.</string>
+    <string name="disabling_notifications">Disabling notifications</string>
+    <string name="you_will_not_receive_notifications_from_the_selected_categories">You will not receive notifications from the selected categories.</string>
 </resources>

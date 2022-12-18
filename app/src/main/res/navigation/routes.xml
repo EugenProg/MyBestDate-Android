@@ -213,6 +213,9 @@
                 <action
                     android:id="@+id/action_profile_to_personalData"
                     app:destination="@id/personalDataFragment" />
+                <action
+                    android:id="@+id/action_profile_to_settings"
+                    app:destination="@id/settingsFragment" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -269,6 +272,10 @@
                     app:popEnterAnim="@anim/slide_in_right"
                     app:popExitAnim="@anim/slide_out_right"/>
             </fragment>
+            <fragment
+                android:id="@+id/settingsFragment"
+                android:name="com.bestDate.presentation.main.userProfile.settings.SettingsFragment"
+                android:label="SettingsFragment"/>
             <fragment
                 android:id="@+id/changePasswordFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.changePassword.ChangePasswordFragment"

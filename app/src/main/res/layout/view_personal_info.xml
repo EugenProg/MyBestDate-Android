@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             app:settings_input_hint="@string/name"
-            app:settings_input_icon="@drawable/ic_settings_user"/>
+            app:settings_input_icon="@drawable/ic_personal_user"/>
 
         <com.bestDate.view.settings.SettingsInfoView
             android:id="@+id/genderInput"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:settings_info_hint="@string/gender"
-            app:settings_info_icon="@drawable/ic_settings_gender"/>
+            app:settings_info_icon="@drawable/ic_personal_gender"/>
 
         <com.bestDate.view.settings.SettingsInfoView
             android:id="@+id/birthInput"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:settings_info_hint="@string/birth_date"
-            app:settings_info_icon="@drawable/ic_settings_calendar"/>
+            app:settings_info_icon="@drawable/ic_personal_calendar"/>
 
         <com.bestDate.view.settings.SettingsInputView
             android:id="@+id/emailInput"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:settings_input_hint="@string/email"
-            app:settings_input_icon="@drawable/ic_settings_message"/>
+            app:settings_input_icon="@drawable/ic_personal_message"/>
 
         <com.bestDate.view.settings.SettingsInputView
             android:id="@+id/emailOtp"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             app:settings_input_hint="@string/phone_number"
-            app:settings_input_icon="@drawable/ic_settings_phone"/>
+            app:settings_input_icon="@drawable/ic_personal_phone"/>
 
         <com.bestDate.view.settings.SettingsInputView
             android:id="@+id/phoneOtp"

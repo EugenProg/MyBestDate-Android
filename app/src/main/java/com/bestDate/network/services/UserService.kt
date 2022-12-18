@@ -1,11 +1,7 @@
 package com.bestDate.network.services
 
-import com.bestDate.data.model.BaseResponse
-import com.bestDate.data.model.LikesListResponse
-import com.bestDate.data.model.UserDataResponse
 import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.db.entity.UserDB
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -84,4 +80,12 @@ interface UserService {
     /**Update user location*/
     @PUT("/api/v1/user/location")
     suspend fun saveUserLocation(@Body body: SaveUserLocationRequest): Response<UserDataResponse>
+
+    /**Get user settings*/
+    @GET("/api/v1/settings")
+    suspend fun getUserSettings(): Response<UserSettingsResponse>
+
+    /**update user settings*/
+    @PUT("/api/v1/settings")
+    suspend fun updateUserSettings(@Body body: UpdateSettingsRequest): Response<UserSettingsResponse>
 }

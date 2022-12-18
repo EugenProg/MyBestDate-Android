@@ -1,15 +1,12 @@
 package com.bestDate.data.model
 
-import android.os.Parcelable
-import com.bestDate.data.extension.getTime
-import com.bestDate.data.extension.getWeekdayWithTime
-import com.bestDate.data.extension.isToday
 import android.content.Context
-import android.provider.ContactsContract.Profile
+import android.os.Parcelable
 import com.bestDate.data.extension.*
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
+import com.bestDate.db.entity.UserSettings
 import kotlinx.parcelize.Parcelize
 import java.util.*
 
@@ -89,6 +86,10 @@ data class InvitationsListResponse(
 
 data class UserInvitationsResponse(
     val data: MutableList<InvitationCard>
+) : BaseResponse()
+
+data class UserSettingsResponse(
+    val data: UserSettings
 ) : BaseResponse()
 
 @Parcelize
