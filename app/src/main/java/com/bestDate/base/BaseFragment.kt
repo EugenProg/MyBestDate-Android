@@ -1,6 +1,5 @@
 package com.bestDate.base
 
-import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
 import android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.StringRes
@@ -21,11 +19,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
+import com.bestDate.data.extension.hideKeyboard
 import com.bestDate.data.extension.setMarginTop
+import com.bestDate.data.extension.showKeyboard
 import com.bestDate.view.alerts.showDefaultDialog
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
-abstract class BaseFragment<VB: ViewBinding>: Fragment() {
+abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     abstract val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> VB
 
     private var _binding: VB? = null
@@ -67,9 +67,9 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
         reDrawBars()
     }
 
-    protected open fun onViewLifecycle() { }
+    protected open fun onViewLifecycle() {}
 
-    protected open fun onViewClickListener() { }
+    protected open fun onViewClickListener() {}
 
     open fun onCustomBackNavigation() {
         goBack()
@@ -121,7 +121,7 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
 
     private fun makeStatusBarOffset(offsetView: View) {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
-            val top = insets?.getInsets(WindowInsetsCompat.Type.systemGestures())?.top
+            val top = insets.getInsets(WindowInsetsCompat.Type.systemGestures()).top
             offsetView.setMarginTop(top ?: 0)
             insets
         }
@@ -142,7 +142,8 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     private fun keyboardAction() {
         KeyboardVisibilityEvent.setEventListener(requireActivity()) { isOpen ->
             if (isOpen) scrollAction()
-        else hideAction() }
+            else hideAction()
+        }
     }
 
     open fun scrollAction() {}
@@ -157,13 +158,11 @@ abstract class BaseFragment<VB: ViewBinding>: Fragment() {
     }
 
     fun hideKeyboardAction() {
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view?.windowToken, 2)
+        binding.root.hideKeyboard()
     }
 
     fun showKeyboardAction() {
-        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+        binding.root.showKeyboard()
     }
 
     fun setFocus(view: EditText) {

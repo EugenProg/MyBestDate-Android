@@ -536,4 +536,5 @@
     <string name="changing_the_password_to_log_in">Changing the password to log in, you need to confirm via email.</string>
     <string name="new_password">New password</string>
     <string name="change_location">Change location</string>
+    <string name="powered_by_google">powered by <font color="#ffffff"><b>Google</b></font></string>
 </resources>
