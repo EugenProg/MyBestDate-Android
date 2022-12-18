@@ -48,4 +48,9 @@ class UserRemoteData @Inject constructor(
 
     suspend fun changePassword(oldPass: String, newPass: String) =
         service.updateUserPassword(UpdatePasswordRequest(oldPass, newPass, newPass))
+
+    suspend fun getUserSettings() = service.getUserSettings()
+
+    suspend fun updateUserSettings(type: SettingsType, checked: Boolean) =
+        service.updateUserSettings(type.getSettingsRequest(checked))
 }

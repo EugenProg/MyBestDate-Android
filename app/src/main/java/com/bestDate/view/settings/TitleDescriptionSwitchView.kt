@@ -37,7 +37,7 @@ class TitleDescriptionSwitchView @JvmOverloads constructor(
         }
     }
 
-    fun setChecked(isChecked: Boolean) {
+    fun setChecked(isChecked: Boolean?) {
         binding.switchView.setChecked(isChecked)
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.ViewSettingsNotificationBinding
+import com.bestDate.db.entity.NotificationSettings
 
 class NotificationSettingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -36,7 +37,13 @@ class NotificationSettingView @JvmOverloads constructor(
         }
     }
 
-    fun setNotificationSettings() {
-
+    fun setNotificationSettings(settings: NotificationSettings) {
+        with(binding) {
+            likesSwitch.setChecked(settings.likes)
+            matchesSwitch.setChecked(settings.matches)
+            invitationsSwitch.setChecked(settings.invitations)
+            messagesSwitch.setChecked(settings.messages)
+            guestsSwitch.setChecked(settings.guests)
+        }
     }
 }

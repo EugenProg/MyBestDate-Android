@@ -34,8 +34,10 @@ class SettingsSwitchView @JvmOverloads constructor(
         with(binding) {
             root.setOnClickListener {
                 if (!progressMode) {
-                    switchCompat.isChecked = !switchCompat.isChecked
-                    toggleSwitchStatus(binding.switchCompat.isChecked)
+                    val isChecked = !switchCompat.isChecked
+                    switchCompat.isChecked = isChecked
+                    toggleSwitchStatus(isChecked)
+                    checkAction?.invoke(isChecked)
                 }
             }
         }
@@ -61,8 +63,9 @@ class SettingsSwitchView @JvmOverloads constructor(
         binding.progress.isVisible = enable
     }
 
-    fun setChecked(isChecked: Boolean) {
-        binding.switchCompat.isChecked = isChecked
+    fun setChecked(isChecked: Boolean?) {
+        binding.switchCompat.isChecked = isChecked == true
+        toggleSwitchStatus(isChecked == true)
     }
 
     private fun toggleSwitchStatus(active: Boolean) {
