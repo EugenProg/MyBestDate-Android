@@ -2,12 +2,14 @@ package com.bestDate.data.extension
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
@@ -140,4 +142,14 @@ fun ViewPager2?.onPageChanged(onScrolled: ((position: Int,
             onSelected?.invoke(position)
         }
     })
+}
+
+fun View.showKeyboard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+}
+
+fun View.hideKeyboard() {
+    val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(this.windowToken, 2)
 }

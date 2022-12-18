@@ -48,4 +48,7 @@ class UserRemoteData @Inject constructor(
 
     suspend fun changePassword(oldPass: String, newPass: String) =
         service.updateUserPassword(UpdatePasswordRequest(oldPass, newPass, newPass))
+
+    suspend fun saveUserLocation(locationRequest: SaveUserLocationRequest) =
+        service.saveUserLocation(locationRequest)
 }

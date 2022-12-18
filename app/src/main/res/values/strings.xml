@@ -538,4 +538,5 @@
     <string name="change_location">Change location</string>
     <string name="enter_a_old_pass">Enter the old password</string>
     <string name="confirm_the_new_pass">Confirm the new password</string>
+    <string name="powered_by_google">powered by <font color="#ffffff"><b>Google</b></font></string>
 </resources>

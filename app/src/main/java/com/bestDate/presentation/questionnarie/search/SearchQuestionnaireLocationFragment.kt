@@ -9,6 +9,8 @@ import com.bestDate.R
 import com.bestDate.base.BaseFragment
 import com.bestDate.databinding.FragmentSearchQuestionnaireLocationBinding
 import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
+import com.bestDate.view.searchLocation.SearchLocationView
+import com.bestDate.view.searchLocation.SearchResultsAdapter
 
 class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQuestion) :
     BaseFragment<FragmentSearchQuestionnaireLocationBinding>() {
@@ -42,7 +44,7 @@ class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQue
                 search(it)
             }
 
-            adapter = SearchResultsAdapter(itemClick())
+            adapter = SearchResultsAdapter(SearchLocationView.SearchStyle.LIGHT)
             addressList.layoutManager = LinearLayoutManager(context)
             addressList.adapter = adapter
 
@@ -60,9 +62,9 @@ class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQue
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        addressesList.observe(viewLifecycleOwner) {
+       /* addressesList.observe(viewLifecycleOwner) {
             adapter.submitList(it)
-        }
+        }*/
     }
 
     private fun search(text: String) {

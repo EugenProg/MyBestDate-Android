@@ -80,4 +80,8 @@ interface UserService {
     /**Change user password*/
     @PUT("/api/v1/user/password")
     suspend fun updateUserPassword(@Body body: UpdatePasswordRequest): Response<BaseResponse>
+
+    /**Update user location*/
+    @PUT("/api/v1/user/location")
+    suspend fun saveUserLocation(@Body body: SaveUserLocationRequest): Response<UserDataResponse>
 }

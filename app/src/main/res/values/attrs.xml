@@ -73,4 +73,11 @@
         <attr name="pass_input_hint" format="string"/>
         <attr name="show_pass" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="SearchLocationView">
+        <attr name="viewSearchStyle" format="enum">
+            <enum name="light" value="0"/>
+            <enum name="dark" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>
