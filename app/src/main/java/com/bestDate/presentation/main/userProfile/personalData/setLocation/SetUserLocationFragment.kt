@@ -60,7 +60,7 @@ class SetUserLocationFragment :
             showMessage(R.string.save_successfully)
             goBack()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }
