@@ -93,6 +93,12 @@ data class UpdateUserRequest(
     var look_for: MutableList<String>?
 )
 
+data class UpdatePasswordRequest(
+    var old_password: String,
+    var password: String,
+    var password_confirmation: String,
+)
+
 enum class InvitationAnswer(var id: Int, @StringRes var title: Int, @DrawableRes val button: Int) {
     YES(1, R.string.yes_i_agree, R.drawable.positive_answer_btn),
     YES_NEXT_TIME(2, R.string.yes_i_will_but_next_time, R.drawable.positive_answer_btn),

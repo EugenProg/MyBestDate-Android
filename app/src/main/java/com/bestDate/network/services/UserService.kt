@@ -76,4 +76,8 @@ interface UserService {
     /**Update user phone*/
     @PUT("/api/v1/user/phone")
     suspend fun saveUserPhone(@Body body: ConfirmRequest): Response<UserDataResponse>
+
+    /**Change user password*/
+    @PUT("/api/v1/user/password")
+    suspend fun updateUserPassword(@Body body: UpdatePasswordRequest): Response<BaseResponse>
 }

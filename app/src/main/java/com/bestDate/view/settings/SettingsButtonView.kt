@@ -19,19 +19,17 @@ class SettingsButtonView @JvmOverloads constructor(
 
     init {
         setAttrs(attrs, R.styleable.SettingsButtonView) {
-            binding.button.text = it.getString(R.styleable.SettingsButtonView_settings_button_title)
+            binding.settingsButton.text = it.getString(R.styleable.SettingsButtonView_settings_button_title)
         }
 
-        binding.button.setOnSaveClickListener {
+        binding.settingsButton.setOnSaveClickListener {
             onClick?.invoke()
         }
     }
 
     var title: String?
-        get() = binding.button.text.toString()
+        get() = binding.settingsButton.text.toString()
         set(value) {
-            binding.button.text = value
+            binding.settingsButton.text = value
         }
-
-
 }

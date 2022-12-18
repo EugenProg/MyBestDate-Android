@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.databinding.FragmentMyDuelsBinding
-import com.bestDate.presentation.main.userProfile.likesList.LikesListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,7 +55,7 @@ class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>(
             if (!binding.refreshView.isRefreshing &&
                 viewModel.myDuels.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

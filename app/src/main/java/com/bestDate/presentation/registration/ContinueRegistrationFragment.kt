@@ -59,7 +59,7 @@ class ContinueRegistrationFragment :
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             showMessage(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
             //showMessage(R.string.oops_its_error)
         }

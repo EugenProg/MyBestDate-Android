@@ -56,7 +56,7 @@ class AnsweredInvitationFragment :
                 viewModel.answeredInvitations.value.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

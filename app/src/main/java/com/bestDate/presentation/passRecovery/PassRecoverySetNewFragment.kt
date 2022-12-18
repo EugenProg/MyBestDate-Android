@@ -49,7 +49,7 @@ class PassRecoverySetNewFragment : BaseVMFragment<FragmentPassRecoverySetNewBind
             navController.navigate(PassRecoverySetNewFragmentDirections
                     .actionGlobalGeoEnableFragment())
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
         }
     }

@@ -6,7 +6,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/settingsButton"
             style="@style/component_title"
             android:layout_width="match_parent"
             android:layout_height="42dp"

@@ -6,7 +6,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/saveDataButton"
             style="@style/component_title"
             android:layout_width="match_parent"
             android:layout_height="42dp"
@@ -22,9 +22,9 @@
             android:layout_gravity="center"
             android:indeterminateTint="@color/white"
             android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/button"
+            app:layout_constraintBottom_toBottomOf="@+id/saveDataButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button" />
+            app:layout_constraintTop_toTopOf="@+id/saveDataButton" />
     </FrameLayout>
 </merge>

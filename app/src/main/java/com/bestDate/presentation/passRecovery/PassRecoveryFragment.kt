@@ -48,7 +48,7 @@ class PassRecoveryFragment : BaseVMFragment<FragmentPassRecoveryBinding, PassRec
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             showMessage(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
         }
     }

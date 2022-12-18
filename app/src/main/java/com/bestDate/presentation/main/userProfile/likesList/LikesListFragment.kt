@@ -56,7 +56,7 @@ class LikesListFragment: BaseVMFragment<FragmentLikesListBinding, LikesListViewM
             if (!binding.refreshView.isRefreshing &&
                 viewModel.likesList.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

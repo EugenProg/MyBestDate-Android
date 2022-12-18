@@ -60,7 +60,9 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
                 showMessage(R.string.save_successfully)
             }
             changePassButton.onClick = {
-
+                navController.navigate(
+                    PersonalDataFragmentDirections.actionPersonalDataToChangePassword()
+                )
             }
             searchLocationButton.onClick = {
 
@@ -92,7 +94,7 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
             loader.stopLoading()
             binding.personalInfo.phoneIsSaved()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }
