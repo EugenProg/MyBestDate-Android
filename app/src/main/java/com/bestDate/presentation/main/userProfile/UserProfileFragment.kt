@@ -99,6 +99,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.personalDataButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToPersonalData())
         }
+        binding.settingsButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToSettings())
+        }
     }
 
     override fun onViewLifecycle() {

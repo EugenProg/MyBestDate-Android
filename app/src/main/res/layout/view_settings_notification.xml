@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/bg_main">
+
+        <com.bestDate.view.settings.TitleDescriptionView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_description_title="@string/disabling_notifications"
+            app:title_description_description="@string/you_will_not_receive_notifications_from_the_selected_categories"/>
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/likesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:settings_switch_title="@string/likes"
+            app:settings_switch_icon="@drawable/ic_settings_like"/>
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/matchesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:settings_switch_title="@string/matches"
+            app:settings_switch_icon="@drawable/ic_settings_match"/>
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/invitationsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:settings_switch_title="@string/invitations"
+            app:settings_switch_icon="@drawable/ic_settings_invitations"/>
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/messagesSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:settings_switch_title="@string/messages"
+            app:settings_switch_icon="@drawable/ic_settings_message"/>
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/guestsSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:settings_switch_title="@string/guests"
+            app:settings_switch_icon="@drawable/ic_settings_user"/>
+    </LinearLayout>
+</merge>

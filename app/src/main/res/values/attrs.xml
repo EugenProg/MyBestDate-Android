@@ -73,4 +73,16 @@
         <attr name="pass_input_hint" format="string"/>
         <attr name="show_pass" format="boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="SettingsSwitchView">
+        <attr name="settings_switch_icon" format="reference"/>
+        <attr name="settings_switch_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionSwitchView">
+        <attr name="t_d_s_title" format="string"/>
+        <attr name="t_d_s_description" format="string"/>
+        <attr name="t_d_s_switch_title" format="string"/>
+        <attr name="t_d_s_switch_icon" format="reference"/>
+    </declare-styleable>
 </resources>

@@ -20,7 +20,7 @@ class TitleDescriptionButtonView @JvmOverloads constructor(
     init {
         setAttrs(attrs, R.styleable.TitleDescriptionButtonView) {
             binding.titleDescription.title = it.getString(R.styleable.TitleDescriptionButtonView_t_d_b_title)
-            binding.titleDescription.description = it.getString(R.styleable.TitleDescriptionView_title_description_description)
+            binding.titleDescription.description = it.getString(R.styleable.TitleDescriptionButtonView_t_d_b_description)
             binding.button.title = it.getString(R.styleable.TitleDescriptionButtonView_t_d_b_button_title)
         }
 

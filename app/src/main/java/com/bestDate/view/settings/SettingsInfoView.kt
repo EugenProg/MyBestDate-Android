@@ -24,7 +24,7 @@ class SettingsInfoView @JvmOverloads constructor(
             binding.icon.setImageResource(
                 it.getResourceId(
                     R.styleable.SettingsInfoView_settings_info_icon,
-                    R.drawable.ic_settings_user
+                    R.drawable.ic_personal_user
                 )
             )
         }
