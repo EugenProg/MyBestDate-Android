@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="13dp"
-        android:fontFamily="@font/regular"
-        android:textSize="18sp"
-        android:textColor="@color/main_90" />
-</FrameLayout>
+    android:layout_height="wrap_content"
+    android:paddingStart="32dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="32dp"
+    android:paddingBottom="13dp"
+    android:fontFamily="@font/regular"
+    android:textColor="@color/main_90"
+    android:textSize="18sp" />

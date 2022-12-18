@@ -1,6 +1,10 @@
 package com.bestDate.network
 
 import android.content.Context
+import com.bestDate.data.extension.Core_network
+import com.bestDate.data.extension.Core_url
+import com.bestDate.data.extension.Geocoding_network
+import com.bestDate.data.extension.Geocoding_url
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.*
 import com.bestDate.network.services.*
@@ -19,13 +23,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     @Provides
-    fun providesBaseURL(): String = "https://dev-api.bestdate.info"
+    @Core_url
+    fun providesCoreBaseURL(): String = "https://dev-api.bestdate.info"
+
+    @Provides
+    @Geocoding_url
+    fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
 
     @Provides
     fun provideInterceptor(
-        @ApplicationContext context: Context,
-        preferences: PreferencesUtils
-    ): OkHttpClient {
+        @ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
@@ -36,7 +43,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCoreApi(BASE_URL: String, interceptor: OkHttpClient): Retrofit =
+    @Core_network
+    fun provideCoreApi(@Core_url BASE_URL: String, interceptor: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -45,28 +53,42 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun coreAuthApiService(retrofit: Retrofit): CoreAuthService =
+    @Geocoding_network
+    fun provideGeocodingApi(@Geocoding_url BASE_URL: String): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    fun coreAuthApiService(@Core_network retrofit: Retrofit): CoreAuthService =
         retrofit.create(CoreAuthService::class.java)
 
     @Provides
     @Singleton
-    fun imageApiService(retrofit: Retrofit): ImageApiService =
+    fun imageApiService(@Core_network retrofit: Retrofit): ImageApiService =
         retrofit.create(ImageApiService::class.java)
 
     @Provides
     @Singleton
-    fun userApiService(retrofit: Retrofit): UserService =
+    fun userApiService(@Core_network retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
 
     @Provides
     @Singleton
-    fun questsApiService(retrofit: Retrofit): GuestsService =
+    fun questsApiService(@Core_network retrofit: Retrofit): GuestsService =
         retrofit.create(GuestsService::class.java)
 
     @Provides
     @Singleton
-    fun invitationApiService(retrofit: Retrofit): InvitationService =
+    fun invitationApiService(@Core_network retrofit: Retrofit): InvitationService =
         retrofit.create(InvitationService::class.java)
+
+    @Provides
+    @Singleton
+    fun geocodingApiService(@Geocoding_network retrofit: Retrofit): GeocodingService =
+        retrofit.create(GeocodingService::class.java)
 
     @Provides
     @Singleton
@@ -92,4 +114,9 @@ object NetworkModule {
     @Singleton
     fun invitationRemoteData(apiService: InvitationService): InvitationsRemoteData =
         InvitationsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
+        GeocodingRemoteData(apiService)
 }

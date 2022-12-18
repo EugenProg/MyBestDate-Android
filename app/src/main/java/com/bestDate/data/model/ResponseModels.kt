@@ -43,8 +43,8 @@ data class ProfileImage(
     }
 
     fun getDefaultPhoto() = ProfileImage(
-        full_url = "https://as2.ftcdn.net/jpg/03/46/93/61/220_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg",
-        thumb_url = "https://as2.ftcdn.net/jpg/03/46/93/61/220_F_346936114_RaxE6OQogebgAWTalE1myseY1Hbb5qPM.jpg"
+        full_url = "https://dev-api.bestdate.info/images/default_photo.jpg",
+        thumb_url = "https://dev-api.bestdate.info/images/default_photo.jpg"
     )
 }
 
@@ -194,3 +194,35 @@ data class InvitationCard(
         }
     }
 }
+
+data class GeocodingResponse(
+    var place_id: Int? = null,
+    var licence: String? = null,
+    var osm_type: String? = null,
+    var lat: String? = null,
+    var lon: String? = null,
+    var display_name: String? = null,
+    var address: Address? = null
+) {
+    fun getSaveUserRequest(): SaveUserLocationRequest {
+        return SaveUserLocationRequest(
+            lat = lat.orEmpty(),
+            lng = lon.orEmpty(),
+            iso_code = address?.country_code.orEmpty(),
+            country = address?.country.orEmpty(),
+            state = address?.country_code,
+            state_name = address?.state_district,
+            city = address?.city ?: address?.town.orEmpty()
+        )
+    }
+}
+
+data class Address(
+    var city: String? = null,
+    var town: String? = null,
+    var county: String? = null,
+    var state_district: String? = null,
+    var state: String? = null,
+    var country: String? = null,
+    var country_code: String? = null
+)

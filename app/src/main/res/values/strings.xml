@@ -538,6 +538,7 @@
     <string name="change_location">Change location</string>
     <string name="enter_a_old_pass">Enter the old password</string>
     <string name="confirm_the_new_pass">Confirm the new password</string>
+    <string name="powered_by_google">powered by <font color="#ffffff"><b>Google</b></font></string>
     <string name="main_settings">main settings</string>
     <string name="blocked_users">Blocked users</string>
     <string name="a_list_of_users_who_have_been_blocked_by_you">A list of users who have been blocked by you. The list can be edited</string>

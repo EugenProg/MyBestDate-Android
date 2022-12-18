@@ -74,6 +74,13 @@
         <attr name="show_pass" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="SearchLocationView">
+        <attr name="viewSearchStyle" format="enum">
+            <enum name="light" value="0"/>
+            <enum name="dark" value="1"/>
+        </attr>
+    </declare-styleable>
+
     <declare-styleable name="SettingsSwitchView">
         <attr name="settings_switch_icon" format="reference"/>
         <attr name="settings_switch_title" format="string"/>

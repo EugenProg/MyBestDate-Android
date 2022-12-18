@@ -77,6 +77,10 @@ interface UserService {
     @PUT("/api/v1/user/password")
     suspend fun updateUserPassword(@Body body: UpdatePasswordRequest): Response<BaseResponse>
 
+    /**Update user location*/
+    @PUT("/api/v1/user/location")
+    suspend fun saveUserLocation(@Body body: SaveUserLocationRequest): Response<UserDataResponse>
+
     /**Get user settings*/
     @GET("/api/v1/settings")
     suspend fun getUserSettings(): Response<UserSettingsResponse>
