@@ -93,6 +93,12 @@ data class UpdateUserRequest(
     var look_for: MutableList<String>?
 )
 
+data class UpdatePasswordRequest(
+    var old_password: String,
+    var password: String,
+    var password_confirmation: String,
+)
+
 data class SaveUserLocationRequest(
     var lat: String,
     var lng: String,

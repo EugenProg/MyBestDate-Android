@@ -23,7 +23,7 @@ class RegistrationOtpFragment: BaseOtpFragment(
             navController.navigate(RegistrationOtpFragmentDirections
                 .actionGlobalProfilePhotoEditingFragment())
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
             binding.confirmButton.toggleActionEnabled(false)
         }

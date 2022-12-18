@@ -39,7 +39,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
             tokenIsRefreshed = true
             viewModel.refreshUser()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             Logger.print("refresh exception: ${it.exception.message}")
             navController.navigate(StartFragmentDirections.actionStartToAuth())
         }

@@ -69,6 +69,11 @@
         <attr name="t_d_b_button_title" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="PasswordInputView">
+        <attr name="pass_input_hint" format="string"/>
+        <attr name="show_pass" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="SearchLocationView">
         <attr name="viewSearchStyle" format="enum">
             <enum name="light" value="0"/>

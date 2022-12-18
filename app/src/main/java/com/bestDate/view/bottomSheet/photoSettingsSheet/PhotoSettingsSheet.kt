@@ -71,7 +71,7 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
         viewModel.deleteLoadingLiveData.observe(viewLifecycleOwner) {
             binding.deleteButton.toggleActionEnabled(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             binding.safeButton.toggleActionEnabled(false)
             binding.deleteButton.toggleActionEnabled(false)
             showMessage(it.exception.message)

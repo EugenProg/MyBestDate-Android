@@ -255,6 +255,13 @@
                 android:name="com.bestDate.presentation.main.userProfile.personalData.PersonalDataFragment"
                 android:label="PersonalDataFragment" >
                 <action
+                    android:id="@+id/action_personalData_to_changePassword"
+                    app:destination="@id/changePasswordFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+                <action
                     android:id="@+id/action_personalData_to_setLocation"
                     app:destination="@id/setUserLocationFragment"
                     app:enterAnim="@anim/slide_in_left"
@@ -262,6 +269,10 @@
                     app:popEnterAnim="@anim/slide_in_right"
                     app:popExitAnim="@anim/slide_out_right"/>
             </fragment>
+            <fragment
+                android:id="@+id/changePasswordFragment"
+                android:name="com.bestDate.presentation.main.userProfile.personalData.changePassword.ChangePasswordFragment"
+                android:label="ChangePasswordFragment"/>
             <fragment
                 android:id="@+id/setUserLocationFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.setLocation.SetUserLocationFragment"
