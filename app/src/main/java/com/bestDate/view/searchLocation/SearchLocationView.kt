@@ -25,6 +25,7 @@ class SearchLocationView @JvmOverloads constructor(
         ViewSearchLocationBinding.inflate(LayoutInflater.from(context), this)
     private val autoComplete = LocationAutocompleteUtil(context)
     private lateinit var adapter: SearchResultsAdapter
+
     var selectAction: ((CityListItem) -> Unit)? = null
 
     init {
@@ -44,7 +45,9 @@ class SearchLocationView @JvmOverloads constructor(
         binding.locationListView.adapter = adapter
     }
 
-    fun initSearching(scope: CoroutineScope, lifecycleOwner: LifecycleOwner) {
+    fun initSearching(scope: CoroutineScope, lifecycleOwner: LifecycleOwner, currentLocation: String?) {
+        binding.input.setText(currentLocation)
+
         binding.input.textInputAsFlow()
             .map { it?.trim() }
             .debounce(350)

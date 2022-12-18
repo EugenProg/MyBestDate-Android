@@ -76,4 +76,8 @@ interface UserService {
     /**Update user phone*/
     @PUT("/api/v1/user/phone")
     suspend fun saveUserPhone(@Body body: ConfirmRequest): Response<UserDataResponse>
+
+    /**Update user location*/
+    @PUT("/api/v1/user/location")
+    suspend fun saveUserLocation(@Body body: SaveUserLocationRequest): Response<UserDataResponse>
 }

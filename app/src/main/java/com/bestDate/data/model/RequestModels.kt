@@ -93,6 +93,16 @@ data class UpdateUserRequest(
     var look_for: MutableList<String>?
 )
 
+data class SaveUserLocationRequest(
+    var lat: String,
+    var lng: String,
+    var iso_code: String,
+    var country: String,
+    var state: String?,
+    var state_name: String?,
+    var city: String
+)
+
 enum class InvitationAnswer(var id: Int, @StringRes var title: Int, @DrawableRes val button: Int) {
     YES(1, R.string.yes_i_agree, R.drawable.positive_answer_btn),
     YES_NEXT_TIME(2, R.string.yes_i_will_but_next_time, R.drawable.positive_answer_btn),

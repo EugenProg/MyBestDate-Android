@@ -63,7 +63,10 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
 
             }
             searchLocationButton.onClick = {
-
+                navController.navigate(
+                    PersonalDataFragmentDirections
+                        .actionPersonalDataToSetLocation(binding.location.text.toString())
+                )
             }
         }
     }
