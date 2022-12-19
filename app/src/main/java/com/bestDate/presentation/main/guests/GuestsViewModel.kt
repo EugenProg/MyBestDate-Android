@@ -17,7 +17,7 @@ class GuestsViewModel @Inject constructor(
     val user = userUseCase.getMyUser.asLiveData()
     val guestsListNew = guestsUseCase.guestsListNew
     val guestsListPrev = guestsUseCase.guestsListPrev
-    val guestsListIsEmpty = guestsUseCase.guestsListIsEmpty
+    val guestsList = guestsUseCase.guestsList
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData

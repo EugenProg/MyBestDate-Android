@@ -30,6 +30,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         setUpToolbar()
         setUpGuestsList()
         setUpSwipe()
+        viewModel.getGuests()
     }
 
     private fun setUpToolbar() {
@@ -60,8 +61,6 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
                 adapter = adapterPrev
             }
         }
-
-        viewModel.getGuests()
     }
 
     private fun goToAnotherProfile(user: ShortUserData?) {
@@ -85,23 +84,29 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             adapterNew.submitList(guestsList) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.newHeader.root.isVisible = guestsList.isNotEmpty()
-                binding.noDataViewWithLoading.noData = viewModel.guestsListIsEmpty.value == true
+                if (guestsList.isNotEmpty()) viewModel.markGuestsViewed(guestsList.map { it.id }
+                    .toMutableList())
             }
-            viewModel.markGuestsViewed(guestsList.map { it.id }.toMutableList())
         }
 
         viewModel.guestsListPrev.observe(viewLifecycleOwner) {
             adapterPrev.submitList(it) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.prevHeader.root.isVisible = it.isNotEmpty()
-                binding.noDataViewWithLoading.noData = viewModel.guestsListIsEmpty.value == true
+                binding.noDataViewWithLoading.noData = viewModel.guestsList.value.isNullOrEmpty()
             }
         }
 
         viewModel.loadingLiveData.observe(viewLifecycleOwner) {
             if (!binding.swipeRefresh.isRefreshing &&
-                viewModel.guestsListIsEmpty.value != true
+                viewModel.guestsList.value.isNullOrEmpty()
             ) binding.noDataViewWithLoading.toggleLoading(it)
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            binding.swipeRefresh.isRefreshing = false
+            binding.noDataViewWithLoading.toggleLoading(false)
+            showMessage(it.exception.message)
         }
     }
 }
