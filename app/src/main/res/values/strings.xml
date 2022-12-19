@@ -557,4 +557,7 @@
     <string name="the_ability_to_view_other_peoples_profiles">The ability to view other people’s profiles unnoticed.</string>
     <string name="disabling_notifications">Disabling notifications</string>
     <string name="you_will_not_receive_notifications_from_the_selected_categories">You will not receive notifications from the selected categories.</string>
+    <string name="unblock">Unblock</string>
+    <string name="this_user_is_blocked">This user is blocked</string>
+    <string name="you_dont_have_any_blocked_users_yet">You don\'t have any blocked users yet</string>
 </resources>

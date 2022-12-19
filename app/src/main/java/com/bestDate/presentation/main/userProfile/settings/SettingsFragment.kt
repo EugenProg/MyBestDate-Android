@@ -10,7 +10,7 @@ import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewModel>() {
+class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =
         { inflater, parent, attach -> FragmentSettingsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<SettingsViewModel> = SettingsViewModel::class.java
@@ -31,7 +31,7 @@ class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewMode
                 goBack()
             }
             blockedListButton.onClick = {
-
+                navController.navigate(SettingsFragmentDirections.actionSettingsToBlockedUsers())
             }
             changeLanguageButton.onClick = {
 
@@ -65,7 +65,7 @@ class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewMode
             }
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
-            if (it) loader.startLoading()
+            if (it && viewModel.userSettings.value == null) loader.startLoading()
             else loader.stopLoading()
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
