@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bg_main"
+    android:background="@color/bg_box"
+    android:foreground="?selectableItemBackground"
     android:paddingHorizontal="18dp"
-    android:paddingVertical="10dp">
+    android:layout_marginVertical="5dp">
 
     <ImageView
         android:id="@+id/profileImageView"
