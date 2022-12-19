@@ -92,4 +92,8 @@ interface UserService {
     /**update user settings*/
     @PUT("/api/v1/settings")
     suspend fun updateUserSettings(@Body body: UpdateSettingsRequest): Response<UserSettingsResponse>
+
+    /**Delete user profile*/
+    @DELETE("/api/v1/user")
+    suspend fun deleteUserProfile(): Response<BaseResponse>
 }

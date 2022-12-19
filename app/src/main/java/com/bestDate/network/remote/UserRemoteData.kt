@@ -60,4 +60,6 @@ class UserRemoteData @Inject constructor(
 
     suspend fun updateUserSettings(type: SettingsType, checked: Boolean) =
         service.updateUserSettings(type.getSettingsRequest(checked))
+
+    suspend fun deleteUserProfile() = service.deleteUserProfile()
 }

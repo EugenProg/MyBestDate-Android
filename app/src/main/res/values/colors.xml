@@ -51,4 +51,5 @@
     <color name="green">#00ff62</color>
     <color name="dark_search_box">#323b3f</color>
     <color name="bg_list_item">#1c262b</color>
+    <color name="light_line">#27beefff</color>
 </resources>

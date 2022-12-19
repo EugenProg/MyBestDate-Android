@@ -33,4 +33,8 @@ class BlockedUserUseCase @Inject constructor(
             response.errorBody()?.getErrorMessage()
         )
     }
+
+    fun clearData() {
+        blockedUsers.postValue(mutableListOf())
+    }
 }

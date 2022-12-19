@@ -7,6 +7,7 @@ import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
 import com.bestDate.view.alerts.LoaderDialog
+import com.bestDate.view.alerts.showDeleteProfileDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +38,10 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
 
             }
             deleteProfileButton.onClick = {
-
+                requireActivity().showDeleteProfileDialog {
+                    loader.startLoading()
+                    viewModel.deleteUserProfile()
+                }
             }
 
             notificationSettings.checkAction = { checked, settingsType ->
@@ -71,6 +75,10 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             loader.stopLoading()
             showMessage(it.exception.message)
+        }
+        viewModel.deleteSuccessLiveData.observe(viewLifecycleOwner) {
+            loader.stopLoading()
+            navController.navigate(SettingsFragmentDirections.actionGlobalAuthFragment())
         }
     }
 }
