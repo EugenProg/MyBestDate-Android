@@ -256,7 +256,7 @@
             <fragment
                 android:id="@+id/personalDataFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.PersonalDataFragment"
-                android:label="PersonalDataFragment" >
+                android:label="PersonalDataFragment">
                 <action
                     android:id="@+id/action_personalData_to_changePassword"
                     app:destination="@id/changePasswordFragment"
@@ -270,16 +270,28 @@
                     app:enterAnim="@anim/slide_in_left"
                     app:exitAnim="@anim/slide_out_left"
                     app:popEnterAnim="@anim/slide_in_right"
-                    app:popExitAnim="@anim/slide_out_right"/>
+                    app:popExitAnim="@anim/slide_out_right" />
             </fragment>
             <fragment
                 android:id="@+id/settingsFragment"
                 android:name="com.bestDate.presentation.main.userProfile.settings.SettingsFragment"
-                android:label="SettingsFragment"/>
+                android:label="SettingsFragment">
+                <action
+                    android:id="@+id/action_settings_to_blockedUsers"
+                    app:destination="@id/blockedUsersFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+            </fragment>
+            <fragment
+                android:id="@+id/blockedUsersFragment"
+                android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"
+                android:label="BlockedUsersFragment" />
             <fragment
                 android:id="@+id/changePasswordFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.changePassword.ChangePasswordFragment"
-                android:label="ChangePasswordFragment"/>
+                android:label="ChangePasswordFragment" />
             <fragment
                 android:id="@+id/setUserLocationFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.setLocation.SetUserLocationFragment"
@@ -480,7 +492,7 @@
         <fragment
             android:id="@+id/registrationOtpFragment"
             android:name="com.bestDate.presentation.registration.RegistrationOtpFragment"
-            android:label="RegistrationOtpFragment"/>
+            android:label="RegistrationOtpFragment" />
         <action
             android:id="@+id/action_global_profilePhotoEditingFragment"
             app:destination="@id/profilePhotoEditingFragment"
