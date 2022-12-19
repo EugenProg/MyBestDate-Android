@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentStartBinding
 import com.bestDate.presentation.auth.AuthFragmentDirections
@@ -22,7 +23,10 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
         super.onInit()
         when {
             viewModel.isFirstEnter() -> {
-                navController.navigate(StartFragmentDirections.actionStartToOnboardStart())
+                postDelayed({
+                    navController.navigate(StartFragmentDirections.actionStartToOnboardStart())
+
+                }, 1600)
             }
             !viewModel.isRefreshTokenValid() -> {
                 navController.navigate(StartFragmentDirections.actionStartToAuth())
