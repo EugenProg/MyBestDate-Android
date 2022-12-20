@@ -102,6 +102,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.settingsButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToSettings())
         }
+        binding.questionnaireButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToQuestionnaire())
+        }
     }
 
     override fun onViewLifecycle() {

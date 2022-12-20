@@ -1,4 +1,4 @@
-package com.bestDate.presentation.questionnarie
+package com.bestDate.base.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,24 +7,28 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.base.questionnaire.search.SearchQuestionnaireLocationFragment
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentQuestionnaireBinding
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.presentation.questionnarie.search.SearchQuestionnaireLocationFragment
 import com.bestDate.view.questionnaire.itemSelectSheet.MultilineQuestionnaireSheet
 import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 import com.bestDate.view.questionnaire.seekBarSheet.SeekBarQuestionnaireSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, QuestionnaireViewModel>() {
+abstract class BaseQuestionnaireFragment :
+    BaseVMFragment<FragmentQuestionnaireBinding, QuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentQuestionnaireBinding =
-        { inflater, parent, attach -> FragmentQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            FragmentQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
     override val viewModelClass: Class<QuestionnaireViewModel> = QuestionnaireViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
@@ -33,6 +37,10 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
     private var savedQuestionnaire: QuestionnaireDB? = null
 
     override var customBackNavigation = true
+
+    abstract fun back()
+    abstract fun forward()
+    open var showSkipButton: Boolean = true
 
     override fun onInit() {
         super.onInit()
@@ -45,6 +53,8 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
             }
         }
 
+        binding.skipButton.isVisible = showSkipButton
+
         lifecycleScope.launchWhenStarted {
             pagesLiveData.postValue(QuestionnaireItemsList().getPages())
         }
@@ -54,7 +64,7 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
         super.onViewClickListener()
         with(binding) {
             backButton.setOnSaveClickListener {
-                goBack()
+                back()
             }
             progressBar.onProgressChanged = {
                 if (it > 46) centerSurprise.hideSurprise()
@@ -77,11 +87,10 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
                 val questionnaire = binding.questionnaireView.getQuestionnaire()
                 if (questionnaireIsUpdate(questionnaire)) {
                     viewModel.saveQuestionnaire(questionnaire)
-                }
+                } else forward()
             }
             skipButton.setOnSaveClickListener {
-                navController.navigate(QuestionnaireFragmentDirections
-                    .actionQuestionnaireFragmentToGeoEnableFragment())
+                forward()
             }
         }
     }
@@ -123,9 +132,8 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.questionnaireView.toggleFinishButton(it)
         }
-        viewModel.questionnaireUseCase.observe(viewLifecycleOwner) {
-            navController.navigate(QuestionnaireFragmentDirections
-                .actionQuestionnaireFragmentToGeoEnableFragment())
+        viewModel.questionnaireSaveLiveData.observe(viewLifecycleOwner) {
+            forward()
         }
     }
 
@@ -210,8 +218,7 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
     }
 
     override fun onCustomBackNavigation() {
-        super.onCustomBackNavigation()
-        if (!binding.questionnaireView.goBack()) navController.popBackStack()
+        if (!binding.questionnaireView.goBack()) back()
     }
 
     override fun scrollAction() {

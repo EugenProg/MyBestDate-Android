@@ -1,11 +1,12 @@
 package com.bestDate.view.questionnaire.list
 
 import com.bestDate.base.QuestionnaireBaseViewHolder
+import com.bestDate.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemConfirmationBinding
 
-class ConfirmationViewHolder(override val binding: ItemConfirmationBinding):
+class ConfirmationViewHolder(override val binding: ItemConfirmationBinding) :
     QuestionnaireBaseViewHolder<ItemConfirmationBinding>(binding) {
     override fun bindView(
         item: QuestionnaireQuestion,

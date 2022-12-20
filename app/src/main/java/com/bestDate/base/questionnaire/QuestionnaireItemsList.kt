@@ -1,4 +1,4 @@
-package com.bestDate.presentation.questionnarie
+package com.bestDate.base.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,7 +11,6 @@ import com.bestDate.presentation.registration.RegistrationHolder
 import com.bestDate.presentation.registration.RegistrationType
 import com.bestDate.view.questionnaire.list.ConfirmationViewHolder
 import com.bestDate.view.questionnaire.list.InfoViewHolder
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 import com.bestDate.view.questionnaire.list.RangeBarViewHolder
 
 class QuestionnaireItemsList {
@@ -154,12 +153,25 @@ class QuestionsItemsList {
     private fun getDataPageQuestions(): MutableList<QuestionnaireQuestion> {
         val questions: MutableList<QuestionnaireQuestion> = ArrayList()
 
-        questions.add(QuestionnaireQuestion(questionInfo = Question.PHOTO, "Your photo is confirmed"))
-        questions.add(QuestionnaireQuestion(questionInfo = Question.EMAIL,
-            if (RegistrationHolder.type == RegistrationType.EMAIL) RegistrationHolder.login else null))
+        questions.add(
+            QuestionnaireQuestion(
+                questionInfo = Question.PHOTO,
+                "Your photo is confirmed"
+            )
+        )
+        questions.add(
+            QuestionnaireQuestion(
+                questionInfo = Question.EMAIL,
+                if (RegistrationHolder.type == RegistrationType.EMAIL) RegistrationHolder.login else null
+            )
+        )
         questions.add(QuestionnaireQuestion(questionInfo = Question.SOCIAL_NETWORK))
-        questions.add(QuestionnaireQuestion(questionInfo = Question.PHONE_NUMBER,
-            if (RegistrationHolder.type == RegistrationType.PHONE) RegistrationHolder.login else null))
+        questions.add(
+            QuestionnaireQuestion(
+                questionInfo = Question.PHONE_NUMBER,
+                if (RegistrationHolder.type == RegistrationType.PHONE) RegistrationHolder.login else null
+            )
+        )
         return questions
     }
 }
@@ -169,21 +181,35 @@ enum class Question(
     val percent: Int,
     val viewType: QuestionnaireViewType,
     val unitString: Int? = null,
-    vararg val answers: Int) {
+    vararg val answers: Int
+) {
     MARITAL_STATUS(
         question = R.string.marital_status,
         percent = 5,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.married, R.string.divorced, R.string.single, R.string.it_s_complicated, R.string.in_love, R.string.engaged, R.string.actively_searching),
+        R.string.married,
+        R.string.divorced,
+        R.string.single,
+        R.string.it_s_complicated,
+        R.string.in_love,
+        R.string.engaged,
+        R.string.actively_searching
+    ),
     HAVING_KIDS(
         question = R.string.having_kids,
         percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.no, R.string.one, R.string.two, R.string.three, R.string.four, R.string.five_or_more),
+        R.string.no,
+        R.string.one,
+        R.string.two,
+        R.string.three,
+        R.string.four,
+        R.string.five_or_more
+    ),
     PLACE_OF_RESIDENCE(
-        question =  R.string.plase_of_residence,
+        question = R.string.plase_of_residence,
         percent = 4,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
@@ -222,71 +248,101 @@ enum class Question(
         R.string.TF, R.string.HR, R.string.CF, R.string.TD, R.string.ME, R.string.CZ, R.string.CL,
         R.string.CH, R.string.SE, R.string.SJ, R.string.LK, R.string.EC, R.string.GQ, R.string.AX,
         R.string.SV, R.string.ER, R.string.SZ, R.string.EE, R.string.ET, R.string.ZA, R.string.GS,
-        R.string.OS, R.string.SS, R.string.JM, R.string.JP),
+        R.string.OS, R.string.SS, R.string.JM, R.string.JP
+    ),
     EDUCATION(
         question = R.string.education,
         percent = 6,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.no_education,R.string.secondary, R.string.higher),
+        R.string.no_education, R.string.secondary, R.string.higher
+    ),
     OCCUPATIONAL_STATUS(
         question = R.string.occupational_status,
         percent = 5,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.student, R.string.working, R.string.unemployed, R.string.businessman, R.string.looking_for_my_self, R.string.freelancer),
+        R.string.student,
+        R.string.working,
+        R.string.unemployed,
+        R.string.businessman,
+        R.string.looking_for_my_self,
+        R.string.freelancer
+    ),
 
     HEIGHT(
         question = R.string.height,
         percent = 6,
         viewType = QuestionnaireViewType.SEEKBAR_VIEW,
-        unitString = R.string.cm_unit, 1, 3, 2, 3),
+        unitString = R.string.cm_unit, 1, 3, 2, 3
+    ),
     WEIGHT(
         question = R.string.weight,
         percent = 5,
         viewType = QuestionnaireViewType.SEEKBAR_VIEW,
-        unitString = R.string.kg_unit, 30, 150),
+        unitString = R.string.kg_unit, 30, 150
+    ),
     EYE_COLOR(
         question = R.string.eye_color,
         percent = 4,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.blue, R.string.gray, R.string.green, R.string.brown_yellow, R.string.yellow, R.string.brown, R.string.black),
+        R.string.blue,
+        R.string.gray,
+        R.string.green,
+        R.string.brown_yellow,
+        R.string.yellow,
+        R.string.brown,
+        R.string.black
+    ),
     HAIR_LENGTH(
         question = R.string.hair_length,
         percent = 3,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.short_, R.string.medium, R.string.long_, R.string.no_hair),
+        R.string.short_, R.string.medium, R.string.long_, R.string.no_hair
+    ),
     HAIR_COLOR(
         question = R.string.hair_color,
         percent = 5,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.blond, R.string.brown, R.string.brunette, R.string.redhead, R.string.no_hair),
+        R.string.blond, R.string.brown, R.string.brunette, R.string.redhead, R.string.no_hair
+    ),
 
     PURPOSE_OF_DATING(
         question = R.string.purpose_of_dating,
         percent = 8,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.friendship, R.string.love, R.string.communication, R.string.sex),
+        R.string.friendship,
+        R.string.love,
+        R.string.communication,
+        R.string.serious_relationship,
+        R.string.sex
+    ),
     WHAT_DO_YOU_WANT(
         question = R.string.what_do_you_want_for_a_date,
         percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.having_a_fun, R.string.interesting_communication, R.string.serious_relationship_only, R.string.one_time_sex),
+        R.string.having_a_fun,
+        R.string.interesting_communication,
+        R.string.serious_relationship_only,
+        R.string.one_time_sex
+    ),
     SEARCH_LOCATION(
         question = R.string.search_location,
         percent = 6,
         viewType = QuestionnaireViewType.INPUT_LOCATION_VIEW,
-        unitString = null),
+        unitString = null
+    ),
     AGE(
         question = R.string.search_age_range,
         percent = 0,
         viewType = QuestionnaireViewType.RANGE_BAR_VIEW,
-        unitString = null, 18, 90),
+        unitString = null, 18, 90
+    ),
 
     /** */
     HOBBY(
@@ -294,69 +350,121 @@ enum class Question(
         percent = 7,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
         unitString = null,
-        R.string.music, R.string.dancing, R.string.stand_up),
+        R.string.music,
+        R.string.dancing,
+        R.string.stand_up,
+        R.string.fishing,
+        R.string.diggering,
+        R.string.hunting,
+        R.string.blogging,
+        R.string.hike,
+        R.string.quest,
+        R.string.gardening,
+        R.string.watching_movies,
+        R.string.bike,
+        R.string.nature_watching,
+        R.string.spotting,
+        R.string.sailing,
+        R.string.rap,
+        R.string.road_trips,
+        R.string.pickup,
+        R.string.sauna,
+        R.string.radio
+    ),
     TYPES_OF_SPORTS(
         question = R.string.types_of_sports,
         percent = 8,
         viewType = QuestionnaireViewType.MULTILINE_INFO_VIEW,
         unitString = null,
-        R.string.badminton, R.string.basketball, R.string.baseball, R.string.billiards, R.string.boxing,
-        R.string.wrestling, R.string.bowling, R.string.cycling, R.string.volleyball, R.string.gymnastics,
-        R.string.golf, R.string.rowing, R.string.darts, R.string.skating),
+        R.string.badminton,
+        R.string.basketball,
+        R.string.baseball,
+        R.string.billiards,
+        R.string.boxing,
+        R.string.wrestling,
+        R.string.bowling,
+        R.string.cycling,
+        R.string.volleyball,
+        R.string.gymnastics,
+        R.string.golf,
+        R.string.rowing,
+        R.string.darts,
+        R.string.skating,
+        R.string.karate,
+        R.string.tennis,
+        R.string.swimming,
+        R.string.judo,
+        R.string.climbing,
+        R.string.soccer,
+        R.string.chess,
+        R.string.checkers
+    ),
     EVENING_TYPE(
         question = R.string.evening_time,
         percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.walking_around_the_city),
+        R.string.walking_around_the_city, R.string.sitting_in_best_date, R.string.going_on_dates,
+        R.string.netflix, R.string.youtube, R.string.meditating
+    ),
+
     /** */
 
     PHOTO(
         question = R.string.photo,
         percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
-        unitString = null),
+        unitString = null
+    ),
     EMAIL(
         question = R.string.email,
         percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
-        R.string.your_email_has_not_been_confirmed),
+        R.string.your_email_has_not_been_confirmed
+    ),
     SOCIAL_NETWORK(
         question = R.string.social_network,
         percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
-        R.string.the_questionnaire_has_not_been_confirmed),
+        R.string.the_questionnaire_has_not_been_confirmed
+    ),
     PHONE_NUMBER(
         question = R.string.phone_number,
         percent = 0,
         viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
         unitString = null,
-        R.string.your_phone_number_has_not_been_confirmed)
+        R.string.your_phone_number_has_not_been_confirmed
+    )
 }
 
 class QuestionnaireViewHolderFactory {
     fun getViewHolder(viewTypeId: Int, parent: ViewGroup): QuestionnaireBaseViewHolder<*> {
-        return when(viewTypeId) {
+        return when (viewTypeId) {
             QuestionnaireViewType.ONE_LINE_INFO_VIEW.id,
             QuestionnaireViewType.MULTILINE_INFO_VIEW.id,
             QuestionnaireViewType.INPUT_LOCATION_VIEW.id,
             QuestionnaireViewType.SEEKBAR_VIEW.id -> InfoViewHolder(
                 ItemMultilineQuestionInfoBinding.inflate(
-                    createLayoutInflater(parent), parent, false)
+                    createLayoutInflater(parent), parent, false
+                )
             )
             QuestionnaireViewType.CONFIRMATION_VIEW.id -> ConfirmationViewHolder(
                 ItemConfirmationBinding.inflate(
-                    createLayoutInflater(parent), parent, false)
+                    createLayoutInflater(parent), parent, false
+                )
             )
             QuestionnaireViewType.RANGE_BAR_VIEW.id -> RangeBarViewHolder(
                 ItemRangeBarQuestionnaireBinding.inflate(
                     createLayoutInflater(parent), parent, false
                 )
             )
-            else -> InfoViewHolder(ItemMultilineQuestionInfoBinding.inflate(
-                createLayoutInflater(parent), parent, false))
+            else -> InfoViewHolder(
+                ItemMultilineQuestionInfoBinding.inflate(
+                    createLayoutInflater(parent), parent, false
+                )
+            )
         }
     }
 
