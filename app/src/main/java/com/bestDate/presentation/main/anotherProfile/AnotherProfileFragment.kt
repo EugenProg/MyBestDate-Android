@@ -48,6 +48,7 @@ class AnotherProfileFragment :
         binding.userInfoView.setUserInfo(user)
         binding.userBlockedView.setUserInfo(user)
         binding.navBox.isVisible = user?.blocked_me != true
+        binding.navBox.isLiked = user?.getMainPhoto()?.liked ?: false
         isBlocked = user?.blocked == true
     }
 
@@ -71,6 +72,9 @@ class AnotherProfileFragment :
             requireActivity().showCreateInvitationDialog(invitationList) {
                 viewModel.sendInvitation(user?.id, it.id)
             }
+        }
+        binding.navBox.likeClick = {
+            user?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
         binding.header.clickAdditionally = {
             val sheet = AnotherProfileAdditionalBottomSheet(isBlocked)
@@ -105,8 +109,10 @@ class AnotherProfileFragment :
             }
         }
         binding.userInfoView.openQuestionnaire = {
-            navController.navigate(AnotherProfileFragmentDirections
-                .actionAnotherProfileToQuestionnaire(fullUser))
+            navController.navigate(
+                AnotherProfileFragmentDirections
+                    .actionAnotherProfileToQuestionnaire(fullUser)
+            )
         }
     }
 
@@ -136,8 +142,13 @@ class AnotherProfileFragment :
         viewModel.invitations.observe(viewLifecycleOwner) {
             invitationList = it
         }
+
         viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
             showMessage(R.string.invitation_is_send_successful)
+        }
+
+        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+            binding.navBox.isLiked = it?.liked ?: false
         }
     }
 }

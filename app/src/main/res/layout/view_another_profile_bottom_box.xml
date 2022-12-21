@@ -79,10 +79,23 @@
                 android:src="@drawable/bg_button_nav_rectangle" />
 
             <ImageView
+                android:id="@+id/heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_nav_like_blue" />
+
         </FrameLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toBottomOf="@+id/likeBox"
+            app:layout_constraintEnd_toEndOf="@+id/likeBox"
+            app:layout_constraintStart_toStartOf="@+id/likeBox"
+            app:layout_constraintTop_toTopOf="@+id/likeBox"
+            app:lottie_autoPlay="false"
+            app:lottie_rawRes="@raw/love_burst_pink" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

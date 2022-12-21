@@ -123,6 +123,21 @@ fun View.rotateHorizontally(degree: Float = 180f, toggleVisibility: () -> Unit) 
     }, 150)
 }
 
+fun View.fadeInsert(toggleVisibility: () -> Unit) {
+    postDelayed({
+        toggleVisibility.invoke()
+        this.animate()
+            .alpha(1f)
+            .setDuration(100)
+            .start()
+    }, 100)
+
+    this.animate()
+        .alpha(0.8f)
+        .setDuration(100)
+        .start()
+}
+
 fun ViewPager2?.onPageChanged(onScrolled: ((position: Int,
                                            positionOffset: Float,
                                            positionOffsetPixels: Int) -> Unit)? = null,
