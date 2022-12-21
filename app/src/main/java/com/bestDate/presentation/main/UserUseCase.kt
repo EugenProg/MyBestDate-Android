@@ -7,6 +7,7 @@ import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.dao.UserDao
+import com.bestDate.db.dao.UserSettingsDao
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
@@ -16,6 +17,7 @@ import com.bestDate.presentation.main.userProfile.invitationList.InvitationListU
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
 import com.bestDate.presentation.main.userProfile.myDuels.MyDuelsUseCase
+import com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUserUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -29,6 +31,8 @@ class UserUseCase @Inject constructor(
     private val myDuelsUseCase: MyDuelsUseCase,
     private val invitationUseCase: InvitationListUseCase,
     private val guestsUseCase: GuestsUseCase,
+    private val userSettingsDao: UserSettingsDao,
+    private val blockedUserUseCase: BlockedUserUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -50,12 +54,18 @@ class UserUseCase @Inject constructor(
 
     suspend fun logout() {
         authRemoteData.logout()
+        clearUserData()
+    }
+
+    private fun clearUserData() {
         userDao.delete()
+        userSettingsDao.delete()
         likesListUseCase.clearData()
         matchesListUseCase.clearData()
         myDuelsUseCase.clearData()
         invitationUseCase.clearData()
         guestsUseCase.clearData()
+        blockedUserUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")
@@ -111,5 +121,10 @@ class UserUseCase @Inject constructor(
             val user = response.body()?.data
             userDao.validate(user ?: UserDB(id = 0))
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    suspend fun deleteUserProfile() {
+        userRemoteData.deleteUserProfile()
+        clearUserData()
     }
 }

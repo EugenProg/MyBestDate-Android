@@ -7,10 +7,11 @@ import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
 import com.bestDate.view.alerts.LoaderDialog
+import com.bestDate.view.alerts.showDeleteProfileDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewModel>() {
+class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSettingsBinding =
         { inflater, parent, attach -> FragmentSettingsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<SettingsViewModel> = SettingsViewModel::class.java
@@ -31,13 +32,16 @@ class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewMode
                 goBack()
             }
             blockedListButton.onClick = {
-
+                navController.navigate(SettingsFragmentDirections.actionSettingsToBlockedUsers())
             }
             changeLanguageButton.onClick = {
 
             }
             deleteProfileButton.onClick = {
-
+                requireActivity().showDeleteProfileDialog {
+                    loader.startLoading()
+                    viewModel.deleteUserProfile()
+                }
             }
 
             notificationSettings.checkAction = { checked, settingsType ->
@@ -65,12 +69,16 @@ class SettingsFragment: BaseVMFragment<FragmentSettingsBinding, SettingsViewMode
             }
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
-            if (it) loader.startLoading()
+            if (it && viewModel.userSettings.value == null) loader.startLoading()
             else loader.stopLoading()
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             loader.stopLoading()
             showMessage(it.exception.message)
+        }
+        viewModel.deleteSuccessLiveData.observe(viewLifecycleOwner) {
+            loader.stopLoading()
+            navController.navigate(SettingsFragmentDirections.actionGlobalAuthFragment())
         }
     }
 }

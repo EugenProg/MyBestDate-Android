@@ -6,7 +6,8 @@ import com.bestDate.network.services.UserService
 import javax.inject.Inject
 
 class UserRemoteData @Inject constructor(
-    private val service: UserService) {
+    private val service: UserService
+) {
 
     suspend fun getUserData() = service.getUserData()
 
@@ -24,6 +25,8 @@ class UserRemoteData @Inject constructor(
 
     suspend fun getMyDuels() = service.getMyDuels()
 
+    suspend fun getBlockedUsers() = service.getBlockedUsers()
+
     suspend fun blockUser(id: Int) = service.blockUser(id)
 
     suspend fun unlockUser(id: Int) = service.unlockUser(id)
@@ -31,8 +34,9 @@ class UserRemoteData @Inject constructor(
     suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
 
     suspend fun getUserInvitations(filter: InvitationFilter) =
-        service.getInvitations(UserInvitationRequest(filter.serverName)
-    )
+        service.getInvitations(
+            UserInvitationRequest(filter.serverName)
+        )
 
     suspend fun updateUserData(userRequest: UpdateUserRequest) = service.updateUserData(userRequest)
 
@@ -56,4 +60,6 @@ class UserRemoteData @Inject constructor(
 
     suspend fun updateUserSettings(type: SettingsType, checked: Boolean) =
         service.updateUserSettings(type.getSettingsRequest(checked))
+
+    suspend fun deleteUserProfile() = service.deleteUserProfile()
 }

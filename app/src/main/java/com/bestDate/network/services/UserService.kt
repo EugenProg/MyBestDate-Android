@@ -30,6 +30,10 @@ interface UserService {
     @GET("/api/v1/voting")
     suspend fun getMyDuels(): Response<MyDuelsResponse>
 
+    /**Get blocked users*/
+    @GET("/api/v1/blocked-users")
+    suspend fun getBlockedUsers(): Response<ShortUserListDataResponse>
+
     /**Block user*/
     @POST("/api/v1/block-user/{id}")
     suspend fun blockUser(@Path("id") userId: Int): Response<BaseResponse>
@@ -88,4 +92,8 @@ interface UserService {
     /**update user settings*/
     @PUT("/api/v1/settings")
     suspend fun updateUserSettings(@Body body: UpdateSettingsRequest): Response<UserSettingsResponse>
+
+    /**Delete user profile*/
+    @DELETE("/api/v1/user")
+    suspend fun deleteUserProfile(): Response<BaseResponse>
 }
