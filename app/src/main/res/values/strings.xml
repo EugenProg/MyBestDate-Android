@@ -53,6 +53,11 @@
     <string name="woman_looking_for_a_man">Woman, looking for a man</string>
     <string name="woman_looking_for_a_woman">Woman, looking for a woman</string>
     <string name="man_looking_for_a_man">Man, looking for a man</string>
+    <string name="man">Man</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="woman">Woman</string>
+    <string name="universe">Universe</string>
     <string name="man_looking_for_a_woman">Man, looking for a woman</string>
     <string name="save_changes">Save Changes</string>
     <string name="main_picture">Main picture</string>

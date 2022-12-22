@@ -23,6 +23,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     override fun onInit() {
         super.onInit()
         setUpToolbar()
+        setUpFilterButtons()
     }
 
     private fun setUpToolbar() {
@@ -32,10 +33,20 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         }
     }
 
+    private fun setUpFilterButtons() {
+        binding.locationFilterButton.label = getString(R.string.universe)
+        binding.locationFilterButton.isActive = true
+        binding.manSelector.label = getString(R.string.man)
+        binding.womanSelector.label = getString(R.string.woman)
+
+    }
+
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         viewModel.user.observe(viewLifecycleOwner) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
+            binding.manSelector.isActive = it?.look_for?.first() == getString(R.string.male)
+            binding.womanSelector.isActive = it?.look_for?.first() == getString(R.string.female)
         }
     }
 }

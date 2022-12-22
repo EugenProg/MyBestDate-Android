@@ -1,14 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.bestDate.view.toolbar.ToolbarProfile
         android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.bestDate.view.filter.FilterButton
+        android:id="@+id/locationFilterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.bestDate.view.SelectorView
+        android:id="@+id/womanSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/manSelector"
+        app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
+
+    <com.bestDate.view.SelectorView
+        android:id="@+id/manSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="18dp"
+        app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
+
+    <View
+        android:id="@+id/_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/white_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/bg_dark_rect_corner_22"
+        android:orientation="vertical"
+        android:paddingHorizontal="50dp"
+        android:paddingVertical="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/coinView"
+        app:layout_constraintStart_toStartOf="@+id/coinView"
+        app:layout_constraintTop_toTopOf="@+id/coinView">
+
+        <TextView
+            style="@style/component_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10.14"
+            android:textColor="@color/white" />
+
+        <TextView
+            style="@style/component_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="BD coin"
+            android:textColor="@color/white_80" />
+    </LinearLayout>
+
+    <com.bestDate.view.button.UserDataButtonView
+        android:id="@+id/myDuelsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="18dp"
+        app:button_icon="@drawable/ic_my_duel"
+        app:button_title="@string/my_duels"
+        app:layout_constraintBottom_toBottomOf="@+id/coinView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coinView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/coinView">
+
+        <com.bestDate.view.DuelElementView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.bestDate.view.DuelElementView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/coinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_view">
+
+        <ImageView
+            android:layout_width="104dp"
+            android:layout_height="104dp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar" />
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/coin_bd_mini" />
+    </FrameLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
