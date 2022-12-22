@@ -73,6 +73,7 @@ class AnotherProfileFragment :
                 viewModel.sendInvitation(user?.id, it.id)
             }
         }
+        binding.navBox.hasMainPhoto = user?.main_photo != null
         binding.navBox.likeClick = {
             user?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
@@ -94,7 +95,7 @@ class AnotherProfileFragment :
                 if (it.firstOrNull()?.id.orZero > 0) {
                     navController.navigate(
                         AnotherProfileFragmentDirections
-                            .actionAnotherProfileToSlider(it)
+                            .actionAnotherProfileToSlider(0, fullUser?.id ?: 0)
                     )
                 }
             }
@@ -104,7 +105,7 @@ class AnotherProfileFragment :
             fullUser?.photos?.toTypedArray()?.let {
                 navController.navigate(
                     AnotherProfileFragmentDirections
-                        .actionAnotherProfileToSlider(it, position)
+                        .actionAnotherProfileToSlider(position, fullUser?.id ?: 0)
                 )
             }
         }
@@ -129,6 +130,7 @@ class AnotherProfileFragment :
             binding.userInfoView.setUserInfo(it)
             binding.userBlockedView.setUserInfo(it)
             binding.navBox.isVisible = it?.blocked_me != true
+            binding.navBox.isLiked = it?.getMainPhoto()?.liked ?: false
             isBlocked = it?.blocked == true
             fullUser = it
         }
@@ -148,7 +150,18 @@ class AnotherProfileFragment :
         }
 
         viewModel.likeLiveData.observe(viewLifecycleOwner) {
-            binding.navBox.isLiked = it?.liked ?: false
+            viewModel.getUserById(user?.id)
         }
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reload")
+            ?.observe(viewLifecycleOwner) { result ->
+                if (result) {
+                    navController.currentBackStackEntry?.savedStateHandle?.set(
+                        "reload",
+                        false
+                    )
+                    viewModel.getUserById(user?.id)
+                }
+            }
+
     }
 }

@@ -19,6 +19,7 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
     var chatClick: (() -> Unit)? = null
     var cardClick: (() -> Unit)? = null
     var likeClick: (() -> Unit)? = null
+    var hasMainPhoto: Boolean = true
 
     var isLiked: Boolean = false
         set(value) {
@@ -37,13 +38,16 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
                 cardClick?.invoke()
             }
             likeBox.setOnSaveClickListener {
-                animationView.isVisible = true
-                animationView.playAnimation()
-                likeClick?.invoke()
-                postDelayed({
-                    animationView.isVisible = false
-                    animationView.pauseAnimation()
-                }, animationView.duration)
+                if (hasMainPhoto) {
+                    animationView.isVisible = true
+                    animationView.playAnimation()
+
+                    likeClick?.invoke()
+                    postDelayed({
+                        animationView.isVisible = false
+                        animationView.pauseAnimation()
+                    }, animationView.duration)
+                }
             }
         }
     }

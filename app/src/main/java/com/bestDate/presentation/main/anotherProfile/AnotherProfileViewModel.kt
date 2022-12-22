@@ -20,6 +20,7 @@ class AnotherProfileViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var user: MutableLiveData<UserDB> = anotherProfileUseCase.user
+    var photos:  MutableLiveData<MutableList<ProfileImage>?> = anotherProfileUseCase.photos
     var invitations = invitationUseCase.invitations.asLiveData()
 
     private var _blockLiveData: LiveEvent<Boolean> = LiveEvent()

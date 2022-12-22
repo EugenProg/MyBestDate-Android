@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.InternalException
+import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.UserRemoteData
 import javax.inject.Inject
@@ -15,12 +16,14 @@ class AnotherProfileUseCase @Inject constructor(
 ) {
 
     var user: MutableLiveData<UserDB> = MutableLiveData()
+    var photos:  MutableLiveData<MutableList<ProfileImage>?> = MutableLiveData()
 
     suspend fun getUserById(id: Int?) {
         val response = userRemoteData.getUserById(id.orZero)
         if (response.isSuccessful) {
             response.body()?.let {
                 user.postValue(it.data)
+                photos.postValue(it.data.photos)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
