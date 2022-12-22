@@ -39,15 +39,22 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
             }
             likeBox.setOnSaveClickListener {
                 if (hasMainPhoto) {
-                    animationView.isVisible = true
-                    animationView.playAnimation()
-
                     likeClick?.invoke()
-                    postDelayed({
-                        animationView.isVisible = false
-                        animationView.pauseAnimation()
-                    }, animationView.duration)
                 }
+            }
+        }
+    }
+
+    fun playHeartsAnim() {
+        with(binding) {
+            if (!isLiked) {
+                animationView.isVisible = true
+                animationView.playAnimation()
+
+                postDelayed({
+                    animationView.isVisible = false
+                    animationView.pauseAnimation()
+                }, animationView.duration)
             }
         }
     }

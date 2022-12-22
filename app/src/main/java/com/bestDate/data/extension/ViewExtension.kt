@@ -134,7 +134,7 @@ fun View.fadeInsert(toggleVisibility: () -> Unit) {
 
     this.animate()
         .alpha(0.8f)
-        .setDuration(100)
+        .setDuration(110)
         .start()
 }
 
