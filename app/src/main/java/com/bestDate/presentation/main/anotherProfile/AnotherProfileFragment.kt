@@ -131,8 +131,6 @@ class AnotherProfileFragment :
             binding.userInfoView.setUserInfo(it)
             binding.userBlockedView.setUserInfo(it)
             binding.navBox.isVisible = it?.blocked_me != true
-            if (needsHeartAnim) binding.navBox.playHeartsAnim()
-            needsHeartAnim = false
             binding.navBox.isLiked = it?.getMainPhoto()?.liked ?: false
             isBlocked = it?.blocked == true
             fullUser = it
@@ -153,7 +151,6 @@ class AnotherProfileFragment :
         }
 
         viewModel.likeLiveData.observe(viewLifecycleOwner) {
-            needsHeartAnim = true
             viewModel.getUserById(user?.id)
         }
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reload")

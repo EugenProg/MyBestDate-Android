@@ -55,8 +55,6 @@ class AnotherProfileSliderFragment :
             showMessage(R.string.invitation_is_send_successful)
         }
         viewModel.likeLiveData.observe(viewLifecycleOwner) {
-            binding.navBox.playHeartsAnim()
-            binding.navBox.isLiked = it?.liked ?: false
             isLikeClicked = true
             viewModel.getUserById(args.userId)
             navController.previousBackStackEntry?.savedStateHandle?.set("reload", true)

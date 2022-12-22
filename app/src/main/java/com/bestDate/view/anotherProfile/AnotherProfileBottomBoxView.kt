@@ -39,6 +39,8 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
             }
             likeBox.setOnSaveClickListener {
                 if (hasMainPhoto) {
+                    playHeartsAnim()
+                    isLiked = !isLiked
                     likeClick?.invoke()
                 }
             }
