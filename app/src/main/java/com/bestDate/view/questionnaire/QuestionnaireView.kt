@@ -14,22 +14,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
+import com.bestDate.base.questionnaire.*
 import com.bestDate.data.extension.*
-import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.PageQuestionnaireQuestionsBinding
 import com.bestDate.databinding.PageQuestionnaireTextBinding
 import com.bestDate.databinding.ViewQuestionnaireBinding
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.presentation.questionnarie.Question
-import com.bestDate.presentation.questionnarie.QuestionnairePage
-import com.bestDate.presentation.questionnarie.QuestionnairePageType
 import com.bestDate.view.questionnaire.list.QuestionnaireListAdapter
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
-import kotlin.text.toList
 
 class QuestionnaireView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewQuestionnaireBinding
     private lateinit var personalPage: PageQuestionnaireQuestionsBinding
@@ -64,7 +59,8 @@ class QuestionnaireView @JvmOverloads constructor(
     var progressAdded: ((Int) -> Unit)? = null
     var collapseAction: ((Boolean) -> Unit)? = null
     var keyboardHideAction: (() -> Unit)? = null
-    var questionClick: ((QuestionnaireQuestion, MutableLiveData<MutableList<QuestionnaireQuestion>>) -> Unit)? = null
+    var questionClick: ((QuestionnaireQuestion, MutableLiveData<MutableList<QuestionnaireQuestion>>) -> Unit)? =
+        null
     var finishClick: (() -> Unit)? = null
 
     init {
@@ -76,21 +72,26 @@ class QuestionnaireView @JvmOverloads constructor(
 
     private fun bindView() {
         personalPage = binding.firstPage
-        personalPageAdapter = QuestionnaireListAdapter { questionClick?.invoke(it, personalPageQuestionsList) }
+        personalPageAdapter =
+            QuestionnaireListAdapter { questionClick?.invoke(it, personalPageQuestionsList) }
 
         appearancePage = binding.secondPage
-        appearancePageAdapter = QuestionnaireListAdapter { questionClick?.invoke(it, appearancePageQuestionsList) }
+        appearancePageAdapter =
+            QuestionnaireListAdapter { questionClick?.invoke(it, appearancePageQuestionsList) }
 
         searchPage = binding.thirdPage
-        searchPageAdapter = QuestionnaireListAdapter { questionClick?.invoke(it, searchPageQuestionsList) }
+        searchPageAdapter =
+            QuestionnaireListAdapter { questionClick?.invoke(it, searchPageQuestionsList) }
 
         freeTimePage = binding.fourthPage
-        freeTimePageAdapter = QuestionnaireListAdapter { questionClick?.invoke(it, freeTimePageQuestionsList) }
+        freeTimePageAdapter =
+            QuestionnaireListAdapter { questionClick?.invoke(it, freeTimePageQuestionsList) }
 
         aboutMePage = binding.fifthPage
 
         dataPage = binding.sixthPage
-        dataPageAdapter = QuestionnaireListAdapter { questionClick?.invoke(it, dataPageQuestionsList) }
+        dataPageAdapter =
+            QuestionnaireListAdapter { questionClick?.invoke(it, dataPageQuestionsList) }
 
         viewClickListeners()
     }
@@ -132,7 +133,11 @@ class QuestionnaireView @JvmOverloads constructor(
     }
 
     fun goBack(): Boolean {
-        if (viewsStack.size > 1) toPreviousPage(viewsStack.last(), viewsStack[viewsStack.lastIndex - 1])
+        if (viewsStack.size > 1) toPreviousPage(
+            viewsStack.last(),
+            viewsStack[viewsStack.lastIndex - 1]
+        )
+        else if (viewsStack.size == 1) toPreviousPage(appearancePage.root, personalPage.root)
         return viewsStack.isNotEmpty()
     }
 
@@ -154,7 +159,8 @@ class QuestionnaireView @JvmOverloads constructor(
     }
 
     private fun setTextPercentColor(active: Boolean, textPage: PageQuestionnaireTextBinding) {
-        val color = ContextCompat.getColor(context, if (active) R.color.blue_90 else R.color.main_30)
+        val color =
+            ContextCompat.getColor(context, if (active) R.color.blue_90 else R.color.main_30)
         textPage.percent.setTextColor(color)
         textPage.plus.setTextColor(color)
         textPage.percentNumber.setTextColor(color)
@@ -184,9 +190,14 @@ class QuestionnaireView @JvmOverloads constructor(
         totalPages = pageList.size
 
         for (page in pageList) {
-            when(page.number) {
+            when (page.number) {
                 1 -> setPage(page, personalPage, personalPageAdapter, personalPageQuestionsList)
-                2 -> setPage(page, appearancePage, appearancePageAdapter, appearancePageQuestionsList)
+                2 -> setPage(
+                    page,
+                    appearancePage,
+                    appearancePageAdapter,
+                    appearancePageQuestionsList
+                )
                 3 -> setPage(page, searchPage, searchPageAdapter, searchPageQuestionsList)
                 4 -> setPage(page, freeTimePage, freeTimePageAdapter, freeTimePageQuestionsList)
                 5 -> setPage(page, aboutMePage)
@@ -195,10 +206,12 @@ class QuestionnaireView @JvmOverloads constructor(
         }
     }
 
-    private fun setPage(page: QuestionnairePage,
-                        binding: ViewBinding,
-                        adapter: QuestionnaireListAdapter? = null,
-                        list: MutableLiveData<MutableList<QuestionnaireQuestion>>? = null) {
+    private fun setPage(
+        page: QuestionnairePage,
+        binding: ViewBinding,
+        adapter: QuestionnaireListAdapter? = null,
+        list: MutableLiveData<MutableList<QuestionnaireQuestion>>? = null
+    ) {
         when (page.type) {
             QuestionnairePageType.QUESTION_LIST -> {
                 setQuestionnairePage(page, binding as PageQuestionnaireQuestionsBinding, adapter)
@@ -210,9 +223,11 @@ class QuestionnaireView @JvmOverloads constructor(
         }
     }
 
-    private fun setQuestionnairePage(page: QuestionnairePage,
-                                     binding: PageQuestionnaireQuestionsBinding,
-                                     adapter: QuestionnaireListAdapter? = null) {
+    private fun setQuestionnairePage(
+        page: QuestionnairePage,
+        binding: PageQuestionnaireQuestionsBinding,
+        adapter: QuestionnaireListAdapter? = null
+    ) {
         with(binding) {
             nextButton.title = context.getString(page.nextButtonText)
 
@@ -240,9 +255,11 @@ class QuestionnaireView @JvmOverloads constructor(
         }
     }
 
-    fun updateQuestionnaireList(question: QuestionnaireQuestion,
-                                answer: String,
-                                list: MutableLiveData<MutableList<QuestionnaireQuestion>>) {
+    fun updateQuestionnaireList(
+        question: QuestionnaireQuestion,
+        answer: String,
+        list: MutableLiveData<MutableList<QuestionnaireQuestion>>
+    ) {
         val items: MutableList<QuestionnaireQuestion> = ArrayList()
 
         for (item in list.value ?: ArrayList()) {
@@ -264,11 +281,36 @@ class QuestionnaireView @JvmOverloads constructor(
         val personalItems: MutableList<QuestionnaireQuestion> = mutableListOf()
         for (item in personalPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.MARITAL_STATUS -> personalItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.marital_status))
-                Question.HAVING_KIDS -> personalItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.kids))
-                Question.PLACE_OF_RESIDENCE -> personalItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.nationality))
-                Question.EDUCATION -> personalItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.education))
-                Question.OCCUPATIONAL_STATUS -> personalItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.occupation))
+                Question.MARITAL_STATUS -> personalItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        MaritalStatus().getName(context, questionnaire.marital_status)
+                    )
+                )
+                Question.HAVING_KIDS -> personalItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        KidsCount().getName(context, questionnaire.kids)
+                    )
+                )
+                Question.PLACE_OF_RESIDENCE -> personalItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        NationalityType().getName(context, questionnaire.nationality)
+                    )
+                )
+                Question.EDUCATION -> personalItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        EducationStatus().getName(context, questionnaire.education)
+                    )
+                )
+                Question.OCCUPATIONAL_STATUS -> personalItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        OccupationalStatus().getName(context, questionnaire.occupation)
+                    )
+                )
             }
         }
         personalPageQuestionsList.value = personalItems
@@ -281,11 +323,36 @@ class QuestionnaireView @JvmOverloads constructor(
         val appearanceItems: MutableList<QuestionnaireQuestion> = mutableListOf()
         for (item in appearancePageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.HEIGHT -> appearanceItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.height.orZero.toString()))
-                Question.WEIGHT -> appearanceItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.weight.orZero.toString()))
-                Question.EYE_COLOR -> appearanceItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.eye_color))
-                Question.HAIR_LENGTH -> appearanceItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.hair_length))
-                Question.HAIR_COLOR -> appearanceItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.hair_color))
+                Question.HEIGHT -> appearanceItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        questionnaire.height.orZero.toString()
+                    )
+                )
+                Question.WEIGHT -> appearanceItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        questionnaire.weight.orZero.toString()
+                    )
+                )
+                Question.EYE_COLOR -> appearanceItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        EyeColorType().getName(context, questionnaire.eye_color)
+                    )
+                )
+                Question.HAIR_LENGTH -> appearanceItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        HairLengthType().getName(context, questionnaire.hair_length)
+                    )
+                )
+                Question.HAIR_COLOR -> appearanceItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        HairColorType().getName(context, questionnaire.hair_color)
+                    )
+                )
             }
         }
         appearancePageQuestionsList.value = appearanceItems
@@ -298,10 +365,30 @@ class QuestionnaireView @JvmOverloads constructor(
         val searchItems: MutableList<QuestionnaireQuestion> = mutableListOf()
         for (item in searchPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.PURPOSE_OF_DATING -> searchItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.purpose))
-                Question.WHAT_DO_YOU_WANT -> searchItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.expectations))
-                Question.SEARCH_LOCATION -> searchItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.getLocation()))
-                Question.AGE -> searchItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.getAgeRange()))
+                Question.PURPOSE_OF_DATING -> searchItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        PurposeOfDating().getName(context, questionnaire.purpose)
+                    )
+                )
+                Question.WHAT_DO_YOU_WANT -> searchItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        ExpectationType().getName(context, questionnaire.expectations)
+                    )
+                )
+                Question.SEARCH_LOCATION -> searchItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        questionnaire.getLocation()
+                    )
+                )
+                Question.AGE -> searchItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        questionnaire.getAgeRange()
+                    )
+                )
             }
         }
         searchPageQuestionsList.value = searchItems
@@ -313,10 +400,25 @@ class QuestionnaireView @JvmOverloads constructor(
         //Free time
         val freeItems: MutableList<QuestionnaireQuestion> = mutableListOf()
         for (item in freeTimePageQuestionsList.value ?: mutableListOf()) {
-            when(item.questionInfo) {
-                Question.HOBBY -> freeItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.hobby?.joinToString()))
-                Question.TYPES_OF_SPORTS -> freeItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.sport?.joinToString()))
-                Question.EVENING_TYPE -> freeItems.add(QuestionnaireQuestion(item.questionInfo, questionnaire.evening_time))
+            when (item.questionInfo) {
+                Question.HOBBY -> freeItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        HobbyType().getNameLine(context, questionnaire.hobby)
+                    )
+                )
+                Question.TYPES_OF_SPORTS -> freeItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        SportTypes().getNameLine(context, questionnaire.sport)
+                    )
+                )
+                Question.EVENING_TYPE -> freeItems.add(
+                    QuestionnaireQuestion(
+                        item.questionInfo,
+                        EveningTimeType().getName(context, questionnaire.evening_time)
+                    )
+                )
             }
         }
         freeTimePageQuestionsList.value = freeItems
@@ -353,7 +455,8 @@ class QuestionnaireView @JvmOverloads constructor(
         val animator = AnimatorSet()
         val topRotation = ObjectAnimator.ofFloat(topView, View.ROTATION, 0f, -30f)
         val topMoveBottom = ObjectAnimator.ofFloat(topView, View.TRANSLATION_Y, 360f)
-        val topMoveLeft = ObjectAnimator.ofFloat(topView, View.TRANSLATION_X, (-(topView.width * 1.2)).toFloat())
+        val topMoveLeft =
+            ObjectAnimator.ofFloat(topView, View.TRANSLATION_X, (-(topView.width * 1.2)).toFloat())
         val bottomTranslation = ObjectAnimator.ofFloat(bottomView, View.TRANSLATION_Y, 0f)
         val bottomScale = ObjectAnimator.ofFloat(bottomView, View.SCALE_X, 1f)
         val bottomAlpha = ObjectAnimator.ofFloat(bottomView, View.ALPHA, 0f, 1f)
@@ -401,7 +504,8 @@ class QuestionnaireView @JvmOverloads constructor(
             animationInProcess = false
         })
 
-        viewsStack.remove(bottomView)
+        if (viewsStack.size == 1) viewsStack.remove(topView)
+        else viewsStack.remove(bottomView)
     }
 
     fun setKeyboardAction(isVisible: Boolean) {
@@ -416,15 +520,15 @@ class QuestionnaireView @JvmOverloads constructor(
     }
 
     fun getQuestionnaire(): QuestionnaireDB {
-        var questionnaire = QuestionnaireDB()
+        val questionnaire = QuestionnaireDB()
 
         for (item in personalPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.MARITAL_STATUS -> questionnaire.marital_status = item.answer
-                Question.HAVING_KIDS -> questionnaire.kids = item.answer
-                Question.PLACE_OF_RESIDENCE -> questionnaire.nationality = item.answer
-                Question.EDUCATION -> questionnaire.education = item.answer
-                Question.OCCUPATIONAL_STATUS -> questionnaire.occupation = item.answer
+                Question.MARITAL_STATUS -> questionnaire.marital_status = MaritalStatus().getServerName(context, item.answer)
+                Question.HAVING_KIDS -> questionnaire.kids = KidsCount().getServerName(context, item.answer)
+                Question.PLACE_OF_RESIDENCE -> questionnaire.nationality = NationalityType().getServerName(context, item.answer)
+                Question.EDUCATION -> questionnaire.education = EducationStatus().getServerName(context, item.answer)
+                Question.OCCUPATIONAL_STATUS -> questionnaire.occupation = OccupationalStatus().getServerName(context, item.answer)
             }
         }
 
@@ -433,17 +537,17 @@ class QuestionnaireView @JvmOverloads constructor(
             when (item.questionInfo) {
                 Question.HEIGHT -> questionnaire.height = item.answer?.toInt()
                 Question.WEIGHT -> questionnaire.weight = item.answer?.toInt()
-                Question.EYE_COLOR -> questionnaire.eye_color = item.answer
-                Question.HAIR_LENGTH -> questionnaire.hair_length = item.answer
-                Question.HAIR_COLOR -> questionnaire.hair_color = item.answer
+                Question.EYE_COLOR -> questionnaire.eye_color = EyeColorType().getServerName(context, item.answer)
+                Question.HAIR_LENGTH -> questionnaire.hair_length = HairLengthType().getServerName(context, item.answer)
+                Question.HAIR_COLOR -> questionnaire.hair_color = HairColorType().getServerName(context, item.answer)
             }
         }
 
         //Search
         for (item in searchPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.PURPOSE_OF_DATING -> questionnaire.purpose = item.answer
-                Question.WHAT_DO_YOU_WANT -> questionnaire.expectations = item.answer
+                Question.PURPOSE_OF_DATING -> questionnaire.purpose = PurposeOfDating().getServerName(context, item.answer)
+                Question.WHAT_DO_YOU_WANT -> questionnaire.expectations = ExpectationType().getServerName(context, item.answer)
                 Question.SEARCH_LOCATION -> questionnaire.setLocation(item.answer)
                 Question.AGE -> questionnaire.setAgeRange(item.answer)
             }
@@ -451,10 +555,10 @@ class QuestionnaireView @JvmOverloads constructor(
 
         //Free time
         for (item in freeTimePageQuestionsList.value ?: mutableListOf()) {
-            when(item.questionInfo) {
-                Question.HOBBY -> questionnaire.hobby = item.answer.toList()
-                Question.TYPES_OF_SPORTS -> questionnaire.sport = item.answer.toList()
-                Question.EVENING_TYPE -> questionnaire.evening_time = item.answer
+            when (item.questionInfo) {
+                Question.HOBBY -> questionnaire.hobby = HobbyType().getServerList(context, item.answer)
+                Question.TYPES_OF_SPORTS -> questionnaire.sport = SportTypes().getServerList(context, item.answer)
+                Question.EVENING_TYPE -> questionnaire.evening_time = EveningTimeType().getServerName(context, item.answer)
             }
         }
 

@@ -22,6 +22,6 @@ class QuestionnaireInfoView @JvmOverloads constructor(
     }
 
     fun setInfo(text: String?) {
-        binding.info.text = text ?: "-"
+        binding.info.text = if (!text.isNullOrBlank()) text else "-"
     }
 }
