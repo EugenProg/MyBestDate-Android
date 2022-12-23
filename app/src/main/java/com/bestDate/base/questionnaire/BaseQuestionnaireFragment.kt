@@ -112,7 +112,6 @@ abstract class BaseQuestionnaireFragment :
                 questionnaire.search_age_max == savedQuestionnaire?.search_age_max &&
                 questionnaire.search_country == savedQuestionnaire?.search_country &&
                 questionnaire.search_city == savedQuestionnaire?.search_city &&
-                questionnaire.purpose == savedQuestionnaire?.purpose &&
                 questionnaire.hobby?.equals(savedQuestionnaire?.hobby) == true &&
                 questionnaire.socials?.equals(savedQuestionnaire?.socials) == true &&
                 questionnaire.sport?.equals(savedQuestionnaire?.sport) == true &&

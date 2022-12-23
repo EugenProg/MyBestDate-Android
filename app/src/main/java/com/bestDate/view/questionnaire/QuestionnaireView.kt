@@ -14,10 +14,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
-import com.bestDate.base.questionnaire.Question
-import com.bestDate.base.questionnaire.QuestionnairePage
-import com.bestDate.base.questionnaire.QuestionnairePageType
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.base.questionnaire.*
 import com.bestDate.data.extension.*
 import com.bestDate.databinding.PageQuestionnaireQuestionsBinding
 import com.bestDate.databinding.PageQuestionnaireTextBinding
@@ -287,31 +284,31 @@ class QuestionnaireView @JvmOverloads constructor(
                 Question.MARITAL_STATUS -> personalItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.marital_status
+                        MaritalStatus().getName(context, questionnaire.marital_status)
                     )
                 )
                 Question.HAVING_KIDS -> personalItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.kids
+                        KidsCount().getName(context, questionnaire.kids)
                     )
                 )
                 Question.PLACE_OF_RESIDENCE -> personalItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.nationality
+                        NationalityType().getName(context, questionnaire.nationality)
                     )
                 )
                 Question.EDUCATION -> personalItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.education
+                        EducationStatus().getName(context, questionnaire.education)
                     )
                 )
                 Question.OCCUPATIONAL_STATUS -> personalItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.occupation
+                        OccupationalStatus().getName(context, questionnaire.occupation)
                     )
                 )
             }
@@ -341,19 +338,19 @@ class QuestionnaireView @JvmOverloads constructor(
                 Question.EYE_COLOR -> appearanceItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.eye_color
+                        EyeColorType().getName(context, questionnaire.eye_color)
                     )
                 )
                 Question.HAIR_LENGTH -> appearanceItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.hair_length
+                        HairLengthType().getName(context, questionnaire.hair_length)
                     )
                 )
                 Question.HAIR_COLOR -> appearanceItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.hair_color
+                        HairColorType().getName(context, questionnaire.hair_color)
                     )
                 )
             }
@@ -371,13 +368,13 @@ class QuestionnaireView @JvmOverloads constructor(
                 Question.PURPOSE_OF_DATING -> searchItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.purpose
+                        PurposeOfDating().getName(context, questionnaire.purpose)
                     )
                 )
                 Question.WHAT_DO_YOU_WANT -> searchItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.expectations
+                        ExpectationType().getName(context, questionnaire.expectations)
                     )
                 )
                 Question.SEARCH_LOCATION -> searchItems.add(
@@ -407,19 +404,19 @@ class QuestionnaireView @JvmOverloads constructor(
                 Question.HOBBY -> freeItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.hobby?.joinToString()
+                        HobbyType().getNameLine(context, questionnaire.hobby)
                     )
                 )
                 Question.TYPES_OF_SPORTS -> freeItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.sport?.joinToString()
+                        SportTypes().getNameLine(context, questionnaire.sport)
                     )
                 )
                 Question.EVENING_TYPE -> freeItems.add(
                     QuestionnaireQuestion(
                         item.questionInfo,
-                        questionnaire.evening_time
+                        EveningTimeType().getName(context, questionnaire.evening_time)
                     )
                 )
             }
@@ -523,15 +520,15 @@ class QuestionnaireView @JvmOverloads constructor(
     }
 
     fun getQuestionnaire(): QuestionnaireDB {
-        var questionnaire = QuestionnaireDB()
+        val questionnaire = QuestionnaireDB()
 
         for (item in personalPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.MARITAL_STATUS -> questionnaire.marital_status = item.answer
-                Question.HAVING_KIDS -> questionnaire.kids = item.answer
-                Question.PLACE_OF_RESIDENCE -> questionnaire.nationality = item.answer
-                Question.EDUCATION -> questionnaire.education = item.answer
-                Question.OCCUPATIONAL_STATUS -> questionnaire.occupation = item.answer
+                Question.MARITAL_STATUS -> questionnaire.marital_status = MaritalStatus().getServerName(context, item.answer)
+                Question.HAVING_KIDS -> questionnaire.kids = KidsCount().getServerName(context, item.answer)
+                Question.PLACE_OF_RESIDENCE -> questionnaire.nationality = NationalityType().getServerName(context, item.answer)
+                Question.EDUCATION -> questionnaire.education = EducationStatus().getServerName(context, item.answer)
+                Question.OCCUPATIONAL_STATUS -> questionnaire.occupation = OccupationalStatus().getServerName(context, item.answer)
             }
         }
 
@@ -540,17 +537,17 @@ class QuestionnaireView @JvmOverloads constructor(
             when (item.questionInfo) {
                 Question.HEIGHT -> questionnaire.height = item.answer?.toInt()
                 Question.WEIGHT -> questionnaire.weight = item.answer?.toInt()
-                Question.EYE_COLOR -> questionnaire.eye_color = item.answer
-                Question.HAIR_LENGTH -> questionnaire.hair_length = item.answer
-                Question.HAIR_COLOR -> questionnaire.hair_color = item.answer
+                Question.EYE_COLOR -> questionnaire.eye_color = EyeColorType().getServerName(context, item.answer)
+                Question.HAIR_LENGTH -> questionnaire.hair_length = HairLengthType().getServerName(context, item.answer)
+                Question.HAIR_COLOR -> questionnaire.hair_color = HairColorType().getServerName(context, item.answer)
             }
         }
 
         //Search
         for (item in searchPageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.PURPOSE_OF_DATING -> questionnaire.purpose = item.answer
-                Question.WHAT_DO_YOU_WANT -> questionnaire.expectations = item.answer
+                Question.PURPOSE_OF_DATING -> questionnaire.purpose = PurposeOfDating().getServerName(context, item.answer)
+                Question.WHAT_DO_YOU_WANT -> questionnaire.expectations = ExpectationType().getServerName(context, item.answer)
                 Question.SEARCH_LOCATION -> questionnaire.setLocation(item.answer)
                 Question.AGE -> questionnaire.setAgeRange(item.answer)
             }
@@ -559,9 +556,9 @@ class QuestionnaireView @JvmOverloads constructor(
         //Free time
         for (item in freeTimePageQuestionsList.value ?: mutableListOf()) {
             when (item.questionInfo) {
-                Question.HOBBY -> questionnaire.hobby = item.answer.toList()
-                Question.TYPES_OF_SPORTS -> questionnaire.sport = item.answer.toList()
-                Question.EVENING_TYPE -> questionnaire.evening_time = item.answer
+                Question.HOBBY -> questionnaire.hobby = HobbyType().getServerList(context, item.answer)
+                Question.TYPES_OF_SPORTS -> questionnaire.sport = SportTypes().getServerList(context, item.answer)
+                Question.EVENING_TYPE -> questionnaire.evening_time = EveningTimeType().getServerName(context, item.answer)
             }
         }
 
