@@ -24,6 +24,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         super.onInit()
         setUpToolbar()
         setUpFilterButtons()
+        setUpResult()
     }
 
     private fun setUpToolbar() {
@@ -39,6 +40,10 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         binding.manSelector.label = getString(R.string.man)
         binding.womanSelector.label = getString(R.string.woman)
 
+    }
+
+    fun setUpResult() {
+        binding.resultView.percent = 80.0
     }
 
     override fun onViewLifecycle() {
