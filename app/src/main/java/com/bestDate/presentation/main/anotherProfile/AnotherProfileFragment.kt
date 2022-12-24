@@ -49,7 +49,7 @@ class AnotherProfileFragment :
         binding.userInfoView.setUserInfo(user)
         binding.userBlockedView.setUserInfo(user)
         binding.navBox.isVisible = user?.blocked_me != true
-        binding.navBox.isLiked = user?.getMainPhoto()?.liked ?: false
+        binding.navBox.isLiked = user?.getMainPhoto()?.liked == true
         isBlocked = user?.blocked == true
     }
 
@@ -131,7 +131,7 @@ class AnotherProfileFragment :
             binding.userInfoView.setUserInfo(it)
             binding.userBlockedView.setUserInfo(it)
             binding.navBox.isVisible = it?.blocked_me != true
-            binding.navBox.isLiked = it?.getMainPhoto()?.liked ?: false
+            binding.navBox.isLiked = it?.getMainPhoto()?.liked == true
             isBlocked = it?.blocked == true
             fullUser = it
         }

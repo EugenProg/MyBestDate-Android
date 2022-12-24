@@ -47,7 +47,7 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
         }
     }
 
-    fun playHeartsAnim() {
+    private fun playHeartsAnim() {
         with(binding) {
             if (!isLiked) {
                 animationView.isVisible = true
