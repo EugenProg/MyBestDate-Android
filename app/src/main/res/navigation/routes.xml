@@ -151,10 +151,10 @@
     </fragment>
     <fragment
         android:id="@+id/questionnaireFragment"
-        android:name="com.bestDate.presentation.questionnarie.QuestionnaireFragment"
+        android:name="com.bestDate.presentation.questionnaire.StartQuestionnaireFragment"
         android:label="QuestionnaireFragment">
         <action
-            android:id="@+id/action_questionnaireFragment_to_geoEnableFragment"
+            android:id="@+id/action_questionnaire_to_geoEnable"
             app:destination="@id/geoEnableFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
@@ -216,6 +216,9 @@
                 <action
                     android:id="@+id/action_profile_to_settings"
                     app:destination="@id/settingsFragment" />
+                <action
+                    android:id="@+id/action_profile_to_questionnaire"
+                    app:destination="@id/profileQuestionnaireFragment" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -284,6 +287,10 @@
                     app:popEnterAnim="@anim/slide_in_right"
                     app:popExitAnim="@anim/slide_out_right" />
             </fragment>
+            <fragment
+                android:id="@+id/profileQuestionnaireFragment"
+                android:name="com.bestDate.presentation.main.userProfile.questionnaire.ProfileQuestionnaireFragment"
+                android:label="ProfileQuestionnaire"/>
             <fragment
                 android:id="@+id/blockedUsersFragment"
                 android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"

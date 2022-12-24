@@ -50,6 +50,7 @@
     <color name="bg_box">#293236</color>
     <color name="green">#00ff62</color>
     <color name="dark_search_box">#323b3f</color>
+    <color name="light_search_box">#f3f3f3</color>
     <color name="bg_list_item">#1c262b</color>
     <color name="light_line">#27beefff</color>
 </resources>

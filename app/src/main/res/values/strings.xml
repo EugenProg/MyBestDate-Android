@@ -134,6 +134,7 @@
     <string name="friendship">Friendship</string>
     <string name="love">Love</string>
     <string name="communication">Communication</string>
+    <string name="serious_relationship">Serious relationship</string>
     <string name="sex">Sex</string>
     <string name="having_a_fun">Having a fun</string>
     <string name="interesting_communication">Interesting communication</string>
@@ -145,6 +146,11 @@
     <string name="secondary">Secondary</string>
     <string name="higher">Higher</string>
     <string name="walking_around_the_city">Walking around the city</string>
+    <string name="sitting_in_best_date">Sitting in Bestdate</string>
+    <string name="going_on_dates">Going on dates</string>
+    <string name="netflix">Netflix</string>
+    <string name="youtube">Youtube</string>
+    <string name="meditating">Meditating</string>
     <string name="specify_the_search_location">Specify the search location</string>
     <string name="badminton">Badminton</string>
     <string name="basketball">Basketball</string>
@@ -160,9 +166,34 @@
     <string name="rowing">Rowing</string>
     <string name="darts">Darts</string>
     <string name="skating">Skating</string>
+    <string name="karate">Karate</string>
+    <string name="tennis">Tennis</string>
+    <string name="swimming">Swimming</string>
+    <string name="judo">Judo</string>
+    <string name="climbing">Climbing</string>
+    <string name="soccer">Soccer</string>
+    <string name="chess">Chess</string>
+    <string name="checkers">Checkers</string>
     <string name="music">Music</string>
     <string name="dancing">Dancing</string>
     <string name="stand_up">Stand up</string>
+    <string name="fishing">Fishing</string>
+    <string name="diggering">Diggering</string>
+    <string name="hunting">Hunting</string>
+    <string name="blogging">Blogging</string>
+    <string name="hike">Hike</string>
+    <string name="quest">Quest</string>
+    <string name="gardening">Gardening</string>
+    <string name="watching_movies">Watching movies</string>
+    <string name="bike">Bike</string>
+    <string name="nature_watching">Nature Watching</string>
+    <string name="spotting">Spotting</string>
+    <string name="sailing">Sailing</string>
+    <string name="rap">Rap</string>
+    <string name="road_trips">Road trips</string>
+    <string name="pickup">Pick-up</string>
+    <string name="sauna">Bath or sauna</string>
+    <string name="radio">Radio amateurism</string>
 
     <!--COUNTRIES-->
     <string name="AB">Abkhazia</string>

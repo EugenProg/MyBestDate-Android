@@ -1,4 +1,4 @@
-package com.bestDate.presentation.questionnarie
+package com.bestDate.base.questionnaire
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,18 +12,18 @@ import javax.inject.Inject
 @HiltViewModel
 class QuestionnaireViewModel @Inject constructor(
     private val userUseCase: UserUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
 
-    private var _questionnaireUseCase = MutableLiveData<Boolean>()
-    var questionnaireUseCase: LiveData<Boolean> = _questionnaireUseCase
+    private var _questionnaireSaveLiveData = MutableLiveData<Boolean>()
+    var questionnaireSaveLiveData: LiveData<Boolean> = _questionnaireSaveLiveData
 
     fun saveQuestionnaire(questionnaire: QuestionnaireDB) {
         doAsync {
             userUseCase.saveQuestionnaire(questionnaire)
-            _questionnaireUseCase.postValue(true)
+            userUseCase.refreshUser()
+            _questionnaireSaveLiveData.postValue(true)
         }
     }
-
 }

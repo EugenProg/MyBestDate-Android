@@ -196,6 +196,7 @@
                             tools:layout_height="wrap_content" />
 
                         <com.bestDate.view.button.DirectionLineButtonView
+                            android:id="@+id/questionnaireButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="36dp"
