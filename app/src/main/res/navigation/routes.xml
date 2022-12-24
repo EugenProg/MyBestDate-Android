@@ -350,10 +350,11 @@
                 android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileSliderFragment"
                 android:label="AnotherProfileSliderFragment">
                 <argument
-                    android:name="photos"
-                    app:argType="com.bestDate.data.model.ProfileImage[]" />
-                <argument
                     android:name="position"
+                    android:defaultValue="0"
+                    app:argType="integer" />
+                <argument
+                    android:name="userId"
                     android:defaultValue="0"
                     app:argType="integer" />
             </fragment>

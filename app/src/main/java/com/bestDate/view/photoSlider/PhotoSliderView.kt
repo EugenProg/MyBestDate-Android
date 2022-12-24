@@ -22,8 +22,10 @@ class PhotoSliderView @JvmOverloads constructor(
     private val binding: ViewPhotoSliderBinding =
         ViewPhotoSliderBinding.inflate(LayoutInflater.from(context), this)
 
-    private var photoList: MutableList<ProfileImage> = mutableListOf()
+    var photoList: MutableList<ProfileImage>? = mutableListOf()
     private var topPositionVisibility: Boolean = false
+    var handleIsLiked: ((Int) -> Unit)? = null
+    var position: Int = 0
 
     init {
         with(binding) {
@@ -36,14 +38,16 @@ class PhotoSliderView @JvmOverloads constructor(
             }.attach()
             pager.onPageChanged {
                 setPhotoSettings(it)
+                handleIsLiked?.invoke(it)
+                position = it
             }
         }
     }
 
     private fun setPhotoSettings(position: Int) {
-        val photo = photoList[position]
-        binding.likeCount.text = photo.likes.toString()
-        if (topPositionVisibility && photo.top_place != null) {
+        val photo = photoList?.get(position)
+        binding.likeCount.text = photo?.likes.toString()
+        if (topPositionVisibility && photo?.top_place != null) {
             binding.topPositionBox.isVisible = true
             binding.topPosition.text = context.getString(R.string.top_position, photo.top_place.orZero)
         } else {
@@ -51,8 +55,9 @@ class PhotoSliderView @JvmOverloads constructor(
         }
     }
 
-    fun setPhotos(photoList: MutableList<ProfileImage>, showPosition: Boolean, selectPosition: Int) {
+    fun setPhotos(photoList: MutableList<ProfileImage>?, showPosition: Boolean, selectPosition: Int) {
         this.photoList = photoList
+        position = selectPosition
         topPositionVisibility = showPosition
         adapter.submitList(photoList) {
             postDelayed({
