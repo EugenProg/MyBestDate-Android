@@ -8,6 +8,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <include
+            android:id="@+id/headerTextview"
+            layout="@layout/item_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginBottom="10dp" />
+
         <com.bestDate.view.ResultProfileView
             android:id="@+id/firstResultProfileView"
             android:layout_width="match_parent"

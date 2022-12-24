@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/percentTextView"
-            style="@style/component_text"
+            style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_gradient_corners"
@@ -58,9 +58,8 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:text="80.6%"
-            android:textColor="@color/white"
+            android:textColor="@color/bg_pink"
             android:textSize="12sp"
-            app:drawableEndCompat="@drawable/ic_signal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

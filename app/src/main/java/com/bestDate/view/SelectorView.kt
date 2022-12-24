@@ -3,12 +3,13 @@ package com.bestDate.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewSelectorBinding
+import com.bestDate.presentation.registration.Gender
 
 class SelectorView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -20,13 +21,18 @@ class SelectorView @JvmOverloads constructor(
 
     init {
         binding.root.setOnSaveClickListener {
+            isActive = true
             onClick?.invoke()
         }
     }
 
     var isActive: Boolean = false
         set(value) {
-            binding.isActiveImageView.isVisible = value
+            if (value) {
+                binding.isActiveImageView.visibility = View.VISIBLE
+            } else {
+                binding.isActiveImageView.visibility = View.INVISIBLE
+            }
             binding.textView.setTextColor(
                 ContextCompat.getColor(
                     context,
@@ -36,9 +42,10 @@ class SelectorView @JvmOverloads constructor(
             field = value
         }
 
-    var label: String = ""
+    var isMan: Boolean = false
         set(value) {
-            binding.textView.text = value
+            binding.textView.text =
+                binding.root.context.getString(if (value) Gender.MAN.label else Gender.WOMAN.label)
             field = value
         }
 }

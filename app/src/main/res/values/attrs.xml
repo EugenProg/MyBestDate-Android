@@ -92,4 +92,8 @@
         <attr name="t_d_s_switch_title" format="string"/>
         <attr name="t_d_s_switch_icon" format="reference"/>
     </declare-styleable>
+
+    <declare-styleable name="ResultView">
+        <attr name="result_title" format="string"/>
+    </declare-styleable>
 </resources>

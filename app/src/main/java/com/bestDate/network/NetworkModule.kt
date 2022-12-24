@@ -67,6 +67,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun duelsApiService(@Core_network retrofit: Retrofit): DuelsService =
+        retrofit.create(DuelsService::class.java)
+
+    @Provides
+    @Singleton
     fun imageApiService(@Core_network retrofit: Retrofit): ImageApiService =
         retrofit.create(ImageApiService::class.java)
 
@@ -119,4 +124,9 @@ object NetworkModule {
     @Singleton
     fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
         GeocodingRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun duelsRemoteData(apiService: DuelsService): DuelsRemoteData =
+        DuelsRemoteData(apiService)
 }

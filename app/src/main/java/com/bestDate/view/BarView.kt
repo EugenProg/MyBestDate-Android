@@ -1,9 +1,11 @@
 package com.bestDate.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.bestDate.data.extension.decimalAfterDot
 import com.bestDate.databinding.ViewBarBinding
 
 class BarView @JvmOverloads constructor(
@@ -12,12 +14,13 @@ class BarView @JvmOverloads constructor(
     private var binding: ViewBarBinding =
         ViewBarBinding.inflate(LayoutInflater.from(context), this)
 
-    var percent: Double = 0.0
+    var percent: Double? = 0.0
+        @SuppressLint("SetTextI18n")
         set(value) {
             val layoutParams = binding.resultView.layoutParams
             layoutParams.width =
-                (binding.backGroundView.layoutParams.width).times(percent).div(100).toInt()
-            binding.percentTextView.text = percent.toString()
+                (binding.backGroundView.layoutParams.width).times(percent ?: 0.0).div(100).toInt()
+            binding.percentTextView.text = "${percent.decimalAfterDot()}%"
             field = value
         }
 }

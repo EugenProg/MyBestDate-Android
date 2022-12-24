@@ -78,6 +78,7 @@ data class SendInvitationRequest(
     var invitation_id: Int,
     var user_id: Int
 )
+
 data class InvitationAnswerRequest(
     var answer_id: Int
 )
@@ -98,21 +99,22 @@ data class UpdatePasswordRequest(
     var password: String,
     var password_confirmation: String,
 )
+
 data class UpdateSettingsRequest(
-   var block_messages: Boolean? = null,
-   var matches: Boolean? = null,
-   var likes_notifications: Boolean? = null,
-   var matches_notifications: Boolean? = null,
-   var invitations_notifications: Boolean? = null,
-   var messages_notifications: Boolean? = null,
-   var guests_notifications: Boolean? = null
+    var block_messages: Boolean? = null,
+    var matches: Boolean? = null,
+    var likes_notifications: Boolean? = null,
+    var matches_notifications: Boolean? = null,
+    var invitations_notifications: Boolean? = null,
+    var messages_notifications: Boolean? = null,
+    var guests_notifications: Boolean? = null
 )
 
 enum class SettingsType {
     MESSAGES, NOTIFY_LIKES, NOTIFY_MATCHES, NOTIFY_INVITATION, NOTIFY_MESSAGES, NOTIFY_GUESTS, MATCHES;
 
     fun getSettingsRequest(checked: Boolean): UpdateSettingsRequest {
-        return when(this) {
+        return when (this) {
             MESSAGES -> UpdateSettingsRequest(block_messages = checked)
             NOTIFY_LIKES -> UpdateSettingsRequest(likes_notifications = checked)
             NOTIFY_MATCHES -> UpdateSettingsRequest(matches_notifications = checked)
@@ -147,3 +149,13 @@ enum class InvitationFilter(var serverName: String) {
     ANSWERED("answered"),
     SENT("sent")
 }
+
+data class DuelRequest(
+    val gender: String,
+    val country: String? = null
+)
+
+data class DuelVoteRequest(
+    val winning_photo: Int,
+    val loser_photo: Int
+)

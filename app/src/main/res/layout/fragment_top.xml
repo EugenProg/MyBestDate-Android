@@ -99,6 +99,16 @@
             android:src="@drawable/coin_bd_mini" />
     </FrameLayout>
 
+    <com.bestDate.view.NoDataViewWithButton
+        android:id="@+id/noDataView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/coinView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coinView"
+        app:no_data_text="@string/you_dont_have_a_match_yet"
+        app:start_with_loading="true" />
+
     <com.bestDate.view.button.UserDataButtonView
         android:id="@+id/myDuelsButton"
         android:layout_width="wrap_content"
@@ -111,10 +121,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/coinView" />
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="15dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,11 +144,13 @@
                 android:orientation="horizontal">
 
                 <com.bestDate.view.DuelElementView
+                    android:id="@+id/firstDuelElementView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <com.bestDate.view.DuelElementView
+                    android:id="@+id/secondDuelElementView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -146,7 +160,8 @@
                 android:id="@+id/resultView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="15dp"/>
+                android:paddingBottom="15dp"
+                app:result_title="@string/result" />
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
