@@ -1,8 +1,8 @@
 package com.bestDate.view.questionnaire.list
 
 import androidx.core.view.isVisible
-import com.bestDate.base.QuestionnaireBaseViewHolder
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.SocialUtils
 import com.bestDate.databinding.ItemConfirmationSocialBinding

@@ -1,7 +1,7 @@
 package com.bestDate.presentation.start
 
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.auth.AuthUseCase

@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bestDate.base.BaseClickViewHolder
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.data.extension.*
 import com.bestDate.databinding.DialogCreateInvitationBinding
 import com.bestDate.databinding.ItemCardInvitationBinding

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSetUserLocationBinding

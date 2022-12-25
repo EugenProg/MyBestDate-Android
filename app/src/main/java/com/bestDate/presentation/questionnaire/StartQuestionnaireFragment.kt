@@ -1,13 +1,23 @@
 package com.bestDate.presentation.questionnaire
 
-import com.bestDate.base.questionnaire.BaseQuestionnaireFragment
+import com.bestDate.presentation.base.questionnaire.BaseQuestionnaireFragment
 
-class StartQuestionnaireFragment: BaseQuestionnaireFragment() {
+class StartQuestionnaireFragment : BaseQuestionnaireFragment() {
     override fun back() {
         navController.popBackStack()
     }
 
     override fun forward() {
-        navController.navigate(StartQuestionnaireFragmentDirections.actionQuestionnaireToGeoEnable())
+        if (viewModel.isFirstEnter()) {
+            navController.navigate(
+                StartQuestionnaireFragmentDirections
+                    .actionQuestionnaireToGeoEnable()
+            )
+        } else {
+            navController.navigate(
+                StartQuestionnaireFragmentDirections
+                    .actionQuestionnaireFragmentToMainNavGraph()
+            )
+        }
     }
 }

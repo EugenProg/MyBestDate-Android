@@ -2,14 +2,13 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
-import com.bestDate.base.BaseClickViewHolder
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.presentation.base.BaseClickViewHolder
+import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemLoadingSearchElementBinding

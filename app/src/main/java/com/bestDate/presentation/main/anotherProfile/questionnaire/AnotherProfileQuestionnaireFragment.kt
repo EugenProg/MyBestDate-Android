@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
-import com.bestDate.base.questionnaire.*
+import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.FragmentAnotherProfileQuestionnaireBinding
+import com.bestDate.presentation.base.questionnaire.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

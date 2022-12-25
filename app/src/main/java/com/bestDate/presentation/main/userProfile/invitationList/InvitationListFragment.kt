@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
+import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.onPageChanged
 import com.bestDate.databinding.FragmentInvitationListBinding
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.ViewPagerAdapter

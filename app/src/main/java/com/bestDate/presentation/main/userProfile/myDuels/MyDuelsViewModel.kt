@@ -1,7 +1,7 @@
 package com.bestDate.presentation.main.userProfile.myDuels
 
 import androidx.lifecycle.MutableLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.MyDuel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

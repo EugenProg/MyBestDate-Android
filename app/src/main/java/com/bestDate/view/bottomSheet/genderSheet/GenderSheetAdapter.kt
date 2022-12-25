@@ -3,7 +3,7 @@ package com.bestDate.view.bottomSheet.genderSheet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bestDate.base.BaseClickViewHolder
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemGenderListBinding
 import com.bestDate.presentation.registration.GenderType

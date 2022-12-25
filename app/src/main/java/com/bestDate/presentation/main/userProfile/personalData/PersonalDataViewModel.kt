@@ -1,7 +1,7 @@
 package com.bestDate.presentation.main.userProfile.personalData
 
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.UpdateUserRequest
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -101,7 +101,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
-            android:id="@+id/backButton"
+            android:id="@+id/previousButton"
             style="@style/text_button"
             android:layout_width="0dp"
             android:layout_marginStart="0dp"
@@ -125,6 +125,6 @@
             android:layout_marginBottom="21dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/backButton" />
+            app:layout_constraintStart_toEndOf="@+id/previousButton" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

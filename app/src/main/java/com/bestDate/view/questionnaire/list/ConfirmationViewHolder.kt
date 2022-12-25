@@ -1,8 +1,8 @@
 package com.bestDate.view.questionnaire.list
 
-import com.bestDate.base.QuestionnaireBaseViewHolder
-import com.bestDate.base.questionnaire.Question
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.questionnaire.Question
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemConfirmationBinding

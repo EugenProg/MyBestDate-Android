@@ -3,9 +3,9 @@ package com.bestDate.view.questionnaire.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.base.QuestionnaireBaseViewHolder
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
-import com.bestDate.base.questionnaire.QuestionnaireViewHolderFactory
+import com.bestDate.presentation.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.questionnaire.QuestionnaireViewHolderFactory
 import com.bestDate.data.extension.orZero
 
 class QuestionnaireListAdapter(private val itemClick: ((QuestionnaireQuestion) -> Unit)) :

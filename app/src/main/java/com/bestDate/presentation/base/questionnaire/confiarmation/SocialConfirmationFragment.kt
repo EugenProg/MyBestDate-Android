@@ -1,11 +1,11 @@
-package com.bestDate.base.questionnaire.confiarmation
+package com.bestDate.presentation.base.questionnaire.confiarmation
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.BaseFragment
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.SocialTypes
 import com.bestDate.data.utils.SocialUtils

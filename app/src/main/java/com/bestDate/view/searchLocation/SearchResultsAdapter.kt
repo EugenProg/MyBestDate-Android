@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.base.BaseClickViewHolder
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.ItemSearchResultBinding

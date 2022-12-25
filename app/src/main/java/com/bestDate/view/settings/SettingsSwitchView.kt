@@ -49,6 +49,12 @@ class SettingsSwitchView @JvmOverloads constructor(
         binding.title.text = value
     }
 
+    var isChecked: Boolean
+    get() = binding.switchCompat.isChecked
+    private set(value) {
+        binding.switchCompat.isChecked = value
+    }
+
     @DrawableRes var icon: Int? = R.drawable.ic_settings_message
     set(value) {
         value?.let {

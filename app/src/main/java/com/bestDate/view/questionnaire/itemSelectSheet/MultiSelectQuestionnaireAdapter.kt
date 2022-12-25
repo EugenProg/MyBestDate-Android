@@ -6,8 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
-import com.bestDate.base.BaseClickViewHolder
-import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.databinding.ItemQuestionnareListBinding
 
 class MultiSelectQuestionnaireAdapter(private val itemClick: ((String) -> Unit)):

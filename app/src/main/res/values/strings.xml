@@ -594,4 +594,11 @@
     <string name="attention">Attention</string>
     <string name="all_your_data_will_be_deleted">All of your data, including your account, will be deleted</string>
     <string name="enter_email">Enter Email</string>
+    <string name="close">Close</string>
+    <string name="this_will_be_your_best_date">this will be your best date</string>
+    <string name="we_are_for_live_communication">We are for live communication</string>
+    <string name="if_you_turn_off_the_chat_then_you_can_only_be_called_on_a_date">If you turn off the chat, then you can\nonly be called on a date</string>
+    <string name="or_everyone_can_write_to_you_you_can_change_this_in_the_settings">Or everyone can write to you\nYou can change this in the <font color="#f28ae5"><u>settings</u></font></string>
+    <string name="get_started">Get Started</string>
+    <string name="enable_geolocation">Enable geolocation</string>
 </resources>

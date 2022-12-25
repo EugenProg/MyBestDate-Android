@@ -1,9 +1,11 @@
-package com.bestDate.base.questionnaire
+package com.bestDate.presentation.base.questionnaire
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.userProfile.personalData.PersonalDataUseCase
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class QuestionnaireViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
-    private val personalDataUseCase: PersonalDataUseCase
+    private val personalDataUseCase: PersonalDataUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
@@ -69,4 +72,6 @@ class QuestionnaireViewModel @Inject constructor(
             _phoneSaveSuccessLiveData.postValue(true)
         }
     }
+
+    fun isFirstEnter() = preferencesUtils.getBooleanWithDefault(Preferences.FIRST_ENTER, true)
 }
