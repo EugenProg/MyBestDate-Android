@@ -3,7 +3,7 @@ package com.bestDate.presentation.start
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentStartBinding

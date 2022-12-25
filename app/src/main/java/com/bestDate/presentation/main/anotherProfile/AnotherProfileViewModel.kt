@@ -2,7 +2,7 @@ package com.bestDate.presentation.main.anotherProfile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.LikesBody
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.entity.UserDB

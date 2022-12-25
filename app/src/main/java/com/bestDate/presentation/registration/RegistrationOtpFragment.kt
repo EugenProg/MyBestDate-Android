@@ -2,7 +2,7 @@ package com.bestDate.presentation.registration
 
 import androidx.fragment.app.viewModels
 import com.bestDate.R
-import com.bestDate.base.BaseOtpFragment
+import com.bestDate.presentation.base.BaseOtpFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

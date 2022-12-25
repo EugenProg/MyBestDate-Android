@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentBlockedUsersBinding
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint

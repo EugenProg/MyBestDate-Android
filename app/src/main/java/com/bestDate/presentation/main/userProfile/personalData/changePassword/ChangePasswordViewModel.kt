@@ -2,7 +2,7 @@ package com.bestDate.presentation.main.userProfile.personalData.changePassword
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.ItemPhotoSliderBinding
 import com.bumptech.glide.Glide

@@ -9,18 +9,17 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.view.iterator
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
-import com.bestDate.base.questionnaire.*
 import com.bestDate.data.extension.*
 import com.bestDate.databinding.PageQuestionnaireQuestionsBinding
 import com.bestDate.databinding.PageQuestionnaireTextBinding
 import com.bestDate.databinding.ViewQuestionnaireBinding
 import com.bestDate.db.entity.QuestionnaireDB
+import com.bestDate.presentation.base.questionnaire.*
 import com.bestDate.view.questionnaire.list.QuestionnaireListAdapter
 
 class QuestionnaireView @JvmOverloads constructor(

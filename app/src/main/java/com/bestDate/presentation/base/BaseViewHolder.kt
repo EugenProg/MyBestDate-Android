@@ -1,8 +1,8 @@
-package com.bestDate.base
+package com.bestDate.presentation.base
 
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 
 abstract class BaseViewHolder<T, VB : ViewBinding>(open val binding: VB) :
     RecyclerView.ViewHolder(binding.root) {

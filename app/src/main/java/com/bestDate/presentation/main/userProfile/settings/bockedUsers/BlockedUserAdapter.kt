@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemBlockedUserBinding

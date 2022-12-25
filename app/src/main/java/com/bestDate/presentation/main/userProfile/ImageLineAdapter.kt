@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bestDate.R
-import com.bestDate.base.BaseClickViewHolder
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.data.extension.setHeight
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.setWidth

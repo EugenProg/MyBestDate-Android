@@ -3,7 +3,7 @@ package com.bestDate.presentation.passRecovery
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.R
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber

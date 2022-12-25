@@ -1,7 +1,7 @@
 package com.bestDate.presentation.main.userProfile.invitationList
 
 import androidx.lifecycle.MutableLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.InvitationAnswer
 import com.bestDate.data.model.InvitationCard
 import dagger.hilt.android.lifecycle.HiltViewModel

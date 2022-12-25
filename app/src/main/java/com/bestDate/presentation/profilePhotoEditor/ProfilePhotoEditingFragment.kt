@@ -8,8 +8,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
-import com.bestDate.base.BasePhotoEditorFragment
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.BasePhotoEditorFragment
 import com.bestDate.data.extension.imageIsSet
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -59,7 +59,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             }
             backButton.setOnClickListener {
                 navController.popBackStack()
-                BasePhotoEditorFragment.editorAction.value = null
+                com.bestDate.presentation.base.BasePhotoEditorFragment.editorAction.value = null
             }
             nextButton.setOnSaveClickListener {
                 if (imageList.value?.size.orZero > 0) {

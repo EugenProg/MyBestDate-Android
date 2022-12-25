@@ -1,6 +1,6 @@
 package com.bestDate.presentation.main.userProfile.questionnaire
 
-import com.bestDate.base.questionnaire.BaseQuestionnaireFragment
+import com.bestDate.presentation.base.questionnaire.BaseQuestionnaireFragment
 
 class ProfileQuestionnaireFragment: BaseQuestionnaireFragment() {
     override fun back() {

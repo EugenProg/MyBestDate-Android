@@ -1,11 +1,11 @@
-package com.bestDate.base.questionnaire.search
+package com.bestDate.presentation.base.questionnaire.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.BaseFragment
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchQuestionnaireLocationBinding

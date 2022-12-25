@@ -1,4 +1,4 @@
-package com.bestDate.base.questionnaire
+package com.bestDate.presentation.base.questionnaire
 
 import android.content.Context
 import com.bestDate.R

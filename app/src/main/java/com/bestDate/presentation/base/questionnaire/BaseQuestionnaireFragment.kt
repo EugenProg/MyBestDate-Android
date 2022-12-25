@@ -1,4 +1,4 @@
-package com.bestDate.base.questionnaire
+package com.bestDate.presentation.base.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,11 +8,11 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
-import com.bestDate.base.questionnaire.confiarmation.EmailConfirmationFragment
-import com.bestDate.base.questionnaire.confiarmation.PhoneConfirmationFragment
-import com.bestDate.base.questionnaire.confiarmation.SocialConfirmationFragment
-import com.bestDate.base.questionnaire.search.SearchQuestionnaireLocationFragment
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.EmailConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.PhoneConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.SocialConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.search.SearchQuestionnaireLocationFragment
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setOnSaveClickListener

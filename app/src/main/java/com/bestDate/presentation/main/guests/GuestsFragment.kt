@@ -6,7 +6,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
 import dagger.hilt.android.AndroidEntryPoint

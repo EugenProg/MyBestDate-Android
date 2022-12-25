@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,12 +1,12 @@
-package com.bestDate.base.questionnaire.confiarmation
+package com.bestDate.presentation.base.questionnaire.confiarmation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
-import com.bestDate.base.questionnaire.QuestionnaireViewModel
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.questionnaire.QuestionnaireViewModel
 import com.bestDate.databinding.FragmentConfirmationBinding
 
 abstract class BaseConfirmationFragment(

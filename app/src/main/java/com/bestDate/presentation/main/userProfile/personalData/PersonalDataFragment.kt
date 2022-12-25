@@ -3,7 +3,7 @@ package com.bestDate.presentation.main.userProfile.personalData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentPersonalDataBinding
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint

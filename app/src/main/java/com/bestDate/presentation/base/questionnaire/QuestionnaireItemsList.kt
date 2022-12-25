@@ -1,9 +1,9 @@
-package com.bestDate.base.questionnaire
+package com.bestDate.presentation.base.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.QuestionnaireBaseViewHolder
 import com.bestDate.databinding.ItemConfirmationBinding
 import com.bestDate.databinding.ItemConfirmationSocialBinding
 import com.bestDate.databinding.ItemMultilineQuestionInfoBinding

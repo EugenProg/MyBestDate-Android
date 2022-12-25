@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.R
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.Preferences

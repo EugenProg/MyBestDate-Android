@@ -1,7 +1,7 @@
-package com.bestDate.base.questionnaire.confiarmation
+package com.bestDate.presentation.base.questionnaire.confiarmation
 
 import com.bestDate.R
-import com.bestDate.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.isPhoneNumber
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.databinding.FragmentSearchBinding
