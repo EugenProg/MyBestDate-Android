@@ -140,6 +140,9 @@ abstract class BaseQuestionnaireFragment :
         viewModel.questionnaireSaveLiveData.observe(viewLifecycleOwner) {
             forward()
         }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            showMessage(it.exception.message)
+        }
     }
 
     private fun questionnaireClickAction():
