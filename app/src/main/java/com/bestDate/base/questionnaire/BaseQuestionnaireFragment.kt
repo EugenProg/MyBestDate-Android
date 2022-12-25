@@ -3,12 +3,17 @@ package com.bestDate.base.questionnaire
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
+import com.bestDate.base.questionnaire.confiarmation.EmailConfirmationFragment
+import com.bestDate.base.questionnaire.confiarmation.PhoneConfirmationFragment
+import com.bestDate.base.questionnaire.confiarmation.SocialConfirmationFragment
 import com.bestDate.base.questionnaire.search.SearchQuestionnaireLocationFragment
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentQuestionnaireBinding
@@ -126,7 +131,8 @@ abstract class BaseQuestionnaireFragment :
         }
         viewModel.user.observe(viewLifecycleOwner) {
             savedQuestionnaire = it?.questionnaire
-            binding.questionnaireView.setQuestionnaire(it?.questionnaire)
+            binding.questionnaireView.setQuestionnaire(it?.questionnaire,
+                it?.email, it?.phone, it?.photos?.size.orZero)
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.questionnaireView.toggleFinishButton(it)
@@ -157,22 +163,41 @@ abstract class BaseQuestionnaireFragment :
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                     }
                 }
-                QuestionnaireViewType.CONFIRMATION_VIEW -> {
-                    // showMessage(question.questionInfo?.question.orZero)
-                }
-                QuestionnaireViewType.INPUT_LOCATION_VIEW -> {
-                    val searchLocationFragment = SearchQuestionnaireLocationFragment(question)
-                    childFragmentManager.commit {
-                        setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
-                        replace(R.id.container, searchLocationFragment)
-                    }
+                QuestionnaireViewType.CONFIRMATION_EMAIL -> {
+                    val emailFragment = EmailConfirmationFragment(question,
+                        viewModel.user.value?.email_verification == true)
+                    openPage(emailFragment)
 
-                    searchLocationFragment.saveClick = {
-                        closeSearchPage(searchLocationFragment)
+                    emailFragment.backClick = { closePage(emailFragment) }
+                }
+                QuestionnaireViewType.CONFIRMATION_PHONE -> {
+                    val phoneFragment = PhoneConfirmationFragment(question,
+                        viewModel.user.value?.phone_verification == true)
+                    openPage(phoneFragment)
+
+                    phoneFragment.backClick = { closePage(phoneFragment) }
+                }
+                QuestionnaireViewType.CONFIRMATION_SOCIAL -> {
+                    val socialFragment = SocialConfirmationFragment(question)
+                    openPage(socialFragment)
+
+                    socialFragment.saveClick = {
+                        closePage(socialFragment)
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                     }
 
-                    searchLocationFragment.backClick = { closeSearchPage(searchLocationFragment) }
+                    socialFragment.backClick = { closePage(socialFragment) }
+                }
+                QuestionnaireViewType.INPUT_LOCATION_VIEW -> {
+                    val searchLocationFragment = SearchQuestionnaireLocationFragment(question)
+                    openPage(searchLocationFragment)
+
+                    searchLocationFragment.saveClick = {
+                        closePage(searchLocationFragment)
+                        binding.questionnaireView.updateQuestionnaireList(question, it, list)
+                    }
+
+                    searchLocationFragment.backClick = { closePage(searchLocationFragment) }
                 }
                 QuestionnaireViewType.MULTILINE_INFO_VIEW -> {
                     val multiLineSheet = MultilineQuestionnaireSheet()
@@ -187,7 +212,14 @@ abstract class BaseQuestionnaireFragment :
         }
     }
 
-    private fun closeSearchPage(fragment: SearchQuestionnaireLocationFragment) {
+    private fun openPage(fragment: Fragment) {
+        childFragmentManager.commit {
+            setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
+            replace(R.id.container, fragment)
+        }
+    }
+
+    private fun closePage(fragment: Fragment) {
         binding.container.animate()
             .translationY((binding.container.height).toFloat())
             .setDuration(300)
@@ -198,14 +230,15 @@ abstract class BaseQuestionnaireFragment :
                 fragment.let {
                     remove(it)
                     binding.container.isVisible = false
+                    hideKeyboardAction()
                     reDrawBars()
-                    reDrawSearchPage()
+                    reDrawPage()
                 }
             }
         }, 350)
     }
 
-    private fun reDrawSearchPage() {
+    private fun reDrawPage() {
         binding.container.animate()
             .translationY(0.0f)
             .setDuration(10)

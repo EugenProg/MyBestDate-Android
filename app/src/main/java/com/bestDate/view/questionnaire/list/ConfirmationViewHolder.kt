@@ -1,6 +1,7 @@
 package com.bestDate.view.questionnaire.list
 
 import com.bestDate.base.QuestionnaireBaseViewHolder
+import com.bestDate.base.questionnaire.Question
 import com.bestDate.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -14,7 +15,7 @@ class ConfirmationViewHolder(override val binding: ItemConfirmationBinding) :
     ) {
         with(binding.view) {
             title = context.getString(item.questionInfo?.question.orZero)
-            description = if (item.answer.isNullOrBlank()) {
+            description = if (item.answer.isNullOrBlank() || item.questionInfo == Question.PHOTO) {
                 if (item.questionInfo?.answers?.isNotEmpty() == true) {
                     context.getString(item.questionInfo?.answers?.get(0).orZero)
                 } else ""

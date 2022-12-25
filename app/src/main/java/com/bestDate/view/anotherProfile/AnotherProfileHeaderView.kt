@@ -9,10 +9,7 @@ import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.model.ShortUserData
-import com.bestDate.data.utils.Logger
-import com.bestDate.data.utils.ZodiacSign
 import com.bestDate.data.utils.ZodiacUtils
 import com.bestDate.databinding.ViewAnotherProfileHeaderBinding
 import com.bestDate.db.entity.UserDB
@@ -49,7 +46,8 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
         binding.online.isVisible = user?.is_online == true
         binding.distance.text =
             context.getString(R.string.distance_unit, user?.distance?.roundToInt().orZero)
-        binding.zodiac.text = context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
+        binding.zodiac.text =
+            context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
         isBlocked(user?.blocked_me)
     }
 
@@ -58,7 +56,8 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
         binding.online.isVisible = user?.is_online == true
         binding.distance.text =
             context.getString(R.string.distance_unit, user?.distance?.roundToInt().orZero)
-        binding.zodiac.text = context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
+        binding.zodiac.text =
+            context.getString(ZodiacUtils().getZodiacSignByDate(user?.birthday).title)
         isBlocked(user?.blocked_me)
     }
 
