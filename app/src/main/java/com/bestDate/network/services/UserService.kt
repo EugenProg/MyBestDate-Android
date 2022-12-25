@@ -22,6 +22,10 @@ interface UserService {
     @GET("/api/v1/likes")
     suspend fun getLikesList(): Response<LikesListResponse>
 
+    /**Post like*/
+    @POST("/api/v1/likes")
+    suspend fun like(@Body body: LikesBody): Response<LikeResponse>
+
     /**Get user matches list*/
     @GET("/api/v1/match")
     suspend fun getMatchesList(): Response<MatchesListResponse>

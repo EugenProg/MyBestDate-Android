@@ -18,6 +18,8 @@ class UserRemoteData @Inject constructor(
 
     suspend fun getUserLikes() = service.getLikesList()
 
+    suspend fun like(body: LikesBody) = service.like(body)
+
     suspend fun getUsers(filters: FilterOptions, page: Int) =
         service.getUsers(filters, page)
 
