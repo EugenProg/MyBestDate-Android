@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.PageQuestionnaireQuestionsBinding
 import com.bestDate.databinding.PageQuestionnaireTextBinding
 import com.bestDate.databinding.ViewQuestionnaireBinding
@@ -100,17 +101,17 @@ class QuestionnaireView @JvmOverloads constructor(
         personalPage.nextButton.onClick = { toNextPage(personalPage.root, appearancePage.root) }
 
         appearancePage.nextButton.onClick = { toNextPage(appearancePage.root, searchPage.root) }
-        appearancePage.backButton.setOnSaveClickListener {
+        appearancePage.previousButton.setOnSaveClickListener {
             toPreviousPage(appearancePage.root, personalPage.root)
         }
 
         searchPage.nextButton.onClick = { toNextPage(searchPage.root, freeTimePage.root) }
-        searchPage.backButton.setOnSaveClickListener {
+        searchPage.previousButton.setOnSaveClickListener {
             toPreviousPage(searchPage.root, appearancePage.root)
         }
 
         freeTimePage.nextButton.onClick = { toNextPage(freeTimePage.root, aboutMePage.root) }
-        freeTimePage.backButton.setOnSaveClickListener {
+        freeTimePage.previousButton.setOnSaveClickListener {
             toPreviousPage(freeTimePage.root, searchPage.root)
         }
 
@@ -118,7 +119,7 @@ class QuestionnaireView @JvmOverloads constructor(
             checkFilling(aboutMePage)
             toNextPage(aboutMePage.root, dataPage.root)
         }
-        aboutMePage.backButton.setOnSaveClickListener {
+        aboutMePage.previousButton.setOnSaveClickListener {
             checkFilling(aboutMePage)
             toPreviousPage(aboutMePage.root, freeTimePage.root)
         }
@@ -127,7 +128,7 @@ class QuestionnaireView @JvmOverloads constructor(
         dataPage.nextButton.onClick = {
             finishClick?.invoke()
         }
-        dataPage.backButton.setOnSaveClickListener {
+        dataPage.previousButton.setOnSaveClickListener {
             toPreviousPage(dataPage.root, aboutMePage.root)
         }
     }
@@ -239,8 +240,8 @@ class QuestionnaireView @JvmOverloads constructor(
             questionsList.adapter = adapter
 
             if (page.number == 1) {
-                backButton.isEnabled = false
-                backButton.setTextColor(ContextCompat.getColor(context, R.color.main_10))
+                previousButton.isEnabled = false
+                previousButton.setTextColor(ContextCompat.getColor(context, R.color.main_10))
             }
         }
     }
@@ -544,7 +545,7 @@ class QuestionnaireView @JvmOverloads constructor(
         aboutMePage.header.root.isVisible = !isVisible
         aboutMePage.percentContainer.isVisible = !isVisible
         aboutMePage.nextButton.isVisible = !isVisible
-        aboutMePage.backButton.isVisible = !isVisible
+        aboutMePage.previousButton.isVisible = !isVisible
         if (isVisible) {
             aboutMePage.textInput.setSelection(aboutMePage.textInput.text.length)
             aboutMePage.textInput.requestFocus()
@@ -600,7 +601,7 @@ class QuestionnaireView @JvmOverloads constructor(
         //Data
         questionnaire.socials = dataPageQuestionsList.value?.firstOrNull {
             it.questionInfo == Question.SOCIAL_NETWORK
-        }?.answer.toList()
+        }?.answer?.toListOrNull()
 
         return questionnaire
     }

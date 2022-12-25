@@ -18,10 +18,10 @@ class GeoEnableFragment : BaseFragment<FragmentGeoEnableBinding>() {
         super.onViewClickListener()
         with(binding) {
             skipButton.setOnClickListener {
-                showMessage("skip")
+                navController.navigate(GeoEnableFragmentDirections.actionGeoToMessagesSettings())
             }
             enableButton.onSafeClick = {
-                showMessage("enabled")
+                navController.navigate(GeoEnableFragmentDirections.actionGeoToMessagesSettings())
             }
         }
     }

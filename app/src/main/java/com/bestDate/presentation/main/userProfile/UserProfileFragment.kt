@@ -138,6 +138,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
                 photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+                BasePhotoEditorFragment.editorAction.value = null
             }
         }
     }

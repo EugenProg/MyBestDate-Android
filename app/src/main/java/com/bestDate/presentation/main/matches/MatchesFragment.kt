@@ -2,7 +2,6 @@ package com.bestDate.presentation.main.matches
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.bestDate.R
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentMatchesBinding
@@ -29,7 +28,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.matches)
         binding.toolbar.onProfileClick = {
-            findNavController().navigate(R.id.action_global_profile_nav_graph_from_matches)
+            navController.navigate(R.id.action_global_profile_nav_graph_from_matches)
         }
     }
 

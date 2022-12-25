@@ -18,6 +18,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
 
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
+    private var isLoggedIn = false
 
     override fun onViewClickListener() {
         super.onViewClickListener()
@@ -44,8 +45,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
             }
             signUpButton.setOnClickListener {
                 navController.navigate(
-                    AuthFragmentDirections
-                        .actionAuthFragmentToStartRegistrationFragment()
+                    AuthFragmentDirections.actionAuthToStartRegistration()
                 )
             }
         }
@@ -57,7 +57,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
             binding.authButton.toggleActionEnabled(it)
         }
         viewModel.user.observe(viewLifecycleOwner) {
-            if (viewModel.user.value != null) {
+            if (viewModel.user.value != null && isLoggedIn) {
                 val language = getString(R.string.app_language)
                 if (language != viewModel.user.value?.language) {
                     viewModel.changeLanguage(language)
@@ -67,9 +67,11 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
             }
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            isLoggedIn = false
             showMessage(getString(R.string.wrong_auth_data))
         }
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+            isLoggedIn = false
             showMessage(it)
         }
         viewModel.updateLanguageSuccessLiveData.observe(viewLifecycleOwner) {
@@ -80,10 +82,10 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
     private fun chooseRoute() {
         when {
             viewModel.user.value?.hasNoPhotos() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmentToProfilePhotoEditingFragment())
+                navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
             }
             viewModel.user.value?.questionnaireEmpty() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmentToQuestionnaireFragment())
+                navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
             }
             else -> {
                 navController.navigate(AuthFragmentDirections.actionAuthToMain())
@@ -117,6 +119,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 emailInput.text.isBlank() -> emailInput.setError()
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
+                    isLoggedIn = true
                     viewModel.logIn(emailInput.text, passInput.text)
                 }
             }

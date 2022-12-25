@@ -2,7 +2,6 @@ package com.bestDate.presentation.main.chats
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.bestDate.R
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentChatsBinding
@@ -28,7 +27,7 @@ class ChatsFragment : BaseVMFragment<FragmentChatsBinding, ChatsViewModel>() {
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.chats)
         binding.toolbar.onProfileClick = {
-            findNavController().navigate(R.id.action_global_profile_nav_graph_from_chats)
+            navController.navigate(R.id.action_global_profile_nav_graph_from_chats)
         }
     }
 

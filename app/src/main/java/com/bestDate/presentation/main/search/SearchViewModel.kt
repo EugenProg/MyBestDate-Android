@@ -79,8 +79,4 @@ class SearchViewModel @Inject constructor(
         val value = preferencesUtils.getString(type)
         return value.ifEmpty { "all" }
     }
-
-    fun setNotFirstEnter() {
-        preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
-    }
 }

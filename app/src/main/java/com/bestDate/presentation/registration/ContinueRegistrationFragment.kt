@@ -61,7 +61,6 @@ class ContinueRegistrationFragment :
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
-            //showMessage(R.string.oops_its_error)
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.signUpButton.toggleActionEnabled(it)

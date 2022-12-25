@@ -109,6 +109,6 @@ abstract class BasePhotoEditorFragment :
     }
 
     companion object {
-        var editorAction: MutableLiveData<ProfileImage> = MutableLiveData()
+        var editorAction: MutableLiveData<ProfileImage?> = MutableLiveData()
     }
 }

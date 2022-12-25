@@ -68,12 +68,11 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
                 navController.navigate(StartFragmentDirections.actionStartToProfilePhotoEditing())
             }
             viewModel.user.value?.questionnaireEmpty() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthFragmentToQuestionnaireFragment())
+                navController.navigate(StartFragmentDirections.actionStartToQuestionnaire())
             }
             else -> {
                 navController.navigate(StartFragmentDirections.actionStartToMainGraph())
             }
         }
     }
-
 }

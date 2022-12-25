@@ -21,7 +21,7 @@ class RegistrationOtpFragment: BaseOtpFragment(
         super.onViewLifecycle()
         viewModel.registrationLiveData.observe(viewLifecycleOwner) {
             navController.navigate(RegistrationOtpFragmentDirections
-                .actionGlobalProfilePhotoEditingFragment())
+                .actionGlobalProfileEditing())
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)

@@ -44,8 +44,4 @@ class AuthUseCase @Inject constructor(
         )
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
     }
-
-    fun saveFirstEnterInfo(isFirst: Boolean) {
-        preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, isFirst)
-    }
 }

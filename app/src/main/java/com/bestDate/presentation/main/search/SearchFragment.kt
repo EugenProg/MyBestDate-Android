@@ -2,7 +2,6 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.presentation.base.BaseVMFragment
@@ -31,7 +30,6 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     override fun onInit() {
         super.onInit()
-        viewModel.setNotFirstEnter()
         setUpSwipe()
         setUpToolbar()
         setUpUsersList()
@@ -68,7 +66,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.search)
         binding.toolbar.onProfileClick = {
-            findNavController().navigate(R.id.action_global_profile_nav_graph_from_search)
+            navController.navigate(R.id.action_global_profile_nav_graph_from_search)
         }
     }
 
@@ -171,5 +169,4 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun clearData() {
         viewModel.clearData()
     }
-
 }

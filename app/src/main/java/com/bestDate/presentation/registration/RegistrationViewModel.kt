@@ -7,14 +7,20 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.auth.AuthUseCase
+import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
-    private val registrationUseCase: RegistrationUseCase) : BaseViewModel() {
+    private val registrationUseCase: RegistrationUseCase,
+    private val userUseCase: UserUseCase,
+    private val preferencesUtils: PreferencesUtils
+    ) : BaseViewModel() {
 
     private var _sendCodeLiveData = MutableLiveData<Boolean>()
     val sendCodeLiveData: LiveData<Boolean> = _sendCodeLiveData
@@ -54,6 +60,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun confirmRegistration(code: String) {
         _loadingLiveData.value = true
+        preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, true)
         if (RegistrationHolder.type == RegistrationType.PHONE) {
             confirmPhoneOtp(code)
         } else {
@@ -92,6 +99,7 @@ class RegistrationViewModel @Inject constructor(
     private fun loginByEmail(login: String, password: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
+            userUseCase.refreshUser()
             _registrationLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
@@ -100,6 +108,7 @@ class RegistrationViewModel @Inject constructor(
     private fun loginByPhone(login: String, password: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
+            userUseCase.refreshUser()
             _registrationLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }

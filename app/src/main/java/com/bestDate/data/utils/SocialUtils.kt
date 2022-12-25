@@ -1,6 +1,6 @@
 package com.bestDate.data.utils
 
-import com.bestDate.data.extension.toList
+import com.bestDate.data.extension.toListOrEmpty
 
 class SocialUtils {
     private val socialsMap: MutableMap<SocialTypes, String> = mutableMapOf()
@@ -17,7 +17,7 @@ class SocialUtils {
     }
 
     fun setSocials(socials: String?) {
-        setSocials(socials.toList())
+        setSocials(socials.toListOrEmpty())
     }
 
     fun getSocials(): String {

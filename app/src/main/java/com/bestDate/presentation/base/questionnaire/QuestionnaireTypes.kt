@@ -2,7 +2,7 @@ package com.bestDate.presentation.base.questionnaire
 
 import android.content.Context
 import com.bestDate.R
-import com.bestDate.data.extension.toList
+import com.bestDate.data.extension.toListOrEmpty
 
 interface QuestionnaireType {
     fun getName(context: Context, name: String?): String
@@ -809,7 +809,7 @@ class HobbyType : QuestionnaireListType {
         val serverList: MutableList<String> = mutableListOf()
         if (answerLine.isNullOrEmpty()) return null
 
-        answerLine.toList()?.forEach {
+        answerLine.toListOrEmpty()?.forEach {
             serverList.add(
                 when (it) {
                     context.getString(R.string.music) -> "Music"
@@ -882,7 +882,7 @@ class SportTypes : QuestionnaireListType {
         val serverList: MutableList<String> = mutableListOf()
         if (answerLine.isNullOrEmpty()) return null
 
-        answerLine.toList()?.forEach {
+        answerLine.toListOrEmpty()?.forEach {
             serverList.add(
                 when (it) {
                     context.getString(R.string.badminton) -> "Badminton"

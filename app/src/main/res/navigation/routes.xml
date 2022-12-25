@@ -11,27 +11,27 @@
         <action
             android:id="@+id/action_start_to_onboardStart"
             app:destination="@id/onboardStartFragment"
-            app:popUpTo="@id/onboardStartFragment"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_start_to_auth"
             app:destination="@id/authFragment"
-            app:popUpTo="@id/authFragment"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_start_to_profilePhotoEditing"
-            app:destination="@id/profilePhotoEditingFragment"
-            app:popUpTo="@id/profilePhotoEditingFragment"
+            app:destination="@id/photo_editor_nav_graph"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_start_to_questionnaire"
             app:destination="@id/questionnaireFragment"
-            app:popUpTo="@id/questionnaireFragment"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_start_to_main_graph"
             app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph"
+            app:popUpTo="@id/startFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -52,7 +52,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/authFragment"
+            app:popUpTo="@id/onboardStartFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -66,7 +66,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/authFragment"
+            app:popUpTo="@id/onboardSecondFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -75,42 +75,64 @@
         android:label="AuthFragment">
         <action
             android:id="@+id/action_authFragment_to_passRecoveryFragment"
-            app:destination="@id/recovery_nev_graph"
+            app:destination="@id/recovery_nav_graph"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_authFragment_to_startRegistrationFragment"
+            android:id="@+id/action_auth_to_startRegistration"
             app:destination="@id/startRegistrationFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_authFragment_to_profilePhotoEditingFragment"
-            app:destination="@id/profilePhotoEditingFragment"
+            android:id="@+id/action_auth_to_profilePhotoEditing"
+            app:destination="@id/photo_editor_nav_graph"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/registrationPhotoEditorFragment"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_authFragment_to_questionnaireFragment"
+            android:id="@+id/action_auth_to_questionnaire"
             app:destination="@id/questionnaireFragment"
-            app:popUpTo="@id/questionnaireFragment"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_auth_to_main"
             app:destination="@id/main_nav_graph"
-            app:popUpTo="@id/main_nav_graph"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/geoEnableFragment"
         android:name="com.bestDate.presentation.GeoEnableFragment"
-        android:label="GeoEnableFragment" />
+        android:label="GeoEnableFragment" >
+        <action
+            android:id="@+id/action_geo_to_messagesSettings"
+            app:destination="@id/messagesSettingsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/messagesSettingsFragment"
+        android:name="com.bestDate.presentation.messageSettings.MessageSettingsFragment"
+        android:label="MessagesSettingsFragment">
+        <action
+            android:id="@+id/action_messagesSettings_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/messagesSettingsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
     <fragment
         android:id="@+id/startRegistrationFragment"
         android:name="com.bestDate.presentation.registration.StartRegistrationFragment"
@@ -131,25 +153,6 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/profilePhotoEditingFragment"
-        android:name="com.bestDate.presentation.profilePhotoEditor.ProfilePhotoEditingFragment"
-        android:label="ProfilePhotoEditingFragment">
-        <action
-            android:id="@+id/action_profilePhotoEditingFragment_to_photoEditorFragment"
-            app:destination="@id/registrationPhotoEditorFragment"
-            app:enterAnim="@anim/push_up_in"
-            app:exitAnim="@anim/push_up_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
-        <action
-            android:id="@+id/action_profilePhotoEditingFragment_to_questionnaireFragment"
-            app:destination="@id/questionnaireFragment"
-            app:enterAnim="@anim/slide_in_left"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
         android:id="@+id/questionnaireFragment"
         android:name="com.bestDate.presentation.questionnaire.StartQuestionnaireFragment"
         android:label="QuestionnaireFragment">
@@ -159,8 +162,15 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_questionnaireFragment_to_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/geoEnableFragment"
+            app:popUpTo="@id/questionnaireFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -432,21 +442,13 @@
         <action
             android:id="@+id/action_global_authFragment"
             app:destination="@id/authFragment"
-            app:popUpTo="@id/authFragment"
+            app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
 
     </navigation>
 
-    <fragment
-        android:id="@+id/registrationPhotoEditorFragment"
-        android:name="com.bestDate.presentation.profilePhotoEditor.RegistrationPhotoEditorFragment"
-        android:label="RegistrationPhotoEditorFragment">
-        <argument
-            android:name="selectedImage"
-            app:argType="com.bestDate.data.model.Image" />
-    </fragment>
     <navigation
-        android:id="@+id/recovery_nev_graph"
+        android:id="@+id/recovery_nav_graph"
         app:startDestination="@id/passRecoveryFragment">
         <fragment
             android:id="@+id/passRecoverySetNewFragment"
@@ -477,9 +479,19 @@
                 app:popExitAnim="@anim/slide_out_right" />
         </fragment>
         <action
-            android:id="@+id/action_global_geoEnableFragment"
-            app:destination="@id/geoEnableFragment"
-            app:popUpTo="@id/geoEnableFragment"
+            android:id="@+id/action_global_profilePhotoEditingFragment"
+            app:destination="@id/photo_editor_nav_graph"
+            app:popUpTo="@id/recovery_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_global_questionnaireFragment"
+            app:destination="@id/questionnaireFragment"
+            app:popUpTo="@id/recovery_nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_global_main_nav_graph"
+            app:destination="@id/main_nav_graph"
+            app:popUpTo="@id/recovery_nav_graph"
             app:popUpToInclusive="true" />
     </navigation>
     <navigation
@@ -502,14 +514,44 @@
             android:name="com.bestDate.presentation.registration.RegistrationOtpFragment"
             android:label="RegistrationOtpFragment" />
         <action
-            android:id="@+id/action_global_profilePhotoEditingFragment"
-            app:destination="@id/profilePhotoEditingFragment"
+            android:id="@+id/action_global_profileEditing"
+            app:destination="@id/photo_editor_nav_graph"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/profilePhotoEditingFragment"
+            app:popUpTo="@id/registration_nav_graph"
             app:popUpToInclusive="true" />
+    </navigation>
+    <navigation android:id="@+id/photo_editor_nav_graph"
+        app:startDestination="@id/profilePhotoEditingFragment">
+        <fragment
+            android:id="@+id/profilePhotoEditingFragment"
+            android:name="com.bestDate.presentation.profilePhotoEditor.ProfilePhotoEditingFragment"
+            android:label="ProfilePhotoEditingFragment">
+            <action
+                android:id="@+id/action_profilePhotoEditingFragment_to_photoEditorFragment"
+                app:destination="@id/registrationPhotoEditorFragment"
+                app:enterAnim="@anim/push_up_in"
+                app:exitAnim="@anim/push_up_out"
+                app:popEnterAnim="@anim/fade_in"
+                app:popExitAnim="@anim/fade_out" />
+        </fragment>
+        <fragment
+            android:id="@+id/registrationPhotoEditorFragment"
+            android:name="com.bestDate.presentation.profilePhotoEditor.RegistrationPhotoEditorFragment"
+            android:label="RegistrationPhotoEditorFragment">
+            <argument
+                android:name="selectedImage"
+                app:argType="com.bestDate.data.model.Image" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_questionnaireFragment"
+            app:destination="@id/questionnaireFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"/>
     </navigation>
 
 </navigation>
