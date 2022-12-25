@@ -23,7 +23,10 @@ enum class QuestionnaireViewType(val id: Int) {
     SEEKBAR_VIEW(2),
     RANGE_BAR_VIEW(3),
     CONFIRMATION_VIEW(4),
-    INPUT_LOCATION_VIEW(5)
+    CONFIRMATION_EMAIL(5),
+    CONFIRMATION_PHONE(6),
+    CONFIRMATION_SOCIAL(7),
+    INPUT_LOCATION_VIEW(8)
 }
 
 @Parcelize

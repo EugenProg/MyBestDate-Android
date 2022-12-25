@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.bestDate.view.button.BackButtonView
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:back_button_color="@color/bg_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/saveButton"
+            style="@style/text"
+            android:layout_width="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="end"
+            android:padding="16dp"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="@+id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/backButton" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/social_network"
+                android:textSize="32sp" />
+
+            <com.bestDate.view.questionnaire.QuestionnaireInputView
+                android:id="@+id/instaInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:questionnaire_input_hint="Instagram"
+                app:questionnaire_input_icon="@drawable/ic_insta" />
+
+            <com.bestDate.view.questionnaire.QuestionnaireInputView
+                android:id="@+id/facebookInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_input_hint="Facebook"
+                app:questionnaire_input_icon="@drawable/ic_facebook_f" />
+
+            <com.bestDate.view.questionnaire.QuestionnaireInputView
+                android:id="@+id/twitterInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_input_hint="Twitter"
+                app:questionnaire_input_icon="@drawable/ic_twitter" />
+
+            <com.bestDate.view.questionnaire.QuestionnaireInputView
+                android:id="@+id/linkedinInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_input_hint="Linkedin"
+                app:questionnaire_input_icon="@drawable/ic_linkedin" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

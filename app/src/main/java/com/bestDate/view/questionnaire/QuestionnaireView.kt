@@ -9,6 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.core.view.iterator
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -274,7 +275,7 @@ class QuestionnaireView @JvmOverloads constructor(
         list.value = items
     }
 
-    fun setQuestionnaire(questionnaire: QuestionnaireDB?) {
+    fun setQuestionnaire(questionnaire: QuestionnaireDB?, email: String?, phone: String?, photos: Int) {
         if (questionnaire == null) return
         var progress = 0
         //Personal
@@ -427,6 +428,38 @@ class QuestionnaireView @JvmOverloads constructor(
                 progress += item.questionInfo?.percent.orZero
         }
 
+        //Data
+        val dataItems: MutableList<QuestionnaireQuestion> = mutableListOf()
+        dataPageQuestionsList.value?.forEach {
+            when(it.questionInfo) {
+                Question.PHOTO -> dataItems.add(
+                    QuestionnaireQuestion(
+                        it.questionInfo,
+                        if (photos > 0) "photo" else null
+                    )
+                )
+                Question.EMAIL -> dataItems.add(
+                    QuestionnaireQuestion(
+                        it.questionInfo,
+                        email
+                    )
+                )
+                Question.PHONE_NUMBER -> dataItems.add(
+                    QuestionnaireQuestion(
+                        it.questionInfo,
+                        phone
+                    )
+                )
+                Question.SOCIAL_NETWORK -> dataItems.add(
+                    QuestionnaireQuestion(
+                        it.questionInfo,
+                        questionnaire.socials?.joinToString()
+                    )
+                )
+            }
+        }
+        dataPageQuestionsList.value = dataItems
+
         //About me
         aboutMePage.textInput.setText(questionnaire.about_me)
 
@@ -564,6 +597,11 @@ class QuestionnaireView @JvmOverloads constructor(
 
         //About me
         questionnaire.about_me = aboutMe
+
+        //Data
+        questionnaire.socials = dataPageQuestionsList.value?.firstOrNull {
+            it.questionInfo == Question.SOCIAL_NETWORK
+        }?.answer.toList()
 
         return questionnaire
     }

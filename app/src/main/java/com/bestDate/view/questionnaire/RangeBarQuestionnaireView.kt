@@ -4,15 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.bestDate.R
 import com.bestDate.databinding.ViewRangeBarQuestionnaireBinding
-import com.google.gson.Gson
-import java.lang.Exception
 
 class RangeBarQuestionnaireView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewRangeBarQuestionnaireBinding
     var rangeIsChanged: ((String) -> Unit)? = null

@@ -5,10 +5,12 @@ import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.base.QuestionnaireBaseViewHolder
 import com.bestDate.databinding.ItemConfirmationBinding
+import com.bestDate.databinding.ItemConfirmationSocialBinding
 import com.bestDate.databinding.ItemMultilineQuestionInfoBinding
 import com.bestDate.databinding.ItemRangeBarQuestionnaireBinding
 import com.bestDate.presentation.registration.RegistrationHolder
 import com.bestDate.presentation.registration.RegistrationType
+import com.bestDate.view.questionnaire.list.ConfirmationSocialViewHolder
 import com.bestDate.view.questionnaire.list.ConfirmationViewHolder
 import com.bestDate.view.questionnaire.list.InfoViewHolder
 import com.bestDate.view.questionnaire.list.RangeBarViewHolder
@@ -419,21 +421,21 @@ enum class Question(
     EMAIL(
         question = R.string.email,
         percent = 0,
-        viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
+        viewType = QuestionnaireViewType.CONFIRMATION_EMAIL,
         unitString = null,
         R.string.your_email_has_not_been_confirmed
     ),
     SOCIAL_NETWORK(
         question = R.string.social_network,
         percent = 0,
-        viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
+        viewType = QuestionnaireViewType.CONFIRMATION_SOCIAL,
         unitString = null,
         R.string.the_questionnaire_has_not_been_confirmed
     ),
     PHONE_NUMBER(
         question = R.string.phone_number,
         percent = 0,
-        viewType = QuestionnaireViewType.CONFIRMATION_VIEW,
+        viewType = QuestionnaireViewType.CONFIRMATION_PHONE,
         unitString = null,
         R.string.your_phone_number_has_not_been_confirmed
     )
@@ -450,13 +452,20 @@ class QuestionnaireViewHolderFactory {
                     createLayoutInflater(parent), parent, false
                 )
             )
-            QuestionnaireViewType.CONFIRMATION_VIEW.id -> ConfirmationViewHolder(
+            QuestionnaireViewType.CONFIRMATION_VIEW.id,
+            QuestionnaireViewType.CONFIRMATION_EMAIL.id,
+            QuestionnaireViewType.CONFIRMATION_PHONE.id -> ConfirmationViewHolder(
                 ItemConfirmationBinding.inflate(
                     createLayoutInflater(parent), parent, false
                 )
             )
             QuestionnaireViewType.RANGE_BAR_VIEW.id -> RangeBarViewHolder(
                 ItemRangeBarQuestionnaireBinding.inflate(
+                    createLayoutInflater(parent), parent, false
+                )
+            )
+            QuestionnaireViewType.CONFIRMATION_SOCIAL.id -> ConfirmationSocialViewHolder(
+                ItemConfirmationSocialBinding.inflate(
                     createLayoutInflater(parent), parent, false
                 )
             )
