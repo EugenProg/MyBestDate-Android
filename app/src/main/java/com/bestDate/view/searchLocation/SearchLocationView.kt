@@ -45,7 +45,11 @@ class SearchLocationView @JvmOverloads constructor(
         binding.locationListView.adapter = adapter
     }
 
-    fun initSearching(scope: CoroutineScope, lifecycleOwner: LifecycleOwner, currentLocation: String?) {
+    fun initSearching(
+        scope: CoroutineScope,
+        lifecycleOwner: LifecycleOwner,
+        currentLocation: String?
+    ) {
         binding.input.setText(currentLocation)
 
         binding.input.textInputAsFlow()
@@ -79,7 +83,7 @@ class SearchLocationView @JvmOverloads constructor(
         var inputColor: Int,
         var hintColor: Int
     ) {
-        LIGHT(R.color.main_5, R.color.main_90, R.color.main_90, R.color.main_60),
+        LIGHT(R.color.light_search_box, R.color.main_90, R.color.main_90, R.color.main_60),
         DARK(R.color.dark_search_box, R.color.white_60, R.color.white_90, R.color.white_60)
     }
 }

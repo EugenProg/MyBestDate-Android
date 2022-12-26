@@ -29,8 +29,13 @@ fun String.isAEmail(): Boolean {
     return this.matches(Regex("\\S+@\\S+\\.[a-zA-Z]{2,3}"))
 }
 
-fun String?.toList(): MutableList<String>? {
+fun String?.toListOrEmpty(): MutableList<String>? {
     return this?.split(", ")?.toMutableList()
+}
+
+fun String?.toListOrNull(): MutableList<String>? {
+    val list = this?.split(", ")?.toMutableList()
+    return if (list.isNullOrEmpty() || list.firstOrNull().isNullOrBlank()) null else list
 }
 
 fun String?.getDateWithTimeOffset(): Date {

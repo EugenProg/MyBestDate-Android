@@ -3,7 +3,7 @@ package com.bestDate.presentation.main.userProfile.invitationList.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.InvitationCard
 import com.bestDate.data.model.ShortUserData

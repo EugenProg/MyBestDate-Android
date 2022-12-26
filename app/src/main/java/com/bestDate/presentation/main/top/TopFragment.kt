@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.bestDate.R
 import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentTopBinding
 import com.bestDate.presentation.registration.Gender
 import com.bestDate.view.DuelElementView
@@ -36,7 +37,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.top_50)
         binding.toolbar.onProfileClick = {
-            findNavController().navigate(R.id.action_global_profile_nav_graph_from_top)
+            navController.navigate(R.id.action_global_profile_nav_graph_from_top)
         }
     }
 

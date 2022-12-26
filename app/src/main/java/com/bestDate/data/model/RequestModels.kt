@@ -150,6 +150,10 @@ enum class InvitationFilter(var serverName: String) {
     SENT("sent")
 }
 
+data class LikesBody(
+    var photo_id: Int
+)
+
 data class DuelRequest(
     val gender: String,
     val country: String? = null

@@ -38,6 +38,7 @@
     <com.bestDate.view.button.BlackButton
         android:id="@+id/enableButton"
         style="@style/standard_button"
+        app:title="@string/enable_geolocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/skipButton"

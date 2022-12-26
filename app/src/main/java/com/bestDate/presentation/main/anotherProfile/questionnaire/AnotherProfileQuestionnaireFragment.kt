@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
+import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.FragmentAnotherProfileQuestionnaireBinding
+import com.bestDate.presentation.base.questionnaire.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,19 +27,19 @@ class AnotherProfileQuestionnaireFragment: BaseFragment<FragmentAnotherProfileQu
             aboutMe.setInfo(questionnaire?.about_me)
             myHeight.setInfo(getString(R.string.cm_unit, questionnaire?.height.orZero.toString()))
             myWeight.setInfo(getString(R.string.kg_unit, questionnaire?.weight.orZero.toString()))
-            eyeColor.setInfo(questionnaire?.eye_color)
-            hairColor.setInfo(questionnaire?.hair_color)
-            hairLength.setInfo(questionnaire?.hair_length)
+            eyeColor.setInfo(EyeColorType().getName(requireContext(), questionnaire?.eye_color))
+            hairColor.setInfo(HairColorType().getName(requireContext(), questionnaire?.hair_color))
+            hairLength.setInfo(HairLengthType().getName(requireContext(), questionnaire?.hair_length))
 
-            maritalStatus.setInfo(questionnaire?.marital_status)
-            havingKids.setInfo(questionnaire?.kids)
-            placeOfResidence.setInfo(questionnaire?.nationality)
-            education.setInfo(questionnaire?.education)
-            occupationalStatus.setInfo(questionnaire?.occupation)
+            maritalStatus.setInfo(MaritalStatus().getName(requireContext(), questionnaire?.marital_status))
+            havingKids.setInfo(KidsCount().getName(requireContext(), questionnaire?.kids))
+            placeOfResidence.setInfo(NationalityType().getName(requireContext(), questionnaire?.nationality))
+            education.setInfo(EducationStatus().getName(requireContext(), questionnaire?.education))
+            occupationalStatus.setInfo(OccupationalStatus().getName(requireContext(), questionnaire?.occupation))
 
-            hobby.setInfo(questionnaire?.hobby?.joinToString(", "))
-            typesOfSports.setInfo(questionnaire?.sport?.joinToString(", "))
-            eveningTime.setInfo(questionnaire?.evening_time)
+            hobby.setInfo(HobbyType().getNameLine(requireContext(), questionnaire?.hobby))
+            typesOfSports.setInfo(SportTypes().getNameLine(requireContext(), questionnaire?.sport))
+            eveningTime.setInfo(EveningTimeType().getName(requireContext(), questionnaire?.evening_time))
 
             socials.setSocials(questionnaire?.socials)
         }

@@ -91,7 +91,6 @@ class RangeBarView @JvmOverloads constructor(
     }
 
     private fun parseRangeString(range: String) {
-        Logger.print(range)
         if (!range.matches(Regex("\\{\"max\":\\d+,\"min\":\\d+\\}")) &&
             !range.matches(Regex("\\{\"min\":\\d+,\"max\":\\d+\\}"))) return
 

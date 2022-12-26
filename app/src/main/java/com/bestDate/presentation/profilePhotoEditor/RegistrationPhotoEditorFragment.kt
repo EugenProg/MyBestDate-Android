@@ -1,7 +1,7 @@
 package com.bestDate.presentation.profilePhotoEditor
 
 import androidx.navigation.fragment.navArgs
-import com.bestDate.base.BasePhotoEditorFragment
+import com.bestDate.presentation.base.BasePhotoEditorFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

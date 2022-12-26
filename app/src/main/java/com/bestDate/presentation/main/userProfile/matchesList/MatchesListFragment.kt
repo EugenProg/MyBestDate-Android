@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentMatchesListBinding
 import com.bestDate.view.alerts.showMatchActionDialog
 import dagger.hilt.android.AndroidEntryPoint

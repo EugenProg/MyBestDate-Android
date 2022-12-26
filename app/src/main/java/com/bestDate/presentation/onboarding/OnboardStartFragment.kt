@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.databinding.FragmentOnboardStartBinding
-import com.bestDate.base.BaseFragment
+import com.bestDate.presentation.base.BaseFragment
 
 class OnboardStartFragment : BaseFragment<FragmentOnboardStartBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentOnboardStartBinding =

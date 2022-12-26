@@ -2,9 +2,12 @@ package com.bestDate.presentation.main.anotherProfile
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
+import com.bestDate.data.model.LikesBody
+import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -12,10 +15,12 @@ import javax.inject.Inject
 @HiltViewModel
 class AnotherProfileViewModel @Inject constructor(
     private val anotherProfileUseCase: AnotherProfileUseCase,
-    private val invitationUseCase: InvitationUseCase
-): BaseViewModel() {
+    private val invitationUseCase: InvitationUseCase,
+    private val likesUseCase: LikesListUseCase
+) : BaseViewModel() {
 
     var user: MutableLiveData<UserDB> = anotherProfileUseCase.user
+    var photos:  MutableLiveData<MutableList<ProfileImage>?> = anotherProfileUseCase.photos
     var invitations = invitationUseCase.invitations.asLiveData()
 
     private var _blockLiveData: LiveEvent<Boolean> = LiveEvent()
@@ -23,6 +28,8 @@ class AnotherProfileViewModel @Inject constructor(
 
     private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
     var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
+
+    var likeLiveData: MutableLiveData<ProfileImage?> = likesUseCase.photoMainResult
 
     fun getUserById(id: Int?) {
         doAsync {
@@ -60,6 +67,12 @@ class AnotherProfileViewModel @Inject constructor(
         doAsync {
             invitationUseCase.sendInvitation(userId, invitationId)
             _sendInvitationLiveData.postValue(true)
+        }
+    }
+
+    fun like(photo_id: Int) {
+        doAsync {
+            likesUseCase.like(LikesBody(photo_id))
         }
     }
 }

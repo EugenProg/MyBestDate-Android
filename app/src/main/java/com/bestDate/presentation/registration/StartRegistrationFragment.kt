@@ -10,7 +10,7 @@ import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
-import com.bestDate.base.BaseFragment
+import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.show
 import com.bestDate.view.CalendarView
 import com.bestDate.view.bottomSheet.genderSheet.GenderSheet

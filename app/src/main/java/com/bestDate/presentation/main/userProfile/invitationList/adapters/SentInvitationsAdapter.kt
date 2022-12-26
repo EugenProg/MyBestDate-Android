@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
-import com.bestDate.base.BaseViewHolder
+import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.InvitationAnswer
 import com.bestDate.data.model.InvitationCard

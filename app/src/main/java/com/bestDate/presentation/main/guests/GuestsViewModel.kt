@@ -3,7 +3,7 @@ package com.bestDate.presentation.main.guests
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.IdListRequest
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

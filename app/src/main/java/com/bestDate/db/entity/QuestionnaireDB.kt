@@ -66,7 +66,7 @@ data class QuestionnaireDB(
     fun isEmpty(): Boolean {
         for (f in javaClass.declaredFields) {
             f.isAccessible = true
-            if (f.name == "socials" || f.name == "hobby" || f.name == "sport") continue
+            if (f.name == "socials" || f.name == "hobby" || f.name == "sport" || f.name == "CREATOR") continue
             if (f[this] != null) return false
         }
         if (!socials.isNullOrEmpty() || !hobby.isNullOrEmpty() || !sport.isNullOrEmpty()) return false
@@ -76,7 +76,7 @@ data class QuestionnaireDB(
     fun isFull(): Boolean {
         for (f in javaClass.declaredFields) {
             f.isAccessible = true
-            if (f.name == "socials" || f.name == "hobby" || f.name == "sport") continue
+            if (f.name == "socials" || f.name == "hobby" || f.name == "sport" || f.name == "CREATOR") continue
             if (f[this] == null) return false
         }
         if (socials.isNullOrEmpty() || hobby.isNullOrEmpty() || sport.isNullOrEmpty()) return false

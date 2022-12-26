@@ -1,4 +1,4 @@
-package com.bestDate.base
+package com.bestDate.presentation.base
 
 import android.content.res.Resources
 import android.graphics.Bitmap
@@ -109,6 +109,6 @@ abstract class BasePhotoEditorFragment :
     }
 
     companion object {
-        var editorAction: MutableLiveData<ProfileImage> = MutableLiveData()
+        var editorAction: MutableLiveData<ProfileImage?> = MutableLiveData()
     }
 }

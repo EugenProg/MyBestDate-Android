@@ -2,12 +2,14 @@ package com.bestDate.presentation.passRecovery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import com.bestDate.R
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
 import com.bestDate.presentation.auth.AuthUseCase
+import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.registration.RegistrationType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,7 +17,11 @@ import javax.inject.Inject
 @HiltViewModel
 class PassRecoveryViewModel @Inject constructor(
     private val passRecoveryUseCase: RecoveryUseCase,
-    private val authUseCase: AuthUseCase): BaseViewModel() {
+    private val authUseCase: AuthUseCase,
+    private val userUseCase: UserUseCase
+    ): BaseViewModel() {
+
+    var user = userUseCase.getMyUser.asLiveData()
 
     private var _sendCodeLiveData = MutableLiveData<Boolean>()
     val sendCodeLiveData: LiveData<Boolean> = _sendCodeLiveData
@@ -88,6 +94,7 @@ class PassRecoveryViewModel @Inject constructor(
     private fun loginByEmail(login: String, password: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
+            userUseCase.refreshUser()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
@@ -96,10 +103,9 @@ class PassRecoveryViewModel @Inject constructor(
     private fun loginByPhone(login: String, password: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
+            userUseCase.refreshUser()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
     }
-
-
 }

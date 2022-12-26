@@ -56,6 +56,10 @@ data class LikesListResponse(
     val data: MutableList<Like>
 ) : BaseResponse()
 
+data class LikeResponse(
+    val data: ProfileImage
+) : BaseResponse()
+
 data class MatchesListResponse(
     val data: MutableList<Match>
 ) : BaseResponse()

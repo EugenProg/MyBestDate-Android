@@ -59,7 +59,7 @@ class StandardInput @JvmOverloads constructor(
     }
 
     var text: String
-    get() = binding.input.text.toString()
+    get() = binding.input.text.toString().trim()
     set(value) {
         binding.input.setText(value)
     }

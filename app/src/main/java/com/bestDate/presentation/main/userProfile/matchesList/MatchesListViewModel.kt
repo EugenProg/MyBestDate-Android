@@ -1,7 +1,7 @@
 package com.bestDate.presentation.main.userProfile.matchesList
 
 import androidx.lifecycle.MutableLiveData
-import com.bestDate.base.BaseViewModel
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.Match
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

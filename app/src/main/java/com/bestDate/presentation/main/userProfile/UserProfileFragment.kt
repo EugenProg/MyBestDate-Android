@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BasePhotoEditorFragment
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BasePhotoEditorFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toPx
@@ -102,6 +102,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         binding.settingsButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToSettings())
         }
+        binding.questionnaireButton.click = {
+            navController.navigate(UserProfileFragmentDirections.actionProfileToQuestionnaire())
+        }
     }
 
     override fun onViewLifecycle() {
@@ -135,6 +138,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
                 photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+                BasePhotoEditorFragment.editorAction.value = null
             }
         }
     }

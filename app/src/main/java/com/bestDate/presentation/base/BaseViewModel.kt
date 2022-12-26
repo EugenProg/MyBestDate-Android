@@ -1,4 +1,4 @@
-package com.bestDate.base
+package com.bestDate.presentation.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

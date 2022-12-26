@@ -96,4 +96,9 @@
     <declare-styleable name="ResultView">
         <attr name="result_title" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="QuestionnaireInputView">
+        <attr name="questionnaire_input_icon" format="reference"/>
+        <attr name="questionnaire_input_hint" format="string"/>
+    </declare-styleable>
 </resources>

@@ -1,30 +1,39 @@
-package com.bestDate.presentation.questionnarie
+package com.bestDate.presentation.base.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
-import com.bestDate.base.BaseFragment
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.EmailConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.PhoneConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.confiarmation.SocialConfirmationFragment
+import com.bestDate.presentation.base.questionnaire.search.SearchQuestionnaireLocationFragment
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentQuestionnaireBinding
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.presentation.questionnarie.search.SearchQuestionnaireLocationFragment
 import com.bestDate.view.questionnaire.itemSelectSheet.MultilineQuestionnaireSheet
 import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 import com.bestDate.view.questionnaire.seekBarSheet.SeekBarQuestionnaireSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, QuestionnaireViewModel>() {
+abstract class BaseQuestionnaireFragment :
+    BaseVMFragment<FragmentQuestionnaireBinding, QuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentQuestionnaireBinding =
-        { inflater, parent, attach -> FragmentQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            FragmentQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
     override val viewModelClass: Class<QuestionnaireViewModel> = QuestionnaireViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
@@ -33,6 +42,10 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
     private var savedQuestionnaire: QuestionnaireDB? = null
 
     override var customBackNavigation = true
+
+    abstract fun back()
+    abstract fun forward()
+    open var showSkipButton: Boolean = true
 
     override fun onInit() {
         super.onInit()
@@ -45,6 +58,8 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
             }
         }
 
+        binding.skipButton.isVisible = showSkipButton
+
         lifecycleScope.launchWhenStarted {
             pagesLiveData.postValue(QuestionnaireItemsList().getPages())
         }
@@ -54,7 +69,7 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
         super.onViewClickListener()
         with(binding) {
             backButton.setOnSaveClickListener {
-                goBack()
+                back()
             }
             progressBar.onProgressChanged = {
                 if (it > 46) centerSurprise.hideSurprise()
@@ -77,11 +92,10 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
                 val questionnaire = binding.questionnaireView.getQuestionnaire()
                 if (questionnaireIsUpdate(questionnaire)) {
                     viewModel.saveQuestionnaire(questionnaire)
-                }
+                } else forward()
             }
             skipButton.setOnSaveClickListener {
-                navController.navigate(QuestionnaireFragmentDirections
-                    .actionQuestionnaireFragmentToGeoEnableFragment())
+                forward()
             }
         }
     }
@@ -103,7 +117,6 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
                 questionnaire.search_age_max == savedQuestionnaire?.search_age_max &&
                 questionnaire.search_country == savedQuestionnaire?.search_country &&
                 questionnaire.search_city == savedQuestionnaire?.search_city &&
-                questionnaire.purpose == savedQuestionnaire?.purpose &&
                 questionnaire.hobby?.equals(savedQuestionnaire?.hobby) == true &&
                 questionnaire.socials?.equals(savedQuestionnaire?.socials) == true &&
                 questionnaire.sport?.equals(savedQuestionnaire?.sport) == true &&
@@ -118,14 +131,17 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
         }
         viewModel.user.observe(viewLifecycleOwner) {
             savedQuestionnaire = it?.questionnaire
-            binding.questionnaireView.setQuestionnaire(it?.questionnaire)
+            binding.questionnaireView.setQuestionnaire(it?.questionnaire,
+                it?.email, it?.phone, it?.photos?.size.orZero)
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.questionnaireView.toggleFinishButton(it)
         }
-        viewModel.questionnaireUseCase.observe(viewLifecycleOwner) {
-            navController.navigate(QuestionnaireFragmentDirections
-                .actionQuestionnaireFragmentToGeoEnableFragment())
+        viewModel.questionnaireSaveLiveData.observe(viewLifecycleOwner) {
+            forward()
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            showMessage(it.exception.message)
         }
     }
 
@@ -150,22 +166,41 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                     }
                 }
-                QuestionnaireViewType.CONFIRMATION_VIEW -> {
-                    // showMessage(question.questionInfo?.question.orZero)
-                }
-                QuestionnaireViewType.INPUT_LOCATION_VIEW -> {
-                    val searchLocationFragment = SearchQuestionnaireLocationFragment(question)
-                    childFragmentManager.commit {
-                        setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
-                        replace(R.id.container, searchLocationFragment)
-                    }
+                QuestionnaireViewType.CONFIRMATION_EMAIL -> {
+                    val emailFragment = EmailConfirmationFragment(question,
+                        viewModel.user.value?.email_verification == true)
+                    openPage(emailFragment)
 
-                    searchLocationFragment.saveClick = {
-                        closeSearchPage(searchLocationFragment)
+                    emailFragment.backClick = { closePage(emailFragment) }
+                }
+                QuestionnaireViewType.CONFIRMATION_PHONE -> {
+                    val phoneFragment = PhoneConfirmationFragment(question,
+                        viewModel.user.value?.phone_verification == true)
+                    openPage(phoneFragment)
+
+                    phoneFragment.backClick = { closePage(phoneFragment) }
+                }
+                QuestionnaireViewType.CONFIRMATION_SOCIAL -> {
+                    val socialFragment = SocialConfirmationFragment(question)
+                    openPage(socialFragment)
+
+                    socialFragment.saveClick = {
+                        closePage(socialFragment)
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                     }
 
-                    searchLocationFragment.backClick = { closeSearchPage(searchLocationFragment) }
+                    socialFragment.backClick = { closePage(socialFragment) }
+                }
+                QuestionnaireViewType.INPUT_LOCATION_VIEW -> {
+                    val searchLocationFragment = SearchQuestionnaireLocationFragment(question)
+                    openPage(searchLocationFragment)
+
+                    searchLocationFragment.saveClick = {
+                        closePage(searchLocationFragment)
+                        binding.questionnaireView.updateQuestionnaireList(question, it, list)
+                    }
+
+                    searchLocationFragment.backClick = { closePage(searchLocationFragment) }
                 }
                 QuestionnaireViewType.MULTILINE_INFO_VIEW -> {
                     val multiLineSheet = MultilineQuestionnaireSheet()
@@ -180,7 +215,14 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
         }
     }
 
-    private fun closeSearchPage(fragment: SearchQuestionnaireLocationFragment) {
+    private fun openPage(fragment: Fragment) {
+        childFragmentManager.commit {
+            setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
+            replace(R.id.container, fragment)
+        }
+    }
+
+    private fun closePage(fragment: Fragment) {
         binding.container.animate()
             .translationY((binding.container.height).toFloat())
             .setDuration(300)
@@ -191,14 +233,15 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
                 fragment.let {
                     remove(it)
                     binding.container.isVisible = false
+                    hideKeyboardAction()
                     reDrawBars()
-                    reDrawSearchPage()
+                    reDrawPage()
                 }
             }
         }, 350)
     }
 
-    private fun reDrawSearchPage() {
+    private fun reDrawPage() {
         binding.container.animate()
             .translationY(0.0f)
             .setDuration(10)
@@ -210,8 +253,7 @@ class QuestionnaireFragment : BaseVMFragment<FragmentQuestionnaireBinding, Quest
     }
 
     override fun onCustomBackNavigation() {
-        super.onCustomBackNavigation()
-        if (!binding.questionnaireView.goBack()) navController.popBackStack()
+        if (!binding.questionnaireView.goBack()) back()
     }
 
     override fun scrollAction() {

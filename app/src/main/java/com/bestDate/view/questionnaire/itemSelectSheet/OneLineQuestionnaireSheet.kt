@@ -5,15 +5,20 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.SheetOneLineQuestionnaireBinding
 import com.bestDate.view.base.BaseBottomSheet
-import com.bestDate.view.bottomSheet.genderSheet.GenderSheetAdapter
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 
-class OneLineQuestionnaireSheet: BaseBottomSheet<SheetOneLineQuestionnaireBinding>() {
+class OneLineQuestionnaireSheet : BaseBottomSheet<SheetOneLineQuestionnaireBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetOneLineQuestionnaireBinding =
-        { inflater, parent, attach -> SheetOneLineQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            SheetOneLineQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
 
     private lateinit var question: QuestionnaireQuestion
 
