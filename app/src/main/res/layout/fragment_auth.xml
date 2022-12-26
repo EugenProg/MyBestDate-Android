@@ -19,28 +19,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <com.bestDate.view.button.BackButtonView
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:padding="16dp"
+                app:back_button_color="@color/bg_main"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_arrow_back" />
-
-                <TextView
-                    android:id="@+id/skipButton"
-                    style="@style/text"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="7dp"
-                    android:text="@string/back" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/headerTitle"
@@ -54,8 +39,8 @@
             <TextView
                 android:id="@+id/textView4"
                 style="@style/text"
-                android:lineSpacingExtra="3dp"
                 android:layout_marginTop="4dp"
+                android:lineSpacingExtra="3dp"
                 android:text="@string/welcome_to_our_kind_and_cozy_home"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="24dp"
-                android:paddingBottom="90dp"
                 android:background="@drawable/bottom_dark_sheet"
                 android:orientation="vertical"
+                android:paddingBottom="90dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -77,17 +62,17 @@
                 <com.bestDate.view.StandardInput
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
+                    android:layout_marginTop="35dp"
                     app:hint="@string/email_or_phone_number"
-                    app:src="@drawable/ic_message"
-                    android:layout_marginTop="35dp" />
+                    app:src="@drawable/ic_message" />
 
                 <com.bestDate.view.StandardInput
                     android:id="@+id/passInput"
                     style="@style/standard_input"
-                    app:isPassField="true"
+                    android:layout_marginTop="25dp"
                     app:hint="@string/password"
-                    app:src="@drawable/ic_eye"
-                    android:layout_marginTop="25dp" />
+                    app:isPassField="true"
+                    app:src="@drawable/ic_eye" />
 
                 <LinearLayout
                     android:id="@+id/passForgotButton"
@@ -118,18 +103,18 @@
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/authButton"
                     style="@style/standard_button"
-                    app:title="@string/login"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    app:title="@string/login" />
 
                 <LinearLayout
                     android:id="@+id/signUpButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="25dp"
-                    android:layout_gravity="center"
+                    android:orientation="horizontal"
                     android:padding="16dp">
 
                     <TextView

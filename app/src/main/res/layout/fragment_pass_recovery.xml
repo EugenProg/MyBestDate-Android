@@ -18,28 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <com.bestDate.view.button.BackButtonView
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:padding="16dp"
+                app:back_button_color="@color/bg_main"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_arrow_back" />
-
-                <TextView
-                    android:id="@+id/skipButton"
-                    style="@style/text"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="7dp"
-                    android:text="@string/back" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/headerTitle"
@@ -73,11 +58,13 @@
                 <com.bestDate.view.StandardInput
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
+                    app:hint="@string/email_or_phone_number"
                     android:layout_marginTop="35dp" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/recoveryButton"
                     style="@style/standard_button"
+                    app:title="@string/next"
                     android:layout_marginTop="35dp"
                     android:layout_marginBottom="10dp"/>
             </LinearLayout>

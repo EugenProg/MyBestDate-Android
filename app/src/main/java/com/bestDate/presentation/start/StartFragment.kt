@@ -7,7 +7,6 @@ import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentStartBinding
-import com.bestDate.presentation.auth.AuthFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,7 +48,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
         }
         viewModel.user.observe(viewLifecycleOwner) {
             if (it != null && tokenIsRefreshed) {
-                val language = getString(R.string.app_language)
+                val language = getString(R.string.app_locale)
                 if (language != it.language) {
                     viewModel.changeLanguage(language)
                 } else {

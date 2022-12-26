@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentBaseOtpBinding
 
 abstract class BaseOtpFragment(
     @StringRes private val title: Int,
     @StringRes private val text: Int,
-    @StringRes private val buttonText: Int): BaseFragment<FragmentBaseOtpBinding>() {
+    @StringRes private val buttonText: Int
+) : BaseFragment<FragmentBaseOtpBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBaseOtpBinding =
         { inflater, parent, attach -> FragmentBaseOtpBinding.inflate(inflater, parent, attach) }
 
@@ -24,7 +24,6 @@ abstract class BaseOtpFragment(
             headerTitle.text = getString(title)
             headerText.text = getString(text)
             confirmButton.title = getString(buttonText)
-            otpInput.hint = getString(R.string.enter_the_confirmation_code)
             otpInput.inputType = InputType.TYPE_CLASS_NUMBER
 
             otpInput.icon = null
@@ -34,7 +33,7 @@ abstract class BaseOtpFragment(
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnSaveClickListener { goBack() }
+            backButton.onClick = { goBack() }
             confirmButton.onClick = { sendOtp(binding.otpInput.text) }
             resendButton.setOnSaveClickListener { resendCode() }
 
@@ -50,7 +49,7 @@ abstract class BaseOtpFragment(
 
     abstract fun sendOtp(code: String)
 
-    protected open fun resendCode() { }
+    protected open fun resendCode() {}
 
     override fun scrollAction() {
         super.scrollAction()

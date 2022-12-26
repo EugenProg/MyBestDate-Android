@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -18,28 +17,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <com.bestDate.view.button.BackButtonView
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:padding="16dp"
+                app:back_button_color="@color/bg_main"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_arrow_back" />
-
-                <TextView
-                    android:id="@+id/skipButton"
-                    style="@style/text"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="7dp"
-                    android:text="@string/back" />
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/headerTitle"
@@ -75,11 +59,14 @@
                 <com.bestDate.view.StandardInput
                     android:id="@+id/passInput"
                     style="@style/standard_input"
+                    app:isPassField="true"
+                    app:hint="@string/enter_a_new_password"
                     android:layout_marginTop="35dp" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/saveButton"
                     style="@style/standard_button"
+                    app:title="@string/install_and_login"
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="10dp" />
             </LinearLayout>

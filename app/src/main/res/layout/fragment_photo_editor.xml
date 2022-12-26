@@ -5,30 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/bg_main">
 
-    <LinearLayout
+    <com.bestDate.view.button.BackButtonView
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_arrow_back"
-            app:tint="@color/white"/>
-
-        <TextView
-            android:id="@+id/back"
-            style="@style/text"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_margin="7dp"
-            android:text="@string/back" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/headerTitle"

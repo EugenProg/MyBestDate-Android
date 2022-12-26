@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import com.bestDate.R
 import com.bestDate.data.extension.setAttrs
@@ -21,12 +22,16 @@ class BackButtonView @JvmOverloads constructor(
         setAttrs(attrs, R.styleable.BackButtonView) {
             val color = it.getColor(R.styleable.BackButtonView_back_button_color,
                 ContextCompat.getColor(context, R.color.white))
-            binding.text.setTextColor(color)
-            binding.arrow.setColorFilter(color)
+            setColor(color)
         }
 
         binding.root.setOnSaveClickListener {
             onClick?.invoke()
         }
+    }
+
+    fun setColor(@ColorInt color: Int) {
+        binding.text.setTextColor(color)
+        binding.arrow.setColorFilter(color)
     }
 }

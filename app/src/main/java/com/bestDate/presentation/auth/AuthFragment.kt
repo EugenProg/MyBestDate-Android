@@ -23,7 +23,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnClickListener {
+            backButton.onClick = {
                 navController.popBackStack()
             }
             authButton.onSafeClick = {
@@ -58,7 +58,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
         }
         viewModel.user.observe(viewLifecycleOwner) {
             if (viewModel.user.value != null && isLoggedIn) {
-                val language = getString(R.string.app_language)
+                val language = getString(R.string.app_locale)
                 if (language != viewModel.user.value?.language) {
                     viewModel.changeLanguage(language)
                 } else {
@@ -124,6 +124,5 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 }
             }
         }
-
     }
 }
