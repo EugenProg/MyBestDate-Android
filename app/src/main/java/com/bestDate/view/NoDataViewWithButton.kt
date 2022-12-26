@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setAttrs
@@ -11,10 +12,11 @@ import com.bestDate.databinding.ViewNoDataWithButtonBinding
 
 class NoDataViewWithButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding: ViewNoDataWithButtonBinding = ViewNoDataWithButtonBinding.inflate(
-        LayoutInflater.from(context), this)
+        LayoutInflater.from(context), this
+    )
 
     init {
         setAttrs(attrs, R.styleable.NoDataViewWithLoading) {
@@ -27,6 +29,23 @@ class NoDataViewWithButton @JvmOverloads constructor(
 
     fun setTitle(title: String) {
         binding.title.text = title
+    }
+
+    fun setTitle(@StringRes titleRes: Int) {
+        binding.title.setText(titleRes)
+    }
+
+
+    fun setDesc(desc: String) {
+        binding.desc.text = desc
+    }
+
+    fun setDesc(@StringRes descRes: Int) {
+        binding.desc.setText(descRes)
+    }
+
+    fun setDirectionsText(@StringRes descRes: Int) {
+        binding.directionsText.setText(descRes)
     }
 
     var noData: Boolean = false

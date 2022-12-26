@@ -19,8 +19,10 @@ class BarView @JvmOverloads constructor(
         set(value) {
             val layoutParams = binding.resultView.layoutParams
             layoutParams.width =
-                (binding.backGroundView.layoutParams.width).times(percent ?: 0.0).div(100).toInt()
-            binding.percentTextView.text = "${percent.decimalAfterDot()}%"
+                (binding.backGroundView.measuredWidth * (String.format("%.2f", value ?: 0.0)
+                    .toDouble()) / 100).toInt()
+            binding.resultView.layoutParams = layoutParams
+            binding.percentTextView.text = "${value.decimalAfterDot()}%"
             field = value
         }
 }

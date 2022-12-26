@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentTopBinding
@@ -30,6 +28,9 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     override fun onInit() {
         super.onInit()
         binding.resultView.visibility = View.INVISIBLE
+        binding.noDataView.setTitle(R.string.duels_are_over)
+        binding.noDataView.setDesc(R.string.you_voted_for_all_the_photos)
+        binding.noDataView.setDirectionsText(R.string.but_you_can_also_go_to_the_top)
         setUpToolbar()
         setUpFilterButtons()
     }
@@ -71,10 +72,14 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         reload()
 
         viewModel.duelsLiveData.observe(viewLifecycleOwner) {
-            binding.scrollView.isVisible = it?.isEmpty() == true
+            binding.duelView.isVisible = it?.isEmpty() != true
+            binding.noDataView.isVisible = it?.isEmpty() == true
+            if (it.isNullOrEmpty()) {
 
-            setUpElement(binding.firstDuelElementView, it?.first(), it?.get(1))
-            setUpElement(binding.secondDuelElementView, it?.get(1), it?.first())
+            } else {
+                setUpElement(binding.firstDuelElementView, it.first(), it[1])
+                setUpElement(binding.secondDuelElementView, it[1], it.first())
+            }
         }
         viewModel.user.observe(viewLifecycleOwner) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()

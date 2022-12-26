@@ -607,4 +607,7 @@
     <string name="get_started">Get Started</string>
     <string name="enable_geolocation">Enable geolocation</string>
     <string name="result">Result</string>
+    <string name="duels_are_over">Duels are over</string>
+    <string name="you_voted_for_all_the_photos">YOU VOTED FOR ALL THE PHOTOS</string>
+    <string name="but_you_can_also_go_to_the_top">But you can also go to\nthe Top 50</string>
 </resources>

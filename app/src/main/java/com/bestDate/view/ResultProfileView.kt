@@ -16,7 +16,7 @@ class ResultProfileView @JvmOverloads constructor(
     private var binding: ViewResultProfileBinding =
         ViewResultProfileBinding.inflate(LayoutInflater.from(context), this)
 
-    var  profile: DuelProfile? = DuelProfile()
+    var profile: DuelProfile? = DuelProfile()
         @SuppressLint("SetTextI18n")
         set(value) {
             with(binding)
