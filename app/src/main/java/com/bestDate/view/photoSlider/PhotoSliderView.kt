@@ -16,7 +16,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class PhotoSliderView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val adapter: PhotoSliderAdapter = PhotoSliderAdapter()
     private val binding: ViewPhotoSliderBinding =
@@ -25,6 +25,7 @@ class PhotoSliderView @JvmOverloads constructor(
     var photoList: MutableList<ProfileImage>? = mutableListOf()
     private var topPositionVisibility: Boolean = false
     var handleIsLiked: ((Int) -> Unit)? = null
+    var onSwipe: (() -> Unit)? = null
     var position: Int = 0
 
     init {
@@ -41,6 +42,10 @@ class PhotoSliderView @JvmOverloads constructor(
                 handleIsLiked?.invoke(it)
                 position = it
             }
+
+            adapter.onSwipe = {
+                onSwipe?.invoke()
+            }
         }
     }
 
@@ -49,13 +54,18 @@ class PhotoSliderView @JvmOverloads constructor(
         binding.likeCount.text = photo?.likes.toString()
         if (topPositionVisibility && photo?.top_place != null) {
             binding.topPositionBox.isVisible = true
-            binding.topPosition.text = context.getString(R.string.top_position, photo.top_place.orZero)
+            binding.topPosition.text =
+                context.getString(R.string.top_position, photo.top_place.orZero)
         } else {
             binding.topPositionBox.isVisible = false
         }
     }
 
-    fun setPhotos(photoList: MutableList<ProfileImage>?, showPosition: Boolean, selectPosition: Int) {
+    fun setPhotos(
+        photoList: MutableList<ProfileImage>?,
+        showPosition: Boolean,
+        selectPosition: Int
+    ) {
         this.photoList = photoList
         position = selectPosition
         topPositionVisibility = showPosition

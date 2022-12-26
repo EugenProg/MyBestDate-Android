@@ -24,5 +24,8 @@ class UserProfileSliderFragment: BaseFragment<FragmentUserProfileSliderBinding>(
         binding.back.onClick = {
             goBack()
         }
+        binding.sliderView.onSwipe = {
+            goBack()
+        }
     }
 }
