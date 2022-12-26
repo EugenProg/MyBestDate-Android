@@ -61,7 +61,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
                     showMessage(getString(R.string.you_can_upload_only_9_photo))
                 }
             }
-            backButton.setOnClickListener {
+            backButton.onClick = {
                 navController.popBackStack()
                 BasePhotoEditorFragment.editorAction.value = null
             }
@@ -148,8 +148,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
 
             val color = ContextCompat.getColor(requireContext(), R.color.white)
             headerTitle.setTextColor(color)
-            back.setTextColor(color)
-            backArrow.setColorFilter(color)
+            backButton.setColor(color)
             nextButton.setTextColor(color)
         }
     }

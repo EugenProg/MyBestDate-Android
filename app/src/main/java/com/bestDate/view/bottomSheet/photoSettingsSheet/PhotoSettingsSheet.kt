@@ -41,8 +41,6 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            topFiftySwitch.onInfoClick = { showMessage(getString(R.string.top_50).uppercase()) }
-
             safeButton.onSafeClick = {
                 viewModel.updatePhotoStatus(
                     selectedImage?.id.orZero,

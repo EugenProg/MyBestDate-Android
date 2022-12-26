@@ -18,17 +18,9 @@ class PassRecoveryFragment : BaseVMFragment<FragmentPassRecoveryBinding, PassRec
     override val navBarColor = R.color.bg_main
     override val statusBarLight = true
 
-    override fun onInit() {
-        super.onInit()
-        with(binding) {
-            emailInput.hint = getString(R.string.email_or_phone_number)
-            recoveryButton.title = getString(R.string.next)
-        }
-    }
-
     override fun onViewClickListener() {
         super.onViewClickListener()
-        binding.backButton.setOnClickListener {
+        binding.backButton.onClick = {
             navController.popBackStack()
         }
         binding.recoveryButton.onSafeClick = {

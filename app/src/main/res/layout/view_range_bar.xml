@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="22dp"
-        android:src="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main_30_without_opacity" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginEnd="22dp"
-        android:src="@drawable/circle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/main_30_without_opacity" />
-
-    <com.google.android.material.slider.RangeSlider
-        android:id="@+id/bar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:valueFrom="18"
-        android:valueTo="90"
-        app:trackHeight="6dp"
-        android:paddingStart="48dp"
-        android:paddingEnd="48dp"
-        app:thumbRadius="24dp"
-        app:thumbColor="@color/bg_main"
-        app:haloColor="@color/main_10"
-        app:labelBehavior="gone"
-        app:trackColorActive="@color/bg_main"
-        app:trackColorInactive="@color/main_30_without_opacity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="22dp"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/main_30_without_opacity" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginEnd="22dp"
+            android:src="@drawable/circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/main_30_without_opacity" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:valueFrom="18"
+            android:valueTo="90"
+            app:haloColor="@color/main_10"
+            app:labelBehavior="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:thumbColor="@color/bg_main"
+            app:thumbRadius="24dp"
+            app:trackColorActive="@color/bg_main"
+            app:trackColorInactive="@color/main_30_without_opacity"
+            app:trackHeight="6dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
+

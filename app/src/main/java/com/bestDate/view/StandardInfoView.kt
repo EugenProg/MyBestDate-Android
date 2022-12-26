@@ -2,25 +2,34 @@ package com.bestDate.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
 import com.bestDate.data.extension.animateError
+import com.bestDate.data.extension.setAttrs
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.vibratePhone
 import com.bestDate.databinding.ViewStandardInfoBinding
 
 class StandardInfoView @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0):
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) :
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ViewStandardInfoBinding
+    private var binding: ViewStandardInfoBinding =
+        ViewStandardInfoBinding.inflate(LayoutInflater.from(context), this)
     var onClick: (() -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.view_standard_info, this)
-        binding = ViewStandardInfoBinding.bind(view)
+        setAttrs(attrs, R.styleable.StandardInfoView) {
+            binding.placeholder.text = it.getString(R.styleable.StandardInfoView_standard_info_hint)
+            binding.icon.setImageResource(
+                it.getResourceId(
+                    R.styleable.StandardInfoView_standard_info_icon, R.drawable.ic_gender
+                )
+            )
+        }
 
         binding.root.setOnSaveClickListener {
             onClick?.invoke()

@@ -6,6 +6,11 @@
         <attr name="src" format="reference"/>
     </declare-styleable>
 
+    <declare-styleable name="StandardInfoView">
+        <attr name="standard_info_hint" format="string"/>
+        <attr name="standard_info_icon" format="reference"/>
+    </declare-styleable>
+
     <declare-styleable name="BaseButton">
         <attr name="title" format="string"/>
     </declare-styleable>

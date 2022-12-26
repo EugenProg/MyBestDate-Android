@@ -68,7 +68,7 @@ abstract class BaseQuestionnaireFragment :
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnSaveClickListener {
+            backButton.onClick = {
                 back()
             }
             progressBar.onProgressChanged = {
