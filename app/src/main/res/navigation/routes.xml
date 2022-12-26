@@ -51,9 +51,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/onboardStartFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -65,9 +63,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/onboardSecondFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"
