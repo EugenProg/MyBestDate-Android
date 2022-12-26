@@ -111,13 +111,13 @@
                         tools:text="Woman, looking for a man" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.bestDate.view.StandardInput
+                <com.bestDate.view.StandardInputView
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
                     app:hint="@string/email_or_phone_number"
                     android:layout_marginTop="35dp" />
 
-                <com.bestDate.view.StandardInput
+                <com.bestDate.view.StandardInputView
                     android:id="@+id/passInput"
                     style="@style/standard_input"
                     app:isPassField="true"

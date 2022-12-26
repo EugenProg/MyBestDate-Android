@@ -3,27 +3,21 @@ package com.bestDate.view
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.bestDate.R
-import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewSwitchBinding
 
 class SwitchView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ViewSwitchBinding
-    var onInfoClick: (() -> Unit)? = null
+    private var binding: ViewSwitchBinding =
+        ViewSwitchBinding.inflate(LayoutInflater.from(context), this)
     var onChecked: ((checked: Boolean) -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.view_switch, this)
-        binding = ViewSwitchBinding.bind(view)
-
-        binding.info.setOnSaveClickListener { onInfoClick?.invoke() }
-
         binding.switchCompat.isChecked = false
         binding.switchCompat.setOnCheckedChangeListener { _, checked ->
             setTrackColor(checked)
@@ -50,10 +44,13 @@ class SwitchView @JvmOverloads constructor(
         }
 
     private fun setTrackColor(checked: Boolean) {
-        val color = ContextCompat.getColor(context,
-            if (checked) R.color.bg_light_blue else R.color.bg_pink)
+        val color = ContextCompat.getColor(
+            context,
+            if (checked) R.color.bg_light_blue else R.color.bg_pink
+        )
         binding.switchCompat.trackTintList = ColorStateList.valueOf(color)
         binding.root.setBackgroundResource(
-            if (checked) R.drawable.blue_input_shape else R.drawable.default_input_shape)
+            if (checked) R.drawable.blue_input_shape else R.drawable.default_input_shape
+        )
     }
 }

@@ -2,22 +2,19 @@ package com.bestDate.view.questionnaire
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bestDate.R
 import com.bestDate.databinding.ViewRangeBarQuestionnaireBinding
 
 class RangeBarQuestionnaireView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewRangeBarQuestionnaireBinding
+    private val binding: ViewRangeBarQuestionnaireBinding =
+        ViewRangeBarQuestionnaireBinding.inflate(LayoutInflater.from(context), this)
     var rangeIsChanged: ((String) -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.view_range_bar_questionnaire, this)
-        binding = ViewRangeBarQuestionnaireBinding.bind(view)
-
         binding.bar.rangeChange = {
             rangeIsChanged?.invoke(range)
         }
