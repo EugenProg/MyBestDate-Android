@@ -1,5 +1,9 @@
 package com.bestDate.data.model
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+import com.bestDate.R
+
 data class EmailAuthRequest(
     val username: String,
     val password: String,
@@ -57,11 +61,95 @@ data class RegistrationRequest(
 )
 
 data class IdListRequest(
-    var ids: MutableList<Int>
+    var ids: MutableList<Int?>
 )
 
 data class PhotoStatusUpdateRequest(
     var main: Boolean,
     var top: Boolean,
     var match: Boolean = false
+)
+
+data class RequestLanguage(
+    var language: String
+)
+
+data class SendInvitationRequest(
+    var invitation_id: Int,
+    var user_id: Int
+)
+
+data class InvitationAnswerRequest(
+    var answer_id: Int
+)
+
+data class UserInvitationRequest(
+    var filter: String
+)
+
+data class UpdateUserRequest(
+    var name: String?,
+    var gender: String?,
+    var birthday: String?,
+    var look_for: MutableList<String>?
+)
+
+data class UpdatePasswordRequest(
+    var old_password: String,
+    var password: String,
+    var password_confirmation: String,
+)
+
+data class UpdateSettingsRequest(
+    var block_messages: Boolean? = null,
+    var matches: Boolean? = null,
+    var likes_notifications: Boolean? = null,
+    var matches_notifications: Boolean? = null,
+    var invitations_notifications: Boolean? = null,
+    var messages_notifications: Boolean? = null,
+    var guests_notifications: Boolean? = null
+)
+
+enum class SettingsType {
+    MESSAGES, NOTIFY_LIKES, NOTIFY_MATCHES, NOTIFY_INVITATION, NOTIFY_MESSAGES, NOTIFY_GUESTS, MATCHES;
+
+    fun getSettingsRequest(checked: Boolean): UpdateSettingsRequest {
+        return when (this) {
+            MESSAGES -> UpdateSettingsRequest(block_messages = checked)
+            NOTIFY_LIKES -> UpdateSettingsRequest(likes_notifications = checked)
+            NOTIFY_MATCHES -> UpdateSettingsRequest(matches_notifications = checked)
+            NOTIFY_INVITATION -> UpdateSettingsRequest(invitations_notifications = checked)
+            NOTIFY_MESSAGES -> UpdateSettingsRequest(messages_notifications = checked)
+            NOTIFY_GUESTS -> UpdateSettingsRequest(guests_notifications = checked)
+            MATCHES -> UpdateSettingsRequest(matches = checked)
+        }
+    }
+}
+
+data class SaveUserLocationRequest(
+    var lat: String,
+    var lng: String,
+    var iso_code: String,
+    var country: String,
+    var state: String?,
+    var state_name: String?,
+    var city: String
+)
+
+enum class InvitationAnswer(var id: Int, @StringRes var title: Int, @DrawableRes val button: Int) {
+    YES(1, R.string.yes_i_agree, R.drawable.positive_answer_btn),
+    YES_NEXT_TIME(2, R.string.yes_i_will_but_next_time, R.drawable.positive_answer_btn),
+    NO(3, R.string.no, R.drawable.negative_answer_btn),
+    NOT_YET(4, R.string.thanks_but_i_cant_yet, R.drawable.negative_answer_btn),
+    NONE(0, R.string.no, R.drawable.negative_answer_btn)
+}
+
+enum class InvitationFilter(var serverName: String) {
+    NEW("new"),
+    ANSWERED("answered"),
+    SENT("sent")
+}
+
+data class LikesBody(
+    var photo_id: Int
 )

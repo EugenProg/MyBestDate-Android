@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,9 +59,8 @@ class ContinueRegistrationFragment :
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             showMessage(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
-            //showMessage(R.string.oops_its_error)
         }
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.signUpButton.toggleActionEnabled(it)

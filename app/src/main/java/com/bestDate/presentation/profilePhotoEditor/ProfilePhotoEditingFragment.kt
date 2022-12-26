@@ -7,13 +7,17 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.BasePhotoEditorFragment
 import com.bestDate.data.extension.imageIsSet
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
+import com.bestDate.presentation.main.userProfile.ImageLineAdapter
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -29,7 +33,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
 
     override val statusBarLight = true
 
-    private lateinit var pagerAdapter: ImagesPageAdapter
+    private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
     private var mainPhotoId: Int = 0
     private var imageList: MutableLiveData<MutableList<ProfileImage>> = MutableLiveData(ArrayList())
@@ -37,12 +41,13 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
     override fun onInit() {
         super.onInit()
 
-        pagerAdapter = ImagesPageAdapter(imageClick())
+        val height = (resources.displayMetrics.widthPixels - 8.toPx()) / 3
+        adapter = ImageLineAdapter(height, true)
 
         with(binding) {
-            imagesCarousel.adapter = pagerAdapter
-
-            uploadButton.title = getString(R.string.upload_a_photo)
+            imagesCarousel.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            imagesCarousel.adapter = adapter
         }
     }
 
@@ -58,15 +63,19 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             }
             backButton.setOnClickListener {
                 navController.popBackStack()
-                editorAction.value = null
+                BasePhotoEditorFragment.editorAction.value = null
             }
             nextButton.setOnSaveClickListener {
                 if (imageList.value?.size.orZero > 0) {
                     navController.navigate(ProfilePhotoEditingFragmentDirections
-                        .actionProfilePhotoEditingFragmentToQuestionnaireFragment())
+                        .actionGlobalQuestionnaireFragment())
                 }
             }
-
+            adapter.imageClick = {
+                val photoSettingsSheet = PhotoSettingsSheet()
+                photoSettingsSheet.setSelectedImage(it)
+                photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+            }
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
 
@@ -79,14 +88,15 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         imageList.observe(viewLifecycleOwner) {
-            pagerAdapter.submitList(getPageImages(it))
+            adapter.submitList(it)
         }
-        editorAction.observe(viewLifecycleOwner) {
+        BasePhotoEditorFragment.editorAction.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.nextButton.isVisible = true
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
                 photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
+                BasePhotoEditorFragment.editorAction.value = null
             }
         }
         viewModel.user.observe(viewLifecycleOwner) {
@@ -97,29 +107,11 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
                 email.text = if (it?.email_verification == true) it.email else it?.phone
 
                 imageList.value = it?.photos
-                it?.photos?.firstOrNull { it.main == true }?.let { photo -> setMainImage(photo) }
+                it?.getMainPhoto()?.let { photo -> setMainImage(photo) }
 
                 binding.nextButton.isVisible = !it?.photos.isNullOrEmpty()
             }
         }
-    }
-
-    private fun getPageImages(images: MutableList<ProfileImage>): MutableList<MutableList<ProfileImage>> {
-        val pages: MutableList<MutableList<ProfileImage>> = ArrayList()
-        val pageList: MutableList<ProfileImage> = ArrayList()
-
-        for (index in images.indices) {
-            pageList.add(images[index])
-            if (pageList.size >= 3) {
-                val list: MutableList<ProfileImage> = ArrayList()
-                list.addAll(pageList)
-                pages.add(list)
-                pageList.clear()
-            }
-        }
-        if (pageList.size in 1..3) pages.add(pageList)
-
-        return pages
     }
 
     private fun setMainImage(image: ProfileImage) {
@@ -160,17 +152,5 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             backArrow.setColorFilter(color)
             nextButton.setTextColor(color)
         }
-    }
-
-    private fun imageClick(): (ProfileImage) -> Unit {
-        return {
-            val photoSettingsSheet = PhotoSettingsSheet()
-            photoSettingsSheet.setSelectedImage(it)
-            photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)
-        }
-    }
-
-    companion object {
-        var editorAction: MutableLiveData<ProfileImage> = MutableLiveData()
     }
 }

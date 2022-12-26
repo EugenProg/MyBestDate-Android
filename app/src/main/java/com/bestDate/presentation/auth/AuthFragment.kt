@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
@@ -18,16 +18,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
 
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
-
-    override fun onInit() {
-        super.onInit()
-        with(binding) {
-            emailInput.hint = getString(R.string.email_or_phone_number)
-            passInput.hint = getString(R.string.password)
-            passInput.isPasswordField = true
-            authButton.title = getString(R.string.login)
-        }
-    }
+    private var isLoggedIn = false
 
     override fun onViewClickListener() {
         super.onViewClickListener()
@@ -47,12 +38,15 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 showMessage("facebook")
             }
             passForgotButton.setOnClickListener {
-                navController.navigate(AuthFragmentDirections
-                    .actionAuthFragmentToPassRecoveryFragment())
+                navController.navigate(
+                    AuthFragmentDirections
+                        .actionAuthFragmentToPassRecoveryFragment()
+                )
             }
             signUpButton.setOnClickListener {
-                navController.navigate(AuthFragmentDirections
-                    .actionAuthFragmentToStartRegistrationFragment())
+                navController.navigate(
+                    AuthFragmentDirections.actionAuthToStartRegistration()
+                )
             }
         }
     }
@@ -62,16 +56,40 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
         viewModel.loadingMode.observe(viewLifecycleOwner) {
             binding.authButton.toggleActionEnabled(it)
         }
-        viewModel.loginLiveData.observe(viewLifecycleOwner) {
-            navController.navigate(AuthFragmentDirections
-                .actionAuthFragmentToProfilePhotoEditingFragment()
-            )
+        viewModel.user.observe(viewLifecycleOwner) {
+            if (viewModel.user.value != null && isLoggedIn) {
+                val language = getString(R.string.app_language)
+                if (language != viewModel.user.value?.language) {
+                    viewModel.changeLanguage(language)
+                } else {
+                    chooseRoute()
+                }
+            }
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            isLoggedIn = false
             showMessage(getString(R.string.wrong_auth_data))
         }
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+            isLoggedIn = false
             showMessage(it)
+        }
+        viewModel.updateLanguageSuccessLiveData.observe(viewLifecycleOwner) {
+            chooseRoute()
+        }
+    }
+
+    private fun chooseRoute() {
+        when {
+            viewModel.user.value?.hasNoPhotos() == true -> {
+                navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
+            }
+            viewModel.user.value?.questionnaireEmpty() == true -> {
+                navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
+            }
+            else -> {
+                navController.navigate(AuthFragmentDirections.actionAuthToMain())
+            }
         }
     }
 
@@ -101,6 +119,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 emailInput.text.isBlank() -> emailInput.setError()
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
+                    isLoggedIn = true
                     viewModel.logIn(emailInput.text, passInput.text)
                 }
             }

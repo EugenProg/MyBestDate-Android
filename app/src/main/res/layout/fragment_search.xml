@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.bestDate.view.toolbar.ToolbarProfile
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.bestDate.view.filter.FilterButton
+        android:id="@+id/locationFilterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <com.bestDate.view.filter.FilterButton
+        android:id="@+id/statusFilterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/locationFilterButton"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <FrameLayout
+        android:id="@+id/filtersView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_shadow_gradient_circular"
+        app:layout_constraintBottom_toBottomOf="@+id/statusFilterButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/locationFilterButton">
+
+        <FrameLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_decor_filter">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="2dp"
+                android:src="@drawable/ic_filter" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="13dp"
+        android:background="@color/white_20"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="2dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_view">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewSearches"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="55dp"
+            tools:itemCount="4"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_search_profiles_element"
+            tools:spanCount="2" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.bestDate.view.NoDataViewWithLoading
+        android:id="@+id/noDataViewWithLoading"
+        app:no_data_text="@string/by_params_not_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_view" />
+</androidx.constraintlayout.widget.ConstraintLayout>

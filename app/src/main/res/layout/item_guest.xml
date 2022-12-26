@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_box"
+    android:foreground="?selectableItemBackground"
+    android:paddingHorizontal="18dp"
+    android:layout_marginVertical="5dp">
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/bg_light_stroke"
+        android:src="@color/blue_90"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/nameView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:shrinkColumns="0"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/nameTextView"
+                style="@style/component_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Alice Lebedeva Pavlovna" />
+
+            <com.bestDate.view.verification.VerifyView
+                android:id="@+id/verifyView"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginStart="7dp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/ageTextView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="2dp"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/nameView"
+        app:layout_constraintStart_toEndOf="@+id/nameView"
+        app:layout_constraintTop_toTopOf="@+id/nameView"
+        tools:text="25" />
+
+    <TextView
+        android:id="@+id/yearTextView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/years_old"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/nameView"
+        app:layout_constraintStart_toEndOf="@+id/ageTextView" />
+
+    <TextView
+        android:id="@+id/locationTextView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/white_40"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/nameView"
+        tools:text="Almaty, Kazakhstan" />
+
+    <TextView
+        android:id="@+id/_visitedView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:text="@string/visited"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:drawableStartCompat="@drawable/ic_time_square"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/_visitedView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        tools:text="1 min" />
+
+    <TextView
+        android:id="@+id/newVisitTextView"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="3dp"
+        android:background="@drawable/bg_gradient_corners"
+        android:drawablePadding="6dp"
+        android:gravity="center"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:text="@string/new_visit"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:drawableEndCompat="@drawable/ic_signal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

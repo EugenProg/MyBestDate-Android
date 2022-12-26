@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="StandardInput">
+        <attr name="isPassField" format="boolean"/>
+        <attr name="hint" format="string"/>
+        <attr name="src" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="BaseButton">
+        <attr name="title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="UserDataButtonView">
+        <attr name="button_title" format="string"/>
+        <attr name="button_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="DirectionLineButtonView">
+        <attr name="button_name" format="string"/>
+        <attr name="button_image" format="reference"/>
+        <attr name="button_background" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="BackButtonView">
+        <attr name="back_button_color" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="ToolbarView">
+        <attr name="toolbar_title" format="string"/>
+        <attr name="toolbar_action_visible" format="boolean"/>
+        <attr name="toolbar_line_visibility" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="NoDataViewWithLoading">
+        <attr name="no_data_text" format="string"/>
+        <attr name="start_with_loading" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="QuestionnaireTitleView">
+        <attr name="questionnaire_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="QuestionnaireInfoView">
+        <attr name="questionnaire_item_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionView">
+        <attr name="title_description_title" format="string"/>
+        <attr name="title_description_description" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsInputView">
+        <attr name="settings_input_hint" format="string"/>
+        <attr name="settings_input_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsInfoView">
+        <attr name="settings_info_hint" format="string"/>
+        <attr name="settings_info_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsButtonView">
+        <attr name="settings_button_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionButtonView">
+        <attr name="t_d_b_title" format="string"/>
+        <attr name="t_d_b_description" format="string"/>
+        <attr name="t_d_b_button_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="PasswordInputView">
+        <attr name="pass_input_hint" format="string"/>
+        <attr name="show_pass" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="SearchLocationView">
+        <attr name="viewSearchStyle" format="enum">
+            <enum name="light" value="0"/>
+            <enum name="dark" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SettingsSwitchView">
+        <attr name="settings_switch_icon" format="reference"/>
+        <attr name="settings_switch_title" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="TitleDescriptionSwitchView">
+        <attr name="t_d_s_title" format="string"/>
+        <attr name="t_d_s_description" format="string"/>
+        <attr name="t_d_s_switch_title" format="string"/>
+        <attr name="t_d_s_switch_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="QuestionnaireInputView">
+        <attr name="questionnaire_input_icon" format="reference"/>
+        <attr name="questionnaire_input_hint" format="string"/>
+    </declare-styleable>
+</resources>

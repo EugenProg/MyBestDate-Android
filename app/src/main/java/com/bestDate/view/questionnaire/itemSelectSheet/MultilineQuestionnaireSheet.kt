@@ -6,15 +6,21 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.SheetMultilineQuestionnaireBinding
 import com.bestDate.view.base.BaseBottomSheet
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 
-class MultilineQuestionnaireSheet: BaseBottomSheet<SheetMultilineQuestionnaireBinding>() {
+class MultilineQuestionnaireSheet : BaseBottomSheet<SheetMultilineQuestionnaireBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetMultilineQuestionnaireBinding =
-        { inflater, parent, attach -> SheetMultilineQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            SheetMultilineQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
 
     private lateinit var question: QuestionnaireQuestion
     private var answersList: MutableList<String> = ArrayList()

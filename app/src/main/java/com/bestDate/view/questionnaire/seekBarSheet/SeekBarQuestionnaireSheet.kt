@@ -5,15 +5,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.text.isDigitsOnly
 import com.bestDate.R
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.SheetSeekBarQuestionnaireBinding
 import com.bestDate.view.base.BaseBottomSheet
-import com.bestDate.view.questionnaire.list.QuestionnaireQuestion
 
-class SeekBarQuestionnaireSheet: BaseBottomSheet<SheetSeekBarQuestionnaireBinding>() {
+class SeekBarQuestionnaireSheet : BaseBottomSheet<SheetSeekBarQuestionnaireBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetSeekBarQuestionnaireBinding =
-        { inflater, parent, attach -> SheetSeekBarQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            SheetSeekBarQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
 
     override fun getTheme() = R.style.WhiteBottomSheetDialogTheme
     private lateinit var question: QuestionnaireQuestion

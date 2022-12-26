@@ -2,6 +2,7 @@ package com.bestDate.data.extension
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -17,16 +18,19 @@ import android.util.TypedValue
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
+import com.bestDate.data.model.BaseResponse
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.gson.Gson
 import com.takusemba.cropme.CropLayout
 import com.takusemba.cropme.OnCropListener
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
+import okhttp3.ResponseBody
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -152,4 +156,17 @@ fun CropLayout.cropListener(success: ((Bitmap) -> Unit)? = null,
             success?.invoke(bitmap)
         }
     })
+}
+
+fun Context.openWebAddress(address: String?) {
+    if (address.isNullOrEmpty() || !address.contains("http")) return
+    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(address)))
+}
+
+fun ResponseBody?.getErrorMessage(): String {
+    return try {
+        Gson().fromJson(this?.charStream(), BaseResponse::class.java).message
+    } catch (e: Exception) {
+        e.message.orEmpty()
+    }
 }

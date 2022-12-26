@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main"
+    android:orientation="vertical">
+
+    <com.bestDate.view.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toolbar_title="@string/settings" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="29dp"
+                android:text="@string/main_settings"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+            <com.bestDate.view.settings.TitleDescriptionSwitchView
+                android:id="@+id/blockingMessagesSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_s_description="@string/you_will_not_be_able_to_send_messages"
+                app:t_d_s_switch_icon="@drawable/ic_settings_message"
+                app:t_d_s_switch_title="@string/messages"
+                app:t_d_s_title="@string/blocking_messages" />
+
+            <com.bestDate.view.settings.NotificationSettingView
+                android:id="@+id/notificationSettings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.bestDate.view.settings.TitleDescriptionButtonView
+                android:id="@+id/blockedListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_b_button_title="@string/show_the_list"
+                app:t_d_b_description="@string/a_list_of_users_who_have_been_blocked_by_you"
+                app:t_d_b_title="@string/blocked_users" />
+
+            <com.bestDate.view.settings.TitleDescriptionSwitchView
+                android:id="@+id/matchParticipationSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_s_description="@string/the_ability_to_view_other_peoples_profiles"
+                app:t_d_s_switch_icon="@drawable/ic_settings_match"
+                app:t_d_s_switch_title="@string/matches"
+                app:t_d_s_title="@string/participation_in_matches" />
+
+            <com.bestDate.view.settings.TitleDescriptionButtonView
+                android:id="@+id/changeLanguageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_b_description="@string/here_you_can_select_the_desired_application_language"
+                app:t_d_b_title="@string/language" />
+
+            <com.bestDate.view.settings.TitleDescriptionButtonView
+                android:id="@+id/deleteProfileButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:t_d_b_button_title="@string/delete"
+                app:t_d_b_description="@string/this_application_will_delete_all_your_data_and_account"
+                app:t_d_b_title="@string/delete_profile" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

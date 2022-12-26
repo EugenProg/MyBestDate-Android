@@ -8,6 +8,7 @@
     <color name="black">#FF000000</color>
 
     <color name="bg_main">#283034</color>
+    <color name="bg_profile_header">#242b2f</color>
     <color name="main_5">#0D283034</color>
     <color name="main_10">#1A283034</color>
     <color name="main_20">#33283034</color>
@@ -19,21 +20,37 @@
     <color name="main_70">#B3283034</color>
     <color name="main_90">#E6283034</color>
     <color name="main_dark">#232c31</color>
+    <color name="dark">#222d33</color>
 
     <color name="bg_pink">#f28be6</color>
+    <color name="bg_pink_10">#1Af28be6</color>
     <color name="bg_light_blue">#beefff</color>
+    <color name="bg_gray_gradient">#303a3e</color>
+    <color name="bg_black_gradient">#2b3438</color>
     <color name="blue">#7bd7f5</color>
     <color name="blue_90">#E67bd7f5</color>
+    <color name="blue_20">#337BD7F5</color>
     <color name="gray">#1fe7eef2</color>
     <color name="red">#ff3333</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="white_10">#1Affffff</color>
     <color name="white_13">#1dffffff</color>
+    <color name="white_20">#34ffffff</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_40">#66FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
     <color name="white_60">#99ffffff</color>
     <color name="white_70">#B3ffffff</color>
     <color name="white_80">#CCffffff</color>
     <color name="white_90">#E6ffffff</color>
+    <color name="white_6">#0fffffff</color>
 
     <color name="startOverlay">#9f283034</color>
+    <color name="bg_box">#293236</color>
+    <color name="green">#00ff62</color>
+    <color name="dark_search_box">#323b3f</color>
+    <color name="light_search_box">#f3f3f3</color>
+    <color name="bg_list_item">#1c262b</color>
+    <color name="light_line">#27beefff</color>
 </resources>

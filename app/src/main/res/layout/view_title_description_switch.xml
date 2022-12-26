@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_main"
+        android:orientation="vertical">
+
+        <com.bestDate.view.settings.TitleDescriptionView
+            android:id="@+id/titleDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title_description_description="description"
+            app:title_description_title="title" />
+
+        <com.bestDate.view.settings.SettingsSwitchView
+            android:id="@+id/switchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/white_10" />
+    </LinearLayout>
+</merge>

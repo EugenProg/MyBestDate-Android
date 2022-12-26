@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentPassRecoverySetNewBinding
+import com.bestDate.presentation.auth.AuthFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,11 +47,24 @@ class PassRecoverySetNewFragment : BaseVMFragment<FragmentPassRecoverySetNewBind
             binding.saveButton.toggleActionEnabled(it)
         }
         viewModel.recoveryLiveData.observe(viewLifecycleOwner) {
-            navController.navigate(PassRecoverySetNewFragmentDirections
-                    .actionPassRecoverySetNewFragmentToGeoEnableFragment())
+            chooseRoute()
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
+        }
+    }
+
+    private fun chooseRoute() {
+        when {
+            viewModel.user.value?.hasNoPhotos() == true -> {
+                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalProfilePhotoEditingFragment())
+            }
+            viewModel.user.value?.questionnaireEmpty() == true -> {
+                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalQuestionnaireFragment())
+            }
+            else -> {
+                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalMainNavGraph())
+            }
         }
     }
 

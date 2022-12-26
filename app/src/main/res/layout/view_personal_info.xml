@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.bestDate.view.settings.SettingsInputView
+            android:id="@+id/nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:settings_input_hint="@string/name"
+            app:settings_input_icon="@drawable/ic_personal_user"/>
+
+        <com.bestDate.view.settings.SettingsInfoView
+            android:id="@+id/genderInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:settings_info_hint="@string/gender"
+            app:settings_info_icon="@drawable/ic_personal_gender"/>
+
+        <com.bestDate.view.settings.SettingsInfoView
+            android:id="@+id/birthInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:settings_info_hint="@string/birth_date"
+            app:settings_info_icon="@drawable/ic_personal_calendar"/>
+
+        <com.bestDate.view.settings.SettingsInputView
+            android:id="@+id/emailInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:settings_input_hint="@string/email"
+            app:settings_input_icon="@drawable/ic_personal_message"/>
+
+        <com.bestDate.view.settings.SettingsInputView
+            android:id="@+id/emailOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:settings_input_hint="@string/confirmation_code"/>
+
+        <com.bestDate.view.settings.SettingsInputView
+            android:id="@+id/phoneInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:settings_input_hint="@string/phone_number"
+            app:settings_input_icon="@drawable/ic_personal_phone"/>
+
+        <com.bestDate.view.settings.SettingsInputView
+            android:id="@+id/phoneOtp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:settings_input_hint="@string/confirmation_code"/>
+
+        <com.bestDate.view.settings.SaveSettingsButtonView
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</merge>

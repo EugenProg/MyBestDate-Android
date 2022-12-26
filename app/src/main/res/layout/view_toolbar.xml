@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_main"
+        android:stretchColumns="1">
+
+        <TableRow>
+
+            <com.bestDate.view.button.BackButtonView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:back_button_color="@color/white" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+                android:paddingStart="1dp"
+                android:paddingEnd="30dp"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/additionalAction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:padding="16dp"
+                android:src="@drawable/ic_menu_dots"
+                android:visibility="invisible" />
+        </TableRow>
+
+        <TableRow>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_span="3"
+                android:background="@color/light_line" />
+        </TableRow>
+    </TableLayout>
+</merge>

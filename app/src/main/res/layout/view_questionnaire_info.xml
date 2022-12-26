@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/component_title"
+            android:textColor="@color/white_90"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/info"
+            style="@style/component_text"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/white_40"
+            android:textSize="20sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/white_10"/>
+    </LinearLayout>
+</merge>

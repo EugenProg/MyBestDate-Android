@@ -1,7 +1,7 @@
 package com.bestDate.presentation.passRecovery
 
 import com.bestDate.R
-import com.bestDate.base.BaseOtpFragment
+import com.bestDate.presentation.base.BaseOtpFragment
 
 class PassRecoveryOtpFragment: BaseOtpFragment(
     R.string.code_send_to_your_email,

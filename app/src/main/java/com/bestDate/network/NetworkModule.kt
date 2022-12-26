@@ -1,13 +1,13 @@
 package com.bestDate.network
 
 import android.content.Context
+import com.bestDate.data.extension.Core_network
+import com.bestDate.data.extension.Core_url
+import com.bestDate.data.extension.Geocoding_network
+import com.bestDate.data.extension.Geocoding_url
 import com.bestDate.data.preferences.PreferencesUtils
-import com.bestDate.network.remote.AuthRemoteData
-import com.bestDate.network.remote.ImageRemoteData
-import com.bestDate.network.remote.UserRemoteData
-import com.bestDate.network.services.CoreAuthService
-import com.bestDate.network.services.ImageApiService
-import com.bestDate.network.services.UserService
+import com.bestDate.network.remote.*
+import com.bestDate.network.services.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,21 +23,28 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
     @Provides
-    fun providesBaseURL(): String = "https://dev-api.bestdate.info"
+    @Core_url
+    fun providesCoreBaseURL(): String = "https://dev-api.bestdate.info"
 
     @Provides
-    fun provideInterceptor(@ApplicationContext context: Context): OkHttpClient {
+    @Geocoding_url
+    fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
+
+    @Provides
+    fun provideInterceptor(
+        @ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(context))
+            .addInterceptor(HeaderInterceptor(context, preferences))
             .addInterceptor(interceptor)
             .build()
     }
 
     @Provides
     @Singleton
-    fun provideCoreApi(BASE_URL: String, interceptor: OkHttpClient): Retrofit =
+    @Core_network
+    fun provideCoreApi(@Core_url BASE_URL: String, interceptor: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -46,30 +53,70 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun coreAuthApiService(retrofit: Retrofit): CoreAuthService =
+    @Geocoding_network
+    fun provideGeocodingApi(@Geocoding_url BASE_URL: String): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    fun coreAuthApiService(@Core_network retrofit: Retrofit): CoreAuthService =
         retrofit.create(CoreAuthService::class.java)
 
     @Provides
     @Singleton
-    fun imageApiService(retrofit: Retrofit): ImageApiService =
+    fun imageApiService(@Core_network retrofit: Retrofit): ImageApiService =
         retrofit.create(ImageApiService::class.java)
 
     @Provides
     @Singleton
-    fun userApiService(retrofit: Retrofit): UserService =
+    fun userApiService(@Core_network retrofit: Retrofit): UserService =
         retrofit.create(UserService::class.java)
 
     @Provides
     @Singleton
-    fun authRemoteData(apiService: CoreAuthService): AuthRemoteData = AuthRemoteData(apiService)
+    fun questsApiService(@Core_network retrofit: Retrofit): GuestsService =
+        retrofit.create(GuestsService::class.java)
 
     @Provides
     @Singleton
-    fun imageRemoteData(apiService: ImageApiService, preferences: PreferencesUtils): ImageRemoteData =
-        ImageRemoteData(apiService, preferences)
+    fun invitationApiService(@Core_network retrofit: Retrofit): InvitationService =
+        retrofit.create(InvitationService::class.java)
 
     @Provides
     @Singleton
-    fun userRemoteData(apiService: UserService, preferences: PreferencesUtils): UserRemoteData =
-        UserRemoteData(apiService, preferences)
+    fun geocodingApiService(@Geocoding_network retrofit: Retrofit): GeocodingService =
+        retrofit.create(GeocodingService::class.java)
+
+    @Provides
+    @Singleton
+    fun authRemoteData(apiService: CoreAuthService): AuthRemoteData =
+        AuthRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun imageRemoteData(apiService: ImageApiService): ImageRemoteData =
+        ImageRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun userRemoteData(apiService: UserService): UserRemoteData =
+        UserRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun guestsRemoteData(apiService: GuestsService): GuestsRemoteData =
+        GuestsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun invitationRemoteData(apiService: InvitationService): InvitationsRemoteData =
+        InvitationsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
+        GeocodingRemoteData(apiService)
 }

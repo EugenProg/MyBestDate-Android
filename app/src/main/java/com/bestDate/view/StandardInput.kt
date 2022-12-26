@@ -9,10 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.bestDate.R
-import com.bestDate.data.extension.animateError
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.textIsChanged
-import com.bestDate.data.extension.vibratePhone
+import com.bestDate.data.extension.*
 import com.bestDate.databinding.ViewStandardInputBinding
 
 class StandardInput @JvmOverloads constructor(
@@ -39,6 +36,12 @@ class StandardInput @JvmOverloads constructor(
         View.inflate(context, R.layout.view_standard_input, this)
         binding = ViewStandardInputBinding.bind(this)
 
+        setAttrs(attrs, R.styleable.StandardInput) {
+            isPasswordField = it.getBoolean(R.styleable.StandardInput_isPassField, false)
+            icon = it.getResourceId(R.styleable.StandardInput_src, R.drawable.ic_message)
+            hint = it.getString(R.styleable.StandardInput_hint).orEmpty()
+        }
+
         binding.iconFrame.setOnClickListener {
             togglePassVisibility()
         }
@@ -56,7 +59,7 @@ class StandardInput @JvmOverloads constructor(
     }
 
     var text: String
-    get() = binding.input.text.toString()
+    get() = binding.input.text.toString().trim()
     set(value) {
         binding.input.setText(value)
     }

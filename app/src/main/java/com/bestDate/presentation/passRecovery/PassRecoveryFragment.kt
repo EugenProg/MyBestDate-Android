@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.databinding.FragmentPassRecoveryBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +48,7 @@ class PassRecoveryFragment : BaseVMFragment<FragmentPassRecoveryBinding, PassRec
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             showMessage(it)
         }
-        viewModel.errorLive.observe(viewLifecycleOwner) {
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             showMessage(it.exception.message)
         }
     }

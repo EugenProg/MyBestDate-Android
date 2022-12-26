@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/main_90"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bg_tap_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/chatBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="29dp"
+            android:background="@drawable/bg_nav_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cardBox">
+
+            <ImageView
+                android:layout_width="61dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bg_button_nav_rectangle" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_nav_message" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/cardBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_nav_button_main"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bg_button_nav_rectangle" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_nav_card" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/likeBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginBottom="29dp"
+            android:background="@drawable/bg_nav_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardBox">
+
+            <ImageView
+                android:layout_width="61dp"
+                android:layout_height="61dp"
+                android:layout_gravity="center"
+                android:src="@drawable/bg_button_nav_rectangle" />
+
+            <ImageView
+                android:id="@+id/heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_nav_like_blue" />
+
+        </FrameLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animation_view"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            app:layout_constraintBottom_toBottomOf="@+id/likeBox"
+            app:layout_constraintEnd_toEndOf="@+id/likeBox"
+            app:layout_constraintStart_toStartOf="@+id/likeBox"
+            app:layout_constraintTop_toTopOf="@+id/likeBox"
+            app:lottie_autoPlay="false"
+            app:lottie_rawRes="@raw/love_burst_pink" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

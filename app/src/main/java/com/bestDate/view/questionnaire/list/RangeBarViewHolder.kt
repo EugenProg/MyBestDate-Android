@@ -1,13 +1,11 @@
 package com.bestDate.view.questionnaire.list
 
-import com.bestDate.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.QuestionnaireBaseViewHolder
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.ItemRangeBarQuestionnaireBinding
-import com.google.gson.Gson
-import java.lang.Exception
-import kotlin.math.max
 
-class RangeBarViewHolder(override val binding: ItemRangeBarQuestionnaireBinding):
+class RangeBarViewHolder(override val binding: ItemRangeBarQuestionnaireBinding) :
     QuestionnaireBaseViewHolder<ItemRangeBarQuestionnaireBinding>(binding) {
     override fun bindView(
         item: QuestionnaireQuestion,
@@ -28,8 +26,8 @@ class RangeBarViewHolder(override val binding: ItemRangeBarQuestionnaireBinding)
             }
 
             rangeIsChanged = {
-               item.answer = it
-               itemClick?.invoke(item)
+                item.answer = it
+                itemClick?.invoke(item)
             }
         }
     }
