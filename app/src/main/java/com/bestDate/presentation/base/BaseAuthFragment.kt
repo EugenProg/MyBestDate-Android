@@ -9,6 +9,11 @@ import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.utils.Logger
 import com.bestDate.presentation.auth.AuthViewModel
 import com.bestDate.view.alerts.LoaderDialog
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -21,10 +26,12 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var loaderDialog: LoaderDialog
+    private lateinit var callbackManager: CallbackManager
 
     override fun onInit() {
         super.onInit()
         loaderDialog = LoaderDialog(requireActivity())
+        facebookCallback()
     }
 
     override fun onViewLifecycle() {
@@ -35,6 +42,30 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
                 showMessage(getString(R.string.wrong_auth_data))
             } else showMessage(it.exception.message)
         }
+    }
+
+    private fun facebookCallback() {
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+            object : FacebookCallback<LoginResult> {
+                override fun onSuccess(result: LoginResult) {
+                    val token = result.accessToken
+                    loaderDialog.startLoading()
+                    viewModel.loginSocial(SocialProvider.FACEBOOK, token.token)
+                }
+
+                override fun onCancel() {
+                    showMessage(getString(R.string.oops_its_error))
+                }
+
+                override fun onError(error: FacebookException) {
+                    showMessage(getString(R.string.oops_its_error))
+                }
+            })
+    }
+
+    protected fun loginWithFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
     }
 
     protected fun loginByGoogle() {
@@ -64,6 +95,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
         try {
             val account = completedTask.getResult(ApiException::class.java)
             Logger.print("Google access token: ${account.serverAuthCode}")
+            loaderDialog.startLoading()
             viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)//"ya29.a0AX9GBdWdmHCpYI0kPIjTYT-6ynTzQ9vRUoBHwqIlQuhjdEQtQsW-i_t0scXeWbbndN5bJ0jfeGx6Y0kiatEEcDs8U1DX0Ld5sVBqOaMDqcISlgs4GmkjC469wLBjN5cboA2V9MdTT0K0pRuHAu-SbcdlR9JuaCgYKAYUSARASFQHUCsbCFuww0unKzsW_YG1_1t0_Vg0163"
         } catch (e: Exception) {
             loaderDialog.stopLoading()

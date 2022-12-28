@@ -603,4 +603,7 @@
     <string name="get_started">Get Started</string>
     <string name="enable_geolocation">Enable geolocation</string>
     <string name="google_oauth_server_key">320734338059-qfih51slhp529h06gplp1r09f4li41vm.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">1234729153762453</string>
+    <string name="fb_login_protocol_scheme">fb1234729153762453</string>
+    <string name="facebook_client_token">0aad54b18e8d0286c214dbc4c6a02747</string>
 </resources>

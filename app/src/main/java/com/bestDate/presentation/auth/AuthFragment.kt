@@ -34,8 +34,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
                 loginByGoogle()
             }
             socialContainer.facebookClick = {
-                //TODO: sign up with Facebook
-                showMessage("facebook")
+                loginWithFacebook()
             }
             passForgotButton.setOnClickListener {
                 navController.navigate(
@@ -53,7 +52,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        viewModel.loginProcessLiveData.observe(viewLifecycleOwner) {
             binding.authButton.toggleActionEnabled(it)
         }
         viewModel.user.observe(viewLifecycleOwner) {

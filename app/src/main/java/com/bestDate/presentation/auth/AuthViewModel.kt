@@ -26,6 +26,9 @@ class AuthViewModel @Inject constructor(
     private var _validationErrorLiveData = MutableLiveData<Int>()
     val validationErrorLiveData: LiveData<Int> = _validationErrorLiveData
 
+    private var _loginProcessLiveData = MutableLiveData<Boolean>()
+    val loginProcessLiveData: LiveData<Boolean> = _loginProcessLiveData
+
     var user = userUseCase.getMyUser.asLiveData()
 
     private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
@@ -40,18 +43,22 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun loginByEmail(login: String, password: String) {
+        _loginProcessLiveData.value = true
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.refreshUser()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
+            _loginProcessLiveData.postValue(false)
         }
     }
 
     private fun loginByPhone(login: String, password: String) {
+        _loginProcessLiveData.value = true
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.refreshUser()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
+            _loginProcessLiveData.postValue(false)
         }
     }
 
