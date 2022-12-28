@@ -12,12 +12,13 @@ import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.show
+import com.bestDate.presentation.base.BaseAuthFragment
 import com.bestDate.view.CalendarView
 import com.bestDate.view.bottomSheet.genderSheet.GenderSheet
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
-class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>() {
+class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentStartRegistrationBinding =
         { inflater, parent, attach -> FragmentStartRegistrationBinding.inflate(inflater, parent, attach) }
 
@@ -51,6 +52,9 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
             nextButton.onSafeClick = {
                 if (!genderInput.isVisible) hideKeyboardAction()
                 else validate()
+            }
+            socialContainer.googleClick = {
+                loginByGoogle()
             }
             loginButton.setOnClickListener {
                 navController.navigate(StartRegistrationFragmentDirections

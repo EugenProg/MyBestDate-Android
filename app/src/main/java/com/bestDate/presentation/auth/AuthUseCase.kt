@@ -3,6 +3,7 @@ package com.bestDate.presentation.auth
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.AuthResponse
 import com.bestDate.data.model.InternalException
+import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
@@ -24,6 +25,13 @@ class AuthUseCase @Inject constructor(
 
     suspend fun loginByPhone(phone: String, password: String) {
         val response = authRemoteData.loginByPhone(phone, password)
+        if (response.isSuccessful) {
+            saveTokens(response.body())
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    suspend fun loginSocial(provider: SocialProvider, token: String?) {
+        val response = authRemoteData.loginSocial(provider, token)
         if (response.isSuccessful) {
             saveTokens(response.body())
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())

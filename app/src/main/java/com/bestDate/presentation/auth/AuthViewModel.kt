@@ -8,6 +8,7 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.main.UserUseCase
@@ -49,6 +50,14 @@ class AuthViewModel @Inject constructor(
     private fun loginByPhone(login: String, password: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
+            userUseCase.refreshUser()
+            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
+        }
+    }
+
+    fun loginSocial(provider: SocialProvider, token: String?) {
+        doAsync {
+            authUseCase.loginSocial(provider, token)
             userUseCase.refreshUser()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }

@@ -602,4 +602,5 @@
     <string name="or_everyone_can_write_to_you_you_can_change_this_in_the_settings">Or everyone can write to you\nYou can change this in the <font color="#f28ae5"><u>settings</u></font></string>
     <string name="get_started">Get Started</string>
     <string name="enable_geolocation">Enable geolocation</string>
+    <string name="google_oauth_server_key">320734338059-qfih51slhp529h06gplp1r09f4li41vm.apps.googleusercontent.com</string>
 </resources>

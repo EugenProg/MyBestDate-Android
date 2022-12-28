@@ -8,10 +8,11 @@ import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
+import com.bestDate.presentation.base.BaseAuthFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
+class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAuthBinding =
         { inflater, parent, attach -> FragmentAuthBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<AuthViewModel> = AuthViewModel::class.java
@@ -30,8 +31,7 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 validate()
             }
             socialContainer.googleClick = {
-                //TODO: sign up with Google
-                showMessage("google")
+                loginByGoogle()
             }
             socialContainer.facebookClick = {
                 //TODO: sign up with Facebook
@@ -65,10 +65,6 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                     chooseRoute()
                 }
             }
-        }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            isLoggedIn = false
-            showMessage(getString(R.string.wrong_auth_data))
         }
         viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
             isLoggedIn = false
