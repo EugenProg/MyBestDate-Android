@@ -37,6 +37,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         binding.toolbar.onProfileClick = {
             navController.navigate(R.id.action_global_profile_nav_graph_from_guests)
         }
+        binding.noDataViewWithLoading.setTitle(getString(R.string.you_have_no_guests_yet))
     }
 
     private fun setUpGuestsList() {

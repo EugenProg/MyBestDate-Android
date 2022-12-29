@@ -6,16 +6,16 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.databinding.FragmentTopBinding
 import com.bestDate.presentation.registration.Gender
 import com.bestDate.view.DuelElementView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTopBinding =
-        { inflater, parent, attach -> FragmentTopBinding.inflate(inflater, parent, attach) }
+class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, TopViewModel>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDuelsBinding =
+        { inflater, parent, attach -> FragmentDuelsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<TopViewModel> = TopViewModel::class.java
 
     override val navBarColor = R.color.bg_main
@@ -36,7 +36,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     }
 
     private fun setUpToolbar() {
-        binding.toolbar.title = getString(R.string.top_50)
+        binding.toolbar.title = getString(R.string.duels)
         binding.toolbar.onProfileClick = {
             navController.navigate(R.id.action_global_profile_nav_graph_from_top)
         }
@@ -45,24 +45,15 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.myDuelsButton.click = {
-            navController.navigate(TopFragmentDirections.actionProfileToMyTopDuels())
+            navController.navigate(DuelsFragmentDirections.actionProfileToMyTopDuels())
         }
     }
 
     private fun setUpFilterButtons() {
         binding.locationFilterButton.label = getString(R.string.universe)
         binding.locationFilterButton.isActive = true
-
-        binding.manSelector.isMan = true
-        binding.womanSelector.isMan = false
-        binding.manSelector.onClick = {
-            binding.womanSelector.isActive = false
-            gender = Gender.MAN
-            reload()
-        }
-        binding.womanSelector.onClick = {
-            binding.manSelector.isActive = false
-            gender = Gender.WOMAN
+        binding.selectorView.onClick = {
+            gender = it
             reload()
         }
     }
@@ -74,17 +65,14 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         viewModel.duelsLiveData.observe(viewLifecycleOwner) {
             binding.duelView.isVisible = it?.isEmpty() != true
             binding.noDataView.isVisible = it?.isEmpty() == true
-            if (it.isNullOrEmpty()) {
-
-            } else {
+            if (!it.isNullOrEmpty()) {
                 setUpElement(binding.firstDuelElementView, it.first(), it[1])
                 setUpElement(binding.secondDuelElementView, it[1], it.first())
             }
         }
         viewModel.user.observe(viewLifecycleOwner) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            binding.manSelector.isActive = it?.look_for?.first() == getString(Gender.MAN.gender)
-            binding.womanSelector.isActive = it?.look_for?.first() == getString(Gender.WOMAN.gender)
+            binding.selectorView.lookFor = it?.look_for?.first()
             gender =
                 if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
         }

@@ -22,21 +22,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <com.bestDate.view.SelectorView
-        android:id="@+id/womanSelector"
+    <com.bestDate.view.ManWomanSelectorView
+        android:id="@+id/selectorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="9dp"
-        app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/manSelector"
-        app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
-
-    <com.bestDate.view.SelectorView
-        android:id="@+id/manSelector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
