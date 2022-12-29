@@ -13,6 +13,7 @@ import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.guests.GuestsUseCase
+import com.bestDate.presentation.main.top.DuelsUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
@@ -33,6 +34,7 @@ class UserUseCase @Inject constructor(
     private val guestsUseCase: GuestsUseCase,
     private val userSettingsDao: UserSettingsDao,
     private val blockedUserUseCase: BlockedUserUseCase,
+    private val duelsUseCase: DuelsUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -61,6 +63,7 @@ class UserUseCase @Inject constructor(
         userDao.delete()
         userSettingsDao.delete()
         likesListUseCase.clearData()
+        duelsUseCase.clearData()
         matchesListUseCase.clearData()
         myDuelsUseCase.clearData()
         invitationUseCase.clearData()

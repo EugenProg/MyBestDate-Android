@@ -179,7 +179,6 @@ data class Guest(
     val guest: ShortUserData? = null
 )
 
-
 data class InvitationCard(
     val id: Int? = null,
     var invitation: Invitation? = null,
@@ -229,4 +228,21 @@ data class Address(
     var state: String? = null,
     var country: String? = null,
     var country_code: String? = null
+)
+
+data class DuelProfileImageListResponse(
+    var data: MutableList<ProfileImage>? = null
+) : BaseResponse()
+
+data class DuelProfileResponse(
+    val data: MutableList<DuelProfile>? = null
+) : BaseResponse()
+
+data class DuelProfile(
+    val id: Int? = null,
+    var full_url: String? = null,
+    var thumb_url: String? = null,
+    val rating: Double? = null,
+    val user: ShortUserData? = null,
+    val location: LocationDB? = null
 )

@@ -9,7 +9,7 @@ import com.bestDate.databinding.FragmentMyDuelsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>() {
+open class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMyDuelsBinding =
         { inflater, parent, attach -> FragmentMyDuelsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MyDuelsViewModel> = MyDuelsViewModel::class.java

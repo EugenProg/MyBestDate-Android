@@ -53,6 +53,11 @@
     <string name="woman_looking_for_a_man">Woman, looking for a man</string>
     <string name="woman_looking_for_a_woman">Woman, looking for a woman</string>
     <string name="man_looking_for_a_man">Man, looking for a man</string>
+    <string name="man">Man</string>
+    <string name="male">male</string>
+    <string name="female">female</string>
+    <string name="woman">Woman</string>
+    <string name="universe">Universe</string>
     <string name="man_looking_for_a_woman">Man, looking for a woman</string>
     <string name="save_changes">Save Changes</string>
     <string name="main_picture">Main picture</string>
@@ -602,4 +607,10 @@
     <string name="or_everyone_can_write_to_you_you_can_change_this_in_the_settings">Or everyone can write to you\nYou can change this in the <font color="#f28ae5"><u>settings</u></font></string>
     <string name="get_started">Get Started</string>
     <string name="enable_geolocation">Enable geolocation</string>
+    <string name="result">Result</string>
+    <string name="duels_are_over">Duels are over</string>
+    <string name="you_voted_for_all_the_photos">YOU VOTED FOR ALL THE PHOTOS</string>
+    <string name="but_you_can_also_go_to_the_top">But you can also go to\nthe Top 50</string>
+    <string name="duels">Duels</string>
+    <string name="you_have_no_guests_yet">You have no guests yet</string>
 </resources>

@@ -65,7 +65,7 @@ fun NavDestination.isBottomNavVisible(): Boolean {
         "id/searchFragment",
         "id/matchesFragment",
         "id/chatsFragment",
-        "id/topFragment",
+        "id/duelsFragment",
         "id/guestsFragment" -> true
         else -> false
     }

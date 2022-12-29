@@ -153,3 +153,13 @@ enum class InvitationFilter(var serverName: String) {
 data class LikesBody(
     var photo_id: Int
 )
+
+data class DuelRequest(
+    val gender: String,
+    val country: String? = null
+)
+
+data class DuelVoteRequest(
+    val winning_photo: Int,
+    val loser_photo: Int
+)
