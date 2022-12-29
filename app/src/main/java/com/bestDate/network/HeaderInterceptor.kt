@@ -19,7 +19,7 @@ class HeaderInterceptor @Inject constructor(
 
         builder.addHeader("Content-Type", "application/json")
         builder.addHeader("Accept", "application/json")
-        builder.addHeader("X-Localization", context.getString(R.string.app_language))
+        builder.addHeader("X-Localization", context.getString(R.string.app_locale))
         if (preferencesUtils.getString(Preferences.ACCESS_TOKEN).isNotEmpty() && shouldAddAuthHeaders
         ) {
             builder.addHeader("Authorization", preferencesUtils.getString(Preferences.ACCESS_TOKEN))

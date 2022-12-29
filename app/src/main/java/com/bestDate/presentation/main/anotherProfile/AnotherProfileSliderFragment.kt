@@ -44,6 +44,9 @@ class AnotherProfileSliderFragment :
                 viewModel.sendInvitation(viewModel.user.value?.id, it.id)
             }
         }
+        binding.sliderView.onSwipe = {
+            goBack()
+        }
     }
 
     override fun onViewLifecycle() {

@@ -22,6 +22,7 @@
             android:layout_gravity="end"
             android:padding="16dp"
             android:text="@string/save"
+            android:background="?selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toBottomOf="@+id/backButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/backButton" />

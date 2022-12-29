@@ -3,7 +3,6 @@ package com.bestDate.presentation.registration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bestDate.R
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -22,14 +21,8 @@ class ContinueRegistrationFragment :
     override fun onInit() {
         super.onInit()
         with(binding) {
-            emailInput.hint = getString(R.string.email_or_phone_number)
             emailInput.text = RegistrationHolder.login
-
-            passInput.hint = getString(R.string.password)
-            passInput.isPasswordField = true
             passInput.text = RegistrationHolder.password
-
-            signUpButton.title = getString(R.string.sign_up)
 
             name.text = RegistrationHolder.name
             birthdate.text = RegistrationHolder.birthdate?.toStringFormat()
@@ -40,7 +33,7 @@ class ContinueRegistrationFragment :
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnClickListener {
+            backButton.onClick = {
                 navController.popBackStack()
             }
             signUpButton.onSafeClick = {

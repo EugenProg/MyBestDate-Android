@@ -42,7 +42,7 @@ class SearchQuestionnaireLocationFragment(private val question: QuestionnaireQue
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnSaveClickListener {
+            backButton.onClick = {
                 backClick?.invoke()
             }
             saveButton.setOnSaveClickListener {

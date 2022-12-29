@@ -3,40 +3,33 @@ package com.bestDate.presentation.passRecovery
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentPassRecoverySetNewBinding
-import com.bestDate.presentation.auth.AuthFragmentDirections
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PassRecoverySetNewFragment : BaseVMFragment<FragmentPassRecoverySetNewBinding, PassRecoveryViewModel>() {
+class PassRecoverySetNewFragment :
+    BaseVMFragment<FragmentPassRecoverySetNewBinding, PassRecoveryViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPassRecoverySetNewBinding =
-        { inflater, parent, attach -> FragmentPassRecoverySetNewBinding.inflate(inflater, parent, attach)}
+        { inflater, parent, attach ->
+            FragmentPassRecoverySetNewBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
 
     override val viewModelClass: Class<PassRecoveryViewModel> = PassRecoveryViewModel::class.java
 
     override val statusBarLight = true
 
-    override fun onInit() {
-        super.onInit()
-        with(binding) {
-            passInput.isPasswordField = true
-            passInput.hint = getString(R.string.enter_a_new_password)
-
-            saveButton.title = getString(R.string.install_and_login)
-        }
-    }
-
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnSaveClickListener { navController.popBackStack() }
+            backButton.onClick = { navController.popBackStack() }
 
             saveButton.onClick = {
                 validate()
-
             }
         }
     }

@@ -7,9 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bestDate.R
 import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.ViewRangeBarBinding
 import com.bestDate.databinding.ViewRangeBarThumbBinding
@@ -17,15 +15,13 @@ import com.google.gson.Gson
 
 class RangeBarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewRangeBarBinding
+    private val binding: ViewRangeBarBinding =
+        ViewRangeBarBinding.inflate(LayoutInflater.from(context), this)
     var rangeChange: (() -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.view_range_bar, this)
-        binding = ViewRangeBarBinding.bind(view)
-
         binding.bar.values = listOf(25f, 45f)
 
         binding.bar.addOnChangeListener { slider, _, _ ->
@@ -92,14 +88,15 @@ class RangeBarView @JvmOverloads constructor(
 
     private fun parseRangeString(range: String) {
         if (!range.matches(Regex("\\{\"max\":\\d+,\"min\":\\d+\\}")) &&
-            !range.matches(Regex("\\{\"min\":\\d+,\"max\":\\d+\\}"))) return
+            !range.matches(Regex("\\{\"min\":\\d+,\"max\":\\d+\\}"))
+        ) return
 
         try {
             val gson = Gson()
             val parsedRange = gson.fromJson(range, Range::class.java)
             binding.bar.values = mutableListOf(parsedRange.min.toFloat(), parsedRange.max.toFloat())
         } catch (e: Exception) {
-
+            Logger.print("Range parsing error: ${e.message}")
         }
     }
 

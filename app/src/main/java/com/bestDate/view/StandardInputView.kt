@@ -3,39 +3,40 @@ package com.bestDate.view
 import android.content.Context
 import android.text.InputType
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.bestDate.R
-import com.bestDate.data.extension.*
+import com.bestDate.data.extension.animateError
+import com.bestDate.data.extension.setAttrs
+import com.bestDate.data.extension.textIsChanged
+import com.bestDate.data.extension.vibratePhone
 import com.bestDate.databinding.ViewStandardInputBinding
 
-class StandardInput @JvmOverloads constructor(
+class StandardInputView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ViewStandardInputBinding
+    private var binding: ViewStandardInputBinding =
+        ViewStandardInputBinding.inflate(LayoutInflater.from(context), this)
     var onTextChangeListener: ((String) -> Unit)? = null
 
     private var passIsVisible: Boolean = false
     var isPasswordField: Boolean = false
-    set(value) {
-        if (value) {
-            icon = R.drawable.ic_eye_slash
-            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+        set(value) {
+            if (value) {
+                icon = R.drawable.ic_eye_slash
+                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+            field = value
         }
-        field = value
-    }
 
     val hasFocus: Boolean
         get() = binding.input.hasFocus()
 
     init {
-        View.inflate(context, R.layout.view_standard_input, this)
-        binding = ViewStandardInputBinding.bind(this)
-
         setAttrs(attrs, R.styleable.StandardInput) {
             isPasswordField = it.getBoolean(R.styleable.StandardInput_isPassField, false)
             icon = it.getResourceId(R.styleable.StandardInput_src, R.drawable.ic_message)
@@ -53,34 +54,35 @@ class StandardInput @JvmOverloads constructor(
     }
 
     var hint: String
-    get() = binding.placeholder.text.toString()
-    set(value) {
-        binding.placeholder.text = value
-    }
-
-    var text: String
-    get() = binding.input.text.toString().trim()
-    set(value) {
-        binding.input.setText(value)
-    }
-
-    @DrawableRes var icon: Int? = R.drawable.ic_message
-    set(value) {
-        if (value == null) binding.icon.isVisible = false
-        else {
-            binding.icon.setImageResource(value)
-            binding.icon.isVisible = true
+        get() = binding.placeholder.text.toString()
+        set(value) {
+            binding.placeholder.text = value
         }
 
-    }
+    var text: String
+        get() = binding.input.text.toString().trim()
+        set(value) {
+            binding.input.setText(value)
+        }
+
+    @DrawableRes
+    var icon: Int? = R.drawable.ic_message
+        set(value) {
+            if (value == null) binding.icon.isVisible = false
+            else {
+                binding.icon.setImageResource(value)
+                binding.icon.isVisible = true
+            }
+
+        }
 
     var inputType: Int =
         if (isPasswordField) InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
         else InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-    set(value) {
-        binding.input.inputType = value
-        field = value
-    }
+        set(value) {
+            binding.input.inputType = value
+            field = value
+        }
 
     private fun togglePassVisibility() {
         if (isPasswordField) {
@@ -89,7 +91,8 @@ class StandardInput @JvmOverloads constructor(
                 icon = R.drawable.ic_eye_slash
                 passIsVisible = false
             } else {
-                inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                inputType =
+                    InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 icon = R.drawable.ic_eye
                 passIsVisible = true
             }

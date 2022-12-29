@@ -62,7 +62,7 @@ abstract class BasePhotoEditorFragment :
             binding.saveButton.toggleActionEnabled(true)
             binding.photoEditor.crop()
         }
-        binding.backButton.setOnClickListener {
+        binding.backButton.onClick = {
             editorAction.value = null
             navController.popBackStack()
         }
