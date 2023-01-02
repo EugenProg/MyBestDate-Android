@@ -426,11 +426,11 @@
             app:startDestination="@id/duelsFragment">
             <fragment
                 android:id="@+id/myTopDuelsFragment"
-                android:name="com.bestDate.presentation.main.top.MyTopDuelsFragment"
+                android:name="com.bestDate.presentation.main.duels.MyTopDuelsFragment"
                 android:label="MyTopDuelsFragment" />
             <fragment
                 android:id="@+id/duelsFragment"
-                android:name="com.bestDate.presentation.main.top.DuelsFragment"
+                android:name="com.bestDate.presentation.main.duels.DuelsFragment"
                 android:label="DuelsFragment">
                 <action
                     android:id="@+id/action_profile_to_myTopDuels"
