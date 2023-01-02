@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.top
+package com.bestDate.presentation.main.duels
 
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.*

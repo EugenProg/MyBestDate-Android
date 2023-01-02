@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.top
+package com.bestDate.presentation.main.duels
 
 import com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment
 

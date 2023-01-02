@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.top
+package com.bestDate.presentation.main.duels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,7 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class TopViewModel @Inject constructor(
+class DuelsViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
     private val duelUseCase: DuelsUseCase
 ) : BaseViewModel() {
@@ -23,10 +23,15 @@ class TopViewModel @Inject constructor(
     private var _duelsResultLiveData = MutableLiveData<MutableList<DuelProfile>?>()
     var duelsResultLiveData: LiveData<MutableList<DuelProfile>?> = _duelsResultLiveData
 
+    private var _loadingLiveData = MutableLiveData<Boolean>()
+    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
     fun getDuels(gender: String, country: String?) {
+        _loadingLiveData.postValue(true)
         doAsync {
             duelUseCase.getMyDuels(gender, country)
             _duelsLiveData.postValue(duelUseCase.duelProfiles)
+            _loadingLiveData.postValue(false)
         }
     }
 
