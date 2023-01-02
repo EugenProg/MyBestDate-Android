@@ -246,3 +246,39 @@ data class DuelProfile(
     val user: ShortUserData? = null,
     val location: LocationDB? = null
 )
+
+data class ChatListResponse(
+    var data: MutableList<Chat>? = mutableListOf()
+): BaseResponse()
+
+data class Chat(
+    var id: Int? = null,
+    var user: ShortUserData? = null,
+    var last_message: Message? = null
+)
+
+data class Message(
+    var id: Int? = null,
+    var sender_id: Int? = null,
+    var recipient_id: Int? = null,
+    var parent_id: Int? = null,
+    var text: Int? = null,
+    var image: ChatImage? = null,
+    var read_at: String? = null,
+    var created_at: String? = null
+)
+
+data class ChatImage(
+    var id: Int? = null,
+    var full_url: String? = null,
+    var thumb_url: String? = null
+)
+
+data class ChatMessagesResponse(
+    val data: MutableList<Message>? = mutableListOf(),
+    val meta: Meta? = null
+): BaseResponse()
+
+data class SendMessageResponse(
+    val data: Message? = null
+): BaseResponse()
