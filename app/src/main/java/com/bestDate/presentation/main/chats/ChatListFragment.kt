@@ -3,15 +3,15 @@ package com.bestDate.presentation.main.chats
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
+import com.bestDate.databinding.FragmentChatListBinding
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.databinding.FragmentChatsBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatsFragment : BaseVMFragment<FragmentChatsBinding, ChatsViewModel>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentChatsBinding =
-        { inflater, parent, attach -> FragmentChatsBinding.inflate(inflater, parent, attach) }
-    override val viewModelClass: Class<ChatsViewModel> = ChatsViewModel::class.java
+class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewModel>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentChatListBinding =
+        { inflater, parent, attach -> FragmentChatListBinding.inflate(inflater, parent, attach) }
+    override val viewModelClass: Class<ChatListViewModel> = ChatListViewModel::class.java
 
     override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main

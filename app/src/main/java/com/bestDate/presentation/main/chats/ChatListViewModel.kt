@@ -7,8 +7,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ChatsViewModel @Inject constructor(
+class ChatListViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
+    private val chatsListUseCase: ChatListUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
+    val chatList = chatsListUseCase.chatList
+
+    fun refreshChatList() {
+        doAsync {
+            chatsListUseCase.refreshChatList()
+        }
+    }
+
+    fun deleteChat(chatId: Int) {
+        doAsync {
+            chatsListUseCase.deleteChat(chatId)
+        }
+    }
 }

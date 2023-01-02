@@ -255,7 +255,15 @@ data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null
-)
+) {
+    fun transform(): Chat {
+        return Chat(
+            user?.id,
+            user,
+            last_message
+        )
+    }
+}
 
 data class Message(
     var id: Int? = null,
