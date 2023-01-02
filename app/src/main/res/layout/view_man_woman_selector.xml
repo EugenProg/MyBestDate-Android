@@ -11,12 +11,14 @@
 
         <com.bestDate.view.SelectorView
             android:id="@+id/womanSelector"
+            android:minWidth="78dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="9dp" />
 
         <com.bestDate.view.SelectorView
             android:id="@+id/manSelector"
+            android:minWidth="78dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

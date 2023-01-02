@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.top
+package com.bestDate.presentation.main.duels
 
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +13,10 @@ import com.bestDate.view.DuelElementView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, TopViewModel>() {
+class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDuelsBinding =
         { inflater, parent, attach -> FragmentDuelsBinding.inflate(inflater, parent, attach) }
-    override val viewModelClass: Class<TopViewModel> = TopViewModel::class.java
+    override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
     override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
@@ -60,26 +60,37 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, TopViewModel>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        reload()
 
         viewModel.duelsLiveData.observe(viewLifecycleOwner) {
             binding.duelView.isVisible = it?.isEmpty() != true
             binding.noDataView.isVisible = it?.isEmpty() == true
+            binding.noDataView.noData = it?.isEmpty() == true
             if (!it.isNullOrEmpty()) {
                 setUpElement(binding.firstDuelElementView, it.first(), it[1])
                 setUpElement(binding.secondDuelElementView, it[1], it.first())
             }
         }
         viewModel.user.observe(viewLifecycleOwner) {
+            binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.selectorView.lookFor = it?.look_for?.first()
             gender =
                 if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
+            reload()
         }
         viewModel.duelsResultLiveData.observe(viewLifecycleOwner) {
             binding.resultView.visibility = View.VISIBLE
             binding.resultView.duelProfiles = it
             reload()
+        }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+            if (viewModel.duelsLiveData.value.isNullOrEmpty()
+            ) binding.noDataView.toggleLoading(it)
+        }
+
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+            binding.noDataView.toggleLoading(false)
+            showMessage(it.exception.message)
         }
     }
 
@@ -101,7 +112,6 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, TopViewModel>() {
         viewModel.getDuels(
             getString(gender.gender).lowercase(),
             null
-            //binding.locationFilterButton.label.lowercase()
         )
     }
 }

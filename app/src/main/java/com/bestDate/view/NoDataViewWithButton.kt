@@ -57,6 +57,6 @@ class NoDataViewWithButton @JvmOverloads constructor(
     fun toggleLoading(show: Boolean) {
         binding.root.isVisible = show || noData
         binding.loader.isVisible = show
-        binding.title.isVisible = !show
+        binding.info.isVisible = !show
     }
 }
