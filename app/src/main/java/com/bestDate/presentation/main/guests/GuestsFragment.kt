@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,13 +16,9 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         { inflater, parent, attach -> FragmentGuestsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<GuestsViewModel> = GuestsViewModel::class.java
 
-    override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
     private val adapterNew: GuestsAdapter = GuestsAdapter()
     private val adapterPrev: GuestsAdapter = GuestsAdapter()
-
-    override val statusBarLight = false
-    override val navBarLight = false
 
     override fun onInit() {
         super.onInit()

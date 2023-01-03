@@ -15,6 +15,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
 import com.bestDate.R
+import hilt_aggregated_deps._com_bestDate_presentation_main_top_TopViewModel_HiltModules_BindsModule
 
 fun View.setMarginTop(marginTop: Int) {
     val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams

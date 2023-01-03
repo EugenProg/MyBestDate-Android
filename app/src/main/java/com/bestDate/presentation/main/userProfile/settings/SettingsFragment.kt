@@ -7,7 +7,7 @@ import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
 import com.bestDate.view.alerts.LoaderDialog
-import com.bestDate.view.alerts.showDeleteProfileDialog
+import com.bestDate.view.alerts.showDeleteDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +38,8 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
 
             }
             deleteProfileButton.onClick = {
-                requireActivity().showDeleteProfileDialog {
+                requireActivity().showDeleteDialog(
+                    getString(R.string.all_your_data_will_be_deleted)) {
                     loader.startLoading()
                     viewModel.deleteUserProfile()
                 }

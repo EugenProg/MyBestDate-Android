@@ -1,7 +1,7 @@
 package com.bestDate
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import androidx.navigation.NavController
@@ -9,6 +9,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.presentation.main.UserUseCase
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,8 +21,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     var bottomNavView: CustomBottomNavView? = null
+
     @Inject
     lateinit var userUseCase: UserUseCase
+
+    @Inject
+    lateinit var chatListUseCase: ChatListUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
         setUpNavigation()
         setUpUserObserver()
+        setUpUserListObserver()
         bottomNavView = binding.bottomNavigationView
     }
 
@@ -56,6 +62,12 @@ class MainActivity : AppCompatActivity() {
                 BottomButton.GUESTS,
                 newGuests > 0
             )
+        }
+    }
+
+    private fun setUpUserListObserver() {
+        chatListUseCase.hasNewChats.observe(this) {
+            binding.bottomNavigationView.setBadge(BottomButton.CHATS, it)
         }
     }
 }

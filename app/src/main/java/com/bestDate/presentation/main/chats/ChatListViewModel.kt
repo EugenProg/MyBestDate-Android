@@ -1,5 +1,7 @@
 package com.bestDate.presentation.main.chats
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
@@ -14,15 +16,20 @@ class ChatListViewModel @Inject constructor(
     val user = userUseCase.getMyUser.asLiveData()
     val chatList = chatsListUseCase.chatList
 
+    private var _deleteLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var deleteLiveData: LiveData<Boolean> = _deleteLiveData
+
     fun refreshChatList() {
         doAsync {
             chatsListUseCase.refreshChatList()
         }
     }
 
-    fun deleteChat(chatId: Int) {
+    fun deleteChat(chatId: Int?) {
+        _deleteLiveData.value = true
         doAsync {
             chatsListUseCase.deleteChat(chatId)
+            _deleteLiveData.postValue(false)
         }
     }
 }
