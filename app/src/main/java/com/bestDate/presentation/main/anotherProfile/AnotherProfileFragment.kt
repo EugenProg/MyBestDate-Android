@@ -6,8 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.data.extension.observe
-import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
@@ -37,7 +36,6 @@ class AnotherProfileFragment :
     private var user: ShortUserData? = null
     private var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
-    private var needsHeartAnim: Boolean = false
 
     override fun onInit() {
         super.onInit()
@@ -154,15 +152,11 @@ class AnotherProfileFragment :
         observe(viewModel.likeLiveData) {
             viewModel.getUserById(user?.id)
         }
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reload")
-            ?.observe(viewLifecycleOwner) { result ->
-                if (result) {
-                    navController.currentBackStackEntry?.savedStateHandle?.set(
-                        "reload",
-                        false
-                    )
-                    viewModel.getUserById(user?.id)
-                }
+        getNavigationResult<Boolean>(NavigationResultKey.RELOAD) { result ->
+            if (result) {
+                setNavigationResult(NavigationResultKey.RELOAD, false)
+                viewModel.getUserById(user?.id)
             }
+        }
     }
 }

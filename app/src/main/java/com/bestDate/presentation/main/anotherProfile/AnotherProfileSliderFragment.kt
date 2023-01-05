@@ -4,7 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
+import com.bestDate.data.extension.NavigationResultKey
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.setNavigationResult
 import com.bestDate.databinding.FragmentAnotherProfileSliderBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
@@ -61,7 +63,7 @@ class AnotherProfileSliderFragment :
         observe(viewModel.likeLiveData) {
             isLikeClicked = true
             viewModel.getUserById(args.userId)
-            navController.previousBackStackEntry?.savedStateHandle?.set("reload", true)
+            setNavigationResult(NavigationResultKey.RELOAD, true)
         }
         observe(viewModel.photos) { photos ->
             binding.sliderView.setPhotos(photos, false,
