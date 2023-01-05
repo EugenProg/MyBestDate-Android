@@ -143,7 +143,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/coinView"
-                app:no_data_text="@string/you_dont_have_a_match_yet"
+                app:no_data_text_title="@string/you_dont_have_a_match_yet"
+                app:no_data_text_desc="@string/you_voted_for_all_the_photos"
+                app:no_data_text_direction="@string/but_you_can_also_go_to_the_top"
                 app:start_with_loading="true"
                 tools:visibility="gone" />
 
