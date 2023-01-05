@@ -67,13 +67,13 @@
         style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-20dp"
         android:layout_marginTop="8dp"
         android:scrollbarSize="16sp"
-        tools:text="10.14"
         android:textColor="@color/white"
-        app:layout_constraintStart_toEndOf="@+id/coinView"
-        app:layout_constraintTop_toTopOf="@+id/bgButtonNoShadow" />
+        app:layout_constraintEnd_toEndOf="@id/bdCoin"
+        app:layout_constraintStart_toStartOf="@id/bdCoin"
+        app:layout_constraintTop_toTopOf="@+id/bgButtonNoShadow"
+        tools:text="10" />
 
     <TextView
         android:id="@+id/bdCoin"
@@ -83,7 +83,8 @@
         android:text="@string/bd_coin"
         android:textColor="@color/white_80"
         android:textSize="10sp"
-        app:layout_constraintStart_toStartOf="@id/amountCoins"
+        app:layout_constraintEnd_toEndOf="@id/bgButtonNoShadow"
+        app:layout_constraintStart_toStartOf="@id/bgButtonNoShadow"
         app:layout_constraintTop_toBottomOf="@+id/amountCoins" />
 
     <FrameLayout
