@@ -398,13 +398,13 @@
             app:startDestination="@id/chatsFragment">
             <fragment
                 android:id="@+id/chatsFragment"
-                android:name="com.bestDate.presentation.main.chats.ChatsFragment"
+                android:name="com.bestDate.presentation.main.chats.ChatListFragment"
                 android:label="ChatsFragment" />
             <action
                 android:id="@+id/action_global_profile_nav_graph_from_chats"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph4"
+                android:id="@+id/action_global_another_profile_nav_graph_from_chats"
                 app:destination="@id/another_profile_nav_graph" />
         </navigation>
         <navigation
