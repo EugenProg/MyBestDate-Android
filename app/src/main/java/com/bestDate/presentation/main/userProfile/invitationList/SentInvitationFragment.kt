@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentInvitationBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.SentInvitationsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,18 +46,18 @@ class SentInvitationFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.sentInvitations.observe(viewLifecycleOwner) {
+        observe(viewModel.sentInvitations) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
                 viewModel.sentInvitations.value.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

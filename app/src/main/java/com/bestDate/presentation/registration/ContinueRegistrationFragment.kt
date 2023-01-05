@@ -3,6 +3,7 @@ package com.bestDate.presentation.registration
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.databinding.FragmentContinueRegistrationBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -13,7 +14,8 @@ class ContinueRegistrationFragment :
     BaseVMFragment<FragmentContinueRegistrationBinding, RegistrationViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) ->
     FragmentContinueRegistrationBinding = { inflater, parent, attach ->
-        FragmentContinueRegistrationBinding.inflate(inflater, parent, attach)}
+        FragmentContinueRegistrationBinding.inflate(inflater, parent, attach)
+    }
     override val viewModelClass: Class<RegistrationViewModel> = RegistrationViewModel::class.java
 
     override val statusBarLight = true
@@ -44,18 +46,19 @@ class ContinueRegistrationFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.sendCodeLiveData.observe(viewLifecycleOwner) {
-            navController.navigate(ContinueRegistrationFragmentDirections
-                .actionContinueRegistrationFragmentToRegistrationOtpFragment()
+        observe(viewModel.sendCodeLiveData) {
+            navController.navigate(
+                ContinueRegistrationFragmentDirections
+                    .actionContinueRegistrationFragmentToRegistrationOtpFragment()
             )
         }
-        viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.validationErrorLiveData) {
             showMessage(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             binding.signUpButton.toggleActionEnabled(it)
         }
     }

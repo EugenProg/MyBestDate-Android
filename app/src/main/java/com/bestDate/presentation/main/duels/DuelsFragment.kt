@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -58,7 +59,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        viewModel.duelsLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.duelsLiveData) {
             binding.duelView.isVisible = it?.isEmpty() != true
             binding.noDataView.isVisible = it?.isEmpty() == true
             binding.noDataView.noData = it?.isEmpty() == true
@@ -67,7 +68,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 setUpElement(binding.secondDuelElementView, it[1], it.first())
             }
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.selectorView.lookFor = it?.look_for?.first()
@@ -75,17 +76,17 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
             reload()
         }
-        viewModel.duelsResultLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.duelsResultLiveData) {
             binding.resultView.visibility = View.VISIBLE
             binding.resultView.duelProfiles = it
             reload()
         }
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             if (viewModel.duelsLiveData.value.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }

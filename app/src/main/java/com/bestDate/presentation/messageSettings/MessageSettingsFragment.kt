@@ -3,17 +3,25 @@ package com.bestDate.presentation.messageSettings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentMessageSettingsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MessageSettingsFragment:
+class MessageSettingsFragment :
     BaseVMFragment<FragmentMessageSettingsBinding, MessageSettingsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMessageSettingsBinding =
-        { inflater, parent, attach -> FragmentMessageSettingsBinding.inflate(inflater, parent, attach) }
-    override val viewModelClass: Class<MessageSettingsViewModel> = MessageSettingsViewModel::class.java
+        { inflater, parent, attach ->
+            FragmentMessageSettingsBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
+    override val viewModelClass: Class<MessageSettingsViewModel> =
+        MessageSettingsViewModel::class.java
 
     override val statusBarColor: Int = R.color.bg_main
 
@@ -22,8 +30,10 @@ class MessageSettingsFragment:
         with(binding) {
             closeBtn.setOnSaveClickListener {
                 viewModel.setNotFirstEnter()
-                navController.navigate(MessageSettingsFragmentDirections
-                    .actionMessagesSettingsToMainNavGraph())
+                navController.navigate(
+                    MessageSettingsFragmentDirections
+                        .actionMessagesSettingsToMainNavGraph()
+                )
             }
             saveButton.onClick = {
                 viewModel.save(switchView.isChecked)
@@ -38,18 +48,20 @@ class MessageSettingsFragment:
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.userSettings.observe(viewLifecycleOwner) {
+        observe(viewModel.userSettings) {
             binding.switchView.setChecked(it?.block_messages)
         }
-        viewModel.saveLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.saveLiveData) {
             viewModel.setNotFirstEnter()
-            navController.navigate(MessageSettingsFragmentDirections
-                .actionMessagesSettingsToMainNavGraph())
+            navController.navigate(
+                MessageSettingsFragmentDirections
+                    .actionMessagesSettingsToMainNavGraph()
+            )
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             binding.saveButton.toggleActionEnabled(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
     }
