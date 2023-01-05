@@ -27,10 +27,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
 
     override fun onInit() {
         super.onInit()
-        binding.resultView.visibility = View.INVISIBLE
-        binding.noDataView.setTitle(R.string.duels_are_over)
-        binding.noDataView.setDesc(R.string.you_voted_for_all_the_photos)
-        binding.noDataView.setDirectionsText(R.string.but_you_can_also_go_to_the_top)
+        binding.resultView.visibility = View.GONE
         setUpToolbar()
         setUpFilterButtons()
     }
