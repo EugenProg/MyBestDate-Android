@@ -9,14 +9,11 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.presentation.base.BasePhotoEditorFragment
-import com.bestDate.data.extension.imageIsSet
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.extension.toPx
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
+import com.bestDate.presentation.base.BasePhotoEditorFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.ImageLineAdapter
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
@@ -25,10 +22,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 
 @AndroidEntryPoint
-class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBinding, ProfilePhotoViewModel>() {
+class ProfilePhotoEditingFragment :
+    BaseVMFragment<FragmentProfilePhotoEditingBinding, ProfilePhotoViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) ->
     FragmentProfilePhotoEditingBinding = { inflater, parent, attach ->
-        FragmentProfilePhotoEditingBinding.inflate(inflater, parent, attach) }
+        FragmentProfilePhotoEditingBinding.inflate(inflater, parent, attach)
+    }
     override val viewModelClass: Class<ProfilePhotoViewModel> = ProfilePhotoViewModel::class.java
 
     override val statusBarLight = true
@@ -67,8 +66,10 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             }
             nextButton.setOnSaveClickListener {
                 if (imageList.value?.size.orZero > 0) {
-                    navController.navigate(ProfilePhotoEditingFragmentDirections
-                        .actionGlobalQuestionnaireFragment())
+                    navController.navigate(
+                        ProfilePhotoEditingFragmentDirections
+                            .actionGlobalQuestionnaireFragment()
+                    )
                 }
             }
             adapter.imageClick = {
@@ -79,18 +80,20 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
 
-                navController.navigate(ProfilePhotoEditingFragmentDirections
-                    .actionProfilePhotoEditingFragmentToPhotoEditorFragment(it))
+                navController.navigate(
+                    ProfilePhotoEditingFragmentDirections
+                        .actionProfilePhotoEditingFragmentToPhotoEditorFragment(it)
+                )
             }
         }
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        imageList.observe(viewLifecycleOwner) {
+        observe(imageList) {
             adapter.submitList(it)
         }
-        BasePhotoEditorFragment.editorAction.observe(viewLifecycleOwner) {
+        observe(BasePhotoEditorFragment.editorAction) {
             if (it != null) {
                 binding.nextButton.isVisible = true
                 val photoSettingsSheet = PhotoSettingsSheet()
@@ -99,7 +102,7 @@ class ProfilePhotoEditingFragment : BaseVMFragment<FragmentProfilePhotoEditingBi
                 BasePhotoEditorFragment.editorAction.value = null
             }
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             with(binding) {
                 name.text = it?.name
                 birthdate.text = it?.getFormattedBirthday()

@@ -6,12 +6,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -125,7 +126,7 @@ class AnotherProfileFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             setBackground(it?.blocked_me)
             binding.header.setUserInfo(it)
             binding.userInfoView.setUserInfo(it)
@@ -136,21 +137,21 @@ class AnotherProfileFragment :
             fullUser = it
         }
 
-        viewModel.blockLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.blockLiveData) {
             val message = if (it) R.string.user_is_blocked_successful
             else R.string.user_is_unlocked_successful
             showMessage(getString(message))
         }
 
-        viewModel.invitations.observe(viewLifecycleOwner) {
+        observe(viewModel.invitations) {
             invitationList = it
         }
 
-        viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.sendInvitationLiveData) {
             showMessage(R.string.invitation_is_send_successful)
         }
 
-        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.likeLiveData) {
             viewModel.getUserById(user?.id)
         }
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reload")
@@ -163,6 +164,5 @@ class AnotherProfileFragment :
                     viewModel.getUserById(user?.id)
                 }
             }
-
     }
 }

@@ -1,8 +1,9 @@
 package com.bestDate.presentation.base.questionnaire.confiarmation
 
 import com.bestDate.R
-import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.extension.observe
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,10 +19,10 @@ class PhoneConfirmationFragment(
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.phoneCodeSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.phoneCodeSuccessLiveData) {
             sendCodeSuccessful()
         }
-        viewModel.phoneSaveSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.phoneSaveSuccessLiveData) {
             saveSuccessful()
         }
     }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.swipeDeleteListener
 import com.bestDate.databinding.FragmentChatListBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -60,18 +61,18 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
         }
-        viewModel.chatList.observe(viewLifecycleOwner) {
+        observe(viewModel.chatList) {
             adapter.submitList(it) {
                 loader.stopLoading()
             }
         }
-        viewModel.deleteLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.deleteLiveData) {
             loader.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }

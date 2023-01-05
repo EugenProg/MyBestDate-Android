@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -52,7 +53,7 @@ class MultilineQuestionnaireSheet : BaseBottomSheet<SheetMultilineQuestionnaireB
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        itemList.observe(viewLifecycleOwner) {
+        observe(itemList) {
             adapter.submitList(it)
         }
     }

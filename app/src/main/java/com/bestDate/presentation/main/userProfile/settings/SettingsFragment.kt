@@ -3,9 +3,10 @@ package com.bestDate.presentation.main.userProfile.settings
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
 import com.bestDate.view.alerts.showDeleteDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,8 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
             }
             deleteProfileButton.onClick = {
                 requireActivity().showDeleteDialog(
-                    getString(R.string.all_your_data_will_be_deleted)) {
+                    getString(R.string.all_your_data_will_be_deleted)
+                ) {
                     loader.startLoading()
                     viewModel.deleteUserProfile()
                 }
@@ -59,25 +61,25 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.changeLanguageButton.buttonTitle = it?.language
         }
-        viewModel.userSettings.observe(viewLifecycleOwner) {
+        observe(viewModel.userSettings) {
             it?.let {
                 binding.blockingMessagesSwitch.setChecked(it.block_messages)
                 binding.matchParticipationSwitch.setChecked(it.matchParticipation)
                 binding.notificationSettings.setNotificationSettings(it.notifications)
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (it && viewModel.userSettings.value == null) loader.startLoading()
             else loader.stopLoading()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }
-        viewModel.deleteSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.deleteSuccessLiveData) {
             loader.stopLoading()
             navController.navigate(SettingsFragmentDirections.actionGlobalAuthFragment())
         }

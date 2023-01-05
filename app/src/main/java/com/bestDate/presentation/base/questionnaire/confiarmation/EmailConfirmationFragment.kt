@@ -1,8 +1,9 @@
 package com.bestDate.presentation.base.questionnaire.confiarmation
 
 import com.bestDate.R
-import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.data.extension.isAEmail
+import com.bestDate.data.extension.observe
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,10 +16,10 @@ class EmailConfirmationFragment(question: QuestionnaireQuestion, isConfirmed: Bo
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.emailCodeSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.emailCodeSuccessLiveData) {
             sendCodeSuccessful()
         }
-        viewModel.emailSaveSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.emailSaveSuccessLiveData) {
             saveSuccessful()
         }
     }
