@@ -72,4 +72,9 @@ class ChatListUseCase @Inject constructor(
 
     private fun createOldHeader(): Chat =
         Chat(id = -1, last_message = Message(id = R.string.all_message), type = ChatItemType.HEADER)
+
+    fun clearData() {
+        chatList.value = mutableListOf()
+        hasNewChats.value = false
+    }
 }
