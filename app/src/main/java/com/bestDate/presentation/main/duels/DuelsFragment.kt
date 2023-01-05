@@ -27,7 +27,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
 
     override fun onInit() {
         super.onInit()
-        binding.resultView.visibility = View.INVISIBLE
+        binding.resultView.visibility = View.GONE
         setUpToolbar()
         setUpFilterButtons()
     }
