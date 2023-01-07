@@ -3,8 +3,9 @@ package com.bestDate.presentation.main.matches
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentMatchesBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +35,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
         }
     }

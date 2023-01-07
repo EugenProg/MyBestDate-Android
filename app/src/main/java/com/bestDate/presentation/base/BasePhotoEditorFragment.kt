@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
 import com.bestDate.data.extension.cropListener
 import com.bestDate.data.extension.getBitmap
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.scale
 import com.bestDate.data.model.Image
 import com.bestDate.data.model.ProfileImage
@@ -72,7 +73,7 @@ abstract class BasePhotoEditorFragment :
         super.onViewLifecycle()
         binding.photoEditor.cropListener(success = successCrop())
 
-        imageLiveData.observe(viewLifecycleOwner) {
+        observe(imageLiveData) {
             with(binding) {
                 saveButton.isEnabled = true
                 progress.visibility = View.INVISIBLE
@@ -80,14 +81,14 @@ abstract class BasePhotoEditorFragment :
             }
         }
 
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             binding.saveButton.toggleActionEnabled(it)
         }
-        viewModel.photoSaveLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.photoSaveLiveData) {
             editorAction.value = it
             navController.popBackStack()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
     }

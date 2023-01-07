@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -72,10 +73,10 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
         }
-        viewModel.guestsListNew.observe(viewLifecycleOwner) { guestsList ->
+        observe(viewModel.guestsListNew) { guestsList ->
             adapterNew.submitList(guestsList) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.newHeader.root.isVisible = guestsList.isNotEmpty()
@@ -84,7 +85,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             }
         }
 
-        viewModel.guestsListPrev.observe(viewLifecycleOwner) {
+        observe(viewModel.guestsListPrev) {
             adapterPrev.submitList(it) {
                 binding.swipeRefresh.isRefreshing = false
                 binding.prevHeader.root.isVisible = it.isNotEmpty()
@@ -92,13 +93,13 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             }
         }
 
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             if (!binding.swipeRefresh.isRefreshing &&
                 viewModel.guestsList.value.isNullOrEmpty()
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.swipeRefresh.isRefreshing = false
             binding.noDataViewWithLoading.toggleLoading(false)
             showMessage(it.exception.message)

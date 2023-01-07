@@ -19,8 +19,10 @@ class NoDataViewWithButton @JvmOverloads constructor(
     )
 
     init {
-        setAttrs(attrs, R.styleable.NoDataViewWithLoading) {
-            binding.title.text = it.getString(R.styleable.NoDataViewWithLoading_no_data_text)
+        setAttrs(attrs, R.styleable.NoDataViewWithButton) {
+            binding.title.text = it.getString(R.styleable.NoDataViewWithButton_no_data_text_title)
+            binding.desc.text = it.getString(R.styleable.NoDataViewWithButton_no_data_text_desc)
+            binding.directionsText.text = it.getString(R.styleable.NoDataViewWithButton_no_data_text_direction)
             val showLoader = it.getBoolean(R.styleable.ToolbarView_toolbar_action_visible, true)
             binding.loader.isVisible = showLoader
             binding.title.isVisible = !showLoader

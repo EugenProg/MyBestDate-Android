@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.getImages
+import com.bestDate.data.extension.observe
 import com.bestDate.data.model.Image
 import com.bestDate.databinding.SheetImageListBinding
 import com.bestDate.view.base.BaseBottomSheet
@@ -22,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ImageListSheet: BaseBottomSheet<SheetImageListBinding>() {
+class ImageListSheet : BaseBottomSheet<SheetImageListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
         { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
 
@@ -51,7 +52,7 @@ class ImageListSheet: BaseBottomSheet<SheetImageListBinding>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        imageList.observe(viewLifecycleOwner) {
+        observe(imageList) {
             adapter.submitList(it) {
                 binding.progress.isVisible = it.isEmpty()
             }
@@ -74,14 +75,17 @@ class ImageListSheet: BaseBottomSheet<SheetImageListBinding>() {
     }
 
     private fun allPermissionsGranted() =
-        ContextCompat.checkSelfPermission(requireActivity(),
-            Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
 
-    private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if (it) {
-            openGallery()
-        } else {
-            //showMessage(getString(R.string.no_permission))
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+            if (it) {
+                openGallery()
+            } else {
+                //showMessage(getString(R.string.no_permission))
+            }
         }
-    }
 }
