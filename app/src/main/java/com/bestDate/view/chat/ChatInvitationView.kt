@@ -28,6 +28,7 @@ class ChatInvitationView @JvmOverloads constructor(
             user?.isBot() == true -> binding.root.isVisible = false
             user?.allow_chat == false -> showOnlyCardsView()
             !hasMessages -> showNoMessagesView()
+            else -> binding.root.isVisible = false
         }
     }
 

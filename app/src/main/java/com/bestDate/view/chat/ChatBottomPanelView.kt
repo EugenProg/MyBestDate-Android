@@ -56,6 +56,10 @@ class ChatBottomPanelView @JvmOverloads constructor(
         }
     }
 
+    fun clearInput() {
+        binding.messageInput.setText("")
+    }
+
     fun setUser(user: ShortUserData?) {
         when {
             user?.isBot() == true -> binding.root.isVisible = false

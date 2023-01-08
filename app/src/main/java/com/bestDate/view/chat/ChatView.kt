@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ViewChatBinding
@@ -14,8 +15,9 @@ class ChatView @JvmOverloads constructor(
 
     private val binding: ViewChatBinding =
         ViewChatBinding.inflate(LayoutInflater.from(context), this)
-    private val messageList: MutableList<Message> = mutableListOf()
+    private val messageList: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
     private var parentMessage: Message? = null
+    private var user: ShortUserData? = null
     private var editMode: Boolean = false
 
     var showInvitationClick: (() -> Unit)? = null
@@ -49,11 +51,21 @@ class ChatView @JvmOverloads constructor(
     }
 
     fun setUser(user: ShortUserData?) {
+        this.user = user
+        setVisibility()
+    }
+
+    private fun setVisibility() {
         with(binding) {
-            topPanelView.setVisibility(user, messageList.isNotEmpty())
-            chatInvitation.setVisibility(user, messageList.isNotEmpty())
+            topPanelView.setVisibility(user, messageList.value?.isNotEmpty() == true)
+            chatInvitation.setVisibility(user, messageList.value?.isNotEmpty() == true)
             bottomPanelView.setUser(user)
         }
+    }
+
+    fun setMessages(messages: MutableList<Message>?) {
+        messageList.value = messages ?: mutableListOf()
+        setVisibility()
     }
 
     fun setEditMode(message: Message?) {
@@ -69,6 +81,7 @@ class ChatView @JvmOverloads constructor(
 
     fun stopSendLoading() {
         binding.bottomPanelView.toggleSendLoading(false)
+        binding.bottomPanelView.clearInput()
         parentMessage = null
         editMode = false
     }

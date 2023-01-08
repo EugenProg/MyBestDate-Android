@@ -22,13 +22,16 @@ interface ChatsService {
     @POST("/api/v1/message/{recipient}/{parent}")
     suspend fun sendTextMessageWithParent(
         @Path("recipient") recipientId: Int,
-        @Path("parent") parentId: Int
+        @Path("parent") parentId: Int,
+        @Body request: SendMessageRequest
     ): Response<SendMessageResponse>
 
     /**Send text message without parent*/
     @POST("/api/v1/message/{recipient}")
-    suspend fun sendTextMessageWithoutParent(@Path("recipient") recipientId: Int):
-            Response<SendMessageResponse>
+    suspend fun sendTextMessageWithoutParent(
+        @Path("recipient") recipientId: Int,
+        @Body request: SendMessageRequest
+    ): Response<SendMessageResponse>
 
     /**Send image message with parent*/
     @Multipart
@@ -51,7 +54,7 @@ interface ChatsService {
     @PUT("/api/v1/message/{message}")
     suspend fun updateMessage(
         @Path("message") messageId: Int,
-        @Body request: UpdateMessageRequest
+        @Body request: SendMessageRequest
     ): Response<SendMessageResponse>
 
     /**Delete message*/

@@ -5,11 +5,14 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
+import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.chat.ChatStatusType
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,11 +26,13 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
     override val statusBarColor: Int = R.color.bg_main
     private val args by navArgs<ChatFragmentArgs>()
     private var user: ShortUserData? = null
+    private var invitationList: MutableList<Invitation> = mutableListOf()
 
     override fun onInit() {
         super.onInit()
         user = args.user
         setUserInfo()
+        viewModel.getChatMessages(user?.id)
     }
 
     override fun onViewClickListener() {
@@ -49,19 +54,46 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.sendClick = { text, parentId ->
-
+                viewModel.sendTextMessage(user?.id, parentId, text)
             }
             chatView.editClick = { text, messageId ->
-
+                viewModel.editMessage(messageId, text)
             }
             chatView.translateClick = {
-
+                viewModel.translateText(it, user?.language)
             }
             chatView.showInvitationClick = {
-
+                requireActivity().showCreateInvitationDialog(invitationList) {
+                    viewModel.sendInvitation(user?.id, it.id)
+                }
             }
             chatView.addImageClick = {
 
+            }
+        }
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        observe(viewModel.invitations) {
+            invitationList = it
+        }
+        observe(viewModel.sendInvitationLiveData) {
+            showMessage(R.string.invitation_is_send_successful)
+        }
+        observe(viewModel.messages) {
+            binding.chatView.setMessages(it)
+        }
+        observe(viewModel.sendMessageLiveData) {
+            binding.chatView.stopSendLoading()
+        }
+        observe(viewModel.translateLiveData) {
+            binding.chatView.setTranslatedText(it)
+        }
+        observe(viewModel.errorLiveData) {
+            with(binding.chatView) {
+                stopSendLoading()
+                stopTranslateLoading()
             }
         }
     }
