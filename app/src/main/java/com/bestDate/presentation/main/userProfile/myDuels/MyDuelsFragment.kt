@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentMyDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +27,10 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         binding.myDuelsView.adapter = adapter
 
         adapter.itemClick = {
-            navController.navigate(MyDuelsFragmentDirections.actionGlobalAnotherProfile(it))
+            navController.navigate(
+                MyDuelsFragmentDirections
+                    .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
+            )
         }
 
         binding.refreshView.setOnRefreshListener {

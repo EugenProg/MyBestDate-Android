@@ -11,7 +11,6 @@ import com.bestDate.data.extension.isPhoneNumber
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.main.UserUseCase
-import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -27,8 +26,8 @@ class AuthViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
-    private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
-    var updateLanguageSuccessLiveData: LiveEvent<Boolean> = _updateLanguageSuccessLiveData
+    private var _updateLanguageSuccessLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var updateLanguageSuccessLiveData: LiveData<Boolean> = _updateLanguageSuccessLiveData
 
     fun logIn(login: String, password: String) {
         when {

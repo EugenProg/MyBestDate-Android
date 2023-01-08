@@ -107,6 +107,7 @@ data class ShortUserData(
     var role: String? = null,
     var blocked: Boolean? = null,
     var blocked_me: Boolean? = null,
+    var block_messages: Boolean? = null,
     var allow_chat: Boolean? = null,
     var is_online: Boolean? = null,
     var last_online_at: String? = null,
@@ -282,6 +283,10 @@ data class Chat(
 
 enum class ChatItemType {
     HEADER, NEW_ITEM, OLD_ITEM, BOT
+}
+
+enum class BackScreenType {
+    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS
 }
 
 data class Message(

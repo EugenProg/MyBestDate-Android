@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="52dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_chat_card" />
+
+        <TextView
+            android:id="@+id/noMessagesView"
+            style="@style/component_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="27dp"
+            android:gravity="center"
+            android:text="@string/you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/onlyCardsTitle"
+            style="@style/component_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="19dp"
+            android:gravity="center"
+            android:text="@string/only_cards"
+            android:textSize="28sp"/>
+
+        <TextView
+            android:id="@+id/onlyCardsText"
+            style="@style/component_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="@string/this_user_agrees_to_accept_only_cards"
+            android:textSize="18sp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/invitationButton"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="@color/bg_light_blue"
+            android:minWidth="137dp"
+            android:text="@string/go_to"
+            android:textAllCaps="false"
+            android:textColor="@color/bg_main"
+            app:cornerRadius="11dp" />
+    </LinearLayout>
+</merge>

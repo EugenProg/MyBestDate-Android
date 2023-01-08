@@ -618,4 +618,13 @@
     <string name="all_message">All message</string>
     <string name="new_message">New message</string>
     <string name="picture">Picture</string>
+    <string name="typing">typing…</string>
+    <string name="go_to">Go To</string>
+    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">This user craves only real meetings\nand is not ready to waste time on\nlong correspondence</string>
+    <string name="chat_closed">Chat Closed!</string>
+    <string name="you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form">You can always send an\ninvitation in the form of a card,\nin a more convenient form</string>
+    <string name="this_user_agrees_to_accept_only_cards">This user agrees to accept\nonly cards</string>
+    <string name="only_cards">Only cards</string>
+    <string name="type_message">Type message</string>
+    <string name="last_visit">Last visit %s</string>
 </resources>

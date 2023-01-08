@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentInvitationBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.AnsweredInvitationsAdapter
@@ -40,7 +41,10 @@ class AnsweredInvitationFragment :
     override fun onViewClickListener() {
         super.onViewClickListener()
         adapter.userClick = {
-            navController.navigate(InvitationListFragmentDirections.actionGlobalAnotherProfile(it))
+            navController.navigate(
+                InvitationListFragmentDirections
+                    .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
+            )
         }
     }
 

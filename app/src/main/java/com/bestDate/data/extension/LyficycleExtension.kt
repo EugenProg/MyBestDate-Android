@@ -1,8 +1,13 @@
 package com.bestDate.data.extension
 
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bestDate.data.utils.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 
@@ -16,8 +21,14 @@ inline fun LifecycleOwner.postDelayed(
     }
 }
 
-fun <T> LifecycleOwner.observe(liveData: LiveData<T>, observe: (T) -> Unit) {
-    liveData.observe(this, Observer(observe))
+inline fun <T> LifecycleOwner.observe(liveData: LiveData<T>, crossinline observer: (T) -> Unit) {
+    liveData.observe(this) {
+        try {
+            it?.let(observer)
+        } catch (e: Exception) {
+            Logger.print("Observe exception: ${e.message}")
+        }
+    }
 }
 
 fun <T> Fragment.setNavigationResult(key: NavigationResultKey, value: T) {

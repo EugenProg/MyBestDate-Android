@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.swipeDeleteListener
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentChatListBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
@@ -51,11 +52,14 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.toolbar.onProfileClick = {
-            navController.navigate(ChatListFragmentDirections.actionGlobalProfileNavGraphFromChats())
+            navController.navigate(ChatListFragmentDirections.actionGlobalChatListToProfile())
         }
 
         adapter.clickAction = {
-            showMessage(it.user?.name.orEmpty())
+            navController.navigate(
+                ChatListFragmentDirections
+                    .actionGlobalChatListToChat(it.user, BackScreenType.CHAT_LIST)
+            )
         }
     }
 
