@@ -2,23 +2,18 @@ package com.bestDate.view.questionnaire
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
+import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
-import com.bestDate.R
 import com.bestDate.databinding.ViewSurprisingBinding
 
 class SurprisingView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var binding: ViewSurprisingBinding
+    private var binding: ViewSurprisingBinding =
+        ViewSurprisingBinding.inflate(LayoutInflater.from(context), this)
     private var isVisibleSurprise: Boolean = true
-
-    init {
-        val view = View.inflate(context, R.layout.view_surprising, this)
-        binding = ViewSurprisingBinding.bind(view)
-    }
 
     fun showSurprise() {
         if (!isVisibleSurprise) toggle()
@@ -28,7 +23,7 @@ class SurprisingView @JvmOverloads constructor(
         if (isVisibleSurprise) toggle()
     }
 
-    fun toggle() {
+    private fun toggle() {
         with(binding) {
             ok.isVisible = isVisibleSurprise
             surprise.isVisible = !isVisibleSurprise

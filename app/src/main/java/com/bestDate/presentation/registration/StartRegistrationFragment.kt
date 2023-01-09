@@ -30,21 +30,11 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
     override fun onInit() {
         super.onInit()
         with(binding) {
-            nameInput.hint = getString(R.string.name)
-            nameInput.icon = R.drawable.ic_user
             nameInput.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
             nameInput.text = RegistrationHolder.name
 
-            genderInput.hint = getString(R.string.gender)
-            genderInput.icon = R.drawable.ic_gender
             RegistrationHolder.gender?.line?.let { genderInput.text = getString(it) }
-
-            birthInput.hint = getString(R.string.birth_date)
-            birthInput.icon = R.drawable.ic_calendar
             birthInput.text = RegistrationHolder.birthdate?.toStringFormat().orEmpty()
-
-            nextButton.title = getString(R.string.next)
-
         }
 
         datePicker = CalendarView().getDateSelectCalender(
@@ -55,7 +45,7 @@ class StartRegistrationFragment : BaseFragment<FragmentStartRegistrationBinding>
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
-            backButton.setOnClickListener {
+            backButton.onClick = {
                 navController.popBackStack()
             }
             nextButton.onSafeClick = {

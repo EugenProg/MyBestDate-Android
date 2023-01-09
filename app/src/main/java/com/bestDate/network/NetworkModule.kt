@@ -67,6 +67,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun duelsApiService(@Core_network retrofit: Retrofit): DuelsService =
+        retrofit.create(DuelsService::class.java)
+
+    @Provides
+    @Singleton
     fun imageApiService(@Core_network retrofit: Retrofit): ImageApiService =
         retrofit.create(ImageApiService::class.java)
 
@@ -84,6 +89,11 @@ object NetworkModule {
     @Singleton
     fun invitationApiService(@Core_network retrofit: Retrofit): InvitationService =
         retrofit.create(InvitationService::class.java)
+
+    @Provides
+    @Singleton
+    fun chatsApiService(@Core_network retrofit: Retrofit): ChatsService =
+        retrofit.create(ChatsService::class.java)
 
     @Provides
     @Singleton
@@ -114,6 +124,16 @@ object NetworkModule {
     @Singleton
     fun invitationRemoteData(apiService: InvitationService): InvitationsRemoteData =
         InvitationsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun duelsRemoteData(apiService: DuelsService): DuelsRemoteData =
+        DuelsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun chatsRemoteData(apiService: ChatsService): ChatsRemoteData =
+        ChatsRemoteData(apiService)
 
     @Provides
     @Singleton

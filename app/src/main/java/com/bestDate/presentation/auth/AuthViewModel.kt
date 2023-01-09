@@ -8,6 +8,8 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.main.UserUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     private var _validationErrorLiveData = MutableLiveData<Int>()
@@ -39,6 +42,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.refreshUser()
+            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }
     }
 
@@ -46,6 +50,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.refreshUser()
+            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }
     }
 

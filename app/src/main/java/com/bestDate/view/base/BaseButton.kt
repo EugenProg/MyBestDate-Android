@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -16,15 +17,13 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
     private val buttonColor: Int, private val textColor: Int, private val progressColor: Int):
     ConstraintLayout(context, attrs, defStyleAttr) {
 
-    protected var binding: ViewButtonBinding
+    protected var binding: ViewButtonBinding = ViewButtonBinding
+        .inflate(LayoutInflater.from(context), this)
     private var buttonTitle: String = ""
     var onClick: (() -> Unit)? = null
     var onSafeClick: (() -> Unit)? = null
 
     init {
-        val view = View.inflate(context, R.layout.view_button, this)
-        binding = ViewButtonBinding.bind(view)
-
         setAttrs(attrs, R.styleable.BaseButton) {
             title = it.getString(R.styleable.BaseButton_title).orEmpty()
         }

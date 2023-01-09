@@ -8,48 +8,43 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.SeekBar
-import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.bestDate.R
 import com.bestDate.data.extension.onChangeListener
 import com.bestDate.databinding.ViewSeekBarBinding
 import com.bestDate.databinding.ViewSeekBarThumbBinding
 
 class SeekBarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr) {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewSeekBarBinding
+    private val binding: ViewSeekBarBinding =
+        ViewSeekBarBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        val view = View.inflate(context, R.layout.view_seek_bar, this)
-        binding = ViewSeekBarBinding.bind(view)
-
         binding.bar.onChangeListener(progressChanged = onSeekBarChanged())
     }
 
     var progress: Int
-    get() = binding.bar.progress
-    set(value) {
-        binding.bar.progress = value
-    }
+        get() = binding.bar.progress
+        set(value) {
+            binding.bar.progress = value
+        }
 
     var minProgress: Int
-    get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) binding.bar.min else 0
-    set(value) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (binding.bar.max < value) binding.bar.max = value + 10
-            binding.bar.min = value
+        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) binding.bar.min else 0
+        set(value) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (binding.bar.max < value) binding.bar.max = value + 10
+                binding.bar.min = value
+            }
         }
-    }
 
     var maxProgress: Int
-    get() = binding.bar.max
-    set(value) {
-        binding.bar.max = value
-    }
+        get() = binding.bar.max
+        set(value) {
+            binding.bar.max = value
+        }
 
     private fun onSeekBarChanged(): ((SeekBar?, Int, Boolean) -> Unit) {
         return { bar, progress, _ ->

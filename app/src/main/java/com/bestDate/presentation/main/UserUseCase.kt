@@ -12,7 +12,9 @@ import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
+import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
@@ -33,6 +35,8 @@ class UserUseCase @Inject constructor(
     private val guestsUseCase: GuestsUseCase,
     private val userSettingsDao: UserSettingsDao,
     private val blockedUserUseCase: BlockedUserUseCase,
+    private val duelsUseCase: DuelsUseCase,
+    private val chatListUseCase: ChatListUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -61,11 +65,13 @@ class UserUseCase @Inject constructor(
         userDao.delete()
         userSettingsDao.delete()
         likesListUseCase.clearData()
+        duelsUseCase.clearData()
         matchesListUseCase.clearData()
         myDuelsUseCase.clearData()
         invitationUseCase.clearData()
         guestsUseCase.clearData()
         blockedUserUseCase.clearData()
+        chatListUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")

@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.observe
+import com.bestDate.databinding.FragmentConfirmationBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.presentation.base.questionnaire.QuestionnaireViewModel
-import com.bestDate.databinding.FragmentConfirmationBinding
 
 abstract class BaseConfirmationFragment(
     private val question: QuestionnaireQuestion,
@@ -62,11 +63,11 @@ abstract class BaseConfirmationFragment(
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.saveButton.toggleActionEnabled(false)
             showMessage(it.exception.message)
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             binding.saveButton.toggleActionEnabled(it)
         }
     }

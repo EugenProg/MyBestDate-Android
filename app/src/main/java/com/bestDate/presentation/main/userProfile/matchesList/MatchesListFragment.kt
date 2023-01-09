@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentMatchesListBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showMatchActionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,11 +31,13 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
         adapter.itemClick = { item, type ->
             if (type == MatchesSelectType.USER) {
                 navController.navigate(
-                    MatchesListFragmentDirections.actionGlobalAnotherProfile(item.user))
+                    MatchesListFragmentDirections.actionGlobalAnotherProfile(item.user)
+                )
             } else {
                 requireActivity().showMatchActionDialog(item, args.myPhoto, {
                     navController.navigate(
-                        MatchesListFragmentDirections.actionGlobalAnotherProfile(it))
+                        MatchesListFragmentDirections.actionGlobalAnotherProfile(it)
+                    )
                 }, {
                     showMessage("open chat")
                 })
@@ -58,18 +61,18 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        viewModel.matchesList.observe(viewLifecycleOwner) {
+        observe(viewModel.matchesList) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
                 viewModel.matchesList.value.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

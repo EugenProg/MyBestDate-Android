@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.ImageDecoder
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -18,7 +19,10 @@ import android.util.TypedValue
 import android.widget.EditText
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.data.model.BaseResponse
+import com.bestDate.presentation.main.chats.ChatListAdapter
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -40,7 +44,7 @@ fun EditText.textIsChanged(textIsChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
             textIsChanged.invoke(s.toString())
@@ -61,8 +65,9 @@ fun EditText.textInputAsFlow() = callbackFlow {
 
 fun RequestBuilder<Drawable>.imageIsSet(
     owner: LifecycleOwner,
-    imageIsSet: () -> Unit): RequestBuilder<Drawable> {
-    return this.addListener(object : RequestListener<Drawable>{
+    imageIsSet: () -> Unit
+): RequestBuilder<Drawable> {
+    return this.addListener(object : RequestListener<Drawable> {
         override fun onLoadFailed(
             e: GlideException?,
             model: Any?,
@@ -93,13 +98,15 @@ fun Context.vibratePhone() {
         vibrator.vibrate(100)
     }
 }
+
 /**
  * An extension to convert numbers from dp to px
  * */
 fun Int.toPx() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,
     this.toFloat(),
-    Resources.getSystem().displayMetrics).toInt()
+    Resources.getSystem().displayMetrics
+).toInt()
 
 @SuppressLint("SimpleDateFormat")
 fun Date.toStringFormat(): String {
@@ -114,7 +121,7 @@ fun Date.toServerFormat(): String {
 }
 
 val Int?.orZero: Int
-get() = this ?: 0
+    get() = this ?: 0
 
 
 fun Uri?.getBitmap(context: Context): Bitmap? {
@@ -145,8 +152,10 @@ fun Bitmap.toByteArray(): ByteArray {
     return stream.toByteArray()
 }
 
-fun CropLayout.cropListener(success: ((Bitmap) -> Unit)? = null,
-                            failure: ((Exception) -> Unit)? = null) {
+fun CropLayout.cropListener(
+    success: ((Bitmap) -> Unit)? = null,
+    failure: ((Exception) -> Unit)? = null
+) {
     this.addOnCropListener(object : OnCropListener {
         override fun onFailure(e: Exception) {
             failure?.invoke(e)
@@ -169,4 +178,41 @@ fun ResponseBody?.getErrorMessage(): String {
     } catch (e: Exception) {
         e.message.orEmpty()
     }
+}
+
+fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
+    ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START) {
+        val currentScrollOffset = 0
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            if (viewHolder is ChatListAdapter.ChatListItemViewHolder) {
+                deleteAction.invoke(viewHolder.adapterPosition)
+            }
+        }
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            if (viewHolder is ChatListAdapter.ChatListItemViewHolder &&
+                actionState == ItemTouchHelper.ACTION_STATE_SWIPE
+            ) {
+                val scrollOffset = currentScrollOffset + (-dX).toInt()
+                viewHolder.itemView.scrollTo(scrollOffset, 0)
+            }
+        }
+    }).attachToRecyclerView(this)
 }

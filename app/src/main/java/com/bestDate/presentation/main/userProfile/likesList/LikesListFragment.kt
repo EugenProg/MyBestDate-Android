@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentLikesListBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LikesListFragment: BaseVMFragment<FragmentLikesListBinding, LikesListViewModel>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLikesListBinding = {
-        inflater, parent, attach -> FragmentLikesListBinding.inflate(inflater, parent, attach)
-    }
+class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesListViewModel>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLikesListBinding =
+        { inflater, parent, attach ->
+            FragmentLikesListBinding.inflate(inflater, parent, attach)
+        }
     override val viewModelClass: Class<LikesListViewModel> = LikesListViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
@@ -46,17 +48,18 @@ class LikesListFragment: BaseVMFragment<FragmentLikesListBinding, LikesListViewM
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        viewModel.likesList.observe(viewLifecycleOwner) {
+        observe(viewModel.likesList) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
-                viewModel.likesList.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
+                viewModel.likesList.value.isNullOrEmpty()
+            ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

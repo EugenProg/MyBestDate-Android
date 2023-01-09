@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.SheetOneLineQuestionnaireBinding
+import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 import com.bestDate.view.base.BaseBottomSheet
 
 class OneLineQuestionnaireSheet : BaseBottomSheet<SheetOneLineQuestionnaireBinding>() {
@@ -44,7 +45,7 @@ class OneLineQuestionnaireSheet : BaseBottomSheet<SheetOneLineQuestionnaireBindi
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        itemList.observe(viewLifecycleOwner) {
+        observe(itemList) {
             adapter.submitList(it.toMutableList())
         }
     }

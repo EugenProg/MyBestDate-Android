@@ -122,7 +122,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     private fun makeStatusBarOffset(offsetView: View) {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
             val top = insets.getInsets(WindowInsetsCompat.Type.systemGestures()).top
-            offsetView.setMarginTop(top ?: 0)
+            offsetView.setMarginTop(top)
             insets
         }
     }

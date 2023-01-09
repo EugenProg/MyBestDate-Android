@@ -31,6 +31,12 @@ fun Date.toShortString(): String {
     return formatter.format(this)
 }
 
+@SuppressLint("SimpleDateFormat")
+fun Date.toWeekday(): String {
+    val formatter = SimpleDateFormat("EE")
+    return formatter.format(this)
+}
+
 fun getDiffYears(first: Date, last: Date): Int {
     val a = getCalendar(first) ?: return 0
     val b = getCalendar(last) ?: return 0

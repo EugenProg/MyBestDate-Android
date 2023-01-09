@@ -14,32 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <com.bestDate.view.button.BackButtonView
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/back"
-                style="@style/text"
-                android:layout_width="wrap_content"
-                android:layout_margin="7dp"
-                android:text="@string/back"
-                android:textColor="@color/white" />
-        </LinearLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/skipButton"
@@ -58,7 +38,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="5dp"
             android:fontFamily="@font/bold"
             android:text="@string/let_s_start"
             android:textColor="@color/white"

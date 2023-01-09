@@ -34,6 +34,7 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:text="@string/skip"
+        android:background="?selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />

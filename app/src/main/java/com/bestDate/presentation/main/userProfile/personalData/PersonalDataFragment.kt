@@ -3,8 +3,9 @@ package com.bestDate.presentation.main.userProfile.personalData
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentPersonalDataBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,29 +76,29 @@ class PersonalDataFragment : BaseVMFragment<FragmentPersonalDataBinding, Persona
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.personalInfo.setUser(it, childFragmentManager)
             binding.location.text = it?.getUserLocation()
         }
-        viewModel.userSaveSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.userSaveSuccessLiveData) {
             binding.personalInfo.userDataIsSaved()
         }
-        viewModel.emailCodeSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.emailCodeSuccessLiveData) {
             loader.stopLoading()
             binding.personalInfo.showEmailOtp()
         }
-        viewModel.emailSaveSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.emailSaveSuccessLiveData) {
             binding.personalInfo.emailIsSaved()
         }
-        viewModel.phoneCodeSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.phoneCodeSuccessLiveData) {
             loader.stopLoading()
             binding.personalInfo.showPhoneOtp()
         }
-        viewModel.phoneSaveSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.phoneSaveSuccessLiveData) {
             loader.stopLoading()
             binding.personalInfo.phoneIsSaved()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }

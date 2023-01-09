@@ -51,9 +51,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/onboardStartFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -65,9 +63,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/onboardSecondFragment"
-            app:popUpToInclusive="true" />
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/authFragment"
@@ -402,13 +398,13 @@
             app:startDestination="@id/chatsFragment">
             <fragment
                 android:id="@+id/chatsFragment"
-                android:name="com.bestDate.presentation.main.chats.ChatsFragment"
+                android:name="com.bestDate.presentation.main.chats.ChatListFragment"
                 android:label="ChatsFragment" />
             <action
                 android:id="@+id/action_global_profile_nav_graph_from_chats"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph4"
+                android:id="@+id/action_global_another_profile_nav_graph_from_chats"
                 app:destination="@id/another_profile_nav_graph" />
         </navigation>
         <navigation
@@ -427,11 +423,23 @@
         </navigation>
         <navigation
             android:id="@+id/top_nav_graph"
-            app:startDestination="@id/topFragment">
+            app:startDestination="@id/duelsFragment">
             <fragment
-                android:id="@+id/topFragment"
-                android:name="com.bestDate.presentation.main.top.TopFragment"
-                android:label="TopFragment" />
+                android:id="@+id/myTopDuelsFragment"
+                android:name="com.bestDate.presentation.main.duels.MyTopDuelsFragment"
+                android:label="MyTopDuelsFragment" />
+            <fragment
+                android:id="@+id/duelsFragment"
+                android:name="com.bestDate.presentation.main.duels.DuelsFragment"
+                android:label="DuelsFragment">
+                <action
+                    android:id="@+id/action_profile_to_myTopDuels"
+                    app:destination="@id/myTopDuelsFragment"
+                    app:enterAnim="@anim/push_up_in"
+                    app:exitAnim="@anim/push_up_out"
+                    app:popEnterAnim="@anim/push_down_in"
+                    app:popExitAnim="@anim/push_down_out" />
+            </fragment>
             <action
                 android:id="@+id/action_global_profile_nav_graph_from_top"
                 app:destination="@id/profile_nav_graph" />

@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentBlockedUsersBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,20 +58,20 @@ class BlockedUsersFragment : BaseVMFragment<FragmentBlockedUsersBinding, Blocked
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.blockedUsersList.observe(viewLifecycleOwner) {
+        observe(viewModel.blockedUsersList) {
             adapter.submitList(it) {
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.unlockSuccessfulLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.unlockSuccessfulLiveData) {
             loader.stopLoading()
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (viewModel.blockedUsersList.value.isNullOrEmpty()) binding.noDataView.toggleLoading(
                 it
             )
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
             loader.stopLoading()
             binding.noDataView.toggleLoading(false)

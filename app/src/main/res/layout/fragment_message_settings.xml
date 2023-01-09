@@ -24,7 +24,7 @@
         android:padding="16dp"
         android:textColor="@color/white"
         android:text="@string/close"
-        android:background="?selectableItemBackground"
+        android:background="?selectableItemBackgroundBorderless"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

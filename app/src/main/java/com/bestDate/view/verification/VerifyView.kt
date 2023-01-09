@@ -15,7 +15,9 @@ class VerifyView @JvmOverloads constructor(
 
     var isVerified: Boolean? = false
         set(value) {
-            binding.verifyImageView.setImageResource(if (value == true) R.drawable.ic_verify_active else R.drawable.ic_verify)
+            binding.verifyImageView.setImageResource(
+                if (value == true) R.drawable.ic_verify_active else R.drawable.ic_verify
+            )
             field = value
         }
 

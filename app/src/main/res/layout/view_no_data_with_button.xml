@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="50dp"
+        android:background="#293236"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sad" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/component_title"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:textSize="32sp"
+                tools:text="You dont have any match yet" />
+
+            <TextView
+                android:id="@+id/desc"
+                style="@style/component_text"
+                android:gravity="center"
+                android:textColor="@color/bg_pink"
+                android:textSize="14sp"
+                tools:text="You voted for all the photos" />
+
+            <com.bestDate.view.ButtonTopView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
+
+            <TextView
+                android:id="@+id/directionsText"
+                style="@style/component_text"
+                android:layout_marginTop="-10dp"
+                android:gravity="center"
+                android:textSize="16sp"
+                tools:text="But you can also go to the Top 50" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/white"
+            tools:visibility="gone" />
+
+    </FrameLayout>
+</merge>
