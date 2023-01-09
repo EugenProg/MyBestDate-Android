@@ -74,7 +74,7 @@ class ChatListUseCase @Inject constructor(
         Chat(id = -1, last_message = Message(id = R.string.all_message), type = ChatItemType.HEADER)
 
     fun clearData() {
-        chatList.value = mutableListOf()
-        hasNewChats.value = false
+        chatList.postValue(mutableListOf())
+        hasNewChats.postValue(false)
     }
 }
