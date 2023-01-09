@@ -49,7 +49,7 @@ class MessageSettingsFragment :
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.userSettings) {
-            binding.switchView.setChecked(it?.block_messages)
+            binding.switchView.setChecked(it.block_messages)
         }
         observe(viewModel.saveLiveData) {
             viewModel.setNotFirstEnter()

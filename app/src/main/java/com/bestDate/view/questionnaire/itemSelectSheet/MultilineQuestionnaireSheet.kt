@@ -30,14 +30,13 @@ class MultilineQuestionnaireSheet : BaseBottomSheet<SheetMultilineQuestionnaireB
 
     private var itemList: MutableLiveData<MutableList<QuestionnaireAnswer>> = MutableLiveData()
     private lateinit var adapter: MultiSelectQuestionnaireAdapter
-    var onClose: ((items: String) -> Unit)? = null
+    var onSave: ((items: String) -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
         adapter = MultiSelectQuestionnaireAdapter(itemClick())
         with(binding) {
             title.text = getString(question.questionInfo?.question.orZero)
-            percentNumber.text = question.questionInfo?.percent.orZero.toString()
 
             itemList.layoutManager = LinearLayoutManager(context)
             itemList.adapter = adapter
@@ -48,7 +47,7 @@ class MultilineQuestionnaireSheet : BaseBottomSheet<SheetMultilineQuestionnaireB
 
     override fun onViewClickListener() {
         super.onViewClickListener()
-        binding.cancelButton.setOnSaveClickListener { this.dismiss() }
+        binding.saveButton.setOnSaveClickListener { save() }
     }
 
     override fun onViewLifecycle() {
@@ -84,7 +83,11 @@ class MultilineQuestionnaireSheet : BaseBottomSheet<SheetMultilineQuestionnaireB
 
     override fun onCancel(dialog: DialogInterface) {
         super.onCancel(dialog)
+        save()
+    }
+
+    private fun save() {
         val answer = answersList.joinToString()
-        onClose?.invoke(answer)
+        onSave?.invoke(answer)
     }
 }

@@ -65,11 +65,9 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
             binding.changeLanguageButton.buttonTitle = it?.language
         }
         observe(viewModel.userSettings) {
-            it?.let {
-                binding.blockingMessagesSwitch.setChecked(it.block_messages)
-                binding.matchParticipationSwitch.setChecked(it.matchParticipation)
-                binding.notificationSettings.setNotificationSettings(it.notifications)
-            }
+            binding.blockingMessagesSwitch.setChecked(it.block_messages)
+            binding.matchParticipationSwitch.setChecked(it.matchParticipation)
+            binding.notificationSettings.setNotificationSettings(it.notifications)
         }
         observe(viewModel.loadingMode) {
             if (it && viewModel.userSettings.value == null) loader.startLoading()

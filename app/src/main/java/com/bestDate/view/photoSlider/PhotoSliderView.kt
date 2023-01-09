@@ -34,7 +34,7 @@ class PhotoSliderView @JvmOverloads constructor(
             pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             pager.offscreenPageLimit = 1
             pager.adapter = adapter
-            TabLayoutMediator(tabLayout, pager) { tab, position ->
+            TabLayoutMediator(tabLayout, pager) { tab, _ ->
                 tab.view.isClickable = true
             }.attach()
             pager.onPageChanged {
