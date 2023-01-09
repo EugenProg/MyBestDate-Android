@@ -213,7 +213,7 @@ abstract class BaseQuestionnaireFragment :
                     val multiLineSheet = MultilineQuestionnaireSheet()
                     multiLineSheet.setInfo(question)
                     multiLineSheet.show(childFragmentManager, multiLineSheet.tag)
-                    multiLineSheet.onClose = {
+                    multiLineSheet.onSave = {
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                         multiLineSheet.dismiss()
                     }
