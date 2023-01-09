@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/messageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/user_message_background"
+        android:orientation="vertical"
+        android:paddingHorizontal="18dp"
+        android:paddingVertical="9dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parentMessageBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp">
+
+            <ImageView
+                android:id="@+id/imageView26"
+                android:layout_width="19dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_reply_white"
+                app:layout_constraintBottom_toBottomOf="@+id/parent_message"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/parent_message"
+                app:tint="@color/bg_main" />
+
+            <TextView
+                android:id="@+id/parent_message"
+                style="@style/component_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="28dp"
+                android:maxLines="3"
+                android:textColor="@color/main_70"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/interesting_communication" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#1c283034"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/parent_message" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/message"
+            style="@style/component_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/bg_main"
+            android:textSize="18sp"
+            tools:text="@string/this_is_necessary_so_that_we_can_make_a_more_suitable_selection" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white_80"
+        android:textSize="16sp"
+        tools:text="4:13" />
+</LinearLayout>
