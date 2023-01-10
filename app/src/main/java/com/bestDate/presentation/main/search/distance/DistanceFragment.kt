@@ -43,11 +43,11 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
         binding.bar.run {
             minProgress = 0
             maxProgress = 300
-            progress = 150
+            progress = getHalfDistance()
         }
     }
 
-    private fun getDistance(): Int {
+    private fun getHalfDistance(): Int {
         val max = binding.bar.maxProgress
         val min = binding.bar.minProgress
         return min + ((max - min) / 2)
@@ -62,7 +62,7 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
             selectedLocation = it
         }
         binding.saveButton.setOnSaveClickListener {
-            saveClick?.invoke(selectedLocation, getDistance())
+            saveClick?.invoke(selectedLocation, binding.bar.progress)
         }
     }
 
