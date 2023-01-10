@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginStart="60dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="18dp"
         android:background="@drawable/my_message_background"
         android:orientation="vertical"
@@ -20,7 +21,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/parentMessageBox"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp">
 
@@ -36,27 +37,28 @@
             <TextView
                 android:id="@+id/parent_message"
                 style="@style/component_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="28dp"
-                android:maxLines="3"
+                android:layout_marginBottom="6dp"
+                android:singleLine="true"
+                android:layout_marginStart="8dp"
                 android:textColor="@color/white_70"
                 android:textSize="16sp"
-                android:layout_marginBottom="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView26"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/thanks_but_i_cant_yet" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="#80f4f8fa"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/parentLine"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#80f4f8fa"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/message"
@@ -64,7 +66,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:gravity="end"
             android:text="@string/this_is_necessary_so_that_we_can_make_a_more_suitable_selection"
             android:textColor="@color/white"
             android:textSize="18sp" />
@@ -75,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_vertical|end"
         android:orientation="horizontal">
 

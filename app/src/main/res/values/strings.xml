@@ -627,4 +627,6 @@
     <string name="only_cards">Only cards</string>
     <string name="type_message">Type message</string>
     <string name="last_visit">Last visit %s</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

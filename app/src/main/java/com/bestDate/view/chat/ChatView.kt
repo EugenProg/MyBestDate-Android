@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ViewChatBinding
@@ -15,10 +16,11 @@ class ChatView @JvmOverloads constructor(
 
     private val binding: ViewChatBinding =
         ViewChatBinding.inflate(LayoutInflater.from(context), this)
-    private val messageList: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    private var messageList: MutableList<Message> = mutableListOf()
     private var parentMessage: Message? = null
     private var user: ShortUserData? = null
     private var editMode: Boolean = false
+    private var adapter: ChatAdapter = ChatAdapter()
 
     var showInvitationClick: (() -> Unit)? = null
     var sendClick: ((text: String, parentId: Int?) -> Unit)? = null
@@ -47,6 +49,10 @@ class ChatView @JvmOverloads constructor(
             chatInvitation.goToClick = {
                 showInvitationClick?.invoke()
             }
+
+            messagesListView.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
+            messagesListView.adapter = adapter
         }
     }
 
@@ -57,14 +63,15 @@ class ChatView @JvmOverloads constructor(
 
     private fun setVisibility() {
         with(binding) {
-            topPanelView.setVisibility(user, messageList.value?.isNotEmpty() == true)
-            chatInvitation.setVisibility(user, messageList.value?.isNotEmpty() == true)
+            topPanelView.setVisibility(user, messageList.isNotEmpty())
+            chatInvitation.setVisibility(user, messageList.isNotEmpty())
             bottomPanelView.setUser(user)
         }
     }
 
     fun setMessages(messages: MutableList<Message>?) {
-        messageList.value = messages ?: mutableListOf()
+        messageList = messages ?: mutableListOf()
+        adapter.submitList(messageList)
         setVisibility()
     }
 

@@ -1,10 +1,14 @@
 package com.bestDate.presentation.main.chats.chat
 
 import androidx.lifecycle.MutableLiveData
+import com.bestDate.data.extension.getDateString
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.Message
+import com.bestDate.data.model.ParentMessage
+import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -14,9 +18,12 @@ import javax.inject.Singleton
 
 @Singleton
 class ChatUseCase @Inject constructor(
+    private val userDao: UserDao,
     private val chatsRemoteData: ChatsRemoteData
 ) {
-    var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData(mutableListOf())
+    var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    private var originalList: MutableList<Message>? = null
+    private var myId: Int? = null
 
     suspend fun sendTextMessage(recipientId: Int?, parentId: Int?, text: String) {
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
@@ -70,8 +77,74 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.getChatMessages(userId.orZero)
         if (response.isSuccessful) {
             response.body()?.let {
-                messages.postValue(it.data)
+                messages.postValue(transformMessageList(it.data))
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
+    }
+    
+    private fun transformMessageList(messages: MutableList<Message>?) : MutableList<Message> {
+        val list: MutableList<Message> = mutableListOf()
+        originalList = messages
+        getUser()
+        var dateId = -1
+        
+        messages?.forEachIndexed { index, message -> 
+            val next = if (index > 0) messages[index - 1]  else null
+            val previous = if (index == messages.lastIndex) null else messages[index + 1]
+            var dateItem: Message? = null
+
+            var type = getMessageType(message, previous, true)
+            if (type == ChatItemType.DATE) {
+                dateItem = Message(id = dateId, created_at = message.created_at, viewType = type)
+                type = getMessageType(message, previous, false)
+                dateId--
+            }
+
+            list.add(
+                message.transform(type, getParentMessage(message.parent_id), checkIsLast(message, next))
+            )
+
+            dateItem?.let {
+                list.add(it)
+            }
+        }
+        
+        return list
+    }
+
+    private fun getUser() {
+        if (myId == null) myId = userDao.getUser()?.id
+    }
+
+    private fun getMessageType(current: Message?, previous: Message?, withDate: Boolean) : ChatItemType {
+        return when {
+            withDate && isNextDate(current?.created_at, previous?.created_at) -> ChatItemType.DATE
+            current?.sender_id != myId -> {
+                if (current?.image == null) ChatItemType.USER_TEXT_MESSAGE
+                else ChatItemType.USER_IMAGE_MESSAGE
+            }
+            else -> {
+                if (current?.image == null) ChatItemType.MY_TEXT_MESSAGE
+                else ChatItemType.MY_IMAGE_MESSAGE
+            }
+        }
+    }
+
+    private fun isNextDate(firstDate: String?, secondDate: String?): Boolean {
+        return firstDate.getDateString() != secondDate.getDateString()
+    }
+
+    private fun getParentMessage(parentId: Int?): ParentMessage? {
+        if (parentId == null) return null
+        val message = originalList?.firstOrNull { it.id == parentId } ?: return null
+        return ParentMessage(
+            message.id,
+            message.text,
+            message.image
+        )
+    }
+
+    private fun checkIsLast(current: Message?, next: Message?): Boolean {
+        return current?.sender_id != next?.sender_id || (isNextDate(current?.created_at, next?.created_at))
     }
 }
