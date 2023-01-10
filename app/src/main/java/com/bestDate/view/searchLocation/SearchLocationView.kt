@@ -3,6 +3,7 @@ package com.bestDate.view.searchLocation
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -25,6 +26,7 @@ class SearchLocationView @JvmOverloads constructor(
         ViewSearchLocationBinding.inflate(LayoutInflater.from(context), this)
     private val autoComplete = LocationAutocompleteUtil(context)
     private lateinit var adapter: SearchResultsAdapter
+    var onFocusChanged: ((Boolean) -> Unit)? = null
 
     var selectAction: ((CityListItem) -> Unit)? = null
 
@@ -38,12 +40,17 @@ class SearchLocationView @JvmOverloads constructor(
         adapter.itemClick = {
             binding.input.setText(it.getLocation())
             selectAction?.invoke(it)
+            binding.input.clearFocus()
             this.hideKeyboard()
+        }
+        binding.input.setOnFocusChangeListener { view, b ->
+            onFocusChanged?.invoke(b)
         }
 
         binding.locationListView.layoutManager = LinearLayoutManager(context)
         binding.locationListView.adapter = adapter
     }
+
 
     fun initSearching(
         scope: CoroutineScope,
@@ -75,6 +82,10 @@ class SearchLocationView @JvmOverloads constructor(
     private fun getStyleById(id: Int): SearchStyle {
         return if (id == 0) SearchStyle.LIGHT
         else SearchStyle.DARK
+    }
+
+    fun hidePoweredByGoogle() {
+        binding.textView23.visibility = View.GONE
     }
 
     enum class SearchStyle(

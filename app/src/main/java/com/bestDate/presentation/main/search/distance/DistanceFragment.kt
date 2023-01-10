@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.search.distance
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -20,9 +21,10 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
     override val statusBarLight = false
     override val navBarLight = false
     override val navBarColor = R.color.bg_main
+    override val statusBarColor = R.color.bg_main
 
     var backClick: (() -> Unit)? = null
-    var saveClick: ((CityListItem?) -> Unit)? = null
+    var saveClick: ((CityListItem?, Int) -> Unit)? = null
     override var customBackNavigation = true
 
     override fun onInit() {
@@ -32,7 +34,23 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
             viewLifecycleOwner,
             userLocation
         )
+        binding.searchView.hidePoweredByGoogle()
+        binding.searchView.onFocusChanged = {
+            binding.seekBar.isVisible = !it
+        }
         loader = LoaderDialog(requireActivity())
+
+        binding.bar.run {
+            minProgress = 0
+            maxProgress = 300
+            progress = 150
+        }
+    }
+
+    private fun getDistance(): Int {
+        val max = binding.bar.maxProgress
+        val min = binding.bar.minProgress
+        return min + ((max - min) / 2)
     }
 
     override fun onViewClickListener() {
@@ -44,7 +62,7 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
             selectedLocation = it
         }
         binding.saveButton.setOnSaveClickListener {
-            saveClick?.invoke(selectedLocation)
+            saveClick?.invoke(selectedLocation, getDistance())
         }
     }
 

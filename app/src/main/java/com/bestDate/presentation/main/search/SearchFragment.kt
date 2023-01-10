@@ -39,6 +39,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     override val statusBarLight = false
     override val navBarLight = false
     private var additionalFilters: AdditionalFilters? = null
+    private var distance = 150
 
     override fun onInit() {
         super.onInit()
@@ -76,7 +77,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             setUpAdditionalFiltersView(it?.location?.city)
         }
         viewModel.locationLiveData.observe(viewLifecycleOwner) {
-            additionalFilters = AdditionalFilters(LocationParams(5, it?.lat, it?.lon))
+            additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
             clearData()
             getUsersByFilterInitial()
         }
@@ -85,7 +86,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpAdditionalFiltersView(location: String?) {
         binding.filtersView.setOnSaveClickListener {
             distanceFragment = DistanceFragment(location)
-            distanceFragment.saveClick = { viewModel.getLocationByAddress(it) }
+            distanceFragment.saveClick = { location, distance ->
+                viewModel.getLocationByAddress(location)
+                this.distance = distance
+            }
             distanceFragment.backClick = { closePage(distanceFragment) }
             childFragmentManager.commit {
                 setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
