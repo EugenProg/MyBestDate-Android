@@ -40,8 +40,8 @@ class SearchLocationView @JvmOverloads constructor(
         adapter.itemClick = {
             binding.input.setText(it.getLocation())
             selectAction?.invoke(it)
-            binding.input.clearFocus()
             this.hideKeyboard()
+            binding.input.clearFocus()
         }
         binding.input.setOnFocusChangeListener { view, b ->
             onFocusChanged?.invoke(b)
@@ -85,7 +85,7 @@ class SearchLocationView @JvmOverloads constructor(
     }
 
     fun hidePoweredByGoogle() {
-        binding.textView23.visibility = View.GONE
+        binding.textViewPoweredByGoogle.visibility = View.GONE
     }
 
     enum class SearchStyle(
