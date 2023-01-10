@@ -163,3 +163,7 @@ data class DuelVoteRequest(
     val winning_photo: Int,
     val loser_photo: Int
 )
+
+data class UpdateMessageRequest(
+    val text: String
+)

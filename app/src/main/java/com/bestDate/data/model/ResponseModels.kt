@@ -126,6 +126,8 @@ data class ShortUserData(
     fun getLocation(): String {
         return "${location?.country.orEmpty()}, ${location?.city.orEmpty()}"
     }
+
+    fun isBot() = role == "bot"
 }
 
 data class FilterOptions(
@@ -257,3 +259,64 @@ data class DuelProfile(
     val user: ShortUserData? = null,
     val location: LocationDB? = null
 )
+
+data class ChatListResponse(
+    var data: MutableList<Chat>? = mutableListOf()
+) : BaseResponse()
+
+data class Chat(
+    var id: Int? = null,
+    var user: ShortUserData? = null,
+    var last_message: Message? = null,
+    var type: ChatItemType? = null
+) {
+    fun transform(itemType: ChatItemType): Chat {
+        return Chat(
+            user?.id,
+            user,
+            last_message,
+            if (user?.isBot() == true) ChatItemType.BOT else itemType
+        )
+    }
+
+    fun getLastMessageTime(): String {
+        val created = last_message?.created_at
+        return if (created.isToday()) created.getTime()
+        else {
+            val date = created.getDateWithTimeOffset()
+            val days = getDaysBetween(Date(), date)
+            if (days > 6) date.toShortString()
+            else date.toWeekday()
+        }
+    }
+}
+
+enum class ChatItemType {
+    HEADER, NEW_ITEM, OLD_ITEM, BOT
+}
+
+data class Message(
+    var id: Int? = null,
+    var sender_id: Int? = null,
+    var recipient_id: Int? = null,
+    var parent_id: Int? = null,
+    var text: String? = null,
+    var image: ChatImage? = null,
+    var read_at: String? = null,
+    var created_at: String? = null
+)
+
+data class ChatImage(
+    var id: Int? = null,
+    var full_url: String? = null,
+    var thumb_url: String? = null
+)
+
+data class ChatMessagesResponse(
+    val data: MutableList<Message>? = mutableListOf(),
+    val meta: Meta? = null
+) : BaseResponse()
+
+data class SendMessageResponse(
+    val data: Message? = null
+) : BaseResponse()

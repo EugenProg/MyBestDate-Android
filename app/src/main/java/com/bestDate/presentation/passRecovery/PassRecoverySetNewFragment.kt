@@ -3,6 +3,7 @@ package com.bestDate.presentation.passRecovery
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentPassRecoverySetNewBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,13 +37,13 @@ class PassRecoverySetNewFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             binding.saveButton.toggleActionEnabled(it)
         }
-        viewModel.recoveryLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.recoveryLiveData) {
             chooseRoute()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
     }

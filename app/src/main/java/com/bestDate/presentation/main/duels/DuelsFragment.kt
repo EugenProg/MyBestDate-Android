@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -27,10 +29,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
 
     override fun onInit() {
         super.onInit()
-        binding.resultView.visibility = View.INVISIBLE
-        binding.noDataView.setTitle(R.string.duels_are_over)
-        binding.noDataView.setDesc(R.string.you_voted_for_all_the_photos)
-        binding.noDataView.setDirectionsText(R.string.but_you_can_also_go_to_the_top)
+        binding.resultView.visibility = View.GONE
         setUpToolbar()
         setUpFilterButtons()
     }
@@ -61,7 +60,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        viewModel.duelsLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.duelsLiveData) {
             binding.duelView.isVisible = it?.isEmpty() != true
             binding.noDataView.isVisible = it?.isEmpty() == true
             binding.noDataView.noData = it?.isEmpty() == true
@@ -70,25 +69,26 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 setUpElement(binding.secondDuelElementView, it[1], it.first())
             }
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.selectorView.lookFor = it?.look_for?.first()
+            binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
             gender =
                 if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
             reload()
         }
-        viewModel.duelsResultLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.duelsResultLiveData) {
             binding.resultView.visibility = View.VISIBLE
             binding.resultView.duelProfiles = it
             reload()
         }
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             if (viewModel.duelsLiveData.value.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
 
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }

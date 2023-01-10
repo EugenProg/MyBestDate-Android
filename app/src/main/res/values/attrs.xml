@@ -41,6 +41,13 @@
         <attr name="start_with_loading" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="NoDataViewWithButton">
+        <attr name="no_data_text_title" format="string"/>
+        <attr name="no_data_text_desc" format="string"/>
+        <attr name="no_data_text_direction" format="string"/>
+        <attr name="start_it_with_loading" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="QuestionnaireTitleView">
         <attr name="questionnaire_title" format="string"/>
     </declare-styleable>

@@ -599,6 +599,7 @@
     <string name="you_dont_have_any_blocked_users_yet">You don\'t have any blocked users yet</string>
     <string name="attention">Attention</string>
     <string name="all_your_data_will_be_deleted">All of your data, including your account, will be deleted</string>
+    <string name="this_chat_will_be_deleted">The chat with %s, including all messages, will be deleted</string>
     <string name="enter_email">Enter Email</string>
     <string name="close">Close</string>
     <string name="this_will_be_your_best_date">this will be your best date</string>
@@ -614,4 +615,7 @@
     <string name="duels">Duels</string>
     <string name="you_have_no_guests_yet">You have no guests yet</string>
     <string name="bd_coin">BD coin</string>
+    <string name="all_message">All message</string>
+    <string name="new_message">New message</string>
+    <string name="picture">Picture</string>
 </resources>

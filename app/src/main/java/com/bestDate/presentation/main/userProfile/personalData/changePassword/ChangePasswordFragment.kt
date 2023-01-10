@@ -3,8 +3,9 @@ package com.bestDate.presentation.main.userProfile.personalData.changePassword
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.databinding.FragmentChangePasswordBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +35,10 @@ class ChangePasswordFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.successLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.successLiveData) {
             showMessage(R.string.save_successfully)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
     }

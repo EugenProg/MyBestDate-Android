@@ -92,6 +92,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun chatsApiService(@Core_network retrofit: Retrofit): ChatsService =
+        retrofit.create(ChatsService::class.java)
+
+    @Provides
+    @Singleton
     fun geocodingApiService(@Geocoding_network retrofit: Retrofit): GeocodingService =
         retrofit.create(GeocodingService::class.java)
 
@@ -122,11 +127,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
-        GeocodingRemoteData(apiService)
+    fun duelsRemoteData(apiService: DuelsService): DuelsRemoteData =
+        DuelsRemoteData(apiService)
 
     @Provides
     @Singleton
-    fun duelsRemoteData(apiService: DuelsService): DuelsRemoteData =
-        DuelsRemoteData(apiService)
+    fun chatsRemoteData(apiService: ChatsService): ChatsRemoteData =
+        ChatsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
+        GeocodingRemoteData(apiService)
 }

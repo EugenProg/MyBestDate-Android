@@ -12,6 +12,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.AdditionalFilters
+import com.bestDate.data.extension.observe
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.LocationParams
@@ -50,7 +51,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         super.onViewLifecycle()
         clearData()
         getAllUsers()
-        viewModel.usersListLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.usersListLiveData) {
             adapter.perPage = viewModel.perPage
             adapter.total = viewModel.total
             adapter.submitList(it) {
@@ -60,12 +61,12 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             if (::distanceFragment.isInitialized) closePage(distanceFragment)
         }
 
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             if (!binding.swipeRefresh.isRefreshing &&
                 viewModel.usersListLiveData.value.isNullOrEmpty()
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             locationMap = viewModel.getLocationMap(requireContext())
             statusesMap = viewModel.getStatusesMap(requireContext())

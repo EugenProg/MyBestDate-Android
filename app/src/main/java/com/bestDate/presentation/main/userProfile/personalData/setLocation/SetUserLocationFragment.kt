@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.CityListItem
@@ -55,12 +56,12 @@ class SetUserLocationFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.saveSuccessfulLivaData.observe(viewLifecycleOwner) {
+        observe(viewModel.saveSuccessfulLivaData) {
             loader.stopLoading()
             showMessage(R.string.save_successfully)
             goBack()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             loader.stopLoading()
             showMessage(it.exception.message)
         }
