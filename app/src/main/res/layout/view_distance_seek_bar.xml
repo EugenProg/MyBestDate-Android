@@ -23,22 +23,21 @@
             android:layout_width="10dp"
             android:layout_height="10dp"
             android:layout_marginEnd="42dp"
-            android:src="@drawable/circle_white"
+            android:src="@drawable/circle_grey"
             app:layout_constraintBottom_toTopOf="@+id/textViewFirst"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/white_20" />
+            />
 
         <View
             android:layout_width="0dp"
             android:layout_height="5.5dp"
             android:layout_marginHorizontal="7dp"
-            android:background="@color/white_20"
+            android:background="@color/gray_787C7E"
             app:layout_constraintBottom_toTopOf="@+id/textViewFirst"
             app:layout_constraintEnd_toEndOf="@+id/imageView7"
             app:layout_constraintStart_toStartOf="@+id/imageView8"
             app:layout_constraintTop_toTopOf="parent" />
-
         <TextView
             android:id="@+id/textViewFirst"
             style="@style/component_text"

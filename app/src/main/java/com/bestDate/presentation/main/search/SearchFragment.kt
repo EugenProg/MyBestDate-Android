@@ -17,6 +17,7 @@ import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchBinding
 import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
@@ -39,7 +40,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     override val statusBarLight = false
     override val navBarLight = false
     private var additionalFilters: AdditionalFilters? = null
-    private var distance = 150
+    private var distance = -1
+    private var selectedLocation: CityListItem? = null
 
     override fun onInit() {
         super.onInit()
@@ -86,8 +88,12 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpAdditionalFiltersView(location: String?) {
         binding.filtersView.setOnSaveClickListener {
             distanceFragment = DistanceFragment(location)
+            distanceFragment.selectedLocation = selectedLocation
+            distanceFragment.distance = distance
+
             distanceFragment.saveClick = { location, distance ->
                 viewModel.getLocationByAddress(location)
+                this.selectedLocation = location
                 this.distance = distance
             }
             distanceFragment.backClick = { closePage(distanceFragment) }

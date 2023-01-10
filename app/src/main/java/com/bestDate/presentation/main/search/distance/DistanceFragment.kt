@@ -16,7 +16,8 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDistanceBinding =
         { inflater, parent, attach -> FragmentDistanceBinding.inflate(inflater, parent, attach) }
     private lateinit var loader: LoaderDialog
-    private var selectedLocation: CityListItem? = null
+    var selectedLocation: CityListItem? = null
+    var distance = -1
 
     override val statusBarLight = false
     override val navBarLight = false
@@ -32,7 +33,8 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
         binding.searchView.initSearching(
             lifecycleScope,
             viewLifecycleOwner,
-            userLocation
+            if (selectedLocation == null) userLocation
+            else selectedLocation?.getLocation()
         )
         binding.searchView.hidePoweredByGoogle()
         binding.searchView.onFocusChanged = {
@@ -43,7 +45,7 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
         binding.bar.run {
             minProgress = 0
             maxProgress = 300
-            progress = getHalfDistance()
+            progress = if (distance == -1) getHalfDistance() else distance
         }
     }
 
@@ -62,7 +64,11 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
             selectedLocation = it
         }
         binding.saveButton.setOnSaveClickListener {
-            saveClick?.invoke(selectedLocation, binding.bar.progress)
+            if (selectedLocation == null) {
+                goBack()
+            } else {
+                saveClick?.invoke(selectedLocation, binding.bar.progress)
+            }
         }
     }
 
