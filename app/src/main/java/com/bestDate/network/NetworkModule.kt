@@ -32,13 +32,12 @@ object NetworkModule {
     @Provides
     fun provideInterceptor (
         @ApplicationContext context: Context,
-        preferences: PreferencesUtils,
         @Session_manager sessionManager: SessionManager
     ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(context, preferences))
+            .addInterceptor(HeaderInterceptor(context))
             .addInterceptor(AuthorizationInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .build()

@@ -27,9 +27,9 @@ class SessionManager @Inject constructor(
             }
         }
         set(value) {
-            field = value
+            field = "Bearer $value"
             _loggedOut.postValue(false)
-            preferencesUtils.saveString(Preferences.ACCESS_TOKEN, value)
+            preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "Bearer $value")
         }
 
     var refreshToken: String
@@ -43,7 +43,11 @@ class SessionManager @Inject constructor(
     fun isAccessTokenExpired(): Boolean {
         return if (isAccessTokenEmpty()) {
             true
-        } else System.currentTimeMillis() > expiresAt
+        } else {
+            Timber.d("HELLO currentTimeMillis%s", System.currentTimeMillis())
+            Timber.d("HELLO expiresAt%s", expiresAt)
+            System.currentTimeMillis() > expiresAt
+        }
     }
 
     fun isAccessTokenEmpty(): Boolean =
@@ -52,9 +56,10 @@ class SessionManager @Inject constructor(
     fun refreshToken(): Response<AuthResponse> {
         val block = runBlocking {
             val response =
-                authRemoteDataProvider.get().refreshToken(preferencesUtils.getString(Preferences.REFRESH_TOKEN))
+                authRemoteDataProvider.get().refreshToken(refreshToken)
             if (response.isSuccessful) {
                 accessToken = response.body()?.access_token.orEmpty()
+                refreshToken = response.body()?.refresh_token.orEmpty()
                 updateSession()
             }
             response
@@ -69,15 +74,13 @@ class SessionManager @Inject constructor(
             this.refreshToken = refreshToken
         }
         val timeInSecs = Calendar.getInstance().timeInMillis
-        expiresAt = timeInSecs + 2000
-                //preferencesUtils.getLong(Preferences.ARG_EXPIRES_AT)
+        expiresAt = timeInSecs + preferencesUtils.getLong(Preferences.ARG_EXPIRES_AT)
         Timber.d("HELLO expiresAt %s", expiresAt)
         Timber.d("HELLO now %s", timeInSecs)
     }
 
     fun clearSession() {
         accessToken = ""
-        refreshToken = ""
         expiresAt = 0L
         _loggedOut.postValue(true)
     }

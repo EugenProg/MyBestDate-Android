@@ -14,32 +14,40 @@ class AuthorizationInterceptor @Inject constructor(
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        return if (!sessionManager.isAccessTokenExpired() || sessionManager.refreshToken.isNotEmpty()) {
-            // Token is fresh or refresh token exists
-            val requestBuilder = chain.request().newBuilder()
-            requestBuilder.addHeaders(getToken())
-            val originalRequest = chain.request()
-            val response = chain.proceed(requestBuilder.build())
-            // If token is expired or anyhow received unauthorized then try to refresh
-            if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED || response.code == HttpsURLConnection.HTTP_FORBIDDEN) {
+        val original = chain.request()
+        val shouldAddAuthHeaders = original.headers["isAuthorize"] != "false"
+
+        return if (shouldAddAuthHeaders) {
+            if (!sessionManager.isAccessTokenExpired() || sessionManager.refreshToken.isNotEmpty()) {
+                // Token is fresh or refresh token exists
+                val requestBuilder = chain.request().newBuilder()
+                requestBuilder.addHeaders(getToken())
+                val originalRequest = chain.request()
+                val response = chain.proceed(requestBuilder.build())
+                // If token is expired or anyhow received unauthorized then try to refresh
+                if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED || response.code == HttpsURLConnection.HTTP_FORBIDDEN) {
                 response.close()
                 synchronized(this) {
                     if (updateTokens()) {
                         // Token refreshed, try again
-                        val newCall = chain.request().newBuilder().addHeaders(getToken()).build()
+                        val newCall =
+                            chain.request().newBuilder().addHeaders(getToken()).build()
                         chain.proceedDeletingTokenOnError(newCall)
                     } else {
                         // Token was expired and can't be refreshed, return
                         chain.proceedDeletingTokenOnError(originalRequest)
                     }
                 }
+                } else {
+                    // Response was successful
+                    response
+                }
             } else {
-                // Response was successful
-                response
+                // Token has expired and there is no refresh token
+                chain.proceedDeletingTokenOnError(chain.request())
             }
         } else {
-            // Token has expired and there is no refresh token
-            chain.proceedDeletingTokenOnError(chain.request())
+            chain.proceed(chain.request())
         }
     }
 
