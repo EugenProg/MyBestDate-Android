@@ -6,7 +6,9 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.asLiveData
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.bestDate.data.utils.SessionManager
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
@@ -23,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     var bottomNavView: CustomBottomNavView? = null
 
     @Inject
+    lateinit var sessionManager: SessionManager
+
+    @Inject
     lateinit var userUseCase: UserUseCase
 
     @Inject
@@ -37,6 +42,16 @@ class MainActivity : AppCompatActivity() {
         setUpUserObserver()
         setUpUserListObserver()
         bottomNavView = binding.bottomNavigationView
+
+        sessionManager.loggedOut.observe(this) {
+            if (it) {
+                navController.navigate(
+                    R.id.routes,
+                    null,
+                    NavOptions.Builder().setPopUpTo(R.id.authFragment, true).build()
+                )
+            }
+        }
     }
 
 

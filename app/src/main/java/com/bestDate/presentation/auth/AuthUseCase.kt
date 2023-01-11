@@ -6,6 +6,7 @@ import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -43,5 +44,8 @@ class AuthUseCase @Inject constructor(
             "Bearer ${response?.access_token.orEmpty()}"
         )
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
+        val timeInSecs = Calendar.getInstance().timeInMillis
+        val expiresAt = timeInSecs + (response?.expires_in ?: 0)
+        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, expiresAt)
     }
 }
