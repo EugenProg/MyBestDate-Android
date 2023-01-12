@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
 import com.bestDate.data.extension.getTime
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.model.ChatImage
 import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
-import com.bestDate.databinding.ItemChatDateViewBinding
-import com.bestDate.databinding.ItemMyTextMessageBinding
-import com.bestDate.databinding.ItemUserTextMessageBinding
+import com.bestDate.databinding.*
 import com.bestDate.presentation.base.ChatBaseViewHolder
 import com.bumptech.glide.Glide
 
 class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) {
 
     var messageClick: ((Message) -> Unit)? = null
+    var imageOpenClick: ((ChatImage) -> Unit)? = null
 
     class ChatDiffUtil : DiffUtil.ItemCallback<Message>() {
         override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
@@ -38,20 +38,32 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
-            ChatItemType.MY_TEXT_MESSAGE.ordinal,
-            ChatItemType.MY_IMAGE_MESSAGE.ordinal -> {
+            ChatItemType.MY_TEXT_MESSAGE.ordinal -> {
                 MyTextMessageViewHolder(
                     ItemMyTextMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     ), messageClick
                 )
             }
-            ChatItemType.USER_TEXT_MESSAGE.ordinal,
-            ChatItemType.USER_IMAGE_MESSAGE.ordinal -> {
+            ChatItemType.MY_IMAGE_MESSAGE.ordinal -> {
+                MyImageMessageViewHolder(
+                    ItemMyImageMessageBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    ), messageClick, imageOpenClick
+                )
+            }
+            ChatItemType.USER_TEXT_MESSAGE.ordinal -> {
                 UserTextMessageViewHolder(
                     ItemUserTextMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     ), messageClick
+                )
+            }
+            ChatItemType.USER_IMAGE_MESSAGE.ordinal -> {
+                UserImageMessageViewHolder(
+                    ItemUserImageMessageBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    ), messageClick, imageOpenClick
                 )
             }
             else -> UserTextMessageViewHolder(
@@ -79,7 +91,36 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 parentMessageBox.isVisible = item.parentMessage != null
                 parentLine.isVisible = item.parentMessage != null
                 parentMessage.text = item.parentMessage?.text
+                parentImageBox.isVisible = item.parentMessage?.image != null
+                item.parentMessage?.image?.let {
+                    Glide.with(itemView.context)
+                        .load(it.thumb_url)
+                        .into(parentImage)
+                }
 
+                message.text = item.text
+                timeBox.isVisible = item.isLastMessage == true
+                time.text = item.created_at.getTime()
+                status.setImageResource(
+                    if (item.read_at == null) R.drawable.ic_message_not_checked
+                    else R.drawable.ic_message_checked
+                )
+            }
+        }
+    }
+
+    class MyImageMessageViewHolder(override val binding: ItemMyImageMessageBinding,
+                                   itemClick: ((Message) -> Unit)?,
+                                   imageOpen: ((ChatImage) -> Unit)?):
+        ChatBaseViewHolder<ItemMyImageMessageBinding>(binding, itemClick) {
+        override fun bindView(item: Message) {
+            super.bindView(item)
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(item.image?.thumb_url)
+                    .into(imageView)
+
+                message.isVisible = item.text != null
                 message.text = item.text
                 timeBox.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()
@@ -107,6 +148,25 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                         .into(parentImage)
                 }
 
+                message.text = item.text
+                time.isVisible = item.isLastMessage == true
+                time.text = item.created_at.getTime()
+            }
+        }
+    }
+
+    class UserImageMessageViewHolder(override val binding: ItemUserImageMessageBinding,
+                                   itemClick: ((Message) -> Unit)?,
+                                   imageOpen: ((ChatImage) -> Unit)?):
+        ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
+        override fun bindView(item: Message) {
+            super.bindView(item)
+            with(binding) {
+                Glide.with(itemView.context)
+                    .load(item.image?.thumb_url)
+                    .into(imageView)
+
+                message.isVisible = item.text != null
                 message.text = item.text
                 time.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()

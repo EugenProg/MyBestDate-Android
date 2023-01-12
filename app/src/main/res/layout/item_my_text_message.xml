@@ -34,19 +34,39 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/parent_message" />
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/parentImageBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="2dp"
+                android:layout_marginStart="8dp"
+                android:visibility="gone"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView26"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/parentImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxWidth="35dp"
+                    android:maxHeight="35dp" />
+            </androidx.cardview.widget.CardView>
+
             <TextView
                 android:id="@+id/parent_message"
                 style="@style/component_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:singleLine="true"
                 android:layout_marginStart="8dp"
+                android:singleLine="true"
                 android:textColor="@color/white_70"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView26"
+                app:layout_constraintStart_toEndOf="@+id/parentImageBox"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/thanks_but_i_cant_yet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -66,9 +86,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="@string/this_is_necessary_so_that_we_can_make_a_more_suitable_selection"
             android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="@string/this_is_necessary_so_that_we_can_make_a_more_suitable_selection" />
     </LinearLayout>
 
     <LinearLayout
