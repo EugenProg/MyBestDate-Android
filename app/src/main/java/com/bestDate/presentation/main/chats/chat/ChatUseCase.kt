@@ -28,11 +28,16 @@ class ChatUseCase @Inject constructor(
     suspend fun sendTextMessage(recipientId: Int?, parentId: Int?, text: String) {
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
         if (response.isSuccessful) {
-
+            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
-    suspend fun sendImageMessage(recipientId: Int?, parentId: Int?, text: String?, image: ByteArray) {
+    suspend fun sendImageMessage(
+        recipientId: Int?,
+        parentId: Int?,
+        text: String?,
+        image: ByteArray
+    ) {
         val requestFile =
             image.toRequestBody("multipart/form-data".toMediaTypeOrNull(), 0, image.size)
         val body = MultipartBody.Part.createFormData("media", "name", requestFile)
@@ -41,6 +46,8 @@ class ChatUseCase @Inject constructor(
             if (!text.isNullOrBlank()) {
                 val messageId = response.body()?.data?.id.orZero
                 chatsRemoteData.updateMessage(messageId, text)
+            } else {
+                response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
@@ -48,14 +55,14 @@ class ChatUseCase @Inject constructor(
     suspend fun editMessage(messageId: Int?, text: String) {
         val response = chatsRemoteData.updateMessage(messageId.orZero, text)
         if (response.isSuccessful) {
-
+            response.body()?.data?.let { messages.postValue(editMessageList(it)) }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
     suspend fun deleteMessage(messageId: Int?) {
         val response = chatsRemoteData.deleteMessage(messageId.orZero)
         if (response.isSuccessful) {
-
+            messages.postValue(deleteMessageFromList(messageId))
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -77,19 +84,36 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.getChatMessages(userId.orZero)
         if (response.isSuccessful) {
             response.body()?.let {
+                originalList = it.data
                 messages.postValue(transformMessageList(it.data))
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
-    
-    private fun transformMessageList(messages: MutableList<Message>?) : MutableList<Message> {
+
+    private fun addNewMessage(message: Message): MutableList<Message> {
+        originalList?.add(0, message)
+        return transformMessageList(originalList)
+    }
+
+    private fun editMessageList(message: Message): MutableList<Message> {
+        originalList?.indexOfFirst { it.id == message.id }?.let {
+            originalList!![it] = message
+        }
+        return transformMessageList(originalList)
+    }
+
+    private fun deleteMessageFromList(messageId: Int?): MutableList<Message> {
+        originalList?.removeAll { it.id == messageId }
+        return transformMessageList(originalList)
+    }
+
+    private fun transformMessageList(messages: MutableList<Message>?): MutableList<Message> {
         val list: MutableList<Message> = mutableListOf()
-        originalList = messages
         getUser()
         var dateId = -1
-        
-        messages?.forEachIndexed { index, message -> 
-            val next = if (index > 0) messages[index - 1]  else null
+
+        messages?.forEachIndexed { index, message ->
+            val next = if (index > 0) messages[index - 1] else null
             val previous = if (index == messages.lastIndex) null else messages[index + 1]
             var dateItem: Message? = null
 
@@ -101,14 +125,18 @@ class ChatUseCase @Inject constructor(
             }
 
             list.add(
-                message.transform(type, getParentMessage(message.parent_id), checkIsLast(message, next))
+                message.transform(
+                    type,
+                    getParentMessage(message.parent_id),
+                    checkIsLast(message, next)
+                )
             )
 
             dateItem?.let {
                 list.add(it)
             }
         }
-        
+
         return list
     }
 
@@ -116,7 +144,11 @@ class ChatUseCase @Inject constructor(
         if (myId == null) myId = userDao.getUser()?.id
     }
 
-    private fun getMessageType(current: Message?, previous: Message?, withDate: Boolean) : ChatItemType {
+    private fun getMessageType(
+        current: Message?,
+        previous: Message?,
+        withDate: Boolean
+    ): ChatItemType {
         return when {
             withDate && isNextDate(current?.created_at, previous?.created_at) -> ChatItemType.DATE
             current?.sender_id != myId -> {
@@ -145,6 +177,9 @@ class ChatUseCase @Inject constructor(
     }
 
     private fun checkIsLast(current: Message?, next: Message?): Boolean {
-        return current?.sender_id != next?.sender_id || (isNextDate(current?.created_at, next?.created_at))
+        return current?.sender_id != next?.sender_id || (isNextDate(
+            current?.created_at,
+            next?.created_at
+        ))
     }
 }

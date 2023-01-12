@@ -18,7 +18,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/editBox"
                 android:layout_width="match_parent"
-                android:layout_height="77dp"
+                android:layout_height="87dp"
                 android:background="#272f33"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/inputBox"
@@ -72,7 +72,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

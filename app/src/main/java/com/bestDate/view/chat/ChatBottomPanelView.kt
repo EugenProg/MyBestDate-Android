@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.hideKeyboard
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ViewChatBottomPanelBinding
@@ -28,6 +30,7 @@ class ChatBottomPanelView @JvmOverloads constructor(
                 val text = messageInput.text
                 if (text.isNotBlank()) {
                     toggleSendLoading(true)
+                    hideKeyboard()
                     sendClick?.invoke(text.toString())
                     clearEditBox()
                 }
@@ -44,6 +47,7 @@ class ChatBottomPanelView @JvmOverloads constructor(
             }
             editCloseBtn.setOnSaveClickListener {
                 clearEditBox()
+                hideKeyboard()
                 closeEditMode?.invoke()
             }
         }
@@ -53,6 +57,7 @@ class ChatBottomPanelView @JvmOverloads constructor(
         with(binding) {
             editBox.isVisible = false
             editMessage.text = ""
+            messageInput.setText("")
         }
     }
 
@@ -77,6 +82,8 @@ class ChatBottomPanelView @JvmOverloads constructor(
             editMessage.text = message
             editIcon.setImageResource(R.drawable.ic_edit)
             messageInput.setText(message)
+            messageInput.setSelection(message?.length.orZero)
+            messageInput.requestFocus()
         }
     }
 
@@ -85,6 +92,7 @@ class ChatBottomPanelView @JvmOverloads constructor(
             editBox.isVisible = true
             editMessage.text = message
             editIcon.setImageResource(R.drawable.ic_reply_white)
+            messageInput.requestFocus()
         }
     }
 

@@ -4,11 +4,12 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ViewChatBinding
+import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 
 class ChatView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -27,6 +28,7 @@ class ChatView @JvmOverloads constructor(
     var editClick: ((text: String, messageId: Int?) -> Unit)? = null
     var translateClick: ((text: String) -> Unit)? = null
     var addImageClick: (() -> Unit)? = null
+    var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
 
     init {
         with(binding) {
@@ -49,6 +51,15 @@ class ChatView @JvmOverloads constructor(
             chatInvitation.goToClick = {
                 showInvitationClick?.invoke()
             }
+            adapter.messageClick = {
+                openActionSheet?.invoke(it, getActions(it.viewType))
+            }
+            adapter.imageLongClick = {
+
+            }
+            adapter.imageOpenClick = {
+
+            }
 
             messagesListView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
@@ -61,6 +72,16 @@ class ChatView @JvmOverloads constructor(
         setVisibility()
     }
 
+    private fun getActions(type: ChatItemType?): MutableList<ChatActions> {
+        return when (type) {
+            ChatItemType.MY_TEXT_MESSAGE,
+            ChatItemType.MY_IMAGE_MESSAGE -> ChatActions.values().toMutableList()
+            ChatItemType.USER_TEXT_MESSAGE,
+            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY)
+            else -> mutableListOf()
+        }
+    }
+
     private fun setVisibility() {
         with(binding) {
             topPanelView.setVisibility(user, messageList.isNotEmpty())
@@ -71,7 +92,9 @@ class ChatView @JvmOverloads constructor(
 
     fun setMessages(messages: MutableList<Message>?) {
         messageList = messages ?: mutableListOf()
-        adapter.submitList(messageList)
+        adapter.submitList(messageList) {
+            binding.messagesListView.scrollToPosition(0)
+        }
         setVisibility()
     }
 

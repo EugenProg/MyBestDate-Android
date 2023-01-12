@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
 import com.bestDate.data.extension.getTime
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ChatImage
 import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
@@ -18,7 +19,8 @@ import com.bumptech.glide.Glide
 class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) {
 
     var messageClick: ((Message) -> Unit)? = null
-    var imageOpenClick: ((ChatImage) -> Unit)? = null
+    var imageOpenClick: ((ChatImage?) -> Unit)? = null
+    var imageLongClick: ((Message) -> Unit)? = null
 
     class ChatDiffUtil : DiffUtil.ItemCallback<Message>() {
         override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
@@ -49,7 +51,7 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 MyImageMessageViewHolder(
                     ItemMyImageMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
-                    ), messageClick, imageOpenClick
+                    ), messageClick, imageOpenClick, imageLongClick
                 )
             }
             ChatItemType.USER_TEXT_MESSAGE.ordinal -> {
@@ -63,7 +65,7 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 UserImageMessageViewHolder(
                     ItemUserImageMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
-                    ), messageClick, imageOpenClick
+                    ), messageClick, imageOpenClick, imageLongClick
                 )
             }
             else -> UserTextMessageViewHolder(
@@ -82,8 +84,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
         return getItem(position).viewType?.ordinal.orZero
     }
 
-    class MyTextMessageViewHolder(override val binding: ItemMyTextMessageBinding,
-                                  itemClick: ((Message) -> Unit)?):
+    class MyTextMessageViewHolder(
+        override val binding: ItemMyTextMessageBinding,
+        itemClick: ((Message) -> Unit)?
+    ) :
         ChatBaseViewHolder<ItemMyTextMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
@@ -105,13 +109,20 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                     if (item.read_at == null) R.drawable.ic_message_not_checked
                     else R.drawable.ic_message_checked
                 )
+
+                messageBox.setOnSaveClickListener {
+                    itemClick?.invoke(item)
+                }
             }
         }
     }
 
-    class MyImageMessageViewHolder(override val binding: ItemMyImageMessageBinding,
-                                   itemClick: ((Message) -> Unit)?,
-                                   imageOpen: ((ChatImage) -> Unit)?):
+    class MyImageMessageViewHolder(
+        override val binding: ItemMyImageMessageBinding,
+        itemClick: ((Message) -> Unit)?,
+        private val imageOpen: ((ChatImage?) -> Unit)?,
+        private val itemLongClick: ((Message) -> Unit)?
+    ) :
         ChatBaseViewHolder<ItemMyImageMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
@@ -128,12 +139,21 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                     if (item.read_at == null) R.drawable.ic_message_not_checked
                     else R.drawable.ic_message_checked
                 )
+
+                messageBox.setOnSaveClickListener {
+                    itemClick?.invoke(item)
+                }
+                imageView.setOnSaveClickListener {
+                    imageOpen?.invoke(item.image)
+                }
             }
         }
     }
 
-    class UserTextMessageViewHolder(override val binding: ItemUserTextMessageBinding,
-                                    itemClick: ((Message) -> Unit)?):
+    class UserTextMessageViewHolder(
+        override val binding: ItemUserTextMessageBinding,
+        itemClick: ((Message) -> Unit)?
+    ) :
         ChatBaseViewHolder<ItemUserTextMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
@@ -151,13 +171,20 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 message.text = item.text
                 time.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()
+
+                messageBox.setOnSaveClickListener {
+                    itemClick?.invoke(item)
+                }
             }
         }
     }
 
-    class UserImageMessageViewHolder(override val binding: ItemUserImageMessageBinding,
-                                   itemClick: ((Message) -> Unit)?,
-                                   imageOpen: ((ChatImage) -> Unit)?):
+    class UserImageMessageViewHolder(
+        override val binding: ItemUserImageMessageBinding,
+        itemClick: ((Message) -> Unit)?,
+        private val imageOpen: ((ChatImage?) -> Unit)?,
+        private val itemLongClick: ((Message) -> Unit)?
+    ) :
         ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
@@ -170,11 +197,18 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 message.text = item.text
                 time.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()
+
+                messageBox.setOnSaveClickListener {
+                    itemClick?.invoke(item)
+                }
+                imageView.setOnSaveClickListener {
+                    imageOpen?.invoke(item.image)
+                }
             }
         }
     }
 
-    class DateViewHolder(override val binding: ItemChatDateViewBinding):
+    class DateViewHolder(override val binding: ItemChatDateViewBinding) :
         ChatBaseViewHolder<ItemChatDateViewBinding>(binding, null) {
         override fun bindView(item: Message) {
             super.bindView(item)

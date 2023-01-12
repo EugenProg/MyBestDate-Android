@@ -7,12 +7,16 @@ import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.show
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showCreateInvitationDialog
+import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
+import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
 import com.bestDate.view.chat.ChatStatusType
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,8 +71,31 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     viewModel.sendInvitation(user?.id, it.id)
                 }
             }
+            chatView.openActionSheet = { message, chatActions ->
+                val actionSheet = ChatActionsSheet(chatActions)
+                actionSheet.itemClick = {
+                    doChatAction(it, message)
+                }
+                actionSheet.show(childFragmentManager)
+            }
             chatView.addImageClick = {
 
+            }
+        }
+    }
+
+    private fun doChatAction(action: ChatActions, message: Message?) {
+        when (action) {
+            ChatActions.REPLY -> {
+                binding.chatView.setReplyMode(message)
+                showKeyboardAction()
+            }
+            ChatActions.EDIT -> {
+                binding.chatView.setEditMode(message)
+                showKeyboardAction()
+            }
+            ChatActions.DELETE -> {
+                viewModel.deleteMessage(message?.id)
             }
         }
     }

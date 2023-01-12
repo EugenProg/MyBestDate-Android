@@ -629,4 +629,7 @@
     <string name="last_visit">Last visit %s</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="chat_actions">Chat actions</string>
+    <string name="reply">Reply</string>
+    <string name="edit">Edit</string>
 </resources>
