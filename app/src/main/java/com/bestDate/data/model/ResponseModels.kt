@@ -344,3 +344,12 @@ data class ChatMessagesResponse(
 data class SendMessageResponse(
     val data: Message? = null
 ) : BaseResponse()
+
+data class TranslationResponse(
+    var translations: MutableList<Translation> = mutableListOf()
+)
+
+data class Translation(
+    var detected_source_language: String? = null,
+    var text: String? = null
+)

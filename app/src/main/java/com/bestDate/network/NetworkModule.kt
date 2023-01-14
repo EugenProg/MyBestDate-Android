@@ -1,10 +1,7 @@
 package com.bestDate.network
 
 import android.content.Context
-import com.bestDate.data.extension.Core_network
-import com.bestDate.data.extension.Core_url
-import com.bestDate.data.extension.Geocoding_network
-import com.bestDate.data.extension.Geocoding_url
+import com.bestDate.data.extension.*
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.*
 import com.bestDate.network.services.*
@@ -29,6 +26,10 @@ object NetworkModule {
     @Provides
     @Geocoding_url
     fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
+
+    @Provides
+    @Translate_url
+    fun providesTranslateBaseURL(): String = "https://api-free.deepl.com/"
 
     @Provides
     fun provideInterceptor(
@@ -58,6 +59,16 @@ object NetworkModule {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    @Translate_network
+    fun provideTranslateApi(@Translate_url BASE_URL: String, interceptor: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(interceptor)
             .build()
 
     @Provides
@@ -102,6 +113,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun translationApiService(@Translate_network retrofit: Retrofit): TranslateService =
+        retrofit.create(TranslateService::class.java)
+
+    @Provides
+    @Singleton
     fun authRemoteData(apiService: CoreAuthService): AuthRemoteData =
         AuthRemoteData(apiService)
 
@@ -139,4 +155,9 @@ object NetworkModule {
     @Singleton
     fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
         GeocodingRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun translationRemoteData(apiService: TranslateService): TranslationRemoteData =
+        TranslationRemoteData(apiService)
 }

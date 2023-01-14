@@ -10,6 +10,7 @@ import com.bestDate.data.model.Message
 import com.bestDate.data.model.ParentMessage
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
+import com.bestDate.network.remote.TranslationRemoteData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -19,9 +20,11 @@ import javax.inject.Singleton
 @Singleton
 class ChatUseCase @Inject constructor(
     private val userDao: UserDao,
-    private val chatsRemoteData: ChatsRemoteData
+    private val chatsRemoteData: ChatsRemoteData,
+    private val translateRemoteData: TranslationRemoteData
 ) {
     var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    var translatedText: MutableLiveData<String?> = MutableLiveData("")
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
 
@@ -88,6 +91,13 @@ class ChatUseCase @Inject constructor(
                 messages.postValue(transformMessageList(it.data))
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
+    }
+
+    suspend fun translate(text: String?, language: String?) {
+        val response = translateRemoteData.translate(text.orEmpty(), (language ?: "EN").uppercase())
+        if (response.isSuccessful) {
+            translatedText.postValue(response.body()?.translations?.firstOrNull()?.text ?: text)
+        } else throw InternalException.OperationException(response.message())
     }
 
     private fun addNewMessage(message: Message): MutableList<Message> {

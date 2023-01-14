@@ -122,7 +122,7 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         observe(viewModel.sendMessageLiveData) {
             binding.chatView.stopSendLoading()
         }
-        observe(viewModel.translateLiveData) {
+        observe(viewModel.translatedText) {
             binding.chatView.setTranslatedText(it)
         }
         observe(viewModel.errorLiveData) {

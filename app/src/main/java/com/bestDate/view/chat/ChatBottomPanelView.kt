@@ -108,6 +108,7 @@ class ChatBottomPanelView @JvmOverloads constructor(
 
     fun setTranslatedText(text: String?) {
         binding.messageInput.setText(text)
+        binding.messageInput.setSelection(text?.length.orZero)
         toggleTranslateLoading(false)
     }
 

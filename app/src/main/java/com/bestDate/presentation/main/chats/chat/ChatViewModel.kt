@@ -1,9 +1,10 @@
 package com.bestDate.presentation.main.chats.chat
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
-import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,16 +15,14 @@ class ChatViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var invitations = invitationUseCase.invitations.asLiveData()
+    var translatedText = chatUseCase.translatedText
     var messages = chatUseCase.messages
 
-    private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
-    var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
+    private var _sendInvitationLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
 
-    private var _sendMessageLiveData: LiveEvent<Boolean> = LiveEvent()
-    var sendMessageLiveData: LiveEvent<Boolean> = _sendMessageLiveData
-
-    private var _translateLiveData: LiveEvent<String?> = LiveEvent()
-    var translateLiveData: LiveEvent<String?> = _translateLiveData
+    private var _sendMessageLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var sendMessageLiveData: LiveData<Boolean> = _sendMessageLiveData
 
     fun sendInvitation(userId: Int?, invitationId: Int) {
         doAsync {
@@ -70,7 +69,9 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun translateText(text: String, language: String?) {
-        _translateLiveData.postValue(text)
+    fun translateText(text: String?, language: String?) {
+        doAsync {
+            chatUseCase.translate(text, language)
+        }
     }
 }
