@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.chats.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ChatImage
 import com.bestDate.databinding.FragmentChatImageViewBinding
 import com.bestDate.presentation.base.BaseFragment
@@ -25,7 +26,16 @@ class ChatImageViewFragment(private val image: ChatImage?): BaseFragment<Fragmen
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.backButton.onClick = {
-            closeAction?.invoke()
+            goBack()
         }
+        binding.imageView.setOnSaveClickListener {
+            goBack()
+        }
+    }
+
+    override var customBackNavigation: Boolean = true
+
+    override fun goBack() {
+        closeAction?.invoke()
     }
 }

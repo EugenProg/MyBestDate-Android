@@ -3,12 +3,9 @@ package com.bestDate.presentation.main.chats.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.commit
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.data.extension.observe
-import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.extension.show
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
@@ -80,9 +77,13 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 actionSheet.show(childFragmentManager)
             }
             chatView.imageOpenClick = {
-                childFragmentManager.commit {
-                    setCustomAnimations(R.anim.scale_in, R.anim.scale_out)
-                    replace(R.id.container, ChatImageViewFragment(it))
+                val fragment = ChatImageViewFragment(it)
+                open(fragment, binding.container, AnimationType.SCALE)
+
+                fragment.closeAction = {
+                    close(fragment, binding.container, AnimationType.SCALE) {
+                        reDrawBars()
+                    }
                 }
             }
             chatView.addImageClick = {

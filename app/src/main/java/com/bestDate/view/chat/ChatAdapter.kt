@@ -146,6 +146,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 imageView.setOnSaveClickListener {
                     imageOpen?.invoke(item.image)
                 }
+                imageView.setOnLongClickListener {
+                    itemLongClick?.invoke(item)
+                    true
+                }
             }
         }
     }
@@ -203,6 +207,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 }
                 imageView.setOnSaveClickListener {
                     imageOpen?.invoke(item.image)
+                }
+                imageView.setOnLongClickListener {
+                    itemLongClick?.invoke(item)
+                    true
                 }
             }
         }

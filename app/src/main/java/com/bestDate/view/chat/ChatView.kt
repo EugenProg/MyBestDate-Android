@@ -54,10 +54,10 @@ class ChatView @JvmOverloads constructor(
                 showInvitationClick?.invoke()
             }
             adapter.messageClick = {
-                openActionSheet?.invoke(it, getActions(it.viewType))
+                openActionSheet?.invoke(it, getActions(it))
             }
             adapter.imageLongClick = {
-
+                openActionSheet?.invoke(it, getActions(it))
             }
             adapter.imageOpenClick = {
                 imageOpenClick?.invoke(it)
@@ -74,10 +74,13 @@ class ChatView @JvmOverloads constructor(
         setVisibility()
     }
 
-    private fun getActions(type: ChatItemType?): MutableList<ChatActions> {
-        return when (type) {
-            ChatItemType.MY_TEXT_MESSAGE,
-            ChatItemType.MY_IMAGE_MESSAGE -> ChatActions.values().toMutableList()
+    private fun getActions(message: Message?): MutableList<ChatActions> {
+        return when (message?.viewType) {
+            ChatItemType.MY_TEXT_MESSAGE -> ChatActions.values().toMutableList()
+            ChatItemType.MY_IMAGE_MESSAGE -> {
+                if (message.text.isNullOrBlank()) mutableListOf(ChatActions.DELETE, ChatActions.REPLY)
+                else ChatActions.values().toMutableList()
+            }
             ChatItemType.USER_TEXT_MESSAGE,
             ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY)
             else -> mutableListOf()
