@@ -78,7 +78,7 @@ class ChatView @JvmOverloads constructor(
         return when (message?.viewType) {
             ChatItemType.MY_TEXT_MESSAGE -> ChatActions.values().toMutableList()
             ChatItemType.MY_IMAGE_MESSAGE -> {
-                if (message.text.isNullOrBlank()) mutableListOf(ChatActions.DELETE, ChatActions.REPLY)
+                if (message.text.isNullOrBlank()) mutableListOf(ChatActions.REPLY, ChatActions.DELETE)
                 else ChatActions.values().toMutableList()
             }
             ChatItemType.USER_TEXT_MESSAGE,

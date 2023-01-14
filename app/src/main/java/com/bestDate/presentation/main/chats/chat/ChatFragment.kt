@@ -15,6 +15,7 @@ import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
+import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.chat.ChatStatusType
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,6 +28,7 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
 
     override val statusBarColor: Int = R.color.bg_main
     private val args by navArgs<ChatFragmentArgs>()
+    private var imageListSheet: ImageListSheet = ImageListSheet()
     private var user: ShortUserData? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
 
@@ -41,7 +43,7 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         super.onViewClickListener()
         with(binding) {
             backButton.onClick = {
-                navController.popBackStack()
+                goBack()
             }
             userBox.setOnSaveClickListener {
                 if (user?.isBot() != true) {
@@ -87,7 +89,18 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.addImageClick = {
+                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+            }
+            imageListSheet.itemClick = {
+                imageListSheet.dismiss()
+                val fragment = ChatAddImageFragment(user, it)
+                open(fragment, binding.container)
 
+                fragment.closeAction = {
+                    close(fragment, binding.container) {
+                        reDrawBars()
+                    }
+                }
             }
         }
     }
@@ -122,15 +135,23 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         observe(viewModel.sendMessageLiveData) {
             binding.chatView.stopSendLoading()
         }
-        observe(viewModel.translatedText) {
+        observe(viewModel.translateLiveData) {
             binding.chatView.setTranslatedText(it)
         }
         observe(viewModel.errorLiveData) {
+            showMessage(it.exception.message)
             with(binding.chatView) {
                 stopSendLoading()
                 stopTranslateLoading()
             }
         }
+    }
+
+    override var customBackNavigation: Boolean = true
+
+    override fun goBack() {
+        viewModel.clearMessages()
+        super.goBack()
     }
 
     private fun setUserInfo() {

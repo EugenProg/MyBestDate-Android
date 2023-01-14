@@ -24,7 +24,7 @@ class ChatUseCase @Inject constructor(
     private val translateRemoteData: TranslationRemoteData
 ) {
     var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
-    var translatedText: MutableLiveData<String?> = MutableLiveData("")
+    var translatedText: String? = ""
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
 
@@ -37,21 +37,15 @@ class ChatUseCase @Inject constructor(
 
     suspend fun sendImageMessage(
         recipientId: Int?,
-        parentId: Int?,
         text: String?,
         image: ByteArray
     ) {
         val requestFile =
             image.toRequestBody("multipart/form-data".toMediaTypeOrNull(), 0, image.size)
-        val body = MultipartBody.Part.createFormData("media", "name", requestFile)
-        val response = chatsRemoteData.sendImageMessage(recipientId.orZero, parentId, body)
+        val body = MultipartBody.Part.createFormData("image", "name", requestFile)
+        val response = chatsRemoteData.sendImageMessage(recipientId.orZero, body, text)
         if (response.isSuccessful) {
-            if (!text.isNullOrBlank()) {
-                val messageId = response.body()?.data?.id.orZero
-                chatsRemoteData.updateMessage(messageId, text)
-            } else {
-                response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
-            }
+            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -96,7 +90,7 @@ class ChatUseCase @Inject constructor(
     suspend fun translate(text: String?, language: String?) {
         val response = translateRemoteData.translate(text.orEmpty(), (language ?: "EN").uppercase())
         if (response.isSuccessful) {
-            translatedText.postValue(response.body()?.translations?.firstOrNull()?.text ?: text)
+            translatedText = response.body()?.translations?.firstOrNull()?.text ?: text
         } else throw InternalException.OperationException(response.message())
     }
 

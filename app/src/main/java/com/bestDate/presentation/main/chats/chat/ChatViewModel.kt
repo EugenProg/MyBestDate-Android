@@ -1,8 +1,10 @@
 package com.bestDate.presentation.main.chats.chat
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import com.bestDate.data.extension.toByteArray
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,6 @@ class ChatViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var invitations = invitationUseCase.invitations.asLiveData()
-    var translatedText = chatUseCase.translatedText
     var messages = chatUseCase.messages
 
     private var _sendInvitationLiveData: MutableLiveData<Boolean> = MutableLiveData()
@@ -23,6 +24,9 @@ class ChatViewModel @Inject constructor(
 
     private var _sendMessageLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var sendMessageLiveData: LiveData<Boolean> = _sendMessageLiveData
+
+    private var _translateLiveData: MutableLiveData<String?> = MutableLiveData()
+    var translateLiveData: LiveData<String?> = _translateLiveData
 
     fun sendInvitation(userId: Int?, invitationId: Int) {
         doAsync {
@@ -34,6 +38,13 @@ class ChatViewModel @Inject constructor(
     fun sendTextMessage(userId: Int?, parentId: Int?, text: String) {
         doAsync {
             chatUseCase.sendTextMessage(userId, parentId, text)
+            _sendMessageLiveData.postValue(true)
+        }
+    }
+
+    fun sendImageMessage(userId: Int?, text: String?, image: Bitmap) {
+        doAsync {
+            chatUseCase.sendImageMessage(userId, text, image.toByteArray())
             _sendMessageLiveData.postValue(true)
         }
     }
@@ -72,6 +83,11 @@ class ChatViewModel @Inject constructor(
     fun translateText(text: String?, language: String?) {
         doAsync {
             chatUseCase.translate(text, language)
+            _translateLiveData.postValue(chatUseCase.translatedText)
         }
+    }
+
+    fun clearMessages() {
+        chatUseCase.messages.value = mutableListOf()
     }
 }

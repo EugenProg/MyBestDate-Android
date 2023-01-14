@@ -632,4 +632,5 @@
     <string name="chat_actions">Chat actions</string>
     <string name="reply">Reply</string>
     <string name="edit">Edit</string>
+    <string name="add_a_caption">Add a caption…</string>
 </resources>

@@ -2,6 +2,7 @@ package com.bestDate.network.services
 
 import com.bestDate.data.model.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -33,21 +34,21 @@ interface ChatsService {
         @Body request: SendMessageRequest
     ): Response<SendMessageResponse>
 
-    /**Send image message with parent*/
+    /**Send image message without text*/
     @Multipart
-    @POST("/api/v1/message/{recipient}/{parent}")
-    suspend fun sendImageMessageWithParent(
+    @POST("/api/v1/message/{recipient}")
+    suspend fun sendImageMessageWithoutText(
         @Path("recipient") recipientId: Int,
-        @Path("parent") parentId: Int,
         @Part image: MultipartBody.Part
     ): Response<SendMessageResponse>
 
-    /**Send image message without parent*/
+    /**Send image message with text*/
     @Multipart
     @POST("/api/v1/message/{recipient}")
-    suspend fun sendImageMessageWithoutParent(
+    suspend fun sendImageMessageWithText(
         @Path("recipient") recipientId: Int,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part,
+        @Part("text") text: RequestBody
     ): Response<SendMessageResponse>
 
     /**Update message*/
