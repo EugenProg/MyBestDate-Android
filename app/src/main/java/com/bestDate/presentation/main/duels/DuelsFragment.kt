@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -72,6 +73,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.selectorView.lookFor = it?.look_for?.first()
+            binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
             gender =
                 if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
             reload()
