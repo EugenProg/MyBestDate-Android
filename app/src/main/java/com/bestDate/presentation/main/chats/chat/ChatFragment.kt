@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.chats.chat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -77,6 +78,12 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     doChatAction(it, message)
                 }
                 actionSheet.show(childFragmentManager)
+            }
+            chatView.imageOpenClick = {
+                childFragmentManager.commit {
+                    setCustomAnimations(R.anim.scale_in, R.anim.scale_out)
+                    replace(R.id.container, ChatImageViewFragment(it))
+                }
             }
             chatView.addImageClick = {
 

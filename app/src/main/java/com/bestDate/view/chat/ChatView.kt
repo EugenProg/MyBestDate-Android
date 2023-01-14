@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bestDate.data.model.ChatImage
 import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
@@ -28,6 +29,7 @@ class ChatView @JvmOverloads constructor(
     var editClick: ((text: String, messageId: Int?) -> Unit)? = null
     var translateClick: ((text: String) -> Unit)? = null
     var addImageClick: (() -> Unit)? = null
+    var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
 
     init {
@@ -58,7 +60,7 @@ class ChatView @JvmOverloads constructor(
 
             }
             adapter.imageOpenClick = {
-
+                imageOpenClick?.invoke(it)
             }
 
             messagesListView.layoutManager =
