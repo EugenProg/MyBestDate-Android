@@ -61,8 +61,10 @@ class CustomBottomNavButtonView @JvmOverloads constructor(
 
     init {
         binding.root.setOnSaveClickListener {
-            onClick?.invoke()
-            onNavigationChange?.invoke()
+            if (!isActive) {
+                onClick?.invoke()
+                onNavigationChange?.invoke()
+            }
         }
     }
 
