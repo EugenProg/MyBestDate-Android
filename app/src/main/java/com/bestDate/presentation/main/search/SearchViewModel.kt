@@ -10,6 +10,7 @@ import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.CityListItem
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
-    private val preferencesUtils: PreferencesUtils
+    private val preferencesUtils: PreferencesUtils,
+    private val geoLocationUseCase: GeoLocationUseCase
 ) : BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
@@ -29,6 +31,7 @@ class SearchViewModel @Inject constructor(
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+    val locationLiveData = geoLocationUseCase.locationLiveData
 
     fun getUsers(filters: FilterOptions) {
         _loadingLiveData.postValue(true)
@@ -38,6 +41,12 @@ class SearchViewModel @Inject constructor(
             total = userUseCase.total
             _usersListLiveData.postValue(userUseCase.usersList)
             _loadingLiveData.postValue(false)
+        }
+    }
+
+    fun getLocationByAddress(location: CityListItem?) {
+        doAsync {
+            geoLocationUseCase.getLocationByAddress(location)
         }
     }
 
