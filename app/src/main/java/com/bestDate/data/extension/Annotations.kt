@@ -17,3 +17,7 @@ annotation class Geocoding_network
 @MustBeDocumented
 @Qualifier
 annotation class Core_network
+
+@MustBeDocumented
+@Qualifier
+annotation class Session_manager

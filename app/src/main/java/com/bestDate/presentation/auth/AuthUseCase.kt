@@ -1,6 +1,7 @@
 package com.bestDate.presentation.auth
 
 import com.bestDate.data.extension.getErrorMessage
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.AuthResponse
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
@@ -39,9 +40,10 @@ class AuthUseCase @Inject constructor(
 
     private fun saveTokens(response: AuthResponse?) {
         preferencesUtils.saveString(
-            Preferences.ACCESS_TOKEN,
-            "Bearer ${response?.access_token.orEmpty()}"
+            Preferences.ACCESS_TOKEN, "Bearer ${response?.access_token.orEmpty()}"
         )
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
+        val expiresAt = System.currentTimeMillis() + (response?.expires_in.orZero)
+        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, expiresAt - 3600)
     }
 }

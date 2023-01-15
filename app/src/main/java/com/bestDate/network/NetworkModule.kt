@@ -1,11 +1,9 @@
 package com.bestDate.network
 
 import android.content.Context
-import com.bestDate.data.extension.Core_network
-import com.bestDate.data.extension.Core_url
-import com.bestDate.data.extension.Geocoding_network
-import com.bestDate.data.extension.Geocoding_url
+import com.bestDate.data.extension.*
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.SessionManager
 import com.bestDate.network.remote.*
 import com.bestDate.network.services.*
 import dagger.Module
@@ -17,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -31,12 +30,15 @@ object NetworkModule {
     fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
 
     @Provides
-    fun provideInterceptor(
-        @ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
+    fun provideInterceptor (
+        @ApplicationContext context: Context,
+        @Session_manager sessionManager: SessionManager
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(context, preferences))
+            .addInterceptor(HeaderInterceptor(context))
+            .addInterceptor(AuthorizationInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .build()
     }
@@ -134,6 +136,12 @@ object NetworkModule {
     @Singleton
     fun chatsRemoteData(apiService: ChatsService): ChatsRemoteData =
         ChatsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    @Session_manager
+    fun sessionManager(preferences: PreferencesUtils, authRemoteDataProvider: Provider<AuthRemoteData>): SessionManager =
+        SessionManager(preferences, authRemoteDataProvider)
 
     @Provides
     @Singleton
