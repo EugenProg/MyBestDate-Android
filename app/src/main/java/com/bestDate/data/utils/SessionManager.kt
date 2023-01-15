@@ -8,8 +8,6 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
 import kotlinx.coroutines.runBlocking
 import retrofit2.Response
-import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -38,28 +36,24 @@ class SessionManager @Inject constructor(
 
     var expiresAt: Long
         get() = preferencesUtils.getLong(Preferences.ARG_EXPIRES_AT)
-        set(value) = preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, value)
+        set(value) = preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, value - 3600)
 
     fun isAccessTokenExpired(): Boolean {
-        return if (isAccessTokenEmpty()) {
-            true
-        } else {
-            Timber.d("HELLO currentTimeMillis%s", System.currentTimeMillis())
-            Timber.d("HELLO expiresAt%s", expiresAt)
-            System.currentTimeMillis() > expiresAt
-        }
+        return if (isAccessTokenEmpty()) true
+        else System.currentTimeMillis() > expiresAt
     }
 
-    fun isAccessTokenEmpty(): Boolean =
+    private fun isAccessTokenEmpty(): Boolean =
         preferencesUtils.getString(Preferences.ACCESS_TOKEN).isNotBlank()
 
     fun refreshToken(): Response<AuthResponse> {
         val block = runBlocking {
-            val response =
-                authRemoteDataProvider.get().refreshToken(refreshToken)
+            val response = authRemoteDataProvider.get().refreshToken(refreshToken)
             if (response.isSuccessful) {
-                accessToken = response.body()?.access_token.orEmpty()
-                refreshToken = response.body()?.refresh_token.orEmpty()
+                response.body()?.let {
+                    accessToken = it.access_token.orEmpty()
+                    refreshToken = it.refresh_token.orEmpty()
+                }
                 updateSession()
             }
             response
@@ -68,20 +62,15 @@ class SessionManager @Inject constructor(
     }
 
 
-    fun updateSession(accessToken: String? = null, refreshToken: String? = null) {
+    private fun updateSession(accessToken: String? = null, refreshToken: String? = null) {
         if (accessToken != null && refreshToken != null) {
             this.accessToken = accessToken
             this.refreshToken = refreshToken
         }
-        val timeInSecs = Calendar.getInstance().timeInMillis
-        expiresAt = timeInSecs + preferencesUtils.getLong(Preferences.ARG_EXPIRES_AT)
-        Timber.d("HELLO expiresAt %s", expiresAt)
-        Timber.d("HELLO now %s", timeInSecs)
+        expiresAt = System.currentTimeMillis() + preferencesUtils.getLong(Preferences.ARG_EXPIRES_AT)
     }
 
     fun clearSession() {
-        accessToken = ""
-        expiresAt = 0L
         _loggedOut.postValue(true)
     }
 }

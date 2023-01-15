@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.utils.SessionManager
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.presentation.main.UserUseCase
@@ -43,8 +44,9 @@ class MainActivity : AppCompatActivity() {
         setUpUserListObserver()
         bottomNavView = binding.bottomNavigationView
 
-        sessionManager.loggedOut.observe(this) {
+        observe(sessionManager.loggedOut) {
             if (it) {
+                userUseCase.clearUserData()
                 navController.navigate(
                     R.id.routes,
                     null,

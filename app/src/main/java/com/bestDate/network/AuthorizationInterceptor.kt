@@ -14,45 +14,40 @@ class AuthorizationInterceptor @Inject constructor(
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-        val original = chain.request()
-        val shouldAddAuthHeaders = original.headers["isAuthorize"] != "false"
+        val shouldAddAuthHeaders = chain.request().headers["isAuthorize"] != "false"
 
         return if (shouldAddAuthHeaders) {
-            if (!sessionManager.isAccessTokenExpired() || sessionManager.refreshToken.isNotEmpty()) {
-                // Token is fresh or refresh token exists
-                val requestBuilder = chain.request().newBuilder()
-                requestBuilder.addHeaders(getToken())
-                val originalRequest = chain.request()
-                val response = chain.proceed(requestBuilder.build())
-                // If token is expired or anyhow received unauthorized then try to refresh
-                if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED || response.code == HttpsURLConnection.HTTP_FORBIDDEN) {
-                response.close()
+            if (sessionManager.isAccessTokenExpired() || sessionManager.refreshToken.isBlank()) {
                 synchronized(this) {
-                    if (updateTokens()) {
-                        // Token refreshed, try again
-                        val newCall =
-                            chain.request().newBuilder().addHeaders(getToken()).build()
-                        chain.proceedDeletingTokenOnError(newCall)
-                    } else {
-                        // Token was expired and can't be refreshed, return
-                        chain.proceedDeletingTokenOnError(originalRequest)
-                    }
-                }
-                } else {
-                    // Response was successful
-                    response
+                    makeRequestWithRefresh(chain)
                 }
             } else {
-                // Token has expired and there is no refresh token
-                chain.proceedDeletingTokenOnError(chain.request())
+                makeRequest(chain)
             }
         } else {
             chain.proceed(chain.request())
         }
     }
 
-    private fun Request.Builder.addHeaders(token: String) =
-        this.apply { header("Authorization", token) }
+    private fun makeRequestWithRefresh(chain: Interceptor.Chain) =
+        if (updateTokens()) makeRequest(chain)
+        else chain.proceedDeletingTokenOnError(chain.request())
+
+    private fun makeRequest(chain: Interceptor.Chain): Response {
+        val request = chain.request().newBuilder().addAuthorizationHeader().build()
+        val response = chain.proceed(request)
+        return if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED ||
+            response.code == HttpsURLConnection.HTTP_FORBIDDEN
+        ) {
+            response.close()
+            synchronized(this) {
+                makeRequestWithRefresh(chain)
+            }
+        } else response
+    }
+
+    private fun Request.Builder.addAuthorizationHeader() =
+        this.apply { header("Authorization", getToken()) }
 
     private fun getToken(): String {
         return sessionManager.accessToken
@@ -64,7 +59,9 @@ class AuthorizationInterceptor @Inject constructor(
 
     private fun Interceptor.Chain.proceedDeletingTokenOnError(request: Request): Response {
         val response = proceed(request)
-        if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED || response.code == HttpsURLConnection.HTTP_FORBIDDEN) {
+        if (response.code == HttpsURLConnection.HTTP_UNAUTHORIZED ||
+            response.code == HttpsURLConnection.HTTP_FORBIDDEN
+        ) {
             sessionManager.clearSession()
         }
         return response

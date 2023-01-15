@@ -1,12 +1,12 @@
 package com.bestDate.presentation.auth
 
 import com.bestDate.data.extension.getErrorMessage
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.AuthResponse
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,12 +40,10 @@ class AuthUseCase @Inject constructor(
 
     private fun saveTokens(response: AuthResponse?) {
         preferencesUtils.saveString(
-            Preferences.ACCESS_TOKEN,
-            "Bearer ${response?.access_token.orEmpty()}"
+            Preferences.ACCESS_TOKEN, "Bearer ${response?.access_token.orEmpty()}"
         )
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, response?.refresh_token.orEmpty())
-        val timeInSecs = Calendar.getInstance().timeInMillis
-        val expiresAt = timeInSecs + (response?.expires_in ?: 0)
-        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, expiresAt)
+        val expiresAt = System.currentTimeMillis() + (response?.expires_in.orZero)
+        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, expiresAt - 3600)
     }
 }
