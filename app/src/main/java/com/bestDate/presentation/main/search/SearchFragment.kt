@@ -1,24 +1,22 @@
 package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.MainActivity
 import com.bestDate.R
-import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.extension.close
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.open
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.AdditionalFilters
-import com.bestDate.data.extension.observe
-import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,11 +34,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private lateinit var statusOptionsSheet: OptionsSheet
     private lateinit var locationMap: MutableList<Pair<String, String>>
     private lateinit var statusesMap: MutableList<Pair<String, String>>
-    private lateinit var distanceFragment: DistanceFragment
     override val statusBarLight = false
     override val navBarLight = false
     private var additionalFilters: AdditionalFilters? = null
-    private var distance = -1
+    private var distance: Int? = null
     private var selectedLocation: CityListItem? = null
 
     override fun onInit() {
@@ -48,6 +45,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         setUpSwipe()
         setUpToolbar()
         setUpUsersList()
+        setUpAdditionalFiltersView()
     }
 
     override fun onViewLifecycle() {
@@ -61,7 +59,6 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
                 binding.swipeRefresh.isRefreshing = false
                 binding.noDataViewWithLoading.noData = it.isEmpty()
             }
-            if (::distanceFragment.isInitialized) closePage(distanceFragment)
         }
 
         observe(viewModel.loadingLiveData) {
@@ -76,32 +73,41 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             setUpLocationSheet()
             setUpStatusSheet()
             setUpFilters()
-            setUpAdditionalFiltersView(it?.location?.city)
         }
-        viewModel.locationLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.locationLiveData) {
             additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
             clearData()
             getUsersByFilterInitial()
         }
     }
 
-    private fun setUpAdditionalFiltersView(location: String?) {
+    private fun setUpAdditionalFiltersView() {
         binding.filtersView.setOnSaveClickListener {
-            distanceFragment = DistanceFragment(location)
-            distanceFragment.selectedLocation = selectedLocation
-            distanceFragment.distance = distance
+            val distanceFragment = DistanceFragment(
+                viewModel.user.value?.getUserLocation(),
+                distance,
+                selectedLocation
+            )
 
             distanceFragment.saveClick = { location, distance ->
                 viewModel.getLocationByAddress(location)
                 this.selectedLocation = location
                 this.distance = distance
+                closePage(distanceFragment)
             }
-            distanceFragment.backClick = { closePage(distanceFragment) }
-            childFragmentManager.commit {
-                setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
-                replace(R.id.fragmentContainer, distanceFragment)
+            distanceFragment.backClick = {
+                closePage(distanceFragment)
             }
-            (activity as MainActivity).bottomNavView?.visibility = View.GONE
+
+            open(distanceFragment, binding.fragmentContainer)
+            (activity as MainActivity).bottomNavView?.isVisible = false
+        }
+    }
+
+    private fun closePage(distanceFragment: DistanceFragment) {
+        close(distanceFragment, binding.fragmentContainer) {
+            reDrawBars()
+            (activity as MainActivity).bottomNavView?.isVisible = true
         }
     }
 
@@ -214,36 +220,5 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun clearData() {
         viewModel.clearData()
-    }
-
-    private fun closePage(fragment: Fragment) {
-        binding.fragmentContainer.animate()
-            .translationY((binding.fragmentContainer.height).toFloat())
-            .setDuration(300)
-            .start()
-
-        postDelayed({
-            childFragmentManager.commit {
-                fragment.let {
-                    remove(it)
-                    binding.fragmentContainer.isVisible = false
-                    hideKeyboardAction()
-                    reDrawBars()
-                    reDrawPage()
-                }
-            }
-        }, 350)
-        (activity as MainActivity).bottomNavView?.visibility = View.VISIBLE
-    }
-
-    private fun reDrawPage() {
-        binding.fragmentContainer.animate()
-            .translationY(0.0f)
-            .setDuration(10)
-            .start()
-
-        postDelayed({
-            binding.fragmentContainer.isVisible = true
-        }, 20)
     }
 }

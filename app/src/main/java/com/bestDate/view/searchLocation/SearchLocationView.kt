@@ -3,9 +3,9 @@ package com.bestDate.view.searchLocation
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
@@ -85,7 +85,7 @@ class SearchLocationView @JvmOverloads constructor(
     }
 
     fun hidePoweredByGoogle() {
-        binding.textViewPoweredByGoogle.visibility = View.GONE
+        binding.textViewPoweredByGoogle.isVisible = false
     }
 
     enum class SearchStyle(

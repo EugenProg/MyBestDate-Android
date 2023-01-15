@@ -11,13 +11,14 @@ import com.bestDate.databinding.FragmentDistanceBinding
 import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.view.alerts.LoaderDialog
 
-class DistanceFragment(var userLocation: String? = null) : BaseFragment<FragmentDistanceBinding>() {
+class DistanceFragment(var userLocation: String?,
+                       private var distance: Int?,
+                       private var selectedLocation: CityListItem? = null) :
+    BaseFragment<FragmentDistanceBinding>() {
 
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDistanceBinding =
         { inflater, parent, attach -> FragmentDistanceBinding.inflate(inflater, parent, attach) }
     private lateinit var loader: LoaderDialog
-    var selectedLocation: CityListItem? = null
-    var distance = -1
 
     override val statusBarLight = false
     override val navBarLight = false
@@ -30,22 +31,18 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
 
     override fun onInit() {
         super.onInit()
+        loader = LoaderDialog(requireActivity())
         binding.searchView.initSearching(
             lifecycleScope,
             viewLifecycleOwner,
-            if (selectedLocation == null) userLocation
-            else selectedLocation?.getLocation()
+            selectedLocation?.getLocation() ?: userLocation
         )
         binding.searchView.hidePoweredByGoogle()
-        binding.searchView.onFocusChanged = {
-            binding.seekBar.isVisible = !it
-        }
-        loader = LoaderDialog(requireActivity())
 
         binding.bar.run {
             minProgress = 0
             maxProgress = 300
-            progress = if (distance == -1) getHalfDistance() else distance
+            progress = distance?.let { distance } ?: getHalfDistance()
         }
     }
 
@@ -70,6 +67,16 @@ class DistanceFragment(var userLocation: String? = null) : BaseFragment<Fragment
                 saveClick?.invoke(selectedLocation, binding.bar.progress)
             }
         }
+    }
+
+    override fun scrollAction() {
+        super.scrollAction()
+        binding.seekBar.isVisible = false
+    }
+
+    override fun hideAction() {
+        super.hideAction()
+        binding.seekBar.isVisible = true
     }
 
     override fun goBack() {
