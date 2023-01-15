@@ -51,7 +51,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -106,14 +106,14 @@
     <fragment
         android:id="@+id/geoEnableFragment"
         android:name="com.bestDate.presentation.GeoEnableFragment"
-        android:label="GeoEnableFragment" >
+        android:label="GeoEnableFragment">
         <action
             android:id="@+id/action_geo_to_messagesSettings"
             app:destination="@id/messagesSettingsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/messagesSettingsFragment"
@@ -296,7 +296,7 @@
             <fragment
                 android:id="@+id/profileQuestionnaireFragment"
                 android:name="com.bestDate.presentation.main.userProfile.questionnaire.ProfileQuestionnaireFragment"
-                android:label="ProfileQuestionnaire"/>
+                android:label="ProfileQuestionnaire" />
             <fragment
                 android:id="@+id/blockedUsersFragment"
                 android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"
@@ -568,7 +568,8 @@
             app:popUpTo="@id/registration_nav_graph"
             app:popUpToInclusive="true" />
     </navigation>
-    <navigation android:id="@+id/photo_editor_nav_graph"
+    <navigation
+        android:id="@+id/photo_editor_nav_graph"
         app:startDestination="@id/profilePhotoEditingFragment">
         <fragment
             android:id="@+id/profilePhotoEditingFragment"
@@ -596,7 +597,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </navigation>
 
 </navigation>

@@ -24,4 +24,8 @@ annotation class Core_network
 
 @MustBeDocumented
 @Qualifier
+annotation class Session_manager
+
+@MustBeDocumented
+@Qualifier
 annotation class Translate_network

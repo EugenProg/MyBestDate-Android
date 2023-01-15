@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GeocodingRemoteData @Inject constructor(
     private val service: GeocodingService
 ) {
-    suspend fun getLocationByAddress(location: CityListItem) =
-        service.getLocationByAddress("json", 1, location.city, location.country.orEmpty())
+    suspend fun getLocationByAddress(location: CityListItem?) =
+        service.getLocationByAddress("json", 1, location?.city.orEmpty(), location?.country.orEmpty())
 }

@@ -61,7 +61,7 @@ class UserUseCase @Inject constructor(
         clearUserData()
     }
 
-    private fun clearUserData() {
+    fun clearUserData() {
         userDao.delete()
         userSettingsDao.delete()
         likesListUseCase.clearData()
@@ -74,6 +74,7 @@ class UserUseCase @Inject constructor(
         chatListUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
+        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, 0L)
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")
         preferencesUtils.saveString(Preferences.FILTER_STATUS, "all")
     }

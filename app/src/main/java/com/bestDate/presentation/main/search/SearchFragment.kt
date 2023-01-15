@@ -2,14 +2,23 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bestDate.MainActivity
 import com.bestDate.R
+import com.bestDate.data.extension.close
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.open
+import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.model.AdditionalFilters
 import com.bestDate.data.model.BackScreenType
-import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchBinding
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,15 +35,18 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private lateinit var statusOptionsSheet: OptionsSheet
     private lateinit var locationMap: MutableList<Pair<String, String>>
     private lateinit var statusesMap: MutableList<Pair<String, String>>
-
     override val statusBarLight = false
     override val navBarLight = false
+    private var additionalFilters: AdditionalFilters? = null
+    private var distance: Int? = null
+    private var selectedLocation: CityListItem? = null
 
     override fun onInit() {
         super.onInit()
         setUpSwipe()
         setUpToolbar()
         setUpUsersList()
+        setUpAdditionalFiltersView()
     }
 
     override fun onViewLifecycle() {
@@ -63,6 +75,41 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             setUpStatusSheet()
             setUpFilters()
         }
+        observe(viewModel.locationLiveData) {
+            additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
+            clearData()
+            getUsersByFilterInitial()
+        }
+    }
+
+    private fun setUpAdditionalFiltersView() {
+        binding.filtersView.setOnSaveClickListener {
+            val distanceFragment = DistanceFragment(
+                viewModel.user.value?.getUserLocation(),
+                distance,
+                selectedLocation
+            )
+
+            distanceFragment.saveClick = { location, distance ->
+                viewModel.getLocationByAddress(location)
+                this.selectedLocation = location
+                this.distance = distance
+                closePage(distanceFragment)
+            }
+            distanceFragment.backClick = {
+                closePage(distanceFragment)
+            }
+
+            open(distanceFragment, binding.fragmentContainer)
+            (activity as MainActivity).bottomNavView?.isVisible = false
+        }
+    }
+
+    private fun closePage(distanceFragment: DistanceFragment) {
+        close(distanceFragment, binding.fragmentContainer) {
+            reDrawBars()
+            (activity as MainActivity).bottomNavView?.isVisible = true
+        }
     }
 
     private fun setUpToolbar() {
@@ -87,6 +134,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             binding.locationFilterButton.label = it?.first ?: getString(R.string.all_world)
             saveFilters(Preferences.FILTER_LOCATION, it?.second ?: "all")
             clearData()
+            additionalFilters = null
             getUsersByFilterInitial()
         }
     }
@@ -99,6 +147,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             binding.statusFilterButton.label = it?.first ?: getString(R.string.not_selected)
             saveFilters(Preferences.FILTER_STATUS, it?.second ?: "all")
             clearData()
+            additionalFilters = null
             getUsersByFilterInitial()
         }
     }
@@ -142,7 +191,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
                 locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
                     ?: "",
                 statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
-                    ?: ""
+                    ?: "",
+                additionalFilters
             )
         )
     }
@@ -153,7 +203,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
                 locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
                     ?: "",
                 statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
-                    ?: ""
+                    ?: "",
+                additionalFilters
             )
         )
     }
