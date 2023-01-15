@@ -44,7 +44,7 @@ class SessionManager @Inject constructor(
     }
 
     private fun isAccessTokenEmpty(): Boolean =
-        preferencesUtils.getString(Preferences.ACCESS_TOKEN).isNotBlank()
+        preferencesUtils.getString(Preferences.ACCESS_TOKEN).isBlank()
 
     fun refreshToken(): Response<AuthResponse> {
         val block = runBlocking {

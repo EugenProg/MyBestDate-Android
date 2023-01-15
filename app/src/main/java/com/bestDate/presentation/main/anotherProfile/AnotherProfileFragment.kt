@@ -122,8 +122,7 @@ class AnotherProfileFragment :
         }
         binding.userInfoView.openQuestionnaire = {
             navController.navigate(
-                AnotherProfileFragmentDirections
-                    .actionAnotherProfileToQuestionnaire(fullUser)
+                AnotherProfileFragmentDirections.actionAnotherProfileToQuestionnaire()
             )
         }
     }
