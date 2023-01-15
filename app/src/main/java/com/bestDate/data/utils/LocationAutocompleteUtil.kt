@@ -47,7 +47,8 @@ class LocationAutocompleteUtil(val context: Context) {
             val city = prediction.getPrimaryText(null).toString()
             val country = getItemFromLine(prediction.getSecondaryText(null).toString())
             val result = CityListItem(index, country, city)
-            if (list.firstOrNull { it.city == result.city && it.country == result.country } == null &&
+            if (result.city.isNotBlank() && !result.country.isNullOrBlank() &&
+                list.firstOrNull { it.city == result.city && it.country == result.country } == null &&
                 result.getLocation() != searchString) {
                 list.add(result)
             }

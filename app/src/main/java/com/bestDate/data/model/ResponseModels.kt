@@ -131,8 +131,19 @@ data class ShortUserData(
 }
 
 data class FilterOptions(
-    val location: String = "all",
-    val online: String = "all"
+    val location: String? = "all",
+    val online: String? = "all",
+    val filters: AdditionalFilters? = null
+)
+
+data class AdditionalFilters(
+    val location: LocationParams? = null
+)
+
+data class LocationParams(
+    val range: Int? = null,
+    val lat: String? = null,
+    val lng: String? = null
 )
 
 data class Like(

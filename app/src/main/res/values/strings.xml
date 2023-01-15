@@ -618,4 +618,6 @@
     <string name="all_message">All message</string>
     <string name="new_message">New message</string>
     <string name="picture">Picture</string>
+    <string name="search_distance">Search distance</string>
+    <string name="possibility_from_0_to_300_kilometers">Possibility from 0 to 300 kilometers</string>
 </resources>
