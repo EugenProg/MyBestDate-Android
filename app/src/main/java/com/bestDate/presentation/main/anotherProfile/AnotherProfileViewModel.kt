@@ -1,5 +1,6 @@
 package com.bestDate.presentation.main.anotherProfile
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
@@ -23,11 +24,11 @@ class AnotherProfileViewModel @Inject constructor(
     var photos:  MutableLiveData<MutableList<ProfileImage>?> = anotherProfileUseCase.photos
     var invitations = invitationUseCase.invitations.asLiveData()
 
-    private var _blockLiveData: LiveEvent<Boolean> = LiveEvent()
-    var blockLiveData: LiveEvent<Boolean> = _blockLiveData
+    private var _blockLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var blockLiveData: LiveData<Boolean> = _blockLiveData
 
-    private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
-    var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
+    private var _sendInvitationLiveData: MutableLiveData<Boolean> = LiveEvent()
+    var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
 
     var likeLiveData: MutableLiveData<ProfileImage?> = likesUseCase.photoMainResult
 
@@ -45,7 +46,7 @@ class AnotherProfileViewModel @Inject constructor(
         doAsync {
             anotherProfileUseCase.blockUser(id)
             anotherProfileUseCase.getUserById(id)
-            blockLiveData.postValue(true)
+            _blockLiveData.postValue(true)
         }
     }
 
@@ -53,7 +54,7 @@ class AnotherProfileViewModel @Inject constructor(
         doAsync {
             anotherProfileUseCase.unlockUser(id)
             anotherProfileUseCase.getUserById(id)
-            blockLiveData.postValue(false)
+            _blockLiveData.postValue(false)
         }
     }
 

@@ -351,12 +351,7 @@
             <fragment
                 android:id="@+id/anotherProfileQuestionnaire"
                 android:name="com.bestDate.presentation.main.anotherProfile.questionnaire.AnotherProfileQuestionnaireFragment"
-                android:label="AnotherProfileQuestionnaireFragment">
-                <argument
-                    android:name="user"
-                    app:argType="com.bestDate.db.entity.UserDB"
-                    app:nullable="true" />
-            </fragment>
+                android:label="AnotherProfileQuestionnaireFragment"/>
             <fragment
                 android:id="@+id/anotherProfileSliderFragment"
                 android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileSliderFragment"
