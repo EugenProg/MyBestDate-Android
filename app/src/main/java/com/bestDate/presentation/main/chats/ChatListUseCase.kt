@@ -5,7 +5,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.Chat
-import com.bestDate.data.model.ChatItemType
+import com.bestDate.data.model.ChatListItemType
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.model.Message
 import com.bestDate.db.dao.UserDao
@@ -46,9 +46,9 @@ class ChatListUseCase @Inject constructor(
         val oldList: MutableList<Chat> = mutableListOf(createOldHeader())
         list?.forEach {
             if (it.last_message?.read_at == null && it.last_message?.sender_id != userId) {
-                newList.add(it.transform(ChatItemType.NEW_ITEM))
+                newList.add(it.transform(ChatListItemType.NEW_ITEM))
             } else {
-                oldList.add(it.transform(ChatItemType.OLD_ITEM))
+                oldList.add(it.transform(ChatListItemType.OLD_ITEM))
             }
         }
         hasNewChats.postValue(newList.size > 1)
@@ -68,10 +68,10 @@ class ChatListUseCase @Inject constructor(
     }
 
     private fun createNewHeader(): Chat =
-        Chat(id = -2, last_message = Message(id = R.string.new_message), type = ChatItemType.HEADER)
+        Chat(id = -2, last_message = Message(id = R.string.new_message), type = ChatListItemType.HEADER)
 
     private fun createOldHeader(): Chat =
-        Chat(id = -1, last_message = Message(id = R.string.all_message), type = ChatItemType.HEADER)
+        Chat(id = -1, last_message = Message(id = R.string.all_message), type = ChatListItemType.HEADER)
 
     fun clearData() {
         chatList.postValue(mutableListOf())

@@ -11,6 +11,7 @@ import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.open
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.AdditionalFilters
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
@@ -114,7 +115,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.search)
         binding.toolbar.onProfileClick = {
-            navController.navigate(R.id.action_global_profile_nav_graph_from_search)
+            navController.navigate(SearchFragmentDirections.actionGlobalSearchToProfile())
         }
     }
 
@@ -154,7 +155,10 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpUsersList() {
         binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter.itemClick = {
-            navController.navigate(SearchFragmentDirections.actionGlobalAnotherProfileNavGraph2(it))
+            navController.navigate(
+                SearchFragmentDirections
+                    .actionGlobalSearchToAnotherProfile(it, BackScreenType.SEARCH)
+            )
         }
         adapter.loadMoreItems = {
             getUsersByFilter()

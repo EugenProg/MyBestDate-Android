@@ -6,6 +6,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentMatchesListBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showMatchActionDialog
@@ -31,12 +32,14 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
         adapter.itemClick = { item, type ->
             if (type == MatchesSelectType.USER) {
                 navController.navigate(
-                    MatchesListFragmentDirections.actionGlobalAnotherProfile(item.user)
+                    MatchesListFragmentDirections
+                        .actionGlobalAnotherProfile(item.user, BackScreenType.PROFILE)
                 )
             } else {
                 requireActivity().showMatchActionDialog(item, args.myPhoto, {
                     navController.navigate(
-                        MatchesListFragmentDirections.actionGlobalAnotherProfile(it)
+                        MatchesListFragmentDirections
+                            .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
                     )
                 }, {
                     showMessage("open chat")

@@ -26,7 +26,7 @@ fun getMillisecondsBetween(firstDate: Date, secondDate: Date): Long {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun Date.toShortString(): String {
+fun Date.toShortDate(): String {
     val formatter = SimpleDateFormat("dd MMM")
     return formatter.format(this)
 }

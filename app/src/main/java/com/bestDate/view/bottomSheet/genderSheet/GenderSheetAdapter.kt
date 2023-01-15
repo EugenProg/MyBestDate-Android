@@ -3,17 +3,19 @@ package com.bestDate.view.bottomSheet.genderSheet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.ItemGenderListBinding
+import com.bestDate.databinding.ItemBottomSheetListBinding
+import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bestDate.presentation.registration.GenderType
 
-class GenderSheetAdapter(private val items: MutableList<GenderType>,
-                         private val itemClick: (GenderType) -> Unit):
+class GenderSheetAdapter(
+    private val items: MutableList<GenderType>,
+    private val itemClick: (GenderType) -> Unit
+) :
     RecyclerView.Adapter<GenderSheetAdapter.GenderSheetViewHolder>() {
 
-    class GenderSheetViewHolder(override val binding: ItemGenderListBinding):
-        BaseClickViewHolder<GenderType, (GenderType) -> Unit, ItemGenderListBinding>(binding) {
+    class GenderSheetViewHolder(override val binding: ItemBottomSheetListBinding) :
+        BaseClickViewHolder<GenderType, (GenderType) -> Unit, ItemBottomSheetListBinding>(binding) {
 
         override fun bindView(item: GenderType, itemClick: (GenderType) -> Unit) {
             binding.name.text = itemView.context.getString(item.line)
@@ -26,8 +28,9 @@ class GenderSheetAdapter(private val items: MutableList<GenderType>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenderSheetViewHolder {
         return GenderSheetViewHolder(
-            ItemGenderListBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+            ItemBottomSheetListBinding.inflate(
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
     }
 

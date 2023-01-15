@@ -8,7 +8,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.bestDate.R
 import com.bestDate.databinding.ViewBottomNavBinding
-import com.bestDate.databinding.ViewBottomNavButtonBinding
 
 class CustomBottomNavView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -100,7 +99,7 @@ class CustomBottomNavView @JvmOverloads constructor(
                         navController.navigate(R.id.matches_nav_graph)
                     }
                     binding.buttonChats -> {
-                        navController.navigate(R.id.chats_nav_graph)
+                        navController.navigate(R.id.chat_list_nav_graph)
                     }
                     binding.buttonTop -> {
                         navController.navigate(R.id.top_nav_graph)

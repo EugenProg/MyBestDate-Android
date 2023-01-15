@@ -2,6 +2,7 @@ package com.bestDate.data.model
 
 import android.content.Context
 import android.os.Parcelable
+import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
@@ -107,6 +108,7 @@ data class ShortUserData(
     var role: String? = null,
     var blocked: Boolean? = null,
     var blocked_me: Boolean? = null,
+    var block_messages: Boolean? = null,
     var allow_chat: Boolean? = null,
     var is_online: Boolean? = null,
     var last_online_at: String? = null,
@@ -268,14 +270,14 @@ data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null,
-    var type: ChatItemType? = null
+    var type: ChatListItemType? = null
 ) {
-    fun transform(itemType: ChatItemType): Chat {
+    fun transform(itemType: ChatListItemType): Chat {
         return Chat(
             user?.id,
             user,
             last_message,
-            if (user?.isBot() == true) ChatItemType.BOT else itemType
+            if (user?.isBot() == true) ChatListItemType.BOT else itemType
         )
     }
 
@@ -285,14 +287,18 @@ data class Chat(
         else {
             val date = created.getDateWithTimeOffset()
             val days = getDaysBetween(Date(), date)
-            if (days > 6) date.toShortString()
+            if (days > 6) date.toShortDate()
             else date.toWeekday()
         }
     }
 }
 
-enum class ChatItemType {
+enum class ChatListItemType {
     HEADER, NEW_ITEM, OLD_ITEM, BOT
+}
+
+enum class BackScreenType {
+    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS
 }
 
 data class Message(
@@ -303,8 +309,37 @@ data class Message(
     var text: String? = null,
     var image: ChatImage? = null,
     var read_at: String? = null,
-    var created_at: String? = null
+    var created_at: String? = null,
+    var parentMessage: ParentMessage? = null,
+    var isLastMessage: Boolean? = null,
+    var viewType: ChatItemType? = null
+) {
+    fun transform(type: ChatItemType, parent: ParentMessage?, isLast: Boolean?): Message {
+        return Message(
+            id, sender_id, recipient_id, parent_id, text, image, read_at, created_at,
+            parent, isLast, type
+        )
+    }
+    
+    fun getDate(context: Context): String {
+        val dateBetween = getDaysBetween(created_at.getDateWithTimeOffset(), Date())
+        return when {
+            created_at.isToday() -> context.getString(R.string.today)
+            dateBetween == 1 -> context.getString(R.string.yesterday)
+            else -> created_at.toShortDate()
+        }
+    }
+}
+
+data class ParentMessage(
+    var id: Int? = null,
+    var text: String? = null,
+    var image: ChatImage? = null
 )
+
+enum class ChatItemType {
+    DATE, MY_TEXT_MESSAGE, USER_TEXT_MESSAGE, MY_IMAGE_MESSAGE, USER_IMAGE_MESSAGE
+}
 
 data class ChatImage(
     var id: Int? = null,
@@ -320,3 +355,12 @@ data class ChatMessagesResponse(
 data class SendMessageResponse(
     val data: Message? = null
 ) : BaseResponse()
+
+data class TranslationResponse(
+    var translations: MutableList<Translation> = mutableListOf()
+)
+
+data class Translation(
+    var detected_source_language: String? = null,
+    var text: String? = null
+)

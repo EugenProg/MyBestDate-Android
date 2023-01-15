@@ -30,6 +30,10 @@ object NetworkModule {
     fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
 
     @Provides
+    @Translate_url
+    fun providesTranslateBaseURL(): String = "https://api-free.deepl.com/"
+
+    @Provides
     fun provideInterceptor (
         @ApplicationContext context: Context,
         @Session_manager sessionManager: SessionManager
@@ -60,6 +64,16 @@ object NetworkModule {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @Singleton
+    @Translate_network
+    fun provideTranslateApi(@Translate_url BASE_URL: String, interceptor: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(interceptor)
             .build()
 
     @Provides
@@ -101,6 +115,11 @@ object NetworkModule {
     @Singleton
     fun geocodingApiService(@Geocoding_network retrofit: Retrofit): GeocodingService =
         retrofit.create(GeocodingService::class.java)
+
+    @Provides
+    @Singleton
+    fun translationApiService(@Translate_network retrofit: Retrofit): TranslateService =
+        retrofit.create(TranslateService::class.java)
 
     @Provides
     @Singleton
@@ -147,4 +166,9 @@ object NetworkModule {
     @Singleton
     fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
         GeocodingRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun translationRemoteData(apiService: TranslateService): TranslationRemoteData =
+        TranslationRemoteData(apiService)
 }

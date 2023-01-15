@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.Chat
-import com.bestDate.data.model.ChatItemType
+import com.bestDate.data.model.ChatListItemType
 import com.bestDate.databinding.ItemChatBotBinding
 import com.bestDate.databinding.ItemChatListBinding
 import com.bestDate.databinding.ItemChatListHeaderBinding
@@ -100,14 +100,14 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListBaseViewHolder<*> {
         return when (viewType) {
-            ChatItemType.HEADER.ordinal -> {
+            ChatListItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     ItemChatListHeaderBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
             }
-            ChatItemType.BOT.ordinal -> {
+            ChatListItemType.BOT.ordinal -> {
                 BotViewHolder(
                     ItemChatBotBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false

@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -32,7 +33,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.guests)
         binding.toolbar.onProfileClick = {
-            navController.navigate(R.id.action_global_profile_nav_graph_from_guests)
+            navController.navigate(R.id.action_global_guests_to_profile)
         }
     }
 
@@ -60,7 +61,10 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     }
 
     private fun goToAnotherProfile(user: ShortUserData?) {
-        navController.navigate(GuestsFragmentDirections.actionGlobalAnotherProfileNavGraph(user))
+        navController.navigate(
+            GuestsFragmentDirections
+                .actionGlobalGuestsToAnotherProfile(user, BackScreenType.GUESTS)
+        )
     }
 
     private fun setUpSwipe() {

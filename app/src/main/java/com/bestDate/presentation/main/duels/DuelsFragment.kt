@@ -37,7 +37,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.duels)
         binding.toolbar.onProfileClick = {
-            navController.navigate(R.id.action_global_profile_nav_graph_from_top)
+            navController.navigate(DuelsFragmentDirections.actionGlobalTopToProfile())
         }
     }
 
