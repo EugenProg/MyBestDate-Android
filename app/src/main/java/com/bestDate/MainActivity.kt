@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.data.extension.observe
 import com.bestDate.data.utils.SessionManager
+import com.bestDate.data.utils.notifications.NotificationCenter
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
@@ -34,6 +35,9 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var chatListUseCase: ChatListUseCase
 
+    @Inject
+    lateinit var notificationCenter: NotificationCenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -53,6 +57,12 @@ class MainActivity : AppCompatActivity() {
                     NavOptions.Builder().setPopUpTo(R.id.authFragment, true).build()
                 )
             }
+        }
+        observe(notificationCenter.notificationsAction) {
+            notificationCenter.showPush(this)
+        }
+        observe(notificationCenter.navigationAction) {
+            navController.navigate(it)
         }
     }
 

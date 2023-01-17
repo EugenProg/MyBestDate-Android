@@ -94,6 +94,24 @@ fun View.showWithSlideTopAnimation(showViews: (() -> Unit)? = null) {
     }, 100)
 }
 
+inline fun View.showWithSlideBottomAnimation(crossinline showViews: () -> Unit) {
+    this.isVisible = false
+    this.animate()
+        .translationY(-400f)
+        .setDuration(100)
+        .start()
+
+    showViews.invoke()
+
+    postDelayed({
+        this.isVisible = true
+        this.animate()
+            .translationY(0f)
+            .setDuration(300)
+            .start()
+    }, 100)
+}
+
 fun View.showWithSlideTopAndRotateAnimation(showViews: (() -> Unit)? = null) {
     this.isVisible = false
     this.animate()

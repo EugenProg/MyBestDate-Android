@@ -241,11 +241,7 @@
             <fragment
                 android:id="@+id/matchesListFragment"
                 android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
-                android:label="MatchesListFragment">
-                <argument
-                    android:name="myPhoto"
-                    app:argType="string" />
-            </fragment>
+                android:label="MatchesListFragment"/>
             <fragment
                 android:id="@+id/myDuelsFragment"
                 android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
@@ -317,6 +313,9 @@
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_search"
+                app:destination="@id/search_nav_graph" />
 
         </navigation>
 

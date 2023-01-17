@@ -18,35 +18,12 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
         { inflater, parent, attach -> FragmentMatchesListBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MatchesListViewModel> = MatchesListViewModel::class.java
 
-    private val args by navArgs<MatchesListFragmentArgs>()
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MatchesListAdapter
+    private var myPhotoUrl: String? = null
 
     override fun onInit() {
         super.onInit()
-
-        adapter = MatchesListAdapter(args.myPhoto)
-        binding.matchesListView.layoutManager = LinearLayoutManager(requireContext())
-        binding.matchesListView.adapter = adapter
-
-        adapter.itemClick = { item, type ->
-            if (type == MatchesSelectType.USER) {
-                navController.navigate(
-                    MatchesListFragmentDirections
-                        .actionGlobalAnotherProfile(item.user, BackScreenType.PROFILE)
-                )
-            } else {
-                requireActivity().showMatchActionDialog(item, args.myPhoto, {
-                    navController.navigate(
-                        MatchesListFragmentDirections
-                            .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
-                    )
-                }, {
-                    showMessage("open chat")
-                })
-            }
-        }
-
         binding.refreshView.setOnRefreshListener {
             viewModel.getMatches()
         }
@@ -64,6 +41,10 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
+        observe(viewModel.myUser) {
+            myPhotoUrl = it?.getMainPhotoThumbUrl()
+            initListData()
+        }
         observe(viewModel.matchesList) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
@@ -79,6 +60,30 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
+        }
+    }
+
+    private fun initListData() {
+        adapter = MatchesListAdapter(myPhotoUrl.orEmpty())
+        binding.matchesListView.layoutManager = LinearLayoutManager(requireContext())
+        binding.matchesListView.adapter = adapter
+
+        adapter.itemClick = { item, type ->
+            if (type == MatchesSelectType.USER) {
+                navController.navigate(
+                    MatchesListFragmentDirections
+                        .actionGlobalAnotherProfile(item.user, BackScreenType.PROFILE)
+                )
+            } else {
+                requireActivity().showMatchActionDialog(item, myPhotoUrl.orEmpty(), {
+                    navController.navigate(
+                        MatchesListFragmentDirections
+                            .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
+                    )
+                }, {
+                    showMessage("open chat")
+                })
+            }
         }
     }
 }
