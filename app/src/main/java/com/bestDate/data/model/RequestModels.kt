@@ -167,3 +167,8 @@ data class DuelVoteRequest(
 data class SendMessageRequest(
     val text: String
 )
+
+data class SaveDeviceTokenRequest(
+    val type: String = "android",
+    val token: String
+)

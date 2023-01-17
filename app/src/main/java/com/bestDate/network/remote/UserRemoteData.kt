@@ -64,4 +64,7 @@ class UserRemoteData @Inject constructor(
         service.updateUserSettings(type.getSettingsRequest(checked))
 
     suspend fun deleteUserProfile() = service.deleteUserProfile()
+
+    suspend fun saveMessagingDeviceToken(token: String) =
+        service.saveMessagingDeviceToken(SaveDeviceTokenRequest(token = token))
 }

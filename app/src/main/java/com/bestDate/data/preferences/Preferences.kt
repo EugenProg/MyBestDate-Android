@@ -7,5 +7,6 @@ enum class Preferences {
     FILTER_LOCATION,
     FILTER_STATUS,
     FIRST_ENTER,
-    ARG_EXPIRES_AT
+    ARG_EXPIRES_AT,
+    FIREBASE_TOKEN
 }
