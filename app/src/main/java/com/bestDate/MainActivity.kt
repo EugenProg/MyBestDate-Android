@@ -1,22 +1,21 @@
 package com.bestDate
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.asLiveData
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
+import com.bestDate.data.extension.isBottomNavVisible
 import com.bestDate.data.extension.observe
-import com.bestDate.data.utils.SessionManager
+import com.bestDate.data.utils.notifications.NotificationType
 import com.bestDate.databinding.ActivityMainBinding
-import com.bestDate.presentation.main.UserUseCase
-import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 //HG3g8wnkTaUGgQHxFcw4
 @AndroidEntryPoint
@@ -24,15 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     var bottomNavView: CustomBottomNavView? = null
-
-    @Inject
-    lateinit var sessionManager: SessionManager
-
-    @Inject
-    lateinit var userUseCase: UserUseCase
-
-    @Inject
-    lateinit var chatListUseCase: ChatListUseCase
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +35,34 @@ class MainActivity : AppCompatActivity() {
         setUpUserListObserver()
         bottomNavView = binding.bottomNavigationView
 
-        observe(sessionManager.loggedOut) {
+        observe(viewModel.loggedOut) {
             if (it) {
-                userUseCase.clearUserData()
+                viewModel.clearUserData()
                 navController.navigate(
                     R.id.routes,
                     null,
                     NavOptions.Builder().setPopUpTo(R.id.authFragment, true).build()
                 )
             }
+        }
+        observe(viewModel.notificationsAction) {
+            if (it == NotificationType.MESSAGE) {
+                when (navController.currentDestination?.getCurrentScreen()) {
+                    Screens.CHAT -> {
+                        if (viewModel.isCurrentUserChat()) viewModel.refreshMessageList()
+                        else viewModel.showPush(this)
+                    }
+                    Screens.CHAT_LIST -> {
+                        viewModel.refreshChatList()
+                    }
+                    else -> viewModel.showPush(this)
+                }
+            } else {
+                viewModel.showPush(this)
+            }
+        }
+        observe(viewModel.navigationAction) {
+            navController.navigate(it.first, it.second)
         }
     }
 
@@ -73,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpUserObserver() {
-        userUseCase.getMyUser.asLiveData().observe(this) {
+        observe(viewModel.myUser) {
             val newGuests = it?.new_guests ?: 0
             binding.bottomNavigationView.setBadge(
                 BottomButton.GUESTS,
@@ -83,19 +93,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpUserListObserver() {
-        chatListUseCase.hasNewChats.observe(this) {
+        viewModel.hasNewChats.observe(this) {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, it)
         }
-    }
-}
-
-fun NavDestination.isBottomNavVisible(): Boolean {
-    return when (displayName.split(":").getOrNull(1)) {
-        "id/searchFragment",
-        "id/matchesFragment",
-        "id/chatsFragment",
-        "id/duelsFragment",
-        "id/guestsFragment" -> true
-        else -> false
     }
 }

@@ -32,6 +32,17 @@ fun Dialog.closeWithAnimation(rootView: View, owner: LifecycleOwner) {
     }, 200)
 }
 
+fun Dialog.closeWithSlideTopAnimation(rootView: View, owner: LifecycleOwner) {
+    rootView.animate()
+        .translationY(-400f)
+        .setDuration(300)
+        .start()
+
+    owner.postDelayed({
+        this@closeWithSlideTopAnimation.dismiss()
+    }, 200)
+}
+
 fun getDialog(
     view: View,
     position: Int = Gravity.CENTER,

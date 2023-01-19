@@ -241,11 +241,7 @@
             <fragment
                 android:id="@+id/matchesListFragment"
                 android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
-                android:label="MatchesListFragment">
-                <argument
-                    android:name="myPhoto"
-                    app:argType="string" />
-            </fragment>
+                android:label="MatchesListFragment"/>
             <fragment
                 android:id="@+id/myDuelsFragment"
                 android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
@@ -317,6 +313,12 @@
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_chat"
+                app:destination="@id/chat_nav_graph" />
 
         </navigation>
 
@@ -484,7 +486,63 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
-
+        <fragment
+            android:id="@+id/globalLikePushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalLikePushScreen"
+            android:label="GlobalLikePushScreen" >
+            <action
+                android:id="@+id/action_likePush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalLikePushScreen"
+                app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_likePush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph"
+                app:popUpTo="@id/globalLikePushScreen"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/globalMatchPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalMatchPushScreen"
+            android:label="GlobalMatchPushScreen" >
+            <action
+                android:id="@+id/action_matchPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalMatchPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_matchPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_matchPush_to_chat"
+                app:destination="@id/chat_nav_graph"/>
+        </fragment>
+        <fragment
+            android:id="@+id/globalInvitationPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalInvitationPushScreen"
+            android:label="GlobalInvitationPushScreen" >
+            <action
+                android:id="@+id/action_invitationPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalInvitationPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_invitationPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+        </fragment>
+        <fragment
+            android:id="@+id/globalChatPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalChatScreenPushScreen"
+            android:label="GlobalChatScreenPushScreen">
+            <action
+                android:id="@+id/action_chatPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalChatPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_chatPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph"/>
+        </fragment>
     </navigation>
 
     <navigation

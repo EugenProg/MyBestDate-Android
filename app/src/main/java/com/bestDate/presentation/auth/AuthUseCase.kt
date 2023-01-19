@@ -7,12 +7,14 @@ import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
+import com.bestDate.network.remote.UserRemoteData
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthUseCase @Inject constructor(
     private val authRemoteData: AuthRemoteData,
+    private val userRemoteData: UserRemoteData,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -20,6 +22,7 @@ class AuthUseCase @Inject constructor(
         val response = authRemoteData.loginByEmail(email, password)
         if (response.isSuccessful) {
             saveTokens(response.body())
+            saveDeviceToken()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
@@ -27,7 +30,13 @@ class AuthUseCase @Inject constructor(
         val response = authRemoteData.loginByPhone(phone, password)
         if (response.isSuccessful) {
             saveTokens(response.body())
+            saveDeviceToken()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    private suspend fun saveDeviceToken() {
+        val token = preferencesUtils.getString(Preferences.FIREBASE_TOKEN)
+        if (token.isNotBlank()) userRemoteData.saveMessagingDeviceToken(token)
     }
 
     suspend fun refreshToken() {

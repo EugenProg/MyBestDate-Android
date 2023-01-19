@@ -3,6 +3,7 @@ package com.bestDate.data.extension
 import android.annotation.SuppressLint
 import android.content.Context
 import com.bestDate.R
+import com.bestDate.data.utils.notifications.NotificationType
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -105,4 +106,9 @@ fun String?.getVisitPeriod(context: Context): String {
 fun String?.getDateString(): String {
     val formatter = SimpleDateFormat("dd-MM-yyyy")
     return formatter.format(this.getDateWithTimeOffset())
+}
+
+fun String.getPushType(): NotificationType {
+    if (this.isBlank()) return NotificationType.DEFAULT_PUSH
+    return NotificationType.values().firstOrNull { it.code == this } ?: NotificationType.DEFAULT_PUSH
 }

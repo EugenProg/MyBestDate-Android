@@ -27,6 +27,7 @@ class ChatUseCase @Inject constructor(
     var translatedText: String? = ""
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
+    private var currentUserId: Int? = null
 
     suspend fun sendTextMessage(recipientId: Int?, parentId: Int?, text: String) {
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
@@ -78,6 +79,7 @@ class ChatUseCase @Inject constructor(
     }
 
     suspend fun getChatMessages(userId: Int?) {
+        currentUserId = userId
         val response = chatsRemoteData.getChatMessages(userId.orZero)
         if (response.isSuccessful) {
             response.body()?.let {
@@ -92,6 +94,11 @@ class ChatUseCase @Inject constructor(
         if (response.isSuccessful) {
             translatedText = response.body()?.translations?.firstOrNull()?.text ?: text
         } else throw InternalException.OperationException(response.message())
+    }
+
+    fun clearChatData() {
+        messages.value = mutableListOf()
+        currentUserId = null
     }
 
     private fun addNewMessage(message: Message): MutableList<Message> {
@@ -110,6 +117,8 @@ class ChatUseCase @Inject constructor(
         originalList?.removeAll { it.id == messageId }
         return transformMessageList(originalList)
     }
+
+    fun isCurrentUserChat(userId: Int?) = userId != null && userId == currentUserId
 
     private fun transformMessageList(messages: MutableList<Message>?): MutableList<Message> {
         val list: MutableList<Message> = mutableListOf()
