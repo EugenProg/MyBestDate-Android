@@ -1,20 +1,18 @@
 package com.bestDate.data.utils.notifications
 
-import android.app.PendingIntent
-import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.NavController
-import androidx.navigation.NavDeepLinkBuilder
-import com.bestDate.MainActivity
-import com.bestDate.R
 import com.bestDate.data.extension.getPushType
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.utils.Logger
-import com.bestDate.view.alerts.showDefaultDialog
+import com.bestDate.view.alerts.showDefaultPush
+import com.bestDate.view.alerts.showInvitationPush
 import com.bestDate.view.alerts.showLikePush
+import com.bestDate.view.alerts.showMatchPush
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -22,15 +20,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.reflect.typeOf
 
 class NotificationCenter @Inject constructor() {
 
-    private var _notificationsAction: MutableLiveData<Boolean> = MutableLiveData()
-    var notificationsAction: LiveData<Boolean> = _notificationsAction
+    private var _notificationsAction: MutableLiveData<NotificationType> = MutableLiveData()
+    var notificationsAction: LiveData<NotificationType> = _notificationsAction
 
-    private var _navigationAction: MutableLiveData<Int> = MutableLiveData()
-    var navigationAction: LiveData<Int> = _navigationAction
+    private var _navigationAction: MutableLiveData<Pair<Int, Bundle?>> = MutableLiveData()
+    var navigationAction: LiveData<Pair<Int, Bundle?>> = _navigationAction
 
     private var user: ShortUserData? = null
     private var notificationType: NotificationType = NotificationType.DEFAULT_PUSH
@@ -42,16 +39,34 @@ class NotificationCenter @Inject constructor() {
         user = getUser(userData)
         this.title = title
         this.body = body
-        _notificationsAction.postValue(true)
+        _notificationsAction.postValue(notificationType)
     }
 
     fun showPush(activity: AppCompatActivity) {
         when(notificationType) {
             NotificationType.LIKE -> activity.showLikePush(user) {
-                _navigationAction.postValue(notificationType.destination)
+                _navigationAction.postValue(Pair(notificationType.destination, null))
+            }
+            NotificationType.MATCH -> activity.showMatchPush(user) {
+                _navigationAction.postValue(Pair(notificationType.destination, null))
+            }
+            NotificationType.INVITATION -> activity.showInvitationPush(user) {
+                _navigationAction.postValue(Pair(notificationType.destination, null))
+            }
+            else -> {
+                activity.showDefaultPush(title, body) {
+                    val bundle =
+                        if (notificationType == NotificationType.MESSAGE) createMessageBundle()
+                        else null
+                    _navigationAction.postValue(Pair(notificationType.destination, bundle))
+                }
             }
         }
     }
+
+    private fun createMessageBundle(): Bundle =
+        bundleOf("user" to user,
+            "backScreen" to BackScreenType.PROFILE)
 
     private fun getUser(user: String?): ShortUserData? {
         if (user.isNullOrBlank()) return null
@@ -63,14 +78,7 @@ class NotificationCenter @Inject constructor() {
         return null
     }
 
-    private fun createPendingIntent(context: Context, destinationId: Int, args: Bundle?): PendingIntent {
-        return NavDeepLinkBuilder(context)
-            .setComponentName(MainActivity::class.java)
-            .setGraph(R.navigation.routes)
-            .setDestination(destinationId)
-            .setArguments(args)
-            .createPendingIntent()
-    }
+    fun getUserId(): Int? = user?.id
 }
 
 @Module

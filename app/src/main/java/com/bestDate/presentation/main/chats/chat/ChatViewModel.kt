@@ -88,6 +88,6 @@ class ChatViewModel @Inject constructor(
     }
 
     fun clearMessages() {
-        chatUseCase.messages.value = mutableListOf()
+        chatUseCase.clearChatData()
     }
 }

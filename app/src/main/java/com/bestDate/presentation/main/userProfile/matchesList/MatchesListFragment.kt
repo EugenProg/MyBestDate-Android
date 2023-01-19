@@ -2,18 +2,19 @@ package com.bestDate.presentation.main.userProfile.matchesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentMatchesListBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showMatchActionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
+open class MatchesListFragment :
+    BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMatchesListBinding =
         { inflater, parent, attach -> FragmentMatchesListBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MatchesListViewModel> = MatchesListViewModel::class.java
@@ -70,20 +71,28 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
 
         adapter.itemClick = { item, type ->
             if (type == MatchesSelectType.USER) {
-                navController.navigate(
-                    MatchesListFragmentDirections
-                        .actionGlobalAnotherProfile(item.user, BackScreenType.PROFILE)
-                )
+                navigateToUserProfile(item.user)
             } else {
                 requireActivity().showMatchActionDialog(item, myPhotoUrl.orEmpty(), {
-                    navController.navigate(
-                        MatchesListFragmentDirections
-                            .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
-                    )
+                    navigateToUserProfile(it)
                 }, {
-                    showMessage("open chat")
+                    navigateToChat(it)
                 })
             }
         }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        navController.navigate(
+            MatchesListFragmentDirections
+                .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
+        )
+    }
+
+    open fun navigateToChat(userData: ShortUserData?) {
+        navController.navigate(
+            MatchesListFragmentDirections
+                .actionGlobalProfileToChat(userData, BackScreenType.PROFILE)
+        )
     }
 }

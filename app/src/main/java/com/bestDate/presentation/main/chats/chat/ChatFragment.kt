@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
+open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentChatBinding =
         { inflater, parent, attach -> FragmentChatBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<ChatViewModel> = ChatViewModel::class.java
@@ -47,14 +47,7 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             }
             userBox.setOnSaveClickListener {
                 if (user?.isBot() != true) {
-                    if (args.backScreen == BackScreenType.ANOTHER_PROFILE) {
-                        navController.popBackStack()
-                    } else {
-                        navController.navigate(
-                            ChatFragmentDirections
-                                .actionGlobalChatToAnotherProfile(user, BackScreenType.CHAT)
-                        )
-                    }
+                    navigateToUserProfile(user)
                 }
             }
             chatView.sendClick = { text, parentId ->
@@ -102,6 +95,17 @@ class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     }
                 }
             }
+        }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        if (args.backScreen == BackScreenType.ANOTHER_PROFILE) {
+            navController.popBackStack()
+        } else {
+            navController.navigate(
+                ChatFragmentDirections
+                    .actionGlobalChatToAnotherProfile(userData, BackScreenType.CHAT)
+            )
         }
     }
 
