@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentMyDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +28,7 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         binding.myDuelsView.adapter = adapter
 
         adapter.itemClick = {
-            navController.navigate(
-                MyDuelsFragmentDirections
-                    .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
-            )
+            navigateToUserProfile(it)
         }
 
         binding.refreshView.setOnRefreshListener {
@@ -66,5 +64,12 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        navController.navigate(
+            MyDuelsFragmentDirections
+                .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
+        )
     }
 }
