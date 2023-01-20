@@ -129,6 +129,9 @@ class AnotherProfileFragment :
 
     override fun goBack() {
         viewModel.clearUserData()
+        if (args.backScreen == BackScreenType.SEARCH) {
+            setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        }
         super.goBack()
     }
 
