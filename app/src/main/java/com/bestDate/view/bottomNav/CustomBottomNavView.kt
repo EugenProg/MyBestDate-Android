@@ -7,6 +7,8 @@ import android.widget.FrameLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.bestDate.R
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
 import com.bestDate.databinding.ViewBottomNavBinding
 
 class CustomBottomNavView @JvmOverloads constructor(
@@ -93,19 +95,34 @@ class CustomBottomNavView @JvmOverloads constructor(
             button.onNavigationChange = {
                 when (button) {
                     binding.buttonSearch -> {
-                        navController.navigate(R.id.search_nav_graph)
+                        navController.currentDestination?.getCurrentScreen()?.
+                        navigateToSearch()?.let {
+                            navController.navigate(it)
+                        }
                     }
                     binding.buttonMatches -> {
-                        navController.navigate(R.id.matches_nav_graph)
+                        navController.currentDestination?.getCurrentScreen()?.
+                        navigateToMatches()?.let {
+                            navController.navigate(it)
+                        }
                     }
                     binding.buttonChats -> {
-                        navController.navigate(R.id.chat_list_nav_graph)
+                        navController.currentDestination?.getCurrentScreen()?.
+                        navigateToChatList()?.let {
+                            navController.navigate(it)
+                        }
                     }
                     binding.buttonTop -> {
-                        navController.navigate(R.id.top_nav_graph)
+                        navController.currentDestination?.getCurrentScreen()?.
+                        navigateToDuels()?.let {
+                            navController.navigate(it)
+                        }
                     }
                     binding.buttonGuests -> {
-                        navController.navigate(R.id.guests_nav_graph)
+                        navController.currentDestination?.getCurrentScreen()?.
+                        navigateToGuests()?.let {
+                            navController.navigate(it)
+                        }
                     }
                 }
             }
@@ -113,20 +130,20 @@ class CustomBottomNavView @JvmOverloads constructor(
     }
 
     fun setActive(destination: NavDestination) {
-        when (destination.displayName.split(":").getOrNull(1)) {
-            "id/searchFragment" -> {
+        when (destination.getCurrentScreen()) {
+            Screens.SEARCH -> {
                 handleButtonsActive(binding.buttonSearch)
             }
-            "id/matchesFragment" -> {
+            Screens.MATCHES -> {
                 handleButtonsActive(binding.buttonMatches)
             }
-            "id/chatsFragment" -> {
+            Screens.CHAT_LIST -> {
                 handleButtonsActive(binding.buttonChats)
             }
-            "id/topFragment" -> {
+            Screens.DUELS -> {
                 handleButtonsActive(binding.buttonTop)
             }
-            "id/guestsFragment" -> {
+            Screens.GUESTS -> {
                 handleButtonsActive(binding.buttonGuests)
             }
         }

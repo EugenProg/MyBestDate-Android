@@ -7,7 +7,9 @@ import com.bestDate.data.model.IdListRequest
 import com.bestDate.data.model.InternalException
 import com.bestDate.network.remote.GuestsRemoteData
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GuestsUseCase @Inject constructor(
     private val guestsRemoteData: GuestsRemoteData
 ) {
@@ -28,8 +30,8 @@ class GuestsUseCase @Inject constructor(
 
     suspend fun markGuestsViewed(body: IdListRequest) {
         val response = guestsRemoteData.markGuestsViewed(body)
-        if (response.isSuccessful) {
-        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        if (!response.isSuccessful)
+            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     fun clearData() {

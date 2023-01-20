@@ -384,6 +384,18 @@
             <action
                 android:id="@+id/action_global_search_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_search_to_matches"
+                app:destination="@id/matches_nav_graph" />
+            <action
+                android:id="@+id/action_global_search_to_chat_list"
+                app:destination="@id/chat_list_nav_graph" />
+            <action
+                android:id="@+id/action_global_search_to_top"
+                app:destination="@id/top_nav_graph" />
+            <action
+                android:id="@+id/action_global_search_to_guests"
+                app:destination="@id/guests_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/matches_nav_graph"
@@ -401,6 +413,18 @@
             <action
                 android:id="@+id/action_global_matches_to_chat"
                 app:destination="@id/chat_nav_graph" />
+            <action
+                android:id="@+id/action_global_matches_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_matches_to_chat_list"
+                app:destination="@id/chat_list_nav_graph" />
+            <action
+                android:id="@+id/action_global_matches_to_top"
+                app:destination="@id/top_nav_graph" />
+            <action
+                android:id="@+id/action_global_matches_to_guests"
+                app:destination="@id/guests_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/chat_list_nav_graph"
@@ -415,6 +439,18 @@
             <action
                 android:id="@+id/action_global_chat_list_to_chat"
                 app:destination="@id/chat_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_list_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_list_to_matches"
+                app:destination="@id/matches_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_list_to_top"
+                app:destination="@id/top_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_list_to_guests"
+                app:destination="@id/guests_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/guests_nav_graph"
@@ -429,6 +465,18 @@
             <action
                 android:id="@+id/action_global_guests_to_profile"
                 app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_top"
+                app:destination="@id/top_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_chat_list"
+                app:destination="@id/chat_list_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_matches"
+                app:destination="@id/matches_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_search"
+                app:destination="@id/search_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/top_nav_graph"
@@ -444,10 +492,10 @@
                 <action
                     android:id="@+id/action_profile_to_myTopDuels"
                     app:destination="@id/myTopDuelsFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/push_down_in"
-                    app:popExitAnim="@anim/push_down_out" />
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
             </fragment>
             <action
                 android:id="@+id/action_global_top_to_profile"
@@ -455,6 +503,18 @@
             <action
                 android:id="@+id/action_global_top_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_matches"
+                app:destination="@id/matches_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_chat_list"
+                app:destination="@id/chat_list_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_guests"
+                app:destination="@id/guests_nav_graph" />
         </navigation>
         <navigation android:id="@+id/chat_nav_graph"
             app:startDestination="@id/chatFragment">
