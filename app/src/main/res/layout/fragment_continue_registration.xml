@@ -127,7 +127,7 @@
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/signUpButton"
                     style="@style/standard_button"
-                    app:title="@string/sign_up"
+                    app:title="@string/create_account"
                     android:layout_marginTop="35dp"
                     android:layout_marginBottom="10dp" />
             </LinearLayout>

@@ -18,6 +18,7 @@
     <string name="geolocation_must_be_enabled">Геолокація має бути включена</string>
     <string name="this_is_necessary_so_that_we_can_make_a_more_suitable_selection">Це необхідно для того, щоби ми могли зробити більш підходящий вибір партнерів, які перебувають поряд із Вами</string>
     <string name="do_it_later">Зробити це пізніше</string>
+    <string name="enable_geolocation">Включити геолокацію</string>
     <string name="password_recovery">Відновлення пароля</string>
     <string name="specify_the_email_or_phone_number_that_was_entered_earlier_during_registration">Вкажіть E-mail або номер телефону, який було введено раніше під час реєстрації. Ми надішлемо реєстраційний код</string>
     <string name="next">Далі</string>
@@ -29,6 +30,7 @@
     <string name="when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy">Під час створення нового облікового запису ми рекомендуємо ознайомитися з політикою конфіденційності та умовами використання додатка для знайомств.</string>
     <string name="one_step_to_your_dream">Один крок до Вашої мрії</string>
     <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">Натискаючи на кнопку «Зареєструватися», ви погоджуєтеся з нашою політикою конфіденційності та умовами використання</string>
+    <string name="create_account">Створити акаунт</string>
     <string name="set_a_profile_photo">Встановити фото\nпрофілю</string>
     <string name="you_can_upload_up_to_9_photos_to_your_profile">Ви можете завантажити до 9 фотографій\nу свій профіль</string>
     <string name="upload_a_photo">Завантажити фото</string>
@@ -606,7 +608,6 @@
     <string name="if_you_turn_off_the_chat_then_you_can_only_be_called_on_a_date">Якщо Ви відключите чат, то Вас зможуть покликати тільки на побачення</string>
     <string name="or_everyone_can_write_to_you_you_can_change_this_in_the_settings">Або всі можуть писати Вам\nВи можете змінити це в <font color="#f28ae5"><u>установки</u></font></string>
     <string name="get_started">Поїхали!</string>
-    <string name="enable_geolocation">Включити геолокацію</string>
     <string name="result">Результат</string>
     <string name="duels_are_over">Дуелі закінчилися</string>
     <string name="you_voted_for_all_the_photos">Вибачте, ви проголосували за всі фото</string>
