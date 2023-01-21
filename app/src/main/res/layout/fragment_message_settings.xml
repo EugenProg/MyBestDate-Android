@@ -122,7 +122,7 @@
             android:id="@+id/switchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:settings_switch_title="Prohibit incoming messages"
+            app:settings_switch_title="@string/prohibit_incoming_messages"
             app:settings_switch_icon="@drawable/ic_message_remove"/>
     </FrameLayout>
 
