@@ -94,36 +94,11 @@ class CustomBottomNavView @JvmOverloads constructor(
         listOfButtons.forEach { button ->
             button.onNavigationChange = {
                 when (button) {
-                    binding.buttonSearch -> {
-                        navController.currentDestination?.getCurrentScreen()?.
-                        navigateToSearch()?.let {
-                            navController.navigate(it)
-                        }
-                    }
-                    binding.buttonMatches -> {
-                        navController.currentDestination?.getCurrentScreen()?.
-                        navigateToMatches()?.let {
-                            navController.navigate(it)
-                        }
-                    }
-                    binding.buttonChats -> {
-                        navController.currentDestination?.getCurrentScreen()?.
-                        navigateToChatList()?.let {
-                            navController.navigate(it)
-                        }
-                    }
-                    binding.buttonTop -> {
-                        navController.currentDestination?.getCurrentScreen()?.
-                        navigateToDuels()?.let {
-                            navController.navigate(it)
-                        }
-                    }
-                    binding.buttonGuests -> {
-                        navController.currentDestination?.getCurrentScreen()?.
-                        navigateToGuests()?.let {
-                            navController.navigate(it)
-                        }
-                    }
+                    binding.buttonSearch -> navController.navigate(R.id.search_nav_graph)
+                    binding.buttonMatches -> navController.navigate(R.id.matches_nav_graph)
+                    binding.buttonChats -> navController.navigate(R.id.chat_list_nav_graph)
+                    binding.buttonTop -> navController.navigate(R.id.top_nav_graph)
+                    binding.buttonGuests -> navController.navigate(R.id.guests_nav_graph)
                 }
             }
         }
@@ -131,21 +106,11 @@ class CustomBottomNavView @JvmOverloads constructor(
 
     fun setActive(destination: NavDestination) {
         when (destination.getCurrentScreen()) {
-            Screens.SEARCH -> {
-                handleButtonsActive(binding.buttonSearch)
-            }
-            Screens.MATCHES -> {
-                handleButtonsActive(binding.buttonMatches)
-            }
-            Screens.CHAT_LIST -> {
-                handleButtonsActive(binding.buttonChats)
-            }
-            Screens.DUELS -> {
-                handleButtonsActive(binding.buttonTop)
-            }
-            Screens.GUESTS -> {
-                handleButtonsActive(binding.buttonGuests)
-            }
+            Screens.SEARCH -> handleButtonsActive(binding.buttonSearch)
+            Screens.MATCHES -> handleButtonsActive(binding.buttonMatches)
+            Screens.CHAT_LIST -> handleButtonsActive(binding.buttonChats)
+            Screens.DUELS -> handleButtonsActive(binding.buttonTop)
+            Screens.GUESTS -> handleButtonsActive(binding.buttonGuests)
         }
     }
 }

@@ -71,7 +71,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         }
         observe(viewModel.locationLiveData) {
             additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
-            clearData()
+            viewModel.clearData()
             getUsersByFilterInitial()
         }
     }
@@ -115,7 +115,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun setUpSwipe() {
         binding.swipeRefresh.setOnRefreshListener {
-            clearData()
+            viewModel.clearData()
             getUsersByFilterInitial()
         }
     }
@@ -125,12 +125,14 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             locationMap, getString(R.string.location)
         )
         locationOptionsSheet.itemClick = {
-            selectedLocationFilter = it.first
-            binding.locationFilterButton.label = it.second
-            saveFilters(Preferences.FILTER_LOCATION, it.first)
-            clearData()
-            additionalFilters = null
-            getUsersByFilterInitial()
+            if (it.first != selectedLocationFilter || additionalFilters != null) {
+                selectedLocationFilter = it.first
+                binding.locationFilterButton.label = it.second
+                viewModel.saveFilter(Preferences.FILTER_LOCATION, it.first)
+                viewModel.clearData()
+                additionalFilters = null
+                getUsersByFilterInitial()
+            }
         }
         locationOptionsSheet.show(childFragmentManager)
     }
@@ -138,12 +140,14 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpStatusSheet() {
         val statusOptionsSheet = OptionsSheet(statusesMap, getString(R.string.online))
         statusOptionsSheet.itemClick = {
-            selectedStatusFilter = it.first
-            binding.statusFilterButton.label = it.second
-            saveFilters(Preferences.FILTER_STATUS, it.first)
-            clearData()
-            additionalFilters = null
-            getUsersByFilterInitial()
+            if (it.first != selectedStatusFilter || additionalFilters != null) {
+                selectedStatusFilter = it.first
+                binding.statusFilterButton.label = it.second
+                viewModel.saveFilter(Preferences.FILTER_STATUS, it.first)
+                viewModel.clearData()
+                additionalFilters = null
+                getUsersByFilterInitial()
+            }
         }
         statusOptionsSheet.show(childFragmentManager)
     }
@@ -207,13 +211,5 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
                 viewModel.getFilter(Preferences.FILTER_STATUS).serverName
             )
         )
-    }
-
-    private fun saveFilters(type: Preferences, value: FilterType) {
-        viewModel.saveFilter(type, value)
-    }
-
-    private fun clearData() {
-        viewModel.clearData()
     }
 }
