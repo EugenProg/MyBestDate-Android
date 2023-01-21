@@ -66,6 +66,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
 
+    <com.bestDate.view.NoDataViewWithLoading
+        android:id="@+id/noDataViewWithLoading"
+        app:no_data_text="@string/by_params_not_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_view" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
@@ -88,15 +97,6 @@
             tools:listitem="@layout/item_search_profiles_element"
             tools:spanCount="2" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.bestDate.view.NoDataViewWithLoading
-        android:id="@+id/noDataViewWithLoading"
-        app:no_data_text="@string/by_params_not_found"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_view" />
 
     <FrameLayout
         android:id="@+id/fragmentContainer"

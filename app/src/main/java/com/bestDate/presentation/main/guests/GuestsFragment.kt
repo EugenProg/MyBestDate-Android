@@ -69,7 +69,6 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
 
     private fun setUpSwipe() {
         binding.swipeRefresh.setOnRefreshListener {
-            viewModel.clearData()
             viewModel.refreshUser()
             viewModel.getGuests()
         }

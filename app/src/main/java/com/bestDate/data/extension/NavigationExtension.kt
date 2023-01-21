@@ -1,6 +1,7 @@
 package com.bestDate.data.extension
 
 import androidx.navigation.NavDestination
+import com.bestDate.R
 
 fun NavDestination.isBottomNavVisible(): Boolean {
     return when (this.getCurrentScreen()) {
