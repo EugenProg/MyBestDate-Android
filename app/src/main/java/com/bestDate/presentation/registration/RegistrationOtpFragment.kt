@@ -7,12 +7,16 @@ import com.bestDate.presentation.base.BaseOtpFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegistrationOtpFragment : BaseOtpFragment(
-    R.string.confirmation_code,
-    R.string.on_the_email_you_specified_we_send_the_confirmation_code,
-    R.string.confirm
-) {
+class RegistrationOtpFragment : BaseOtpFragment() {
     private val viewModel by viewModels<RegistrationViewModel>()
+
+    override fun getTitle(): Int = R.string.confirmation_code
+
+    override fun getText(): Int =
+        if (RegistrationHolder.type == RegistrationType.EMAIL) R.string.on_the_email_you_specified_we_send_the_confirmation_code
+        else R.string.on_the_phone_you_specified_we_send_the_confirmation_code
+
+    override fun getButtonTitle(): Int = R.string.confirm
 
     override fun onInit() {
         super.onInit()
