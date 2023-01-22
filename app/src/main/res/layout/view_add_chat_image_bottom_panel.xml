@@ -27,7 +27,7 @@
             android:maxLines="3"
             android:textColor="@color/white"
             android:textColorHint="@color/white_30"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/translateBox"
             app:layout_constraintStart_toStartOf="parent"

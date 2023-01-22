@@ -13,7 +13,7 @@
             android:id="@+id/title"
             style="@style/component_title"
             android:textColor="@color/white_90"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:textColor="@color/white_40"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/line"
             app:layout_constraintEnd_toStartOf="@id/translateBox"
             app:layout_constraintStart_toStartOf="parent"

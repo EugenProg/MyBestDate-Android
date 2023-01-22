@@ -8,14 +8,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
+            style="@style/component_title"
             android:layout_width="0dp"
             android:layout_height="63dp"
             android:backgroundTint="@color/white"
-            android:fontFamily="@font/bold"
             android:text="@string/back"
             android:textAllCaps="false"
             android:textColor="@color/bg_main"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:cornerRadius="33dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

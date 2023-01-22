@@ -101,7 +101,7 @@
                                 android:layout_marginEnd="0dp"
                                 android:gravity="center"
                                 android:textColor="@color/white"
-                                android:textSize="26sp"
+                                android:textSize="24sp"
                                 tools:text="Safira Artemieva" />
 
                             <com.bestDate.view.verification.VerifyView
@@ -122,7 +122,7 @@
                         android:layout_marginHorizontal="32dp"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         tools:text="10 January 1995" />
 
                     <HorizontalScrollView

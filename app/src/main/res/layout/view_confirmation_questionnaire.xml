@@ -23,35 +23,36 @@
 
             <TextView
                 android:id="@+id/title"
+                style="@style/component_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/bold"
                 android:textColor="@color/bg_main"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 tools:text="@string/photo" />
 
             <TextView
                 android:id="@+id/description"
+                style="@style/component_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-                android:fontFamily="@font/regular"
                 android:textColor="@color/main_60"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:visibility="gone"
+                tools:ignore="SmallSp"
                 tools:text="15" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/confirmedText"
+            style="@style/component_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            android:fontFamily="@font/bold"
             android:text="@string/confirmed"
             android:textColor="@color/bg_pink"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/confirmedImage"
             app:layout_constraintEnd_toStartOf="@+id/confirmedImage"

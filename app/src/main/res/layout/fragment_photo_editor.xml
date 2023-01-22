@@ -17,7 +17,7 @@
         style="@style/title"
         android:textColor="@color/white"
         android:layout_marginTop="2dp"
-        android:textSize="32sp"
+        android:textSize="26sp"
         android:text="@string/adding_and_editing_a_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -114,15 +114,15 @@
     </FrameLayout>
 
     <TextView
+        style="@style/component_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="35dp"
-        android:fontFamily="@font/regular"
         android:gravity="center"
         android:text="@string/you_can_upload_up_to_9_photos_to_your_profile"
         android:textColor="@color/white_60"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/saveButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

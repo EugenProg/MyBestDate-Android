@@ -23,8 +23,8 @@
             android:gravity="center"
             android:text="@string/you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:visibility="gone"/>
+            android:textSize="16sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/onlyCardsTitle"
@@ -35,7 +35,7 @@
             android:layout_marginTop="19dp"
             android:gravity="center"
             android:text="@string/only_cards"
-            android:textSize="28sp"/>
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/onlyCardsText"
@@ -46,7 +46,7 @@
             android:layout_marginTop="6dp"
             android:gravity="center"
             android:text="@string/this_user_agrees_to_accept_only_cards"
-            android:textSize="18sp"/>
+            android:textSize="16sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/invitationButton"

@@ -45,7 +45,7 @@ class MaritalStatus : QuestionnaireType {
 class KidsCount : QuestionnaireType {
     override fun getName(context: Context, name: String?): String {
         return when (name) {
-            "No" -> context.getString(R.string.no)
+            "No" -> context.getString(R.string.no_kids)
             "1" -> context.getString(R.string.one)
             "2" -> context.getString(R.string.two)
             "3" -> context.getString(R.string.three)

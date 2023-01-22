@@ -57,19 +57,19 @@
         app:layout_constraintTop_toBottomOf="@+id/enableButton">
 
         <TextView
+            style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/main_60"
             android:text="@string/do_it_later"/>
 
         <TextView
+            style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:fontFamily="@font/bold"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textColor="@color/bg_main"
             android:text="@string/skip"/>
     </LinearLayout>

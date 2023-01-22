@@ -101,10 +101,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/bd_coin"
                     android:textColor="@color/white_80"
-                    android:textSize="10sp"
+                    android:textSize="8sp"
                     app:layout_constraintEnd_toEndOf="@id/bgButtonNoShadow"
                     app:layout_constraintStart_toStartOf="@id/bgButtonNoShadow"
-                    app:layout_constraintTop_toBottomOf="@+id/amountCoins" />
+                    app:layout_constraintTop_toBottomOf="@+id/amountCoins"
+                    tools:ignore="SmallSp" />
 
                 <FrameLayout
                     android:id="@+id/coinView"

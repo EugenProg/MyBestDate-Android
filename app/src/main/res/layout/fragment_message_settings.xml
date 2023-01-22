@@ -57,7 +57,7 @@
         android:text="@string/this_will_be_your_best_date"
         android:textAllCaps="true"
         android:textColor="@color/white_70"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:layout_marginBottom="24dp"
         android:layout_marginHorizontal="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView24"
@@ -73,7 +73,7 @@
         android:gravity="center"
         android:text="@string/we_are_for_live_communication"
         android:textColor="@color/white"
-        android:textSize="28sp"
+        android:textSize="26sp"
         android:layout_marginTop="17dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
         android:gravity="center"
         android:text="@string/if_you_turn_off_the_chat_then_you_can_only_be_called_on_a_date"
         android:textColor="@color/white_70"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
@@ -101,7 +101,7 @@
         android:layout_marginHorizontal="32dp"
         android:text="@string/or_everyone_can_write_to_you_you_can_change_this_in_the_settings"
         android:textColor="@color/white_70"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/switchFrame"
         app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,7 @@
             android:id="@+id/switchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:settings_switch_title="Prohibit incoming messages"
+            app:settings_switch_title="@string/prohibit_incoming_messages"
             app:settings_switch_icon="@drawable/ic_message_remove"/>
     </FrameLayout>
 

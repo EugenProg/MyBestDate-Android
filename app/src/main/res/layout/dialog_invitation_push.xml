@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/box"
@@ -25,30 +25,16 @@
         <TextView
             android:id="@+id/textView23"
             style="@style/component_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
             android:layout_marginTop="23dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/invitation_card"
-            android:textSize="20sp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView27"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/goToButton"
-            style="@style/component_title"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:backgroundTint="@color/bg_light_blue"
-            android:minWidth="75dp"
-            android:text="@string/go_to"
-            android:layout_marginEnd="26dp"
-            android:textAllCaps="false"
-            android:textColor="@color/bg_main"
-            app:cornerRadius="11dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView23"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView23" />
 
         <ImageView
             android:id="@+id/avatar"
@@ -74,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
+            android:singleLine="true"
             android:textColor="@color/white_70"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/watch"
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -88,8 +75,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="8dp"
+            android:singleLine="true"
             android:textColor="@color/white_40"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/watch"
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/name" />
@@ -100,9 +88,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="26dp"
-            android:text="watch"
+            android:text="@string/watch"
             android:textColor="@color/white_80"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
     </androidx.constraintlayout.widget.ConstraintLayout>

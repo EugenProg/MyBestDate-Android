@@ -44,7 +44,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="3dp"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             tools:text="@string/this_is_necessary_so_that_we_can_make_a_more_suitable_selection" />
     </LinearLayout>
 
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="41dp"
             android:textColor="@color/white_80"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="4:13" />
     </LinearLayout>
 </LinearLayout>

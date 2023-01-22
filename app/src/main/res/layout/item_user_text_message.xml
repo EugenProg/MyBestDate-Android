@@ -22,9 +22,9 @@
             android:id="@+id/parentMessageBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="3dp">
+            android:layout_marginBottom="3dp"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imageView26"
@@ -65,7 +65,7 @@
                 android:layout_marginStart="8dp"
                 android:singleLine="true"
                 android:textColor="@color/main_70"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/bg_main"
-            android:textSize="18sp"
+            android:textSize="16sp"
             tools:text="election" />
     </LinearLayout>
 
@@ -99,6 +99,6 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white_80"
-        android:textSize="16sp"
+        android:textSize="14sp"
         tools:text="4:13" />
 </LinearLayout>

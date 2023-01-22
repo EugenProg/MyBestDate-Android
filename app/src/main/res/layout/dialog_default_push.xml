@@ -45,7 +45,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="21dp"
             android:singleLine="true"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iconBox"
             app:layout_constraintTop_toTopOf="parent" />
@@ -59,7 +59,7 @@
             android:layout_marginTop="6dp"
             android:singleLine="true"
             android:textColor="@color/white_70"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iconBox"

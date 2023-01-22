@@ -8,5 +8,6 @@ enum class Preferences {
     FILTER_STATUS,
     FIRST_ENTER,
     ARG_EXPIRES_AT,
-    FIREBASE_TOKEN
+    FIREBASE_TOKEN,
+    LANGUAGE
 }

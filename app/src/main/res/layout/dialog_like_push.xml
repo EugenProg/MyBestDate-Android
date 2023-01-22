@@ -29,8 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="19dp"
             android:layout_marginTop="22dp"
-            android:text="Like"
-            android:textSize="20sp"
+            android:text="like"
+            android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/imageView27"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -69,8 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
+            android:singleLine="true"
             android:textColor="@color/white_70"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/watch"
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
@@ -81,11 +82,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="3dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
+            android:singleLine="true"
             android:text="@string/this_user_liked_your_photo"
             android:textColor="@color/white_40"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/watch"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -95,9 +97,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="26dp"
-            android:text="watch"
+            android:text="@string/watch"
             android:textColor="@color/white_80"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
     </androidx.constraintlayout.widget.ConstraintLayout>

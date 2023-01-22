@@ -84,11 +84,6 @@ fun FragmentActivity.showInvitationPush(userData: ShortUserData?, navigateAction
             location.text = userData?.getLocation()
         }
 
-        goToButton.setOnSaveClickListener {
-            dialog.closeWithSlideTopAnimation(root, this@showInvitationPush)
-            navigateAction.invoke()
-        }
-
         root.setOnSaveClickListener {
             dialog.closeWithSlideTopAnimation(root, this@showInvitationPush)
             navigateAction.invoke()

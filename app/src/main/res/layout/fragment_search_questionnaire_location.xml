@@ -38,27 +38,27 @@
 
     <TextView
         android:id="@+id/plus"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
-        android:fontFamily="@font/bold"
         android:text="+"
         android:textColor="@color/blue_90"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/percentNumber"
         app:layout_constraintEnd_toStartOf="@+id/percentNumber" />
 
     <TextView
         android:id="@+id/percentNumber"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="4dp"
-        android:fontFamily="@font/bold"
         android:text="0"
         android:textColor="@color/blue_90"
-        android:textSize="26sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/headerTitle"
         app:layout_constraintEnd_toStartOf="@+id/percent"
         app:layout_constraintTop_toTopOf="@+id/headerTitle"
@@ -66,14 +66,14 @@
 
     <TextView
         android:id="@+id/percent"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="3dp"
-        android:fontFamily="@font/bold"
         android:text="%"
         android:textColor="@color/blue_90"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/percentNumber"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -39,13 +39,13 @@
 
                 <TextView
                     android:id="@+id/nameTextView"
-                    style="@style/component_text"
+                    style="@style/component_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
+                    android:textSize="14sp"
                     tools:text="Alice Lebedeva Pavlovna Lalalalalallalaallaallalalalalalallalalalalallala" />
 
                 <com.bestDate.view.verification.VerifyView
@@ -67,37 +67,38 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="7dp"
             android:textColor="@color/white_40"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameView"
+            tools:ignore="SmallSp"
             tools:text="Almaty, Kazakhstan" />
 
         <TextView
             android:id="@+id/ageTextView"
-            style="@style/component_text"
+            style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="2dp"
             android:textColor="@color/white"
-            android:textStyle="bold"
+            android:textSize="14sp"
             app:layout_constraintEnd_toStartOf="@+id/yearTextView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="25" />
 
         <TextView
             android:id="@+id/yearTextView"
-            style="@style/component_text"
+            style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:text="@string/years_old"
             android:textColor="@color/white"
-            android:textSize="10sp"
-            android:textStyle="bold"
+            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="@+id/ageTextView"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.bestDate.view.squareFrameLayout.SquareFrameLayout
@@ -163,7 +164,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="10sp"
+            tools:ignore="SmallSp"
             tools:text="2.1 km" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

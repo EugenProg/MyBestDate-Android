@@ -20,7 +20,7 @@
         style="@style/component_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginTop="20dp"
         android:text="@string/who_voted_for_me"
         android:layout_marginHorizontal="18dp"
