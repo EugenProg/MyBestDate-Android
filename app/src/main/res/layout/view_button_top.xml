@@ -20,7 +20,7 @@
             android:gravity="center"
             android:text="@string/top_50"
             android:textColor="@color/bg_light_blue"
-            android:textSize="14sp"
+            android:textSize="12sp"
             app:drawableEndCompat="@drawable/ic_arrow_right_blue"
             app:drawableStartCompat="@drawable/ic_top_active"
             app:layout_constraintBottom_toBottomOf="parent"

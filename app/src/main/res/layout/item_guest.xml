@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
     android:background="@color/bg_box"
     android:foreground="?selectableItemBackground"
-    android:paddingHorizontal="18dp"
-    android:layout_marginVertical="5dp">
+    android:paddingHorizontal="18dp">
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -37,14 +37,13 @@
 
             <TextView
                 android:id="@+id/nameTextView"
-                style="@style/component_text"
+                style="@style/component_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
                 tools:text="Alice Lebedeva Pavlovna" />
 
             <com.bestDate.view.verification.VerifyView
@@ -59,14 +58,13 @@
 
     <TextView
         android:id="@+id/ageTextView"
-        style="@style/component_text"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="2dp"
         android:textColor="@color/white"
-        android:textSize="16dp"
-        android:textStyle="bold"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/nameView"
         app:layout_constraintStart_toEndOf="@+id/nameView"
         app:layout_constraintTop_toTopOf="@+id/nameView"
@@ -74,17 +72,17 @@
 
     <TextView
         android:id="@+id/yearTextView"
-        style="@style/component_text"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginEnd="10dp"
         android:text="@string/years_old"
         android:textColor="@color/white"
-        android:textSize="10sp"
-        android:textStyle="bold"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="@+id/nameView"
-        app:layout_constraintStart_toEndOf="@+id/ageTextView" />
+        app:layout_constraintStart_toEndOf="@+id/ageTextView"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/locationTextView"
@@ -94,9 +92,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="6dp"
         android:textColor="@color/white_40"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintStart_toEndOf="@+id/profileImageView"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
+        tools:ignore="SmallSp"
         tools:text="Almaty, Kazakhstan" />
 
     <TextView
@@ -111,11 +110,12 @@
         android:gravity="center"
         android:text="@string/visited"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:drawableStartCompat="@drawable/ic_time_square"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        tools:ignore="SmallSp" />
 
     <TextView
         android:id="@+id/timeTextView"
@@ -127,10 +127,11 @@
         android:layout_marginBottom="3dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/_visitedView"
         app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        tools:ignore="SmallSp"
         tools:text="1 min" />
 
     <TextView
@@ -148,11 +149,12 @@
         android:paddingVertical="4dp"
         android:text="@string/new_visit"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:drawableEndCompat="@drawable/ic_signal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        tools:ignore="SmallSp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

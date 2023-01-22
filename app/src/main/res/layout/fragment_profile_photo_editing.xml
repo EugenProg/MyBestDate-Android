@@ -105,50 +105,50 @@
 
                 <TextView
                     android:id="@+id/name"
+                    style="@style/component_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="68dp"
-                    android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="26sp"
+                    android:textSize="24sp"
                     tools:text="Safira Artemieva" />
 
                 <TextView
                     android:id="@+id/birthdate"
+                    style="@style/component_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
-                    android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:textColor="@color/white_80"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     tools:text="10 January 1995" />
 
                 <TextView
                     android:id="@+id/gender"
+                    style="@style/component_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="16dp"
-                    android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:textColor="@color/white_60"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     tools:text="Woman, looking for a man" />
 
                 <TextView
                     android:id="@+id/email"
+                    style="@style/component_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/bold"
                     android:gravity="center"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     tools:text="info@safiru.art" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -158,15 +158,15 @@
                     tools:layout_height="140dp" />
 
                 <TextView
+                    style="@style/component_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/regular"
                     android:gravity="center"
                     android:text="@string/you_can_upload_up_to_9_photos_to_your_profile"
                     android:textColor="@color/white_60"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/uploadButton"

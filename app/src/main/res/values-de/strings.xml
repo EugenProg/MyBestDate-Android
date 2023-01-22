@@ -542,7 +542,7 @@
     <string name="write_a_message">Nachricht schreiben</string>
     <string name="by_params_not_found">Für die angegebenen Parameter wurde nichts gefunden</string>
     <string name="years_old">j</string>
-    <string name="invitation_card">EINLADUNGSKARTE</string>
+    <string name="invitation_card">Einladungskarte</string>
     <string name="invite">Einladen</string>
     <string name="top_position">№%d</string>
     <string name="invitation_is_send_successful">Ihre Einladung wurde erfolgreich gesendet</string>

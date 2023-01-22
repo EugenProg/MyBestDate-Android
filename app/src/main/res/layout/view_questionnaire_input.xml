@@ -47,7 +47,7 @@
                 android:minHeight="48dp"
                 android:textColor="@color/bg_main"
                 android:textColorHint="@color/main_50"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/check"
                 app:layout_constraintStart_toEndOf="@id/view3"

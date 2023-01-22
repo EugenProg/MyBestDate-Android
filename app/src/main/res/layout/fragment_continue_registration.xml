@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 app:back_button_color="@color/bg_main"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/headerTitle"
@@ -73,12 +73,12 @@
 
                     <TextView
                         android:id="@+id/name"
+                        style="@style/component_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
-                        android:fontFamily="@font/bold"
                         android:textColor="@color/white"
-                        android:textSize="26sp"
+                        android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/imageView3"
                         app:layout_constraintTop_toTopOf="parent"
@@ -86,11 +86,11 @@
 
                     <TextView
                         android:id="@+id/birthdate"
+                        style="@style/component_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/bold"
                         android:textColor="@color/white_80"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/name"
@@ -98,13 +98,13 @@
 
                     <TextView
                         android:id="@+id/gender"
+                        style="@style/component_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
                         android:layout_marginTop="16dp"
-                        android:fontFamily="@font/bold"
                         android:textColor="@color/white_60"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView3"
                         app:layout_constraintTop_toBottomOf="@+id/birthdate"
@@ -114,22 +114,22 @@
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
-                    app:hint="@string/email_or_phone_number"
-                    android:layout_marginTop="35dp" />
+                    android:layout_marginTop="35dp"
+                    app:hint="@string/email_or_phone_number" />
 
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/passInput"
                     style="@style/standard_input"
-                    app:isPassField="true"
+                    android:layout_marginTop="25dp"
                     app:hint="@string/password"
-                    android:layout_marginTop="25dp" />
+                    app:isPassField="true" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/signUpButton"
                     style="@style/standard_button"
-                    app:title="@string/create_account"
                     android:layout_marginTop="35dp"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    app:title="@string/create_account" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

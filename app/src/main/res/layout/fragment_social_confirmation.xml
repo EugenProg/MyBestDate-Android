@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/social_network"
-                android:textSize="32sp" />
+                android:textSize="30sp" />
 
             <com.bestDate.view.questionnaire.QuestionnaireInputView
                 android:id="@+id/instaInput"

@@ -33,7 +33,7 @@
             android:minHeight="48dp"
             android:textColor="@color/white_90"
             android:textColorHint="@color/gray"
-            android:textSize="19sp"
+            android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iconFrame"
             app:layout_constraintStart_toStartOf="parent"

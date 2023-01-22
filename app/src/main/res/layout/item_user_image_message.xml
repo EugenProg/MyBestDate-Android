@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/messageBox"
@@ -15,8 +15,8 @@
         android:layout_marginEnd="100dp"
         android:background="@drawable/user_message_background"
         android:orientation="vertical"
-        android:paddingHorizontal="18dp"
-        android:padding="6dp">
+        android:padding="6dp"
+        android:paddingHorizontal="18dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
@@ -28,10 +28,10 @@
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxHeight="550dp"
                 android:adjustViewBounds="true"
                 android:cropToPadding="true"
-                android:scaleType="fitCenter"/>
+                android:maxHeight="550dp"
+                android:scaleType="fitCenter" />
         </androidx.cardview.widget.CardView>
 
         <TextView
@@ -39,11 +39,11 @@
             style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/bg_main"
             android:layout_marginHorizontal="12dp"
             android:layout_marginTop="6dp"
             android:layout_marginBottom="3dp"
-            android:textSize="18sp"
+            android:textColor="@color/bg_main"
+            android:textSize="16sp"
             tools:text="election" />
     </LinearLayout>
 
@@ -56,6 +56,6 @@
         android:layout_marginTop="2dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white_80"
-        android:textSize="16sp"
+        android:textSize="14sp"
         tools:text="4:13" />
 </LinearLayout>

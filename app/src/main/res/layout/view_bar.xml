@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -31,7 +32,8 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
 
             <View
                 android:id="@+id/resultView"
@@ -44,7 +46,8 @@
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="10sp"
+                tools:ignore="SmallSp" />
         </FrameLayout>
 
         <TextView
@@ -59,9 +62,10 @@
             android:paddingVertical="4dp"
             android:text="80.6%"
             android:textColor="@color/bg_pink"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>
