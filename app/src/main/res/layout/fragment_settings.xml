@@ -66,6 +66,7 @@
                 android:id="@+id/changeLanguageButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:t_d_b_button_title="@string/app_language"
                 app:t_d_b_description="@string/here_you_can_select_the_desired_application_language"
                 app:t_d_b_title="@string/language" />
 
