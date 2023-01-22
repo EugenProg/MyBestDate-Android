@@ -17,15 +17,15 @@ import com.bestDate.R
 import com.bestDate.data.extension.getImages
 import com.bestDate.data.extension.observe
 import com.bestDate.data.model.Image
-import com.bestDate.databinding.SheetImageListBinding
+import com.bestDate.databinding.SheetItemListBinding
 import com.bestDate.view.base.BaseBottomSheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ImageListSheet : BaseBottomSheet<SheetImageListBinding>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
-        { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
+class ImageListSheet : BaseBottomSheet<SheetItemListBinding>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetItemListBinding =
+        { inflater, parent, attach -> SheetItemListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: ImageSheetAdapter
     private var imageList: MutableLiveData<MutableList<Uri>> = MutableLiveData(ArrayList())

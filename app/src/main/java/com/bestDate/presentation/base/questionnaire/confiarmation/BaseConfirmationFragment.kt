@@ -13,8 +13,7 @@ import com.bestDate.presentation.base.questionnaire.QuestionnaireViewModel
 abstract class BaseConfirmationFragment(
     private val question: QuestionnaireQuestion,
     private val isConfirmed: Boolean
-) :
-    BaseVMFragment<FragmentConfirmationBinding, QuestionnaireViewModel>() {
+) : BaseVMFragment<FragmentConfirmationBinding, QuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentConfirmationBinding =
         { inflater, parent, attach ->
             FragmentConfirmationBinding.inflate(
@@ -35,7 +34,7 @@ abstract class BaseConfirmationFragment(
     override fun onInit() {
         super.onInit()
         with(binding) {
-            title.text = question.questionInfo?.name
+            title.text = question.questionInfo?.question?.let { getString(it) }
             fieldInput.setText(question.answer)
             fieldInput.isChecked(isConfirmed)
             fieldInput.setPlaceholder(getString(getInputHint()))

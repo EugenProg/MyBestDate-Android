@@ -3,16 +3,16 @@ package com.bestDate.view.bottomSheet.optionsSheet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bestDate.databinding.SheetImageListBinding
+import com.bestDate.databinding.SheetItemListBinding
 import com.bestDate.presentation.main.search.FilterType
 import com.bestDate.view.base.BaseBottomSheet
 
 class OptionsSheet(
     private var optionsList: LinkedHashMap<FilterType, String>,
     private var title: String
-) : BaseBottomSheet<SheetImageListBinding>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetImageListBinding =
-        { inflater, parent, attach -> SheetImageListBinding.inflate(inflater, parent, attach) }
+) : BaseBottomSheet<SheetItemListBinding>() {
+    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetItemListBinding =
+        { inflater, parent, attach -> SheetItemListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: FilterListAdapter
     var itemClick: ((Pair<FilterType, String>) -> Unit)? = null
