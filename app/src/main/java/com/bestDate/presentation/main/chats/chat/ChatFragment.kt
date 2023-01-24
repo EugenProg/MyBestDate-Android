@@ -65,11 +65,13 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.openActionSheet = { message, chatActions ->
-                val actionSheet = ChatActionsSheet(chatActions)
-                actionSheet.itemClick = {
-                    doChatAction(it, message)
+                if (user?.isBot() != true) {
+                    val actionSheet = ChatActionsSheet(chatActions)
+                    actionSheet.itemClick = {
+                        doChatAction(it, message)
+                    }
+                    actionSheet.show(childFragmentManager)
                 }
-                actionSheet.show(childFragmentManager)
             }
             chatView.imageOpenClick = {
                 val fragment = ChatImageViewFragment(it)
