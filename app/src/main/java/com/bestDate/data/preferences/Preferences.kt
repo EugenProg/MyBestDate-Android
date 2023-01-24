@@ -6,5 +6,8 @@ enum class Preferences {
     REFRESH_TOKEN,
     FILTER_LOCATION,
     FILTER_STATUS,
-    FIRST_ENTER
+    FIRST_ENTER,
+    ARG_EXPIRES_AT,
+    FIREBASE_TOKEN,
+    LANGUAGE
 }

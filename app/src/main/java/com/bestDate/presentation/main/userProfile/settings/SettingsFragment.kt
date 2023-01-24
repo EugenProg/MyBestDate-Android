@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.show
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
 import com.bestDate.view.alerts.showDeleteDialog
+import com.bestDate.view.bottomSheet.languageSheet.LanguageSelectSheet
+import com.yariksoffice.lingver.Lingver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +29,7 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
         loader = LoaderDialog(requireActivity())
     }
 
+
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
@@ -36,7 +40,7 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
                 navController.navigate(SettingsFragmentDirections.actionSettingsToBlockedUsers())
             }
             changeLanguageButton.onClick = {
-
+                showLanguageSelectSheet()
             }
             deleteProfileButton.onClick = {
                 requireActivity().showDeleteDialog(
@@ -61,9 +65,6 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        observe(viewModel.user) {
-            binding.changeLanguageButton.buttonTitle = it?.language
-        }
         observe(viewModel.userSettings) {
             binding.blockingMessagesSwitch.setChecked(it.block_messages)
             binding.matchParticipationSwitch.setChecked(it.matchParticipation)
@@ -81,5 +82,20 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
             loader.stopLoading()
             navController.navigate(SettingsFragmentDirections.actionGlobalAuthFragment())
         }
+        observe(viewModel.languageSaveLiveData) {
+            loader.stopLoading()
+            Lingver.getInstance().setLocale(requireContext(), it.settingsName)
+            navController.navigate(SettingsFragmentDirections.actionRefresh())
+        }
+    }
+
+    private fun showLanguageSelectSheet() {
+        val languageSelectSheet = LanguageSelectSheet()
+        languageSelectSheet.itemClick = {
+            loader.startLoading()
+            viewModel.saveLanguage(it)
+        }
+
+        languageSelectSheet.show(childFragmentManager)
     }
 }

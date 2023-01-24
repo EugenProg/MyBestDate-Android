@@ -98,20 +98,21 @@
                     android:padding="16dp">
 
                     <TextView
+                        style="@style/component_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/regular"
                         android:text="@string/already_have_in_account"
                         android:textColor="@color/white_60"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <TextView
+                        style="@style/component_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:text="@string/login"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

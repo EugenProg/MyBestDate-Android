@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/messageBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="100dp"
+        android:background="@drawable/user_message_background"
+        android:orientation="vertical"
+        android:padding="6dp"
+        android:paddingHorizontal="18dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:cardCornerRadius="25dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                android:maxHeight="550dp"
+                android:scaleType="fitCenter" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/message"
+            style="@style/component_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="3dp"
+            android:textColor="@color/bg_main"
+            android:textSize="16sp"
+            tools:text="election" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/time"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white_80"
+        android:textSize="14sp"
+        tools:text="4:13" />
+</LinearLayout>

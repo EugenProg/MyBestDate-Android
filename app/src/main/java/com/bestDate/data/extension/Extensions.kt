@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.ImageDecoder
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -17,10 +15,12 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.bestDate.R
 import com.bestDate.data.model.BaseResponse
 import com.bestDate.presentation.main.chats.ChatListAdapter
 import com.bumptech.glide.RequestBuilder
@@ -194,6 +194,7 @@ fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (viewHolder is ChatListAdapter.ChatListItemViewHolder) {
+                context.vibratePhone()
                 deleteAction.invoke(viewHolder.adapterPosition)
             }
         }
@@ -210,8 +211,43 @@ fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
             if (viewHolder is ChatListAdapter.ChatListItemViewHolder &&
                 actionState == ItemTouchHelper.ACTION_STATE_SWIPE
             ) {
-                val scrollOffset = currentScrollOffset + (-dX).toInt()
-                viewHolder.itemView.scrollTo(scrollOffset, 0)
+                with(viewHolder.itemView) {
+                    val paint = Paint()
+                    paint.color = ContextCompat.getColor(context, R.color.red)
+                    val back = RectF(
+                        right.toFloat() - 81.toPx(),
+                        top.toFloat(),
+                        right.toFloat(),
+                        bottom.toFloat()
+                    )
+                    c.drawRect(back, paint)
+
+                    val scrollOffset = currentScrollOffset + (-dX).toInt()
+                    if (scrollOffset < 80.toPx()) {
+                        super.onChildDraw(
+                            c,
+                            recyclerView,
+                            viewHolder,
+                            -scrollOffset.toFloat(),
+                            dY,
+                            actionState,
+                            isCurrentlyActive
+                        )
+                    }
+
+                    if (scrollOffset > 50.toPx()) {
+                        val icon =
+                            BitmapFactory.decodeResource(resources, R.drawable.ic_chat_list_delete)
+                        val iconRect =
+                            RectF(
+                                right.toFloat() - 50.toPx(),
+                                top.toFloat() + 28.toPx(),
+                                right.toFloat() - 30.toPx(),
+                                bottom.toFloat() - 30.toPx()
+                            )
+                        c.drawBitmap(icon, null, iconRect, paint)
+                    }
+                }
             }
         }
     }).attachToRecyclerView(this)

@@ -111,8 +111,6 @@ class ProfilePhotoEditingFragment :
 
                 imageList.value = it?.photos
                 it?.getMainPhoto()?.let { photo -> setMainImage(photo) }
-
-                binding.nextButton.isVisible = !it?.photos.isNullOrEmpty()
             }
         }
     }

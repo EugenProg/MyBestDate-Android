@@ -43,9 +43,6 @@ abstract class BasePhotoEditorFragment :
         setSelectedImage()
 
         with(binding) {
-            editorContainer.layoutParams.height = Resources.getSystem().displayMetrics.widthPixels
-            editorContainer.requestLayout()
-
             saveButton.isEnabled = false
 
             lifecycleScope.launch(Dispatchers.IO) {

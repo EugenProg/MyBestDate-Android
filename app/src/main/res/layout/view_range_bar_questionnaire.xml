@@ -10,15 +10,16 @@
 
         <TextView
             android:id="@+id/placeholder"
+            style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="27dp"
             android:layout_marginTop="18dp"
-            android:fontFamily="@font/regular"
             android:textColor="@color/main_60"
-            android:textSize="12sp"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp"
             tools:text="Search age range" />
 
         <com.bestDate.view.seekBar.RangeBarView

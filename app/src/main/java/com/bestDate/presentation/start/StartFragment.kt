@@ -18,6 +18,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
 
     private var tokenIsRefreshed: Boolean = false
     override val statusBarColor = R.color.bg_main
+    override val navBarColor = R.color.bg_main
 
     override fun onInit() {
         super.onInit()
@@ -25,7 +26,6 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
             viewModel.isFirstEnter() -> {
                 postDelayed({
                     navController.navigate(StartFragmentDirections.actionStartToOnboardStart())
-
                 }, 1600)
             }
             !viewModel.isRefreshTokenValid() -> {

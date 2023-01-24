@@ -53,4 +53,6 @@
     <color name="light_search_box">#f3f3f3</color>
     <color name="bg_list_item">#1c262b</color>
     <color name="light_line">#27beefff</color>
+    <color name="gray_787C7E">#787C7E</color>
+    <color name="chat_blue">#2491ff</color>
 </resources>

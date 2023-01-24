@@ -41,11 +41,6 @@ class UserUseCase @Inject constructor(
 ) {
 
     val getMyUser = userDao.getUserFlow()
-    var usersList: MutableList<ShortUserData>? = mutableListOf()
-    var perPage: Int = 10
-    var currentPage: Int = 1
-    var lastPage: Int = 1
-    var total: Int = 0
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -61,7 +56,7 @@ class UserUseCase @Inject constructor(
         clearUserData()
     }
 
-    private fun clearUserData() {
+    fun clearUserData() {
         userDao.delete()
         userSettingsDao.delete()
         likesListUseCase.clearData()
@@ -74,6 +69,7 @@ class UserUseCase @Inject constructor(
         chatListUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
+        preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, 0L)
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")
         preferencesUtils.saveString(Preferences.FILTER_STATUS, "all")
     }
@@ -83,42 +79,6 @@ class UserUseCase @Inject constructor(
         if (!response.isSuccessful) throw InternalException.OperationException(
             response.errorBody()?.getErrorMessage()
         )
-    }
-
-    suspend fun getUsers(filters: FilterOptions) {
-        val response = userRemoteData.getUsers(filters, 1)
-        if (response.isSuccessful) {
-            usersList = response.body()?.data
-            perPage = response.body()?.meta?.per_page ?: 0
-            currentPage = response.body()?.meta?.current_page ?: 0
-            lastPage = response.body()?.meta?.last_page ?: 0
-            total = response.body()?.meta?.total ?: 0
-        } else {
-            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
-        }
-    }
-
-    suspend fun getUsersPaged(filters: FilterOptions) {
-        currentPage++
-
-        if (lastPage < currentPage) return
-        val response = userRemoteData.getUsers(filters, currentPage)
-        if (response.isSuccessful) {
-            val list = mutableListOf<ShortUserData>()
-            usersList?.let { list.addAll(it) }
-            list.addAll(response.body()?.data ?: mutableListOf())
-            usersList = list
-        } else {
-            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
-        }
-    }
-
-    fun clearPagingData() {
-        usersList = mutableListOf()
-        perPage = 10
-        currentPage = 1
-        lastPage = 1
-        total = 0
     }
 
     suspend fun changeLanguage(language: String) {

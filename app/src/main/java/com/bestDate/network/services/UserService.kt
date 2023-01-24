@@ -100,4 +100,8 @@ interface UserService {
     /**Delete user profile*/
     @DELETE("/api/v1/user")
     suspend fun deleteUserProfile(): Response<BaseResponse>
+
+    /**Save messaging token*/
+    @POST("/api/v1/device-token")
+    suspend fun saveMessagingDeviceToken(@Body request: SaveDeviceTokenRequest): Response<BaseResponse>
 }

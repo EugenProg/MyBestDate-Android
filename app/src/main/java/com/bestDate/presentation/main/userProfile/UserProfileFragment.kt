@@ -29,7 +29,6 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
-    private var mainPhotoUrl: String = ""
 
     override fun onInit() {
         super.onInit()
@@ -48,7 +47,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.backButton.onClick = {
-            navController.popBackStack()
+            goBack()
         }
         binding.signOutButton.onClick = {
             binding.signOutButton.toggleActionEnabled(true)
@@ -59,9 +58,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
         binding.matchesListButton.click = {
             navController.navigate(
-                UserProfileFragmentDirections.actionProfileToMatchesList(
-                    mainPhotoUrl
-                )
+                UserProfileFragmentDirections.actionProfileToMatchesList()
             )
         }
         binding.invitationListButton.click = {
@@ -153,7 +150,6 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private fun setMainImage(image: ProfileImage?) {
         if (image == null) return
-        mainPhotoUrl = image.thumb_url.orEmpty()
         makeStatusBarTransparent(binding.refreshView)
 
         Glide.with(requireContext())

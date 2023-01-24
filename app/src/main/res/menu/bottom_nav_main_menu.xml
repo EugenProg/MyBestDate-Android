@@ -11,7 +11,7 @@
         android:title="@string/matches" />
 
     <item
-        android:id="@+id/chats_nav_graph"
+        android:id="@+id/chat_list_nav_graph"
         android:icon="@drawable/chats_selector"
         android:title="@string/chats" />
 

@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@null">
 
-
     <TextView
         android:id="@+id/currentPageNumber"
         style="@style/title"
@@ -20,39 +19,39 @@
 
     <TextView
         android:id="@+id/textView5"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="33dp"
-        android:fontFamily="@font/bold"
         android:text="@string/of"
         android:textColor="@color/main_60"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/currentPageNumber"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/totalPagesNumber"
+        style="@style/component_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="7dp"
         android:layout_marginTop="33dp"
-        android:fontFamily="@font/bold"
         android:textColor="@color/main_60"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="05" />
 
     <TextView
         android:id="@+id/title"
+        style="@style/component_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="23dp"
         android:layout_marginEnd="23dp"
         android:layout_marginTop="13dp"
-        android:fontFamily="@font/bold"
-        android:textSize="26sp"
+        android:textSize="24sp"
         android:textColor="@color/bg_main"
         tools:text="Personal information"
         app:layout_constraintEnd_toEndOf="parent"

@@ -1,30 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
         android:orientation="vertical"
-        android:paddingHorizontal="32dp">
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="10dp">
 
         <TextView
             android:id="@+id/title"
             style="@style/component_title"
             android:textColor="@color/white_90"
-            android:textSize="20sp" />
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/info"
             style="@style/component_text"
+            android:layout_width="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:textColor="@color/white_40"
-            android:textSize="20sp" />
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/line"
+            app:layout_constraintEnd_toStartOf="@id/translateBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+
+        <FrameLayout
+            android:id="@+id/translateBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/info">
+
+            <ImageView
+                android:id="@+id/translateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="15dp"
+                android:paddingStart="8dp"
+                android:paddingEnd="1dp"
+                android:src="@drawable/ic_translate"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/translateLoading"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="gone" />
+        </FrameLayout>
 
         <View
+            android:id="@+id/line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/white_10"/>
-    </LinearLayout>
+            android:background="@color/white_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

@@ -2,6 +2,7 @@ package com.bestDate.network.services
 
 import com.bestDate.data.model.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -22,36 +23,39 @@ interface ChatsService {
     @POST("/api/v1/message/{recipient}/{parent}")
     suspend fun sendTextMessageWithParent(
         @Path("recipient") recipientId: Int,
-        @Path("parent") parentId: Int
+        @Path("parent") parentId: Int,
+        @Body request: SendMessageRequest
     ): Response<SendMessageResponse>
 
     /**Send text message without parent*/
     @POST("/api/v1/message/{recipient}")
-    suspend fun sendTextMessageWithoutParent(@Path("recipient") recipientId: Int):
-            Response<SendMessageResponse>
-
-    /**Send image message with parent*/
-    @Multipart
-    @POST("/api/v1/message/{recipient}/{parent}")
-    suspend fun sendImageMessageWithParent(
+    suspend fun sendTextMessageWithoutParent(
         @Path("recipient") recipientId: Int,
-        @Path("parent") parentId: Int,
+        @Body request: SendMessageRequest
+    ): Response<SendMessageResponse>
+
+    /**Send image message without text*/
+    @Multipart
+    @POST("/api/v1/message/{recipient}")
+    suspend fun sendImageMessageWithoutText(
+        @Path("recipient") recipientId: Int,
         @Part image: MultipartBody.Part
     ): Response<SendMessageResponse>
 
-    /**Send image message without parent*/
+    /**Send image message with text*/
     @Multipart
     @POST("/api/v1/message/{recipient}")
-    suspend fun sendImageMessageWithoutParent(
+    suspend fun sendImageMessageWithText(
         @Path("recipient") recipientId: Int,
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part,
+        @Part("text") text: RequestBody
     ): Response<SendMessageResponse>
 
     /**Update message*/
     @PUT("/api/v1/message/{message}")
     suspend fun updateMessage(
         @Path("message") messageId: Int,
-        @Body request: UpdateMessageRequest
+        @Body request: SendMessageRequest
     ): Response<SendMessageResponse>
 
     /**Delete message*/

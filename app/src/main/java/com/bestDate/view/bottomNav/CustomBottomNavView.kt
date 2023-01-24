@@ -7,8 +7,9 @@ import android.widget.FrameLayout
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import com.bestDate.R
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
 import com.bestDate.databinding.ViewBottomNavBinding
-import com.bestDate.databinding.ViewBottomNavButtonBinding
 
 class CustomBottomNavView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -93,43 +94,23 @@ class CustomBottomNavView @JvmOverloads constructor(
         listOfButtons.forEach { button ->
             button.onNavigationChange = {
                 when (button) {
-                    binding.buttonSearch -> {
-                        navController.navigate(R.id.search_nav_graph)
-                    }
-                    binding.buttonMatches -> {
-                        navController.navigate(R.id.matches_nav_graph)
-                    }
-                    binding.buttonChats -> {
-                        navController.navigate(R.id.chats_nav_graph)
-                    }
-                    binding.buttonTop -> {
-                        navController.navigate(R.id.top_nav_graph)
-                    }
-                    binding.buttonGuests -> {
-                        navController.navigate(R.id.guests_nav_graph)
-                    }
+                    binding.buttonSearch -> navController.navigate(R.id.search_nav_graph)
+                    binding.buttonMatches -> navController.navigate(R.id.matches_nav_graph)
+                    binding.buttonChats -> navController.navigate(R.id.chat_list_nav_graph)
+                    binding.buttonTop -> navController.navigate(R.id.top_nav_graph)
+                    binding.buttonGuests -> navController.navigate(R.id.guests_nav_graph)
                 }
             }
         }
     }
 
     fun setActive(destination: NavDestination) {
-        when (destination.displayName.split(":").getOrNull(1)) {
-            "id/searchFragment" -> {
-                handleButtonsActive(binding.buttonSearch)
-            }
-            "id/matchesFragment" -> {
-                handleButtonsActive(binding.buttonMatches)
-            }
-            "id/chatsFragment" -> {
-                handleButtonsActive(binding.buttonChats)
-            }
-            "id/topFragment" -> {
-                handleButtonsActive(binding.buttonTop)
-            }
-            "id/guestsFragment" -> {
-                handleButtonsActive(binding.buttonGuests)
-            }
+        when (destination.getCurrentScreen()) {
+            Screens.SEARCH -> handleButtonsActive(binding.buttonSearch)
+            Screens.MATCHES -> handleButtonsActive(binding.buttonMatches)
+            Screens.CHAT_LIST -> handleButtonsActive(binding.buttonChats)
+            Screens.DUELS -> handleButtonsActive(binding.buttonTop)
+            Screens.GUESTS -> handleButtonsActive(binding.buttonGuests)
         }
     }
 }

@@ -3,6 +3,7 @@ package com.bestDate.data.extension
 import android.annotation.SuppressLint
 import android.content.Context
 import com.bestDate.R
+import com.bestDate.data.utils.notifications.NotificationType
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -77,7 +78,7 @@ fun String?.isToday(): Boolean {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun String?.toShortString(): String {
+fun String?.toShortDate(): String {
     val formatter = SimpleDateFormat("dd MMM")
     return formatter.format(this.getDateWithTimeOffset())
 }
@@ -96,7 +97,18 @@ fun String?.getVisitPeriod(context: Context): String {
         }
     } else {
         val days = getDaysBetween(date, now)
-        if (days > 6) date.toShortString()
+        if (days > 6) date.toShortDate()
         else context.getString(R.string.was_n_days_ago, days)
     }
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String?.getDateString(): String {
+    val formatter = SimpleDateFormat("dd-MM-yyyy")
+    return formatter.format(this.getDateWithTimeOffset())
+}
+
+fun String.getPushType(): NotificationType {
+    if (this.isBlank()) return NotificationType.DEFAULT_PUSH
+    return NotificationType.values().firstOrNull { it.code == this } ?: NotificationType.DEFAULT_PUSH
 }
