@@ -26,7 +26,6 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
             viewModel.isFirstEnter() -> {
                 postDelayed({
                     navController.navigate(StartFragmentDirections.actionStartToOnboardStart())
-
                 }, 1600)
             }
             !viewModel.isRefreshTokenValid() -> {
