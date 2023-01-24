@@ -56,6 +56,7 @@
         android:id="@+id/textView"
         style="@style/title"
         android:gravity="center_horizontal"
+        android:textSize="30sp"
         android:text="@string/no_loneliness_just_reality"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

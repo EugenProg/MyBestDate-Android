@@ -9,6 +9,7 @@ import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.db.entity.UserSettings
 import kotlinx.parcelize.Parcelize
+import java.math.BigDecimal
 import java.util.*
 
 open class BaseResponse {
@@ -257,7 +258,7 @@ data class DuelProfile(
     val id: Int? = null,
     var full_url: String? = null,
     var thumb_url: String? = null,
-    val rating: Double? = null,
+    val rating: BigDecimal? = null,
     val user: ShortUserData? = null,
     val location: LocationDB? = null
 )

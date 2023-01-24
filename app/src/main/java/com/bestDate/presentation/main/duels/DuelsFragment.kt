@@ -25,11 +25,10 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
 
     override val statusBarLight = false
     override val navBarLight = false
-    private var gender: Gender = Gender.MAN
 
     override fun onInit() {
         super.onInit()
-        binding.resultView.visibility = View.GONE
+        binding.resultView.isVisible = false
         setUpToolbar()
         setUpFilterButtons()
     }
@@ -52,40 +51,38 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.locationFilterButton.label = getString(R.string.universe)
         binding.locationFilterButton.isActive = true
         binding.selectorView.onClick = {
-            gender = it
-            reload()
+            viewModel.gender = it
+            viewModel.getDuels()
         }
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        observe(viewModel.duelsLiveData) {
+        observe(viewModel.duelImages) {
             binding.duelView.isVisible = it?.isEmpty() != true
             binding.noDataView.isVisible = it?.isEmpty() == true
             binding.noDataView.noData = it?.isEmpty() == true
             if (!it.isNullOrEmpty()) {
-                setUpElement(binding.firstDuelElementView, it.first(), it[1])
-                setUpElement(binding.secondDuelElementView, it[1], it.first())
+                setUpElement(binding.firstDuelElementView, it.first(), it.last())
+                setUpElement(binding.secondDuelElementView, it.last(), it.first())
             }
         }
         observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            binding.selectorView.lookFor = it?.look_for?.first()
+            it?.getDuelGender()?.let { gender -> viewModel.gender = gender }
+            binding.selectorView.setGender(viewModel.gender)
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
-            gender =
-                if (it?.look_for?.first() == getString(Gender.MAN.gender)) Gender.MAN else Gender.WOMAN
-            reload()
+
+            viewModel.getDuels()
         }
-        observe(viewModel.duelsResultLiveData) {
-            binding.resultView.visibility = View.VISIBLE
+        observe(viewModel.duelResults) {
+            binding.resultView.isVisible = it?.isNotEmpty() == true
             binding.resultView.duelProfiles = it
-            reload()
         }
         observe(viewModel.loadingLiveData) {
-            if (viewModel.duelsLiveData.value.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
+            if (viewModel.duelImages.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
 
         observe(viewModel.errorLiveData) {
@@ -101,17 +98,10 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     ) {
         duelElementView.apply {
             image = profileImage?.full_url
-            photoId = profileImage?.id ?: 0
+            photoId = profileImage?.id.orZero
             likeClick = { winningId ->
-                viewModel.postVote(winningId, anotherProfileImage?.id ?: 0)
+                viewModel.postVote(winningId, anotherProfileImage?.id.orZero)
             }
         }
-    }
-
-    private fun reload() {
-        viewModel.getDuels(
-            getString(gender.gender).lowercase(),
-            null
-        )
     }
 }
