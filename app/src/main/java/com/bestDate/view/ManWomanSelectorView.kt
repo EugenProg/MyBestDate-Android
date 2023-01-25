@@ -12,29 +12,30 @@ class ManWomanSelectorView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private var binding: ViewManWomanSelectorBinding =
         ViewManWomanSelectorBinding.inflate(LayoutInflater.from(context), this)
-    var lookFor: String? = ""
-        set(value) {
-            binding.manSelector.isActive =
-                value == binding.root.context.getString(Gender.MAN.gender)
-            binding.womanSelector.isActive =
-                value == binding.root.context.getString(Gender.WOMAN.gender)
-            field = value
+
+    init {
+        with(binding) {
+            manSelector.gender = Gender.MAN
+            womanSelector.gender = Gender.WOMAN
+
+            manSelector.onClick = {
+                binding.womanSelector.isActive = false
+                onClick?.invoke(it)
+
+            }
+            womanSelector.onClick = {
+                binding.manSelector.isActive = false
+                onClick?.invoke(it)
+            }
         }
+    }
+
+    fun setGender(gender: Gender) {
+        with(binding) {
+            manSelector.isActive = gender == Gender.MAN
+            womanSelector.isActive = gender == Gender.WOMAN
+        }
+    }
 
     var onClick: ((Gender) -> Unit)? = null
-        set(value) {
-            binding.manSelector.isMan = true
-            binding.womanSelector.isMan = false
-
-            binding.manSelector.onClick = {
-                binding.womanSelector.isActive = false
-                value?.invoke(Gender.MAN)
-
-            }
-            binding.womanSelector.onClick = {
-                binding.manSelector.isActive = false
-                value?.invoke(Gender.WOMAN)
-            }
-            field = value
-        }
 }

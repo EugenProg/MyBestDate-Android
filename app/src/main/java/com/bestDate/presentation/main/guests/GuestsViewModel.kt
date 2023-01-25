@@ -30,10 +30,6 @@ class GuestsViewModel @Inject constructor(
         }
     }
 
-    fun clearData() {
-        guestsUseCase.clearData()
-    }
-
     fun refreshUser() {
         doAsync {
             userUseCase.refreshUser()

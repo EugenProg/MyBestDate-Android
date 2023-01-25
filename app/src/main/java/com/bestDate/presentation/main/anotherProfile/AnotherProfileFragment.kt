@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
@@ -49,6 +50,7 @@ class AnotherProfileFragment :
         binding.userBlockedView.setUserInfo(user)
         binding.navBox.isVisible = user?.blocked_me != true
         binding.navBox.isLiked = user?.getMainPhoto()?.liked == true
+        binding.navBox.hasMainPhoto = user?.main_photo != null
         isBlocked = user?.blocked == true
     }
 
@@ -73,7 +75,16 @@ class AnotherProfileFragment :
                 viewModel.sendInvitation(user?.id, it.id)
             }
         }
-        binding.navBox.hasMainPhoto = user?.main_photo != null
+        binding.navBox.chatClick = {
+            if (args.backScreen == BackScreenType.CHAT) {
+                navController.popBackStack()
+            } else {
+                navController.navigate(
+                    AnotherProfileFragmentDirections
+                        .actionGlobalAnotherProfileToChat(user, BackScreenType.ANOTHER_PROFILE)
+                )
+            }
+        }
         binding.navBox.likeClick = {
             user?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
@@ -111,20 +122,23 @@ class AnotherProfileFragment :
         }
         binding.userInfoView.openQuestionnaire = {
             navController.navigate(
-                AnotherProfileFragmentDirections
-                    .actionAnotherProfileToQuestionnaire(fullUser)
+                AnotherProfileFragmentDirections.actionAnotherProfileToQuestionnaire()
             )
         }
     }
 
     override fun goBack() {
         viewModel.clearUserData()
+        if (args.backScreen == BackScreenType.SEARCH) {
+            setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        }
         super.goBack()
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.user) {
+            user?.last_online_at = it.last_online_at
             setBackground(it?.blocked_me)
             binding.header.setUserInfo(it)
             binding.userInfoView.setUserInfo(it)

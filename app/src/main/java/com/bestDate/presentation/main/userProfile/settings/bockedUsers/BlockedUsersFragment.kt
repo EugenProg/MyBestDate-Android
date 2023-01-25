@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentBlockedUsersBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.LoaderDialog
@@ -47,7 +48,10 @@ class BlockedUsersFragment : BaseVMFragment<FragmentBlockedUsersBinding, Blocked
             }
 
             adapter.openClick = {
-                navController.navigate(BlockedUsersFragmentDirections.actionGlobalAnotherProfile(it))
+                navController.navigate(
+                    BlockedUsersFragmentDirections
+                        .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
+                )
             }
             adapter.unlockClick = {
                 loader.startLoading()

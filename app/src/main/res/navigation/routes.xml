@@ -51,7 +51,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/onboardSecondFragment"
@@ -106,14 +106,14 @@
     <fragment
         android:id="@+id/geoEnableFragment"
         android:name="com.bestDate.presentation.GeoEnableFragment"
-        android:label="GeoEnableFragment" >
+        android:label="GeoEnableFragment">
         <action
             android:id="@+id/action_geo_to_messagesSettings"
             app:destination="@id/messagesSettingsFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/messagesSettingsFragment"
@@ -241,11 +241,7 @@
             <fragment
                 android:id="@+id/matchesListFragment"
                 android:name="com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment"
-                android:label="MatchesListFragment">
-                <argument
-                    android:name="myPhoto"
-                    app:argType="string" />
-            </fragment>
+                android:label="MatchesListFragment"/>
             <fragment
                 android:id="@+id/myDuelsFragment"
                 android:name="com.bestDate.presentation.main.userProfile.myDuels.MyDuelsFragment"
@@ -292,11 +288,19 @@
                     app:exitAnim="@anim/slide_out_left"
                     app:popEnterAnim="@anim/slide_in_right"
                     app:popExitAnim="@anim/slide_out_right" />
+                <action
+                    android:id="@+id/action_refresh"
+                    app:destination="@id/settingsFragment"
+                    app:enterAnim="@anim/fade_in"
+                    app:exitAnim="@anim/fade_out"
+                    app:popUpTo="@id/settingsFragment"
+                    app:popUpToInclusive="true"/>
+
             </fragment>
             <fragment
                 android:id="@+id/profileQuestionnaireFragment"
                 android:name="com.bestDate.presentation.main.userProfile.questionnaire.ProfileQuestionnaireFragment"
-                android:label="ProfileQuestionnaire"/>
+                android:label="ProfileQuestionnaire" />
             <fragment
                 android:id="@+id/blockedUsersFragment"
                 android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"
@@ -317,6 +321,12 @@
             <action
                 android:id="@+id/action_global_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_chat"
+                app:destination="@id/chat_nav_graph" />
 
         </navigation>
 
@@ -327,6 +337,9 @@
                 android:name="user"
                 app:argType="com.bestDate.data.model.ShortUserData"
                 app:nullable="true" />
+            <argument
+                android:name="backScreen"
+                app:argType="com.bestDate.data.model.BackScreenType" />
             <fragment
                 android:id="@+id/anotherProfile"
                 android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileFragment"
@@ -335,6 +348,9 @@
                     android:name="user"
                     app:argType="com.bestDate.data.model.ShortUserData"
                     app:nullable="true" />
+                <argument
+                    android:name="backScreen"
+                    app:argType="com.bestDate.data.model.BackScreenType" />
                 <action
                     android:id="@+id/action_anotherProfile_to_questionnaire"
                     app:destination="@id/anotherProfileQuestionnaire" />
@@ -345,12 +361,7 @@
             <fragment
                 android:id="@+id/anotherProfileQuestionnaire"
                 android:name="com.bestDate.presentation.main.anotherProfile.questionnaire.AnotherProfileQuestionnaireFragment"
-                android:label="AnotherProfileQuestionnaireFragment">
-                <argument
-                    android:name="user"
-                    app:argType="com.bestDate.db.entity.UserDB"
-                    app:nullable="true" />
-            </fragment>
+                android:label="AnotherProfileQuestionnaireFragment"/>
             <fragment
                 android:id="@+id/anotherProfileSliderFragment"
                 android:name="com.bestDate.presentation.main.anotherProfile.AnotherProfileSliderFragment"
@@ -364,6 +375,9 @@
                     android:defaultValue="0"
                     app:argType="integer" />
             </fragment>
+            <action
+                android:id="@+id/action_global_another_profile_to_chat"
+                app:destination="@id/chat_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/search_nav_graph"
@@ -373,10 +387,10 @@
                 android:name="com.bestDate.presentation.main.search.SearchFragment"
                 android:label="SearchFragment" />
             <action
-                android:id="@+id/action_global_profile_nav_graph_from_search"
+                android:id="@+id/action_global_search_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph2"
+                android:id="@+id/action_global_search_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
         </navigation>
         <navigation
@@ -387,25 +401,28 @@
                 android:name="com.bestDate.presentation.main.matches.MatchesFragment"
                 android:label="MatchesFragment" />
             <action
-                android:id="@+id/action_global_profile_nav_graph_from_matches"
+                android:id="@+id/action_global_matches_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph3"
+                android:id="@+id/action_global_matches_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_matches_to_chat"
+                app:destination="@id/chat_nav_graph" />
         </navigation>
         <navigation
-            android:id="@+id/chats_nav_graph"
+            android:id="@+id/chat_list_nav_graph"
             app:startDestination="@id/chatsFragment">
             <fragment
                 android:id="@+id/chatsFragment"
                 android:name="com.bestDate.presentation.main.chats.ChatListFragment"
                 android:label="ChatsFragment" />
             <action
-                android:id="@+id/action_global_profile_nav_graph_from_chats"
+                android:id="@+id/action_global_chat_list_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph_from_chats"
-                app:destination="@id/another_profile_nav_graph" />
+                android:id="@+id/action_global_chat_list_to_chat"
+                app:destination="@id/chat_nav_graph" />
         </navigation>
         <navigation
             android:id="@+id/guests_nav_graph"
@@ -415,10 +432,10 @@
                 android:name="com.bestDate.presentation.main.guests.GuestsFragment"
                 android:label="GuestsFragment" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph"
+                android:id="@+id/action_global_guests_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
             <action
-                android:id="@+id/action_global_profile_nav_graph_from_guests"
+                android:id="@+id/action_global_guests_to_profile"
                 app:destination="@id/profile_nav_graph" />
         </navigation>
         <navigation
@@ -435,16 +452,53 @@
                 <action
                     android:id="@+id/action_profile_to_myTopDuels"
                     app:destination="@id/myTopDuelsFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/push_down_in"
-                    app:popExitAnim="@anim/push_down_out" />
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
             </fragment>
             <action
-                android:id="@+id/action_global_profile_nav_graph_from_top"
+                android:id="@+id/action_global_top_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
-                android:id="@+id/action_global_another_profile_nav_graph6"
+                android:id="@+id/action_global_top_to_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_search"
+                app:destination="@id/search_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_matches"
+                app:destination="@id/matches_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_chat_list"
+                app:destination="@id/chat_list_nav_graph" />
+            <action
+                android:id="@+id/action_global_top_to_guests"
+                app:destination="@id/guests_nav_graph" />
+        </navigation>
+        <navigation android:id="@+id/chat_nav_graph"
+            app:startDestination="@id/chatFragment">
+            <fragment
+                android:id="@+id/chatFragment"
+                android:name="com.bestDate.presentation.main.chats.chat.ChatFragment"
+                android:label="ChatFragment">
+                <argument
+                    android:name="user"
+                    app:argType="com.bestDate.data.model.ShortUserData"
+                    app:nullable="true" />
+                <argument
+                    android:name="backScreen"
+                    app:argType="com.bestDate.data.model.BackScreenType" />
+            </fragment>
+            <argument
+                android:name="user"
+                app:argType="com.bestDate.data.model.ShortUserData"
+                app:nullable="true" />
+            <argument
+                android:name="backScreen"
+                app:argType="com.bestDate.data.model.BackScreenType" />
+            <action
+                android:id="@+id/action_global_chat_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
         </navigation>
         <action
@@ -452,7 +506,63 @@
             app:destination="@id/authFragment"
             app:popUpTo="@id/main_nav_graph"
             app:popUpToInclusive="true" />
-
+        <fragment
+            android:id="@+id/globalLikePushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalLikePushScreen"
+            android:label="GlobalLikePushScreen" >
+            <action
+                android:id="@+id/action_likePush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalLikePushScreen"
+                app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_likePush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph"
+                app:popUpTo="@id/globalLikePushScreen"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/globalMatchPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalMatchPushScreen"
+            android:label="GlobalMatchPushScreen" >
+            <action
+                android:id="@+id/action_matchPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalMatchPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_matchPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_matchPush_to_chat"
+                app:destination="@id/chat_nav_graph"/>
+        </fragment>
+        <fragment
+            android:id="@+id/globalInvitationPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalInvitationPushScreen"
+            android:label="GlobalInvitationPushScreen" >
+            <action
+                android:id="@+id/action_invitationPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalInvitationPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_invitationPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph" />
+        </fragment>
+        <fragment
+            android:id="@+id/globalChatPushScreen"
+            android:name="com.bestDate.presentation.globalPushScreens.GlobalChatScreenPushScreen"
+            android:label="GlobalChatScreenPushScreen">
+            <action
+                android:id="@+id/action_chatPush_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/globalChatPushScreen"
+                app:popUpToInclusive="true" />
+            <action
+                android:id="@+id/action_chatPush_to_another_profile"
+                app:destination="@id/another_profile_nav_graph"/>
+        </fragment>
     </navigation>
 
     <navigation
@@ -531,7 +641,8 @@
             app:popUpTo="@id/registration_nav_graph"
             app:popUpToInclusive="true" />
     </navigation>
-    <navigation android:id="@+id/photo_editor_nav_graph"
+    <navigation
+        android:id="@+id/photo_editor_nav_graph"
         app:startDestination="@id/profilePhotoEditingFragment">
         <fragment
             android:id="@+id/profilePhotoEditingFragment"
@@ -559,7 +670,7 @@
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </navigation>
 
 </navigation>

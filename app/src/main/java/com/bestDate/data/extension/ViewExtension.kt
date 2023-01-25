@@ -43,9 +43,10 @@ fun View.setWidth(width: Int) {
 fun SeekBar.onChangeListener(
     progressChanged: ((SeekBar?, Int, Boolean) -> Unit)? = null,
     startTouch: ((SeekBar?) -> Unit)? = null,
-    stopTouch: ((SeekBar?) -> Unit)? = null) {
+    stopTouch: ((SeekBar?) -> Unit)? = null
+) {
 
-    this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener{
+    this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(bar: SeekBar?, progress: Int, fromUser: Boolean) {
             progressChanged?.invoke(bar, progress, fromUser)
         }
@@ -60,7 +61,11 @@ fun SeekBar.onChangeListener(
     })
 }
 
-inline fun View.setAttrs(attrs: AttributeSet?, styleable: IntArray, crossinline body: (TypedArray) -> Unit) {
+inline fun View.setAttrs(
+    attrs: AttributeSet?,
+    styleable: IntArray,
+    crossinline body: (TypedArray) -> Unit
+) {
     context.theme.obtainStyledAttributes(attrs, styleable, 0, 0)
         .apply {
             try {
@@ -79,6 +84,24 @@ fun View.showWithSlideTopAnimation(showViews: (() -> Unit)? = null) {
         .start()
 
     showViews?.invoke()
+
+    postDelayed({
+        this.isVisible = true
+        this.animate()
+            .translationY(0f)
+            .setDuration(300)
+            .start()
+    }, 100)
+}
+
+inline fun View.showWithSlideBottomAnimation(crossinline showViews: () -> Unit) {
+    this.isVisible = false
+    this.animate()
+        .translationY(-400f)
+        .setDuration(100)
+        .start()
+
+    showViews.invoke()
 
     postDelayed({
         this.isVisible = true
@@ -138,10 +161,14 @@ fun View.fadeInsert(toggleVisibility: () -> Unit) {
         .start()
 }
 
-fun ViewPager2?.onPageChanged(onScrolled: ((position: Int,
-                                           positionOffset: Float,
-                                           positionOffsetPixels: Int) -> Unit)? = null,
-                             onSelected: ((position: Int) -> Unit)? = null) {
+fun ViewPager2?.onPageChanged(
+    onScrolled: ((
+        position: Int,
+        positionOffset: Float,
+        positionOffsetPixels: Int
+    ) -> Unit)? = null,
+    onSelected: ((position: Int) -> Unit)? = null
+) {
     this?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrolled(
             position: Int,
@@ -166,5 +193,5 @@ fun View.showKeyboard() {
 
 fun View.hideKeyboard() {
     val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.hideSoftInputFromWindow(this.windowToken, 2)
+    imm.hideSoftInputFromWindow(this.windowToken, 0)
 }

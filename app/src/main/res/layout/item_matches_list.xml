@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="99dp"
     android:layout_marginTop="20dp">
@@ -62,10 +63,11 @@
                 android:id="@+id/location"
                 style="@style/component_text"
                 android:layout_width="wrap_content"
-                android:textSize="11sp"
+                android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name" />
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
@@ -84,10 +86,10 @@
             android:layout_width="74dp"
             android:layout_height="76dp"
             android:layout_marginEnd="10dp"
+            android:background="?selectableItemBackground"
             app:cardBackgroundColor="#384045"
             app:cardCornerRadius="14dp"
             app:cardElevation="0dp"
-            android:background="?selectableItemBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">

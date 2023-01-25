@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.Like
 import com.bestDate.databinding.FragmentLikesListBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesListViewModel>() {
+open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLikesListBinding =
         { inflater, parent, attach ->
             FragmentLikesListBinding.inflate(inflater, parent, attach)
@@ -20,6 +22,13 @@ class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesListView
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: LikesListAdapter
 
+    open fun navigateToUserProfile(like: Like) {
+        navController.navigate(
+            LikesListFragmentDirections
+                .actionGlobalAnotherProfile(like.user, BackScreenType.PROFILE)
+        )
+    }
+
     override fun onInit() {
         super.onInit()
 
@@ -28,7 +37,7 @@ class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesListView
         binding.likesListView.adapter = adapter
 
         adapter.itemClick = {
-            navController.navigate(LikesListFragmentDirections.actionGlobalAnotherProfile(it.user))
+            navigateToUserProfile(it)
         }
 
         binding.refreshView.setOnRefreshListener {

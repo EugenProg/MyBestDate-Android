@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -61,16 +62,17 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintBottom_toBottomOf="@id/name"
                 app:layout_constraintStart_toEndOf="@id/name"
-                app:layout_constraintTop_toTopOf="@id/name"/>
+                app:layout_constraintTop_toTopOf="@id/name" />
 
             <TextView
                 android:id="@+id/location"
                 style="@style/component_text"
                 android:layout_width="wrap_content"
-                android:textSize="11sp"
+                android:textSize="9sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/name" />
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:ignore="SmallSp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <FrameLayout
@@ -100,7 +102,7 @@
             android:text="@string/matching_you"
             android:textAllCaps="true"
             android:textColor="@color/bg_pink"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/avatarBox" />
@@ -115,7 +117,7 @@
             android:text="@string/congratulations"
             android:textAllCaps="true"
             android:textColor="#c6deeb"
-            android:textSize="22sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -187,10 +189,11 @@
             style="@style/component_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:gravity="center_horizontal"
             android:text="@string/you_have_a_match_write_to_the_user_you_liked_each_other"
             android:textColor="#c6deeb"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/matchesBox" />
@@ -221,7 +224,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="13dp"
                 android:text="@string/write_a_message"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView

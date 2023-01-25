@@ -28,13 +28,13 @@
 
             <TextView
                 android:id="@+id/title"
+                style="@style/component_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:fontFamily="@font/bold"
                 android:text="@string/social_network"
                 android:textColor="@color/bg_main"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:id="@+id/socialContainer"

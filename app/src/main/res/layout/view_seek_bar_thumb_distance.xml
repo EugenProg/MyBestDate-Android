@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/opacityCircle"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:elevation="4dp"
+        android:src="@drawable/circle_white_20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/whiteCircle"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:foregroundGravity="center"
+        android:src="@drawable/circle_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/progressNumber"
+        style="@style/component_title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/one"
+        android:textColor="@color/bg_main"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/whiteCircle"
+        app:layout_constraintEnd_toEndOf="@+id/whiteCircle"
+        app:layout_constraintStart_toStartOf="@+id/whiteCircle"
+        app:layout_constraintTop_toTopOf="@+id/whiteCircle" />
+</androidx.constraintlayout.widget.ConstraintLayout>

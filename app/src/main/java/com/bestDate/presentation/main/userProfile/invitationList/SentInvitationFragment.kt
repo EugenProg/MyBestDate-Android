@@ -5,13 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentInvitationBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.SentInvitationsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SentInvitationFragment :
+class SentInvitationFragment(var navigateAction: (ShortUserData?) -> Unit) :
     BaseVMFragment<FragmentInvitationBinding, InvitationListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInvitationBinding =
         { inflater, parent, attach -> FragmentInvitationBinding.inflate(inflater, parent, attach) }
@@ -40,7 +41,7 @@ class SentInvitationFragment :
     override fun onViewClickListener() {
         super.onViewClickListener()
         adapter.userClick = {
-            navController.navigate(InvitationListFragmentDirections.actionGlobalAnotherProfile(it))
+            navigateAction.invoke(it)
         }
     }
 

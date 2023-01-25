@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/name"
+    style="@style/component_text"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="32dp"
     android:paddingTop="12dp"
     android:paddingEnd="32dp"
     android:paddingBottom="13dp"
-    android:fontFamily="@font/regular"
     android:textColor="@color/main_90"
-    android:textSize="18sp" />
+    android:textSize="16sp" />

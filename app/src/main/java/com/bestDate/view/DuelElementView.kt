@@ -3,8 +3,8 @@ package com.bestDate.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
-import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewDuelElementBinding
@@ -16,9 +16,11 @@ class DuelElementView @JvmOverloads constructor(
     private var binding: ViewDuelElementBinding =
         ViewDuelElementBinding.inflate(LayoutInflater.from(context), this)
     var likeClick: ((Int) -> Unit)? = null
+    private var isLiked = false
 
     var image: String? = ""
         set(value) {
+            isLiked = false
             Glide.with(binding.root.context)
                 .load(value)
                 .placeholder(R.drawable.ic_default_photo)
@@ -31,20 +33,21 @@ class DuelElementView @JvmOverloads constructor(
     init {
         binding.viewLike.setOnSaveClickListener {
             playHeartsAnim()
+            isLiked = true
             likeClick?.invoke(photoId)
         }
     }
 
     private fun playHeartsAnim() {
         with(binding) {
-            // if (!isLiked) {
-            animationView.isVisible = true
-            animationView.playAnimation()
-            postDelayed({
-                animationView.isVisible = false
-                animationView.pauseAnimation()
-            }, animationView.duration)
-            //}
+            if (!isLiked) {
+                animationView.visibility = View.VISIBLE
+                animationView.playAnimation()
+                postDelayed({
+                    animationView.visibility = View.INVISIBLE
+                    animationView.pauseAnimation()
+                }, animationView.duration)
+            }
         }
     }
 }

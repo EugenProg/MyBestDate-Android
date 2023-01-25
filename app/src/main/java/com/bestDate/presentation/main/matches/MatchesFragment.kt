@@ -14,12 +14,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
         { inflater, parent, attach -> FragmentMatchesBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MatchesViewModel> = MatchesViewModel::class.java
 
-    override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
-
-    override val statusBarLight = false
-    override val navBarLight = false
-
 
     override fun onInit() {
         super.onInit()
@@ -29,7 +24,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.matches)
         binding.toolbar.onProfileClick = {
-            navController.navigate(R.id.action_global_profile_nav_graph_from_matches)
+            navController.navigate(MatchesFragmentDirections.actionGlobalMatchesToProfile())
         }
     }
 

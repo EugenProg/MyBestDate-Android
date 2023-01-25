@@ -4,13 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.onPageChanged
+import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentInvitationListBinding
+import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.ViewPagerAdapter
 import com.bestDate.view.button.InvitationActions
 
-class InvitationListFragment : BaseFragment<FragmentInvitationListBinding>() {
+open class InvitationListFragment : BaseFragment<FragmentInvitationListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInvitationListBinding =
         { inflater, parent, attach ->
             FragmentInvitationListBinding.inflate(
@@ -26,7 +28,9 @@ class InvitationListFragment : BaseFragment<FragmentInvitationListBinding>() {
         super.onInit()
         with(binding) {
             val fragments = mutableListOf<Fragment>(
-                NewInvitationFragment(), AnsweredInvitationFragment(), SentInvitationFragment()
+                NewInvitationFragment { navigateToUserProfile(it) },
+                AnsweredInvitationFragment{ navigateToUserProfile(it) },
+                SentInvitationFragment { navigateToUserProfile(it) }
             )
             val adapter =
                 ViewPagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, fragments)
@@ -53,10 +57,15 @@ class InvitationListFragment : BaseFragment<FragmentInvitationListBinding>() {
 
     override fun onViewClickListener() {
         super.onViewClickListener()
-        with(binding) {
-            toolbar.backClick = {
-                goBack()
-            }
+        binding.toolbar.backClick = {
+            goBack()
         }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        navController.navigate(
+            InvitationListFragmentDirections
+                .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
+        )
     }
 }

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="32sp"/>
+        android:textSize="30sp"/>
 
     <com.bestDate.view.questionnaire.QuestionnaireInputView
         android:id="@+id/fieldInput"

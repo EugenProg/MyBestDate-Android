@@ -203,7 +203,7 @@ enum class Question(
         percent = 7,
         viewType = QuestionnaireViewType.ONE_LINE_INFO_VIEW,
         unitString = null,
-        R.string.no,
+        R.string.no_kids,
         R.string.one,
         R.string.two,
         R.string.three,

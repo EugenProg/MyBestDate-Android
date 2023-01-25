@@ -17,13 +17,21 @@ class SelectorView @JvmOverloads constructor(
     private var binding: ViewSelectorBinding =
         ViewSelectorBinding.inflate(LayoutInflater.from(context), this)
 
-    var onClick: (() -> Unit)? = null
+    var onClick: ((Gender) -> Unit)? = null
 
     init {
         binding.root.setOnSaveClickListener {
-            isActive = true
-            onClick?.invoke()
+            if (!isActive) {
+                isActive = true
+                onClick?.invoke(gender)
+            }
         }
+    }
+
+    var gender: Gender = Gender.WOMAN
+    set(value) {
+        binding.textView.text = context.getString(value.label)
+        field = value
     }
 
     var isActive: Boolean = false
@@ -39,13 +47,6 @@ class SelectorView @JvmOverloads constructor(
                     if (value) R.color.white else R.color.white_50
                 )
             )
-            field = value
-        }
-
-    var isMan: Boolean = false
-        set(value) {
-            binding.textView.text =
-                binding.root.context.getString(if (value) Gender.MAN.label else Gender.WOMAN.label)
             field = value
         }
 }
