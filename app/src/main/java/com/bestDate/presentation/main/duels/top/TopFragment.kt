@@ -2,7 +2,14 @@ package com.bestDate.presentation.main.duels.top
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentTopBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,4 +25,66 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
 
     override val statusBarLight = false
     override val navBarLight = false
+
+    private val args by navArgs<TopFragmentArgs>()
+    private var adapter = TopAdapter()
+
+    override fun onInit() {
+        super.onInit()
+        setUpToolbar()
+        setUpSelectorView()
+        viewModel.gender = args.gender
+        setUpRecyclerView()
+    }
+
+    private fun setUpToolbar() {
+        binding.toolbar.title = getString(R.string.top_50)
+        binding.toolbar.backClick = { goBack() }
+        binding.toolbar.lineVisible = false
+    }
+
+    private fun setUpSelectorView() {
+        binding.selectorView.onClick = {
+            viewModel.gender = it
+            viewModel.getTop()
+        }
+    }
+
+    private fun setUpAdapterClick() {
+        adapter.itemClick = {
+            findNavController().navigate(
+                TopFragmentDirections.actionGlobalTopToAnotherProfile(
+                    it?.user,
+                    BackScreenType.DUELS
+                )
+            )
+        }
+    }
+
+    private fun setUpRecyclerView() {
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        setUpAdapterClick()
+        binding.recyclerView.adapter = adapter
+    }
+
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+
+        observe(viewModel.user) {
+            val country = it?.location?.country.orEmpty()
+            binding.decoratedFilterButton.country = country
+            binding.decoratedFilterButton.gender = args.gender
+            viewModel.country = country
+            binding.selectorView.setGender(viewModel.gender)
+            viewModel.getTop()
+        }
+
+        observe(viewModel.errorLiveData) {
+            showMessage(it.exception.message)
+        }
+
+        observe(viewModel.topsResults) {
+            adapter.submitList(it)
+        }
+    }
 }

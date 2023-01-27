@@ -10,8 +10,7 @@ import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.setTextViewDrawableColor
 import com.bestDate.databinding.ViewFilterButtonBinding
 
-
-class FilterButton @JvmOverloads constructor(
+open class FilterButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
     private var binding: ViewFilterButtonBinding =

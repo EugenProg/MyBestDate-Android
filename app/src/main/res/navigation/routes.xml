@@ -450,12 +450,27 @@
                 android:name="com.bestDate.presentation.main.duels.DuelsFragment"
                 android:label="DuelsFragment">
                 <action
-                    android:id="@+id/action_profile_to_myTopDuels"
+                    android:id="@+id/action_duels_to_myTopDuels"
                     app:destination="@id/myTopDuelsFragment"
                     app:enterAnim="@anim/slide_in_left"
                     app:exitAnim="@anim/slide_out_left"
                     app:popEnterAnim="@anim/slide_in_right"
                     app:popExitAnim="@anim/slide_out_right" />
+                <action
+                    android:id="@+id/action_duels_to_top"
+                    app:destination="@id/topFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+            </fragment>
+            <fragment
+                android:id="@+id/topFragment"
+                android:name="com.bestDate.presentation.main.duels.top.TopFragment"
+                android:label="TopFragment">
+                <argument
+                    android:name="gender"
+                    app:argType="com.bestDate.presentation.registration.Gender" />
             </fragment>
             <action
                 android:id="@+id/action_global_top_to_profile"

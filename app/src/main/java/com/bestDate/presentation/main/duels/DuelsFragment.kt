@@ -43,7 +43,10 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.myDuelsButton.click = {
-            navController.navigate(DuelsFragmentDirections.actionProfileToMyTopDuels())
+            navController.navigate(DuelsFragmentDirections.actionDuelsToMyTopDuels())
+        }
+        binding.topButton.onClick = {
+            navController.navigate(DuelsFragmentDirections.actionDuelsToTop(viewModel.gender))
         }
     }
 

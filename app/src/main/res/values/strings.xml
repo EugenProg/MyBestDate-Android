@@ -4,6 +4,8 @@
     <string name="female" translatable="false">female</string>
     <string name="powered_by_google" translatable="false">powered by <font color="#ffffff"><b>Google</b></font></string>
     <string name="default_notification_channel_id" translatable="false">LoveSexAndSexWithLove</string>
+    <string name="miss_country" translatable="false">Miss %s</string>
+    <string name="mister_country" translatable="false">Mister %s</string>
 
     <string name="skip">Skip</string>
     <string name="dating_without_restrictions">Dating without restrictions</string>
