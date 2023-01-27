@@ -9,14 +9,15 @@ import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.setTextViewDrawableColor
+import com.bestDate.databinding.ViewDecorationFilterButtonBinding
 import com.bestDate.databinding.ViewFilterButtonBinding
 import com.bestDate.presentation.registration.Gender
 
 class DecoratedFilterButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    private var binding: ViewFilterButtonBinding =
-        ViewFilterButtonBinding.inflate(LayoutInflater.from(context), this)
+    private var binding: ViewDecorationFilterButtonBinding =
+        ViewDecorationFilterButtonBinding.inflate(LayoutInflater.from(context), this)
 
     var onClick: (() -> Unit)? = null
     var country: String = ""

@@ -3,19 +3,18 @@ package com.bestDate.presentation.main.duels.top
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
-import com.bestDate.data.extension.getVisitPeriod
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.DuelProfile
-import com.bestDate.data.model.Guest
-import com.bestDate.databinding.ItemGuestBinding
 import com.bestDate.databinding.ItemTopProfilesElementBinding
 import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bumptech.glide.Glide
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class TopAdapter : ListAdapter<DuelProfile, RecyclerView.ViewHolder>(GuestsDiffUtils()) {
 
@@ -53,18 +52,34 @@ class TopAdapter : ListAdapter<DuelProfile, RecyclerView.ViewHolder>(GuestsDiffU
         @SuppressLint("SetTextI18n")
         override fun bindView(item: DuelProfile?, itemClick: ((DuelProfile?) -> Unit)?) {
             binding.run {
-//                newVisitTextView.isVisible = item?.viewed == false
-//                nameTextView.text = item?.guest?.name
-//                timeTextView.text = item?.visit_at.getVisitPeriod(binding.root.context)
-//                locationTextView.text =
-//                    "${item?.guest?.location?.city}, ${item?.guest?.location?.country}"
-//                ageTextView.text = item?.guest?.getAge()
-                Glide.with(binding.root.context)
+                val color = when (adapterPosition) {
+                    0 -> R.color.gold
+                    1 -> R.color.silver
+                    2 -> R.color.bronze
+                    else -> R.color.black
+                }
+
+                val colorAward = when (adapterPosition) {
+                    0 -> R.color.gold
+                    1 -> R.color.silver
+                    2 -> R.color.bronze
+                    else -> R.color.white
+                }
+                starsStatus.setColorFilter(
+                    ContextCompat.getColor(itemView.context, color),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                );
+                awardStatus.setColorFilter(
+                    ContextCompat.getColor(itemView.context, colorAward),
+                    android.graphics.PorterDuff.Mode.SRC_IN
+                );
+                placeStatus.text = "№${adapterPosition + 1}"
+                percentNumber.text =
+                    (item?.rating?.setScale(2, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
+                Glide.with(itemView.context)
                     .load(item?.thumb_url)
                     .placeholder(R.drawable.ic_default_photo)
                     .into(binding.profileImageView)
-//                verifyView.isVerified = item?.guest?.full_questionnaire
-//
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)
                 }

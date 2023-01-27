@@ -23,6 +23,7 @@ class TopViewModel @Inject constructor(
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
     fun getTop() {
+        if (topsResults.value.isNullOrEmpty())
         _loadingLiveData.postValue(true)
         doAsync {
             topUseCase.getTop(gender.serverName, country)

@@ -46,6 +46,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     private fun setUpSelectorView() {
         binding.selectorView.onClick = {
             viewModel.gender = it
+            binding.decoratedFilterButton.gender = it
             viewModel.getTop()
         }
     }
@@ -85,6 +86,11 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
 
         observe(viewModel.topsResults) {
             adapter.submitList(it)
+        }
+
+        observe(viewModel.loadingLiveData) {
+            binding.loader.isVisible = it
+            binding.recyclerView.isVisible = !it
         }
     }
 }

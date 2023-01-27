@@ -55,4 +55,8 @@
     <color name="light_line">#27beefff</color>
     <color name="gray_787C7E">#787C7E</color>
     <color name="chat_blue">#2491ff</color>
+
+    <color name="gold">#F2BB52</color>
+    <color name="silver">#CECDCA</color>
+    <color name="bronze">#BD5D23</color>
 </resources>
