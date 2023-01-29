@@ -108,6 +108,12 @@ fun Int.toPx() = TypedValue.applyDimension(
     Resources.getSystem().displayMetrics
 ).toInt()
 
+fun Float.toPx() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this,
+    Resources.getSystem().displayMetrics
+)
+
 @SuppressLint("SimpleDateFormat")
 fun Date.toStringFormat(): String {
     val formatter = SimpleDateFormat("dd MMMM yyyy")

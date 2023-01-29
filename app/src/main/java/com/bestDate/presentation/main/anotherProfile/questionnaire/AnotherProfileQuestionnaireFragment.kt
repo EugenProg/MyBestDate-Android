@@ -13,7 +13,7 @@ import com.bestDate.presentation.base.questionnaire.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AnotherProfileQuestionnaireFragment:
+open class AnotherProfileQuestionnaireFragment:
     BaseVMFragment<FragmentAnotherProfileQuestionnaireBinding, AnotherProfileQuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileQuestionnaireBinding =
         { inflater, parent, attach -> FragmentAnotherProfileQuestionnaireBinding.inflate(inflater, parent, attach) }
