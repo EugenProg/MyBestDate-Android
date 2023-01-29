@@ -7,8 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
-import com.bestDate.data.extension.observe
-import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentTopBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -33,8 +32,12 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         super.onInit()
         setUpToolbar()
         setUpSelectorView()
-        viewModel.gender = args.gender
         setUpRecyclerView()
+        viewModel.gender = args.gender
+        getNavigationResult<Boolean>(NavigationResultKey.CHECK_GENDER) {
+            if (it) viewModel.getGenderFromUseCase()
+            else viewModel.gender = args.gender
+        }
     }
 
     private fun setUpToolbar() {
@@ -74,7 +77,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         observe(viewModel.user) {
             val country = it?.location?.country.orEmpty()
             binding.decoratedFilterButton.country = country
-            binding.decoratedFilterButton.gender = args.gender
+            binding.decoratedFilterButton.gender = viewModel.gender
             viewModel.country = country
             binding.selectorView.setGender(viewModel.gender)
             viewModel.getTop()
@@ -92,5 +95,10 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
             binding.loader.isVisible = it
             binding.recyclerView.isVisible = !it
         }
+    }
+
+    override fun goBack() {
+        setNavigationResult(NavigationResultKey.GENDER_DUELS, viewModel.gender)
+        super.goBack()
     }
 }

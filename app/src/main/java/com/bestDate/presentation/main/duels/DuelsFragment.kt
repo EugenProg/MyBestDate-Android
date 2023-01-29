@@ -1,10 +1,11 @@
 package com.bestDate.presentation.main.duels
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.NavigationResultKey
+import com.bestDate.data.extension.getNavigationResult
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ProfileImage
@@ -26,11 +27,19 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val statusBarLight = false
     override val navBarLight = false
 
+    private var genderFromTop = false
+
     override fun onInit() {
         super.onInit()
         binding.resultView.isVisible = false
         setUpToolbar()
         setUpFilterButtons()
+        getNavigationResult<Gender>(NavigationResultKey.GENDER_DUELS) {
+            if (viewModel.gender != it) {
+                genderFromTop = true
+                viewModel.gender = it
+            }
+        }
     }
 
     private fun setUpToolbar() {
@@ -74,7 +83,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            it?.getDuelGender()?.let { gender -> viewModel.gender = gender }
+            if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.gender = gender }
             binding.selectorView.setGender(viewModel.gender)
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
 

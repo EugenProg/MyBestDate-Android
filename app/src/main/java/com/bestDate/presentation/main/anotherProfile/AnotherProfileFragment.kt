@@ -132,6 +132,9 @@ class AnotherProfileFragment :
         if (args.backScreen == BackScreenType.SEARCH) {
             setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
         }
+        else if (args.backScreen == BackScreenType.DUELS) {
+            setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
+        }
         super.goBack()
     }
 

@@ -24,10 +24,14 @@ class TopViewModel @Inject constructor(
 
     fun getTop() {
         if (topsResults.value.isNullOrEmpty())
-        _loadingLiveData.postValue(true)
+            _loadingLiveData.postValue(true)
         doAsync {
-            topUseCase.getTop(gender.serverName, country)
+            topUseCase.getTop(gender, country)
             _loadingLiveData.postValue(false)
         }
+    }
+
+    fun getGenderFromUseCase() {
+        gender = topUseCase.genderLocal
     }
 }
