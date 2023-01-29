@@ -399,7 +399,30 @@
             <fragment
                 android:id="@+id/matchesFragment"
                 android:name="com.bestDate.presentation.main.matches.MatchesFragment"
-                android:label="MatchesFragment" />
+                android:label="MatchesFragment" >
+                <action
+                    android:id="@+id/action_matches_to_matchesList"
+                    app:destination="@id/matchesMatchesListFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+                <action
+                    android:id="@+id/action_matches_to_matchesQuestionnaire"
+                    app:destination="@id/matchesQuestionnaireFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right"  />
+            </fragment>
+            <fragment
+                android:id="@+id/matchesMatchesListFragment"
+                android:name="com.bestDate.presentation.main.matches.MatchesMatchesListFragment"
+                android:label="MatchesMatchesListFragment"/>
+            <fragment
+                android:id="@+id/matchesQuestionnaireFragment"
+                android:name="com.bestDate.presentation.main.matches.MatchQuestionnaireFragment"
+                android:label="MatchesQuestionnaireFragment"/>
             <action
                 android:id="@+id/action_global_matches_to_profile"
                 app:destination="@id/profile_nav_graph" />

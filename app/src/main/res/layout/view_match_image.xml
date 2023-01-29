@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardCornerRadius="33dp"
+            app:cardElevation="1dp">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bg_main"/>
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:src="@drawable/match_cancel_button"
+            android:elevation="2dp"
+            android:padding="14dp"
+            android:layout_gravity="start|bottom"/>
+
+        <ImageView
+            android:id="@+id/matchBtn"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:src="@drawable/match_button"
+            android:elevation="2dp"
+            android:padding="14dp"
+            android:layout_gravity="end|bottom"/>
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
+</merge>
