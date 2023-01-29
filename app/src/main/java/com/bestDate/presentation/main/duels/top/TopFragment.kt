@@ -88,7 +88,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         }
 
         observe(viewModel.topsResults) {
-            adapter.submitList(it)
+            adapter.items = it ?: mutableListOf()
         }
 
         observe(viewModel.loadingLiveData) {

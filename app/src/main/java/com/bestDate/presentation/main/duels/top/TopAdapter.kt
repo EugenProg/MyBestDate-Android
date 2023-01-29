@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -16,19 +14,16 @@ import com.bumptech.glide.Glide
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class TopAdapter : ListAdapter<DuelProfile, RecyclerView.ViewHolder>(GuestsDiffUtils()) {
+class TopAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var itemClick: ((DuelProfile?) -> Unit)? = null
 
-    class GuestsDiffUtils : DiffUtil.ItemCallback<DuelProfile>() {
-        override fun areItemsTheSame(oldItem: DuelProfile, newItem: DuelProfile): Boolean {
-            return oldItem.id == newItem.id
+    var items: MutableList<DuelProfile> = mutableListOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
         }
 
-        override fun areContentsTheSame(oldItem: DuelProfile, newItem: DuelProfile): Boolean {
-            return oldItem == newItem
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return GuestViewHolder(
@@ -41,7 +36,7 @@ class TopAdapter : ListAdapter<DuelProfile, RecyclerView.ViewHolder>(GuestsDiffU
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is GuestViewHolder) holder.bind(getItem(position), itemClick)
+        if (holder is GuestViewHolder) holder.bind(items[position], itemClick)
     }
 
     class GuestViewHolder(
@@ -87,8 +82,5 @@ class TopAdapter : ListAdapter<DuelProfile, RecyclerView.ViewHolder>(GuestsDiffU
         }
     }
 
-    override fun getItem(position: Int): DuelProfile? {
-        return currentList[position]
-    }
-
+    override fun getItemCount(): Int = items.size
 }
