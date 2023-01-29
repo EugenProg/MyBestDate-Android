@@ -48,4 +48,8 @@ class MatchesViewModel @Inject constructor(
             _getUserLiveData.postValue(true)
         }
     }
+
+    fun clearMatch() {
+        matchUseCase.clearMatch()
+    }
 }

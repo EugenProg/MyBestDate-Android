@@ -15,7 +15,7 @@ class MatchUseCase @Inject constructor(
 ) {
 
     val matchesList: MutableLiveData<MutableList<ShortUserData>> = MutableLiveData(mutableListOf())
-    val matchAction: MutableLiveData<Match> = MutableLiveData()
+    val matchAction: MutableLiveData<Match?> = MutableLiveData()
 
     suspend fun getUsersForMatch() {
         val response = remoteData.getUsersForMatch()
@@ -37,5 +37,9 @@ class MatchUseCase @Inject constructor(
 
     fun nextUser() {
         matchesList.value?.removeLast()
+    }
+
+    fun clearMatch() {
+        matchAction.value = null
     }
 }

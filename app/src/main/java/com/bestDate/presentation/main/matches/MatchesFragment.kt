@@ -85,16 +85,19 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
             matchView.setMatches(it)
         }
         observe(viewModel.matchAction) {
-            requireActivity().showMatchActionDialog(it, mainPhoto, {
-                navController.navigate(
-                    MatchesFragmentDirections
-                        .actionGlobalMatchesToAnotherProfile(it, BackScreenType.MATCHES)
-                )
-            }, {
-                navController.navigate(
-                    MatchesFragmentDirections.actionGlobalMatchesToChat(it, BackScreenType.MATCHES)
-                )
-            })
+            it?.let { match ->
+                viewModel.clearMatch()
+                requireActivity().showMatchActionDialog(match, mainPhoto, { user ->
+                    navController.navigate(
+                        MatchesFragmentDirections
+                            .actionGlobalMatchesToAnotherProfile(user, BackScreenType.MATCHES)
+                    )
+                }, { user ->
+                    navController.navigate(
+                        MatchesFragmentDirections.actionGlobalMatchesToChat(user, BackScreenType.MATCHES)
+                    )
+                })
+            }
         }
         observe(viewModel.getUserLiveData) {
             loaderDialog.stopLoading()
