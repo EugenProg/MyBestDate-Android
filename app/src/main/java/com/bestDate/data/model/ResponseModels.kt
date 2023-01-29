@@ -66,12 +66,16 @@ data class MatchesListResponse(
     val data: MutableList<Match>
 ) : BaseResponse()
 
+data class MatchActionResponse(
+    val data: Match? = null
+) : BaseResponse()
+
 data class MyDuelsResponse(
     val data: MutableList<MyDuel>
 ) : BaseResponse()
 
-data class ShortUserDataResponse(
-    val data: ShortUserData
+data class ShortUsersDataResponse(
+    val data: MutableList<ShortUserData>
 ) : BaseResponse()
 
 data class ShortUserListDataResponse(

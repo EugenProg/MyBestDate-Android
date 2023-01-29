@@ -172,3 +172,7 @@ data class SaveDeviceTokenRequest(
     val type: String = "android",
     val token: String
 )
+
+data class MatchActionRequest(
+    var user_id: Int
+)
