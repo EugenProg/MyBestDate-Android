@@ -29,7 +29,6 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
         loader = LoaderDialog(requireActivity())
     }
 
-
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {
@@ -83,8 +82,8 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
             navController.navigate(SettingsFragmentDirections.actionGlobalAuthFragment())
         }
         observe(viewModel.languageSaveLiveData) {
-            loader.stopLoading()
             Lingver.getInstance().setLocale(requireContext(), it.settingsName)
+            viewModel.refreshInvitationList()
             navController.navigate(SettingsFragmentDirections.actionRefresh())
         }
     }

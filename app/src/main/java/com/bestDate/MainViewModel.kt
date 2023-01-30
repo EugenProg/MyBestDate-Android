@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.utils.SessionManager
 import com.bestDate.data.utils.notifications.NotificationCenter
+import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.base.BaseViewModel
+import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.chats.chat.ChatUseCase
@@ -16,6 +18,8 @@ class MainViewModel @Inject constructor(
     private val chatListUseCase: ChatListUseCase,
     private val chatUseCase: ChatUseCase,
     private val userUseCase: UserUseCase,
+    private val authUseCase: AuthUseCase,
+    private val invitationUseCase: InvitationUseCase,
     private val notificationCenter: NotificationCenter,
     sessionManager: SessionManager
 ) : BaseViewModel() {
@@ -48,5 +52,14 @@ class MainViewModel @Inject constructor(
 
     fun isCurrentUserChat(): Boolean {
         return chatUseCase.isCurrentUserChat(notificationCenter.getUserId())
+    }
+
+    fun refreshData() {
+        if (authUseCase.tokenIsFresh) {
+            doAsync {
+                userUseCase.refreshUser()
+                invitationUseCase.refreshInvitations()
+            }
+        }
     }
 }

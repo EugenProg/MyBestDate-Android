@@ -58,12 +58,6 @@ class AnotherProfileViewModel @Inject constructor(
         }
     }
 
-    fun refreshInvitations() {
-        doAsync {
-            invitationUseCase.refreshInvitations()
-        }
-    }
-
     fun sendInvitation(userId: Int?, invitationId: Int) {
         doAsync {
             invitationUseCase.sendInvitation(userId, invitationId)

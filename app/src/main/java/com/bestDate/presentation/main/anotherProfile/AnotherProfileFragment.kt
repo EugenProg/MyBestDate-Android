@@ -43,7 +43,6 @@ class AnotherProfileFragment :
         makeStatusBarTransparent(binding.header.getTopBoxView())
         user = args.user
         viewModel.getUserById(user?.id)
-        viewModel.refreshInvitations()
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)
         binding.userInfoView.setUserInfo(user)

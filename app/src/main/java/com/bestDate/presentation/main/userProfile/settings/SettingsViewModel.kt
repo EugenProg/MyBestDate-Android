@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.SettingsType
+import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.view.bottomSheet.languageSheet.LanguageType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
+    private val invitationUseCase: InvitationUseCase,
     private val userUseCase: UserUseCase
 ): BaseViewModel() {
 
@@ -47,6 +49,12 @@ class SettingsViewModel @Inject constructor(
         doAsync {
             userUseCase.changeLanguage(languageType.settingsName)
             _languageSaveLiveData.postValue(languageType)
+        }
+    }
+
+    fun refreshInvitationList() {
+        doAsync {
+            invitationUseCase.refreshInvitations()
         }
     }
 }
