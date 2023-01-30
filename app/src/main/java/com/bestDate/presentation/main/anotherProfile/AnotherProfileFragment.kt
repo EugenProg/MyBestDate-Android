@@ -43,7 +43,6 @@ class AnotherProfileFragment :
         makeStatusBarTransparent(binding.header.getTopBoxView())
         user = args.user
         viewModel.getUserById(user?.id)
-        viewModel.refreshInvitations()
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)
         binding.userInfoView.setUserInfo(user)
@@ -131,6 +130,9 @@ class AnotherProfileFragment :
         viewModel.clearUserData()
         if (args.backScreen == BackScreenType.SEARCH) {
             setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        }
+        else if (args.backScreen == BackScreenType.DUELS) {
+            setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
         }
         super.goBack()
     }

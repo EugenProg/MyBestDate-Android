@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.duels
+package com.bestDate.presentation.main.duels.top
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,32 +10,25 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DuelsViewModel @Inject constructor(
+class TopViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
-    private val duelUseCase: DuelsUseCase
+    private val topUseCase: TopUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
-    val duelImages = duelUseCase.duelProfiles
-    val duelResults = duelUseCase.duelResults
-    var gender = duelUseCase.genderLocal
+    var gender = topUseCase.genderLocal
+    val topsResults = topUseCase.topsResults
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
-    fun getDuels(gender: Gender? = duelUseCase.genderLocal.value) {
-        _loadingLiveData.postValue(true)
+    fun getTop(gender: Gender? = topUseCase.genderLocal.value) {
+        if (topsResults.value.isNullOrEmpty())
+            _loadingLiveData.postValue(true)
         doAsync {
             if (gender != null) {
-                duelUseCase.getMyDuels(gender, null)
+                topUseCase.getTop(gender)
             }
             _loadingLiveData.postValue(false)
-        }
-    }
-
-    fun postVote(winningPhoto: Int, loserPhoto: Int) {
-        doAsync {
-            duelUseCase.postVote(winningPhoto, loserPhoto)
-            getDuels()
         }
     }
 }
