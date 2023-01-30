@@ -369,3 +369,22 @@ data class Translation(
     var detected_source_language: String? = null,
     var text: String? = null
 )
+
+data class PusherMessageResponse(
+    val message: Message? = null
+)
+
+data class PusherCoinsResponse(
+    var id: Int? = null,
+    val coins: String? = null
+)
+
+data class PusherReadingResponse(
+    var id: Int? = null,
+    var last_message: Message? = null
+)
+
+data class PusherTypingResponse(
+    var id: Int? = null,
+    var sender_id: Int? = null
+)
