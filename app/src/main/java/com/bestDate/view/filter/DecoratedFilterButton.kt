@@ -10,7 +10,6 @@ import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.setTextViewDrawableColor
 import com.bestDate.databinding.ViewDecorationFilterButtonBinding
-import com.bestDate.databinding.ViewFilterButtonBinding
 import com.bestDate.presentation.registration.Gender
 
 class DecoratedFilterButton @JvmOverloads constructor(
@@ -20,7 +19,7 @@ class DecoratedFilterButton @JvmOverloads constructor(
         ViewDecorationFilterButtonBinding.inflate(LayoutInflater.from(context), this)
 
     var onClick: (() -> Unit)? = null
-    var country: String = ""
+    var country: String = context.getString(R.string.universe)
 
     var gender = Gender.WOMAN
         set(value) {
@@ -28,7 +27,7 @@ class DecoratedFilterButton @JvmOverloads constructor(
             val textColor = if (isWoman) R.color.white else R.color.black
             val textInt = if (isWoman) R.string.miss_country else R.string.mister_country
             val decorationInt = if (isWoman) R.drawable.decor_button else R.drawable.decor_button_blue
-            val backGroundColor = if (isWoman)  R.color.bg_pink else  R.color.bg_light_blue
+            val backGroundColor = if (isWoman)  R.color.bg_pink else  R.color.decoration_blue
 
             binding.textView.setTextColor(ContextCompat.getColor(context, textColor))
             binding.textView.setTextViewDrawableColor(textColor)

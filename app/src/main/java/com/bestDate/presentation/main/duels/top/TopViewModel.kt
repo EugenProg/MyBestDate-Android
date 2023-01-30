@@ -16,7 +16,6 @@ class TopViewModel @Inject constructor(
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
     var gender = topUseCase.genderLocal
-    var country: String? = ""
     val topsResults = topUseCase.topsResults
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
@@ -27,7 +26,7 @@ class TopViewModel @Inject constructor(
             _loadingLiveData.postValue(true)
         doAsync {
             if (gender != null) {
-                topUseCase.getTop(gender, country)
+                topUseCase.getTop(gender)
             }
             _loadingLiveData.postValue(false)
         }

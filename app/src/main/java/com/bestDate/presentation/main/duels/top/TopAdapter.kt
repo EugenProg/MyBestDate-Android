@@ -70,7 +70,7 @@ class TopAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 );
                 placeStatus.text = "№${adapterPosition + 1}"
                 percentNumber.text =
-                    (item?.rating?.setScale(2, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
+                    (item?.rating?.setScale(1, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
                 Glide.with(itemView.context)
                     .load(item?.thumb_url)
                     .placeholder(R.drawable.ic_default_photo)

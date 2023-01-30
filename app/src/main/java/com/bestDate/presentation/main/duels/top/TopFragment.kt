@@ -19,11 +19,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         { inflater, parent, attach -> FragmentTopBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<TopViewModel> = TopViewModel::class.java
 
-    override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
-
-    override val statusBarLight = false
-    override val navBarLight = false
 
     private val args by navArgs<TopFragmentArgs>()
     private var adapter = TopAdapter()
@@ -75,9 +71,6 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         super.onViewLifecycle()
 
         observe(viewModel.user) {
-            val country = it?.location?.country.orEmpty()
-            binding.decoratedFilterButton.country = country
-            viewModel.country = country
             if (!getGenderFromLocal) {
                 viewModel.getTop(args.gender)
             }

@@ -18,7 +18,7 @@ class TopUseCase @Inject constructor(
     private var topsWoman: MutableList<DuelProfile> = mutableListOf()
     private var topsMan: MutableList<DuelProfile> = mutableListOf()
 
-    suspend fun getTop(gender: Gender, country: String?) {
+    suspend fun getTop(gender: Gender) {
         when {
             gender == Gender.WOMAN && topsWoman.isNotEmpty() -> {
                 topsResults.postValue(topsWoman)
@@ -29,7 +29,7 @@ class TopUseCase @Inject constructor(
                 genderLocal.postValue(gender)
             }
             else -> {
-                val response = topRemoteData.getTop(gender.serverName, country)
+                val response = topRemoteData.getTop(gender.serverName)
                 if (response.isSuccessful) {
                     response.body()?.let {
                         if (gender == Gender.WOMAN) {

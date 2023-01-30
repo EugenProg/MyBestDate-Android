@@ -41,7 +41,7 @@
             android:id="@+id/starsStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="8dp"
             android:src="@drawable/ic_stars"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5.6dp"
             android:src="@drawable/ic_award"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/awardStatus"
             app:layout_constraintTop_toTopOf="parent"
@@ -79,7 +79,7 @@
             android:layout_marginEnd="2dp"
             android:src="@drawable/ic_award"
             android:textColor="@color/white_80"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/percentSymbol"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,10 +95,11 @@
             android:src="@drawable/ic_award"
             android:text="@string/percent_symbol"
             android:textColor="@color/white_80"
-            android:textSize="10sp"
+            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
