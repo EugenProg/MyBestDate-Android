@@ -27,16 +27,18 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
 
     private val args by navArgs<TopFragmentArgs>()
     private var adapter = TopAdapter()
+    private var getGenderFromLocal = false
 
     override fun onInit() {
         super.onInit()
         setUpToolbar()
         setUpSelectorView()
         setUpRecyclerView()
-        viewModel.gender = args.gender
         getNavigationResult<Boolean>(NavigationResultKey.CHECK_GENDER) {
-            if (it) viewModel.getGenderFromUseCase()
-            else viewModel.gender = args.gender
+            if (it) {
+                viewModel.getTop()
+                getGenderFromLocal = true
+            }
         }
     }
 
@@ -48,9 +50,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
 
     private fun setUpSelectorView() {
         binding.selectorView.onClick = {
-            viewModel.gender = it
-            binding.decoratedFilterButton.gender = it
-            viewModel.getTop()
+            viewModel.getTop(it)
         }
     }
 
@@ -77,10 +77,15 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
         observe(viewModel.user) {
             val country = it?.location?.country.orEmpty()
             binding.decoratedFilterButton.country = country
-            binding.decoratedFilterButton.gender = viewModel.gender
             viewModel.country = country
-            binding.selectorView.setGender(viewModel.gender)
-            viewModel.getTop()
+            if (!getGenderFromLocal) {
+                viewModel.getTop(args.gender)
+            }
+        }
+
+        observe(viewModel.gender) {
+            binding.decoratedFilterButton.gender = it
+            binding.selectorView.setGender(it)
         }
 
         observe(viewModel.errorLiveData) {
@@ -98,7 +103,7 @@ class TopFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     }
 
     override fun goBack() {
-        setNavigationResult(NavigationResultKey.GENDER_DUELS, viewModel.gender)
+        setNavigationResult(NavigationResultKey.GENDER_DUELS, viewModel.gender.value)
         super.goBack()
     }
 }

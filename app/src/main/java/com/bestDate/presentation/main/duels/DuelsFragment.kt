@@ -35,10 +35,8 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         setUpToolbar()
         setUpFilterButtons()
         getNavigationResult<Gender>(NavigationResultKey.GENDER_DUELS) {
-            if (viewModel.gender != it) {
-                genderFromTop = true
-                viewModel.gender = it
-            }
+            genderFromTop = true
+            viewModel.getDuels(it)
         }
     }
 
@@ -55,7 +53,11 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             navController.navigate(DuelsFragmentDirections.actionDuelsToMyTopDuels())
         }
         binding.topButton.onClick = {
-            navController.navigate(DuelsFragmentDirections.actionDuelsToTop(viewModel.gender))
+            navController.navigate(
+                DuelsFragmentDirections.actionDuelsToTop(
+                    viewModel.gender.value ?: Gender.WOMAN
+                )
+            )
         }
     }
 
@@ -63,8 +65,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.locationFilterButton.label = getString(R.string.universe)
         binding.locationFilterButton.isActive = true
         binding.selectorView.onClick = {
-            viewModel.gender = it
-            viewModel.getDuels()
+            viewModel.getDuels(it)
         }
     }
 
@@ -83,11 +84,11 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.gender = gender }
-            binding.selectorView.setGender(viewModel.gender)
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
-
-            viewModel.getDuels()
+            if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.getDuels(gender) }
+        }
+        observe(viewModel.gender) {
+            binding.selectorView.setGender(it)
         }
         observe(viewModel.duelResults) {
             binding.resultView.isVisible = it?.isNotEmpty() == true

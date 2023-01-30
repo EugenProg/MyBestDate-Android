@@ -17,15 +17,17 @@ class DuelsViewModel @Inject constructor(
     val user = userUseCase.getMyUser.asLiveData()
     val duelImages = duelUseCase.duelProfiles
     val duelResults = duelUseCase.duelResults
-    var gender: Gender = Gender.WOMAN
+    var gender = duelUseCase.genderLocal
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
-    fun getDuels() {
+    fun getDuels(gender: Gender? = duelUseCase.genderLocal.value) {
         _loadingLiveData.postValue(true)
         doAsync {
-            duelUseCase.getMyDuels(gender.serverName, null)
+            if (gender != null) {
+                duelUseCase.getMyDuels(gender, null)
+            }
             _loadingLiveData.postValue(false)
         }
     }
