@@ -96,6 +96,24 @@ class ChatUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.message())
     }
 
+    fun addPusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(addNewMessage(it))
+        }
+    }
+
+    fun editPusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(editMessageList(it))
+        }
+    }
+
+    fun deletePusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(deleteMessageFromList(it.id))
+        }
+    }
+
     fun clearChatData() {
         messages.value = mutableListOf()
         currentUserId = null

@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         setUpNavigation()
         setUpUserObserver()
         setUpUserListObserver()
+        setUpPusherObserver()
         bottomNavView = binding.bottomNavigationView
 
         observe(viewModel.loggedOut) {
@@ -46,18 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         observe(viewModel.notificationsAction) {
-            if (it == NotificationType.MESSAGE) {
-                when (navController.currentDestination?.getCurrentScreen()) {
-                    Screens.CHAT -> {
-                        if (viewModel.isCurrentUserChat()) viewModel.refreshMessageList()
-                        else viewModel.showPush(this)
-                    }
-                    Screens.CHAT_LIST -> {
-                        viewModel.refreshChatList()
-                    }
-                    else -> viewModel.showPush(this)
-                }
-            } else {
+            if (!(it == NotificationType.MESSAGE && (isInChat() || isInChatList()))) {
                 viewModel.showPush(this)
             }
         }
@@ -66,9 +56,65 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpPusherObserver() {
+        observe(viewModel.newMessageLiveData) {
+            binding.bottomNavigationView.setBadge(BottomButton.CHATS, true)
+            when {
+                isInChatList() -> {
+                    viewModel.refreshChatList()
+                }
+                isInChat(it?.sender_id) -> {
+                    viewModel.addChatMessage(it)
+                    viewModel.sendReadingEvent(it?.sender_id)
+                }
+            }
+        }
+        observe(viewModel.editMessageLiveData) {
+            when {
+                isInChatList() -> {
+                    viewModel.refreshChatList()
+                }
+                isInChat(it?.sender_id) -> {
+                    viewModel.editChatMessage(it)
+                }
+            }
+        }
+        observe(viewModel.deleteMessageLiveData) {
+            when {
+                isInChatList() -> {
+                    viewModel.refreshChatList()
+                }
+                isInChat(it?.sender_id) -> {
+                    viewModel.deleteChatMessage(it)
+                }
+            }
+        }
+        observe(viewModel.typingLiveData) {
+
+        }
+        observe(viewModel.readingLiveData) {
+            when {
+                isInChatList() -> {
+                    viewModel.refreshChatList()
+                }
+                isInChat(it?.recipient_id) -> {
+                    viewModel.editChatMessage(it)
+                }
+            }
+        }
+        observe(viewModel.coinsLiveData) {
+            viewModel.setCoinsCount(it)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         viewModel.refreshData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.disconnectPusher()
     }
 
     private fun setUpNavigation() {
@@ -101,4 +147,15 @@ class MainActivity : AppCompatActivity() {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, it)
         }
     }
+
+    private fun isInChatList() =
+        navController.currentDestination?.getCurrentScreen() == Screens.CHAT_LIST
+
+    private fun isInChat(senderId: Int?) =
+        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
+                && viewModel.isCurrentUserChat(senderId)
+
+    private fun isInChat() =
+        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
+                && viewModel.isCurrentUserChat()
 }
