@@ -1,10 +1,11 @@
 package com.bestDate.presentation.main.duels
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.NavigationResultKey
+import com.bestDate.data.extension.getNavigationResult
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ProfileImage
@@ -26,11 +27,17 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val statusBarLight = false
     override val navBarLight = false
 
+    private var genderFromTop = false
+
     override fun onInit() {
         super.onInit()
         binding.resultView.isVisible = false
         setUpToolbar()
         setUpFilterButtons()
+        getNavigationResult<Gender>(NavigationResultKey.GENDER_DUELS) {
+            genderFromTop = true
+            viewModel.getDuels(it)
+        }
     }
 
     private fun setUpToolbar() {
@@ -43,7 +50,14 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.myDuelsButton.click = {
-            navController.navigate(DuelsFragmentDirections.actionProfileToMyTopDuels())
+            navController.navigate(DuelsFragmentDirections.actionDuelsToMyTopDuels())
+        }
+        binding.topButton.onClick = {
+            navController.navigate(
+                DuelsFragmentDirections.actionDuelsToTop(
+                    viewModel.gender.value ?: Gender.WOMAN
+                )
+            )
         }
     }
 
@@ -51,8 +65,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.locationFilterButton.label = getString(R.string.universe)
         binding.locationFilterButton.isActive = true
         binding.selectorView.onClick = {
-            viewModel.gender = it
-            viewModel.getDuels()
+            viewModel.getDuels(it)
         }
     }
 
@@ -71,11 +84,11 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         observe(viewModel.user) {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            it?.getDuelGender()?.let { gender -> viewModel.gender = gender }
-            binding.selectorView.setGender(viewModel.gender)
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
-
-            viewModel.getDuels()
+            if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.getDuels(gender) }
+        }
+        observe(viewModel.gender) {
+            binding.selectorView.setGender(it)
         }
         observe(viewModel.duelResults) {
             binding.resultView.isVisible = it?.isNotEmpty() == true

@@ -42,4 +42,10 @@ class ToolbarView @JvmOverloads constructor(
         set(value) {
             binding.title.text = value
         }
+
+    var lineVisible = true
+    set(value){
+        binding.line.isVisible = value
+        field = value
+    }
 }

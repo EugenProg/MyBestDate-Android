@@ -123,6 +123,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun topApiService(@Core_network retrofit: Retrofit): TopService =
+        retrofit.create(TopService::class.java)
+
+    @Provides
+    @Singleton
     fun authRemoteData(apiService: CoreAuthService): AuthRemoteData =
         AuthRemoteData(apiService)
 
@@ -155,6 +160,11 @@ object NetworkModule {
     @Singleton
     fun chatsRemoteData(apiService: ChatsService): ChatsRemoteData =
         ChatsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun topRemoteData(topService: TopService): TopRemoteData =
+        TopRemoteData(topService)
 
     @Provides
     @Singleton

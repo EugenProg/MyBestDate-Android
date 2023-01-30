@@ -57,5 +57,5 @@ fun <T> Fragment.getNavigationResult(key: NavigationResultKey, onResult: (result
 }
 
 enum class NavigationResultKey {
-    RELOAD, SAVE_POSITION
+    RELOAD, SAVE_POSITION, GENDER_DUELS, CHECK_GENDER
 }
