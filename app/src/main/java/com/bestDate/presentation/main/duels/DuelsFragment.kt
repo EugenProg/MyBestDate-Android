@@ -21,12 +21,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         { inflater, parent, attach -> FragmentDuelsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
-    override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
-
-    override val statusBarLight = false
-    override val navBarLight = false
-
     private var genderFromTop = false
 
     override fun onInit() {
@@ -82,10 +77,12 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             }
         }
         observe(viewModel.user) {
-            binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
             if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.getDuels(gender) }
+        }
+        observe(viewModel.coins) {
+            binding.amountCoins.text = it
         }
         observe(viewModel.gender) {
             binding.selectorView.setGender(it)
