@@ -275,7 +275,8 @@ data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null,
-    var type: ChatListItemType? = null
+    var type: ChatListItemType? = null,
+    var typingMode: Boolean? = null
 ) {
     fun transform(itemType: ChatListItemType): Chat {
         return Chat(

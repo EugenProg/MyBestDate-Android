@@ -151,6 +151,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 stopTranslateLoading()
             }
         }
+        observe(viewModel.typingMode) {
+            if (it != null) {
+                binding.statusView.setStatus(it)
+                binding.online.isVisible = true
+            }
+        }
     }
 
     override var customBackNavigation: Boolean = true
@@ -171,8 +177,8 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 .into(avatar)
             name.text = user?.name
             online.isVisible = user?.is_online == true
-            if (user?.is_online == true) status.setStatus(ChatStatusType.ONLINE)
-            else status.setStatus(ChatStatusType.LAST_ONLINE, user?.last_online_at)
+            if (user?.is_online == true) statusView.setStatus(ChatStatusType.ONLINE)
+            else statusView.setStatus(ChatStatusType.LAST_ONLINE, user?.last_online_at)
 
             chatView.setUser(user)
         }

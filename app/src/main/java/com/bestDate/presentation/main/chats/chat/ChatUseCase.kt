@@ -11,6 +11,7 @@ import com.bestDate.data.model.ParentMessage
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
+import com.bestDate.view.chat.ChatStatusType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -24,6 +25,7 @@ class ChatUseCase @Inject constructor(
     private val translateRemoteData: TranslationRemoteData
 ) {
     var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
     var translatedText: String? = ""
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
@@ -212,5 +214,9 @@ class ChatUseCase @Inject constructor(
             current?.created_at,
             next?.created_at
         ))
+    }
+
+    fun setTypingEvent(on: Boolean) {
+        typingMode.postValue(if (on) ChatStatusType.TYPING else ChatStatusType.ONLINE)
     }
 }

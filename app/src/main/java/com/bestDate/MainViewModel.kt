@@ -45,6 +45,18 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun setChatListTypingEvent(senderId: Int?, isOn: Boolean) {
+        doAsync {
+            chatListUseCase.setTypingEvent(senderId, isOn)
+        }
+    }
+
+    fun setChatTypingEvent(isOn: Boolean) {
+        doAsync {
+            chatUseCase.setTypingEvent(isOn)
+        }
+    }
+
     fun clearUserData() {
         userUseCase.clearUserData()
     }

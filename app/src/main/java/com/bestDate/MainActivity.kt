@@ -7,10 +7,8 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import com.bestDate.data.extension.Screens
-import com.bestDate.data.extension.getCurrentScreen
-import com.bestDate.data.extension.isBottomNavVisible
-import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.*
+import com.bestDate.data.utils.notifications.ChatListTypingEventCoordinator
 import com.bestDate.data.utils.notifications.NotificationType
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.view.bottomNav.BottomButton
@@ -24,6 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     var bottomNavView: CustomBottomNavView? = null
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var chatListTypingEventCoordinator: ChatListTypingEventCoordinator
+    private lateinit var chatTypingEventCoordinator: ChatListTypingEventCoordinator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         setUpUserObserver()
         setUpUserListObserver()
         setUpPusherObserver()
+        setUpChatListTypingCoordinator()
+        setUpChatTypingListener()
         bottomNavView = binding.bottomNavigationView
 
         observe(viewModel.loggedOut) {
@@ -90,7 +92,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         observe(viewModel.typingLiveData) {
-
+            when {
+                isInChatList() -> {
+                    viewModel.setChatListTypingEvent(it, true)
+                    chatListTypingEventCoordinator.setTypingEvent(it)
+                }
+                isInChat(it) -> {
+                    viewModel.setChatTypingEvent(true)
+                    chatTypingEventCoordinator.setTypingEvent(it)
+                }
+            }
         }
         observe(viewModel.readingLiveData) {
             when {
@@ -104,6 +115,18 @@ class MainActivity : AppCompatActivity() {
         }
         observe(viewModel.coinsLiveData) {
             viewModel.setCoinsCount(it)
+        }
+    }
+
+    private fun setUpChatListTypingCoordinator() {
+        chatListTypingEventCoordinator = ChatListTypingEventCoordinator {
+            viewModel.setChatListTypingEvent(it, false)
+        }
+    }
+
+    private fun setUpChatTypingListener() {
+        chatTypingEventCoordinator = ChatListTypingEventCoordinator {
+            viewModel.setChatTypingEvent(false)
         }
     }
 

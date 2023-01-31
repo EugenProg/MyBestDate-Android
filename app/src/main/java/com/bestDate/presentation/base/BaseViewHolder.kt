@@ -32,10 +32,14 @@ abstract class ChatListBaseViewHolder<VB : ViewBinding>(
     val itemClick: ((Chat) -> Unit)?
 ) : BaseViewHolder<Chat, VB>(binding) {
 
-    protected fun getTextColor(itemType: ChatListItemType?): Int {
+    protected fun getTextColor(itemType: ChatListItemType?, typingMode: Boolean?): Int {
         return ContextCompat.getColor(
             itemView.context,
-            if (itemType == ChatListItemType.NEW_ITEM) R.color.white_90 else R.color.white_30
+            when {
+                typingMode == true -> R.color.green
+                itemType == ChatListItemType.NEW_ITEM -> R.color.white_90
+                else -> R.color.white_30
+            }
         )
     }
 
