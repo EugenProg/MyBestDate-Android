@@ -28,6 +28,7 @@ class ChatView @JvmOverloads constructor(
     var sendClick: ((text: String, parentId: Int?) -> Unit)? = null
     var editClick: ((text: String, messageId: Int?) -> Unit)? = null
     var translateClick: ((text: String) -> Unit)? = null
+    var typingEvent: (() -> Unit)? = null
     var addImageClick: (() -> Unit)? = null
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
@@ -46,6 +47,9 @@ class ChatView @JvmOverloads constructor(
             }
             bottomPanelView.closeEditMode = {
                 parentMessage = null
+            }
+            bottomPanelView.typingEvent = {
+                typingEvent?.invoke()
             }
             topPanelView.goToClick = {
                 showInvitationClick?.invoke()

@@ -71,6 +71,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
                 navController.navigate(StartFragmentDirections.actionStartToQuestionnaire())
             }
             else -> {
+                viewModel.startPusher()
                 navController.navigate(StartFragmentDirections.actionStartToMainGraph())
             }
         }

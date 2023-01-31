@@ -39,19 +39,25 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
                     .load(item.user?.getMainPhoto()?.thumb_url)
                     .circleCrop()
                     .into(avatar)
-                online.isVisible = item.user?.is_online == true
+                online.isVisible = item.user?.is_online == true || item.typingMode == true
                 name.text = item.user?.name
-                lastMessage.text = item.last_message?.text
                 time.text = item.getLastMessageTime()
 
-                val imageVisibility = item.last_message?.image != null
-                lastMessage.isVisible = !imageVisibility
-                pictureBox.isVisible = imageVisibility
+                if (item.typingMode == true) {
+                    lastMessage.isVisible = true
+                    pictureBox.isVisible = false
+                    lastMessage.text = itemView.context.getString(R.string.typing)
+                } else {
+                    val imageVisibility = item.last_message?.image != null
+                    lastMessage.isVisible = !imageVisibility
+                    pictureBox.isVisible = imageVisibility
+                    lastMessage.text = item.last_message?.text
+                }
 
                 read.setImageResource(getMessageIcon(item))
 
                 name.setTextColor(getTitleColor(item.type))
-                lastMessage.setTextColor(getTextColor(item.type))
+                lastMessage.setTextColor(getTextColor(item.type, item.typingMode))
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)
@@ -85,7 +91,7 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
                 read.setImageResource(getMessageIcon(item))
 
                 name.setTextColor(getTitleColor(item.type))
-                lastMessage.setTextColor(getTextColor(item.type))
+                lastMessage.setTextColor(getTextColor(item.type, false))
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)

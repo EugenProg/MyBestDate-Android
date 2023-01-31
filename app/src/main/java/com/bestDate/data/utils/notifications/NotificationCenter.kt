@@ -8,7 +8,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getPushType
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
+import com.bestDate.db.dao.UserDao
 import com.bestDate.view.alerts.showDefaultPush
 import com.bestDate.view.alerts.showInvitationPush
 import com.bestDate.view.alerts.showLikePush
@@ -87,4 +89,9 @@ class NotificationCenterModule {
     @Provides
     @Singleton
     fun provideNotificationCenter() = NotificationCenter()
+
+    @Provides
+    @Singleton
+    fun providePusherCenter(userDao: UserDao, preferencesUtils: PreferencesUtils) =
+        PusherCenter(userDao, preferencesUtils)
 }

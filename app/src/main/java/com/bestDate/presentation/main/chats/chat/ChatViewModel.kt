@@ -18,6 +18,7 @@ class ChatViewModel @Inject constructor(
 
     var invitations = invitationUseCase.invitations.asLiveData()
     var messages = chatUseCase.messages
+    var typingMode = chatUseCase.typingMode
 
     private var _sendInvitationLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
@@ -68,15 +69,9 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun sendTypingEvent(recipientId: Int?) {
+    fun sendTypingEvent() {
         doAsync {
-            chatUseCase.sendTypingEvent(recipientId)
-        }
-    }
-
-    fun sendReadingEvent(recipientId: Int?) {
-        doAsync {
-            chatUseCase.sendReadingEvent(recipientId)
+            chatUseCase.sendTypingEvent()
         }
     }
 
