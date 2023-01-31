@@ -86,6 +86,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.addImageClick = {
                 imageListSheet.show(childFragmentManager, imageListSheet.tag)
             }
+            chatView.typingEvent = {
+                viewModel.sendTypingEvent()
+            }
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
                 val fragment = ChatAddImageFragment(user, it)

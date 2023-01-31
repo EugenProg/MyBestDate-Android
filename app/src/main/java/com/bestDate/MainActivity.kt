@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.data.extension.*
-import com.bestDate.data.utils.notifications.ChatListTypingEventCoordinator
+import com.bestDate.data.utils.notifications.TypingEventCoordinator
 import com.bestDate.data.utils.notifications.NotificationType
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.view.bottomNav.BottomButton
@@ -22,8 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     var bottomNavView: CustomBottomNavView? = null
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var chatListTypingEventCoordinator: ChatListTypingEventCoordinator
-    private lateinit var chatTypingEventCoordinator: ChatListTypingEventCoordinator
+    private lateinit var chatListTypingEventCoordinator: TypingEventCoordinator
+    private lateinit var chatTypingEventCoordinator: TypingEventCoordinator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,13 +119,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpChatListTypingCoordinator() {
-        chatListTypingEventCoordinator = ChatListTypingEventCoordinator {
+        chatListTypingEventCoordinator = TypingEventCoordinator {
             viewModel.setChatListTypingEvent(it, false)
         }
     }
 
     private fun setUpChatTypingListener() {
-        chatTypingEventCoordinator = ChatListTypingEventCoordinator {
+        chatTypingEventCoordinator = TypingEventCoordinator {
             viewModel.setChatTypingEvent(false)
         }
     }

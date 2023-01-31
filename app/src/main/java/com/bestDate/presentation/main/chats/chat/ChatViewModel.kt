@@ -69,15 +69,9 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun sendTypingEvent(recipientId: Int?) {
+    fun sendTypingEvent() {
         doAsync {
-            chatUseCase.sendTypingEvent(recipientId)
-        }
-    }
-
-    fun sendReadingEvent(recipientId: Int?) {
-        doAsync {
-            chatUseCase.sendReadingEvent(recipientId)
+            chatUseCase.sendTypingEvent()
         }
     }
 

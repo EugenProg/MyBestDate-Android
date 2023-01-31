@@ -1,10 +1,9 @@
 package com.bestDate.data.utils.notifications
 
 import com.bestDate.data.extension.orZero
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 
-class ChatListTypingEventCoordinator(private var offAction: (senderId: Int?) -> Unit) {
+class TypingEventCoordinator(private var offAction: (senderId: Int?) -> Unit) {
     private var typingList: HashMap<Int, PingEventListener> = hashMapOf()
 
     fun setTypingEvent(senderId: Int?) {
@@ -22,7 +21,7 @@ class ChatListTypingEventCoordinator(private var offAction: (senderId: Int?) -> 
     }
 }
 
-class PingEventListener(var offAction: () -> Unit) {
+class PingEventListener(private var offAction: () -> Unit) {
     private var lastUpdate: Long = System.currentTimeMillis()
     private var timer: Timer = Timer()
     private var task: TimerTask = object : TimerTask() {

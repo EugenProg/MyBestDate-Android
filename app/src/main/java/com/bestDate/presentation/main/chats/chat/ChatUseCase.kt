@@ -66,8 +66,8 @@ class ChatUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
-    suspend fun sendTypingEvent(recipientId: Int?) {
-        val response = chatsRemoteData.sendTypingEvent(recipientId.orZero)
+    suspend fun sendTypingEvent() {
+        val response = chatsRemoteData.sendTypingEvent(currentUserId.orZero)
         if (!response.isSuccessful) throw InternalException.OperationException(
             response.errorBody().getErrorMessage()
         )
