@@ -13,46 +13,39 @@ import javax.inject.Singleton
 class TopUseCase @Inject constructor(
     private val topRemoteData: TopRemoteData
 ) {
-    var topsResults: MutableLiveData<MutableList<DuelProfile>?> = MutableLiveData()
-    var genderLocal: MutableLiveData<Gender> = MutableLiveData()
-    private var topsWoman: MutableList<DuelProfile> = mutableListOf()
-    private var topsMan: MutableList<DuelProfile> = mutableListOf()
+    var topsWoman: MutableLiveData<MutableList<DuelProfile>> = MutableLiveData()
+    var topsMan: MutableLiveData<MutableList<DuelProfile>> = MutableLiveData()
 
     suspend fun getTop(gender: Gender) {
-        when {
-            gender == Gender.WOMAN && topsWoman.isNotEmpty() -> {
-                topsResults.postValue(topsWoman)
-                genderLocal.postValue(gender)
-            }
-            gender == Gender.MAN && topsMan.isNotEmpty() -> {
-                topsResults.postValue(topsMan)
-                genderLocal.postValue(gender)
-            }
-            else -> {
-                val response = topRemoteData.getTop(gender.serverName)
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        if (gender == Gender.WOMAN) {
-                            topsWoman = it.data ?: mutableListOf()
-                            topsResults.postValue(topsWoman)
-                        } else {
-                            topsMan = it.data ?: mutableListOf()
-                            topsResults.postValue(topsMan)
-                        }
-                        genderLocal.postValue(gender)
-                    }
-                } else
-                    throw InternalException.OperationException(
-                        response.errorBody()?.getErrorMessage()
-                    )
-            }
+        if (gender == Gender.WOMAN) {
+            getWomanTop()
+            getManTop()
+        } else {
+            getManTop()
+            getWomanTop()
         }
     }
 
+    private suspend fun getWomanTop() {
+        val response = topRemoteData.getTop(Gender.WOMAN.serverName)
+        if (response.isSuccessful) {
+            response.body()?.data?.let {
+                topsWoman.postValue(it)
+            }
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    private suspend fun getManTop() {
+        val response = topRemoteData.getTop(Gender.MAN.serverName)
+        if (response.isSuccessful) {
+            response.body()?.data?.let {
+                topsMan.postValue(it)
+            }
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
     fun clearData() {
-        topsResults.postValue(mutableListOf())
-        topsWoman = mutableListOf()
-        topsMan = mutableListOf()
-        genderLocal = MutableLiveData()
+        topsWoman.postValue(mutableListOf())
+        topsMan.postValue(mutableListOf())
     }
 }

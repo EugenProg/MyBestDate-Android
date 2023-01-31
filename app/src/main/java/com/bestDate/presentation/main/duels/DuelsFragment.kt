@@ -36,7 +36,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         setUpFilterButtons()
         getNavigationResult<Gender>(NavigationResultKey.GENDER_DUELS) {
             genderFromTop = true
-            viewModel.getDuels(it)
+            viewModel.getDuels()
         }
     }
 
@@ -55,7 +55,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.topButton.onClick = {
             navController.navigate(
                 DuelsFragmentDirections.actionDuelsToTop(
-                    viewModel.gender.value ?: Gender.WOMAN
+                    viewModel.gender
                 )
             )
         }
@@ -65,7 +65,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.locationFilterButton.label = getString(R.string.universe)
         binding.locationFilterButton.isActive = true
         binding.selectorView.onClick = {
-            viewModel.getDuels(it)
+            viewModel.getDuels()
         }
     }
 
@@ -85,10 +85,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
-            if (!genderFromTop) it?.getDuelGender()?.let { gender -> viewModel.getDuels(gender) }
-        }
-        observe(viewModel.gender) {
-            binding.selectorView.setGender(it)
+            if (!genderFromTop) it?.getDuelGender()?.let { viewModel.getDuels() }
         }
         observe(viewModel.duelResults) {
             binding.resultView.isVisible = it?.isNotEmpty() == true

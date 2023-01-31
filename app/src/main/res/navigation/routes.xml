@@ -489,7 +489,7 @@
             </fragment>
             <fragment
                 android:id="@+id/topFragment"
-                android:name="com.bestDate.presentation.main.duels.top.TopFragment"
+                android:name="com.bestDate.presentation.main.duels.top.TopListFragment"
                 android:label="TopFragment">
                 <argument
                     android:name="gender"
