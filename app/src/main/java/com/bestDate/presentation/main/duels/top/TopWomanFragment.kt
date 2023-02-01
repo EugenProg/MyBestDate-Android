@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentTopBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,12 +25,19 @@ class TopWomanFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
             root.layoutManager = GridLayoutManager(requireContext(), 2)
             root.adapter = adapter
         }
+
+        adapter.itemClick = {
+            navController.navigate(
+                TopListFragmentDirections
+                    .actionGlobalTopToAnotherProfile(it?.user, BackScreenType.DUELS)
+            )
+        }
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.topsWoman) {
-            adapter.items = it
+            adapter.submitList(it)
         }
     }
 }
