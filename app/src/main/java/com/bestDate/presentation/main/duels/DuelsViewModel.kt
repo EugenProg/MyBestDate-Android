@@ -26,6 +26,9 @@ class DuelsViewModel @Inject constructor(
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
 
+    private var _genderIsSetLiveData = MutableLiveData<Boolean>()
+    val genderIsSetLiveData: LiveData<Boolean> = _genderIsSetLiveData
+
     fun getDuels() {
         _loadingLiveData.postValue(true)
         doAsync {
@@ -37,6 +40,14 @@ class DuelsViewModel @Inject constructor(
     fun postVote(winningPhoto: Int, loserPhoto: Int) {
         doAsync {
             duelUseCase.postVote(winningPhoto, loserPhoto)
+            getDuels()
+        }
+    }
+
+    fun setUserGender() {
+        doAsync {
+            duelUseCase.setUserGender()
+            _genderIsSetLiveData.postValue(true)
             getDuels()
         }
     }
