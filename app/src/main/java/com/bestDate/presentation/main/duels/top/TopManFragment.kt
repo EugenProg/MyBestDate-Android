@@ -29,7 +29,7 @@ class TopManFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.topsMan) {
-
+            adapter.items = it
         }
     }
 }

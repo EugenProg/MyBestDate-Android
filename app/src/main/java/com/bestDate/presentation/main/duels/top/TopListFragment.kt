@@ -20,25 +20,15 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
 
     override val statusBarColor = R.color.bg_main
     private lateinit var loader: LoaderDialog
-
-    //private val args by navArgs<TopFragmentArgs>()
-   /* private var adapter = TopAdapter()
-    private var getGenderFromLocal = false*/
+    private var isInited: Boolean = false
 
     override fun onInit() {
         super.onInit()
         loader = LoaderDialog(requireActivity())
         binding.toolbar.backClick = { goBack() }
-        setUpSelectorView()
         setUpPager()
+        setUpSelectorView()
         viewModel.getTop()
-        /*setUpRecyclerView()
-        getNavigationResult<Boolean>(NavigationResultKey.CHECK_GENDER) {
-            if (it) {
-                viewModel.getTop()
-                getGenderFromLocal = true
-            }
-        }*/
     }
 
     override fun onViewLifecycle() {
@@ -47,7 +37,8 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
             showMessage(it.exception.message)
         }
         observe(viewModel.loadingMode) {
-            if (it) loader.startLoading()
+            if (it && viewModel.topsMan.value.isNullOrEmpty() &&
+                viewModel.topsWoman.value.isNullOrEmpty()) loader.startLoading()
             else loader.stopLoading()
         }
     }
@@ -66,74 +57,30 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
                 when (it) {
                     0 -> {
                         binding.selectorView.setGender(Gender.WOMAN)
-                        viewModel.gender = Gender.WOMAN
+                        if (isInited) viewModel.gender = Gender.WOMAN
                         binding.decoratedFilterButton.gender = Gender.WOMAN
                     }
                     1 -> {
                         binding.selectorView.setGender(Gender.MAN)
-                        viewModel.gender = Gender.MAN
+                        if (isInited) viewModel.gender = Gender.MAN
                         binding.decoratedFilterButton.gender = Gender.MAN
                     }
                 }
             }
         }
+
+        postDelayed({
+            isInited = true
+            binding.pager.currentItem = viewModel.gender.ordinal
+        }, 200)
     }
 
     private fun setUpSelectorView() {
+        binding.selectorView.setGender(viewModel.gender)
         binding.selectorView.onClick = {
             viewModel.gender = it
             binding.decoratedFilterButton.gender = it
             binding.pager.setCurrentItem(it.ordinal, true)
         }
     }
-
-/*    private fun setUpAdapterClick() {
-        adapter.itemClick = {
-            findNavController().navigate(
-                TopFragmentDirections.actionGlobalTopToAnotherProfile(
-                    it?.user,
-                    BackScreenType.DUELS
-                )
-            )
-        }
-    }
-
-    private fun setUpRecyclerView() {
-        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        setUpAdapterClick()
-        binding.recyclerView.adapter = adapter
-    }*/
-
-/*    override fun onViewLifecycle() {
-        super.onViewLifecycle()
-
-        observe(viewModel.user) {
-            if (!getGenderFromLocal) {
-                viewModel.getTop(args.gender)
-            }
-        }
-
-        observe(viewModel.gender) {
-            binding.decoratedFilterButton.gender = it
-            binding.selectorView.setGender(it)
-        }
-
-        observe(viewModel.errorLiveData) {
-            showMessage(it.exception.message)
-        }
-
-        observe(viewModel.topsResults) {
-            adapter.items = it ?: mutableListOf()
-        }
-
-        observe(viewModel.loadingLiveData) {
-            binding.loader.isVisible = it
-            binding.recyclerView.isVisible = !it
-        }
-    }
-
-    override fun goBack() {
-        setNavigationResult(NavigationResultKey.GENDER_DUELS, viewModel.gender.value)
-        super.goBack()
-    }*/
 }
