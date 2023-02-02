@@ -19,6 +19,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
+    private var genderFromTop = false
 
     override fun onInit() {
         super.onInit()
@@ -71,7 +72,6 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             }
         }
         observe(viewModel.user) {
-            binding.amountCoins.text = it?.coins ?: "0.0"
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
         }

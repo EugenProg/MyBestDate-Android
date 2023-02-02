@@ -15,6 +15,7 @@ class DuelsViewModel @Inject constructor(
     private val duelUseCase: DuelsUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
+    val coins = userUseCase.coinsCount
     val duelImages = duelUseCase.duelProfiles
     val duelResults = duelUseCase.duelResults
     var gender: Gender

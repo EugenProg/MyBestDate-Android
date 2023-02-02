@@ -120,13 +120,16 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                     invitationListButton.badgeOn = user?.new_invitations.orZero > 0
                     likeListButton.badgeOn = user?.new_likes.orZero > 0
                     myDuelsButton.badgeOn = user?.new_duels.orZero > 0
-                    balanceButton.coinsCount = user?.coins?.toInt().orZero
+
                 }
 
                 adapter.submitList(getImageList(user?.photos)) {
                     binding.refreshView.isRefreshing = false
                 }
             }
+        }
+        observe(viewModel.coins) {
+            binding.balanceButton.coinsCount = it?.toInt().orZero
         }
         observe(viewModel.signOutLiveData) {
             navController.navigate(UserProfileFragmentDirections.actionGlobalAuthFragment())

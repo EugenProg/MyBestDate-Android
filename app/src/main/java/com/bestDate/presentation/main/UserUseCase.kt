@@ -1,9 +1,8 @@
 package com.bestDate.presentation.main
 
+import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getErrorMessage
-import com.bestDate.data.model.FilterOptions
 import com.bestDate.data.model.InternalException
-import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.dao.UserDao
@@ -13,9 +12,9 @@ import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.chats.ChatListUseCase
-import com.bestDate.presentation.main.guests.GuestsUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.duels.top.TopUseCase
+import com.bestDate.presentation.main.guests.GuestsUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
@@ -43,12 +42,14 @@ class UserUseCase @Inject constructor(
 ) {
 
     val getMyUser = userDao.getUserFlow()
+    var coinsCount: MutableLiveData<String?> = MutableLiveData("0")
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
         if (response.isSuccessful) {
             response.body()?.data?.let {
                 userDao.validate(it)
+                coinsCount.postValue(it.coins)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }

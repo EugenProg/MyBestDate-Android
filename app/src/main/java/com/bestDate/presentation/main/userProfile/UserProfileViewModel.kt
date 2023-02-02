@@ -14,6 +14,7 @@ class UserProfileViewModel @Inject constructor(
 ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
+    var coins = userUseCase.coinsCount
 
     private var _signOutLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var signOutLiveData: LiveData<Boolean> = _signOutLiveData

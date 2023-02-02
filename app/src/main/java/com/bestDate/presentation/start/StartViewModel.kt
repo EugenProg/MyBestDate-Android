@@ -4,6 +4,7 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class StartViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
     private val authUseCase: AuthUseCase,
-    private val preferencesUtils: PreferencesUtils
+    private val preferencesUtils: PreferencesUtils,
+    private val pusherCenter: PusherCenter
 ) : BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
@@ -46,6 +48,12 @@ class StartViewModel @Inject constructor(
         doAsync {
             userUseCase.changeLanguage(language)
             _updateLanguageSuccessLiveData.postValue(true)
+        }
+    }
+
+    fun startPusher() {
+        doAsync {
+            pusherCenter.startPusher()
         }
     }
 }

@@ -11,6 +11,7 @@ import com.bestDate.data.model.ParentMessage
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
+import com.bestDate.view.chat.ChatStatusType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -24,6 +25,7 @@ class ChatUseCase @Inject constructor(
     private val translateRemoteData: TranslationRemoteData
 ) {
     var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
     var translatedText: String? = ""
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
@@ -64,8 +66,8 @@ class ChatUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
-    suspend fun sendTypingEvent(recipientId: Int?) {
-        val response = chatsRemoteData.sendTypingEvent(recipientId.orZero)
+    suspend fun sendTypingEvent() {
+        val response = chatsRemoteData.sendTypingEvent(currentUserId.orZero)
         if (!response.isSuccessful) throw InternalException.OperationException(
             response.errorBody().getErrorMessage()
         )
@@ -94,6 +96,24 @@ class ChatUseCase @Inject constructor(
         if (response.isSuccessful) {
             translatedText = response.body()?.translations?.firstOrNull()?.text ?: text
         } else throw InternalException.OperationException(response.message())
+    }
+
+    fun addPusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(addNewMessage(it))
+        }
+    }
+
+    fun editPusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(editMessageList(it))
+        }
+    }
+
+    fun deletePusherMessage(message: Message?) {
+        message?.let {
+            messages.postValue(deleteMessageFromList(it.id))
+        }
     }
 
     fun clearChatData() {
@@ -194,5 +214,9 @@ class ChatUseCase @Inject constructor(
             current?.created_at,
             next?.created_at
         ))
+    }
+
+    fun setTypingEvent(on: Boolean) {
+        typingMode.postValue(if (on) ChatStatusType.TYPING else ChatStatusType.ONLINE)
     }
 }
