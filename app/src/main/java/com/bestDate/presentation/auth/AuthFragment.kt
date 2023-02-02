@@ -9,7 +9,6 @@ import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
 import com.bestDate.presentation.base.BaseAuthFragment
-import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +19,6 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
 
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
-    private var isLoggedIn = false
 
     override fun onViewClickListener() {
         super.onViewClickListener()
@@ -68,6 +66,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
         }
         observe(viewModel.errorLiveData) {
             isLoggedIn = false
+            loaderDialog.stopLoading()
             showMessage(getString(R.string.wrong_auth_data))
         }
         observe(viewModel.validationErrorLiveData) {
@@ -80,6 +79,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
     }
 
     private fun chooseRoute() {
+        loaderDialog.stopLoading()
         when {
             viewModel.user.value?.hasNoPhotos() == true -> {
                 navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())

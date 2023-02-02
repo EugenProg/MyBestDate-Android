@@ -25,8 +25,9 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     override val viewModelClass: Class<AuthViewModel> = AuthViewModel::class.java
 
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var loaderDialog: LoaderDialog
     private lateinit var callbackManager: CallbackManager
+    protected lateinit var loaderDialog: LoaderDialog
+    protected var isLoggedIn = false
 
     override fun onInit() {
         super.onInit()
@@ -49,16 +50,17 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {
-                    val token = result.accessToken
                     loaderDialog.startLoading()
-                    viewModel.loginSocial(SocialProvider.FACEBOOK, token.token)
+                    isLoggedIn = true
+                    viewModel.loginSocial(SocialProvider.FACEBOOK, result.accessToken.token)
                 }
 
                 override fun onCancel() {
-                    showMessage(getString(R.string.oops_its_error))
+                    isLoggedIn = false
                 }
 
                 override fun onError(error: FacebookException) {
+                    isLoggedIn = false
                     showMessage(getString(R.string.oops_its_error))
                 }
             })
@@ -103,4 +105,8 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     }
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data)
+    }
 }

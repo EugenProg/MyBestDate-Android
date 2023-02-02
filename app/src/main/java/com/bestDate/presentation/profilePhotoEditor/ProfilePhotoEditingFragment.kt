@@ -65,12 +65,10 @@ class ProfilePhotoEditingFragment :
                 BasePhotoEditorFragment.editorAction.value = null
             }
             nextButton.setOnSaveClickListener {
-                if (imageList.value?.size.orZero > 0) {
-                    navController.navigate(
-                        ProfilePhotoEditingFragmentDirections
-                            .actionGlobalQuestionnaireFragment()
-                    )
-                }
+                navController.navigate(
+                    ProfilePhotoEditingFragmentDirections
+                        .actionGlobalQuestionnaireFragment()
+                )
             }
             adapter.imageClick = {
                 val photoSettingsSheet = PhotoSettingsSheet()

@@ -104,6 +104,6 @@ dependencies {
     implementation "com.pusher:pusher-java-client:2.2.1"
 
     //Oauth
-    implementation 'com.google.android.gms:play-services-auth:20.4.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.facebook.android:facebook-login:13.0.0'
 }

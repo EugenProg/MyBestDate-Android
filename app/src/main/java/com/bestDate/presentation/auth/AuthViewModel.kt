@@ -69,6 +69,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginSocial(provider, token)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }
     }
