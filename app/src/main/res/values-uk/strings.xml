@@ -640,4 +640,5 @@
     <string name="choose_the_plan">Виберіть план</string>
     <string name="you_have_three_messages_available_per_day">У вас є три\nповідомлення на день</string>
     <string name="activate">Активувати</string>
+    <string name="you_have_one_invitation_card_per_day">У вас є одне запрошення\nна день</string>
 </resources>

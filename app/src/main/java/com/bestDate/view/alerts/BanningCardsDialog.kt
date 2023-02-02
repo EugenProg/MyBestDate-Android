@@ -3,10 +3,10 @@ package com.bestDate.view.alerts
 import android.view.Gravity
 import androidx.fragment.app.FragmentActivity
 import com.bestDate.data.extension.*
-import com.bestDate.databinding.DialogBanningMessagesBinding
+import com.bestDate.databinding.DialogBanningCardsBinding
 
 fun FragmentActivity.showBanningCardsDialog(navigateAction: (() -> Unit)) {
-    val binding = DialogBanningMessagesBinding.inflate(layoutInflater)
+    val binding = DialogBanningCardsBinding.inflate(layoutInflater)
 
     val dialog = getDialog(binding.root, position = Gravity.TOP)
 

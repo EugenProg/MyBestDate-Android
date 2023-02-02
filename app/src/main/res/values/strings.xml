@@ -650,4 +650,5 @@
     <string name="choose_the_plan">Choose the plan</string>
     <string name="you_have_three_messages_available_per_day">You have three messages\navailable per day</string>
     <string name="activate">Activate</string>
+    <string name="you_have_one_invitation_card_per_day">You have one invitation card\nper day</string>
 </resources>
