@@ -637,4 +637,7 @@
     <string name="possibility_from_0_to_300_kilometers">Возможность от 0 до 300 километров</string>
     <string name="prohibit_incoming_messages">Запретить входящие сообщения</string>
     <string name="watch">Watch</string>
+    <string name="choose_the_plan">Выберите план</string>
+    <string name="you_have_three_messages_available_per_day">Вам доступны три\nсообщения в день</string>
+    <string name="activate">Активировать</string>
 </resources>

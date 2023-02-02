@@ -6,6 +6,8 @@
     <string name="default_notification_channel_id" translatable="false">LoveSexAndSexWithLove</string>
     <string name="miss_country" translatable="false">Miss %s</string>
     <string name="mister_country" translatable="false">Mister %s</string>
+    <string name="percent_symbol" translatable="false">%</string>
+    <string name="pro" translatable="false">Pro</string>
 
     <string name="skip">Skip</string>
     <string name="dating_without_restrictions">Dating without restrictions</string>
@@ -645,5 +647,7 @@
     <string name="possibility_from_0_to_300_kilometers">Possibility from 0 to 300 kilometers</string>
     <string name="prohibit_incoming_messages">Prohibit incoming messages</string>
     <string name="watch">Watch</string>
-    <string name="percent_symbol">%</string>
+    <string name="choose_the_plan">Choose the plan</string>
+    <string name="you_have_three_messages_available_per_day">You have three messages\navailable per day</string>
+    <string name="activate">Activate</string>
 </resources>
