@@ -19,7 +19,6 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
-    private var genderFromTop = false
 
     override fun onInit() {
         super.onInit()
@@ -82,7 +81,9 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         observe(viewModel.loadingLiveData) {
             if (viewModel.duelImages.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
-
+        observe(viewModel.coins) {
+            binding.amountCoins.text = it
+        }
         observe(viewModel.errorLiveData) {
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
