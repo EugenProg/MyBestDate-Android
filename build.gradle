@@ -1,7 +1,7 @@
 
 buildscript {
     ext.kotlin_version = "1.5.30"
-    ext.navigation_version = "2.5.1"
+    ext.navigation_version = "2.5.3"
     ext.dagger_version = "2.40"
     repositories {
         google()
@@ -12,6 +12,7 @@ buildscript {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.21'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigation_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_version"
+        classpath 'com.google.gms:google-services:4.3.14'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

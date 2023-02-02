@@ -13,19 +13,19 @@ fun AnimatorSet.setupOnListener(
     repeat: ((Animator?) -> Unit)? = null,
     ) {
     addListener(object : Animator.AnimatorListener {
-        override fun onAnimationStart(animation: Animator?) {
+        override fun onAnimationStart(animation: Animator) {
             start?.invoke(animation)
         }
 
-        override fun onAnimationEnd(animation: Animator?) {
+        override fun onAnimationEnd(animation: Animator) {
             end?.invoke(animation)
         }
 
-        override fun onAnimationCancel(animation: Animator?) {
+        override fun onAnimationCancel(animation: Animator) {
             cancel?.invoke(animation)
         }
 
-        override fun onAnimationRepeat(animation: Animator?) {
+        override fun onAnimationRepeat(animation: Animator) {
             repeat?.invoke(animation)
         }
     })

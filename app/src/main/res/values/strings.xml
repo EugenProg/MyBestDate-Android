@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">Best date</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app_name" translatable="false">Best date</string>
+    <string name="male" translatable="false">male</string>
+    <string name="female" translatable="false">female</string>
+    <string name="powered_by_google" translatable="false">powered by <font color="#ffffff"><b>Google</b></font></string>
+    <string name="default_notification_channel_id" translatable="false">LoveSexAndSexWithLove</string>
+    <string name="miss_country" translatable="false">Miss %s</string>
+    <string name="mister_country" translatable="false">Mister %s</string>
+
     <string name="skip">Skip</string>
     <string name="dating_without_restrictions">Dating without restrictions</string>
     <string name="communicate_and_get_to_know_people_from_all_over_the_world">Communicate and get to know people from all over the world, and a convenient automatic language translator will help you.</string>
@@ -30,6 +36,7 @@
     <string name="when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy">When creating a new account, we recommend that you read our privacy policy and terms of use of the dating app.</string>
     <string name="one_step_to_your_dream">One step to your dream</string>
     <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">By clicking the “Sign up” button, you agree to our privacy policy and terms of use</string>
+    <string name="create_account">Create account</string>
     <string name="set_a_profile_photo">Set a profile\nphoto</string>
     <string name="you_can_upload_up_to_9_photos_to_your_profile">You can upload up to 9 photos\nto your profile.</string>
     <string name="upload_a_photo">Upload a photo</string>
@@ -53,6 +60,9 @@
     <string name="woman_looking_for_a_man">Woman, looking for a man</string>
     <string name="woman_looking_for_a_woman">Woman, looking for a woman</string>
     <string name="man_looking_for_a_man">Man, looking for a man</string>
+    <string name="man">Man</string>
+    <string name="woman">Woman</string>
+    <string name="universe">Universe</string>
     <string name="man_looking_for_a_woman">Man, looking for a woman</string>
     <string name="save_changes">Save Changes</string>
     <string name="main_picture">Main picture</string>
@@ -105,7 +115,7 @@
     <string name="in_love">In love</string>
     <string name="engaged">Engaged</string>
     <string name="actively_searching">Actively searching</string>
-    <string name="no">No</string>
+    <string name="no_kids">No</string>
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -451,9 +461,12 @@
     <string name="enter_the_confirmation_code">Enter the confirmation code</string>
     <string name="confirmation_code">Confirmation code</string>
     <string name="on_the_email_you_specified_we_send_the_confirmation_code">On the email you specified, we sent the\nconfirmation code, it must be entered</string>
+    <string name="on_the_phone_you_specified_we_send_the_confirmation_code">On the phone you specified, we sent the\nconfirmation code, it must be entered</string>
     <string name="confirm">Confirm</string>
     <string name="code_send_to_your_email">Code sent to your email</string>
+    <string name="code_send_to_your_phone">Code sent to your phone</string>
     <string name="confirmation_code_sent_to_email_address">Confirmation code sent to email address:</string>
+    <string name="confirmation_code_sent_to_phone">Код підтвердження відправлено на телефон:</string>
     <string name="photo_is_not_correct">Photo is not correct</string>
     <string name="we_cannot_accept_this_photo_for_one_of_the_following_reasons">We cannot accept this photo for one of the following reasons:</string>
     <string name="i_can_t_see_your_face">I can’t see your face</string>
@@ -534,7 +547,7 @@
     <string name="congratulations">Congratulations</string>
     <string name="you_have_a_match_write_to_the_user_you_liked_each_other">You have a match, write to the\nuser, you liked each other</string>
     <string name="write_a_message">Write a message</string>
-    <string name="by_params_not_found">По данным параметрам ничего \nне найдено</string>
+    <string name="by_params_not_found">Nothing was found by these parameters</string>
     <string name="years_old">y</string>
     <string name="invitation_card">Invitation card</string>
     <string name="invite">To invite</string>
@@ -555,6 +568,7 @@
     <string name="yes_i_agree">Yes I agree</string>
     <string name="yes_i_will_but_next_time">Yes, I will, but next time</string>
     <string name="thanks_but_i_cant_yet">Thanks, but I can’t yet</string>
+    <string name="no">No</string>
     <string name="you_have_received_an_invitation_please_give_an_answer">You have received an invitation,\nplease give an answer</string>
     <string name="answer_choice">Answer Choice</string>
     <string name="we_have_transmitted_your_reply_to_the_sender">We have transmitted your\nreply to the sender</string>
@@ -570,7 +584,6 @@
     <string name="change_location">Change location</string>
     <string name="enter_a_old_pass">Enter the old password</string>
     <string name="confirm_the_new_pass">Confirm the new password</string>
-    <string name="powered_by_google">powered by <font color="#ffffff"><b>Google</b></font></string>
     <string name="main_settings">main settings</string>
     <string name="blocked_users">Blocked users</string>
     <string name="a_list_of_users_who_have_been_blocked_by_you">A list of users who have been blocked by you. The list can be edited</string>
@@ -594,6 +607,7 @@
     <string name="you_dont_have_any_blocked_users_yet">You don\'t have any blocked users yet</string>
     <string name="attention">Attention</string>
     <string name="all_your_data_will_be_deleted">All of your data, including your account, will be deleted</string>
+    <string name="this_chat_will_be_deleted">The chat with %s, including all messages, will be deleted</string>
     <string name="enter_email">Enter Email</string>
     <string name="close">Close</string>
     <string name="this_will_be_your_best_date">this will be your best date</string>
@@ -602,6 +616,36 @@
     <string name="or_everyone_can_write_to_you_you_can_change_this_in_the_settings">Or everyone can write to you\nYou can change this in the <font color="#f28ae5"><u>settings</u></font></string>
     <string name="get_started">Get Started</string>
     <string name="enable_geolocation">Enable geolocation</string>
+    <string name="result">Result</string>
+    <string name="duels_are_over">Duels are over</string>
+    <string name="you_voted_for_all_the_photos">You voted for all the photos</string>
+    <string name="but_you_can_also_go_to_the_top">But you can also go to\nthe Top 50</string>
+    <string name="duels">Duels</string>
+    <string name="you_have_no_guests_yet">You have no guests yet</string>
+    <string name="bd_coin">BD coin</string>
+    <string name="all_message">All message</string>
+    <string name="new_message">New message</string>
+    <string name="picture">Picture</string>
+    <string name="typing">typing…</string>
+    <string name="go_to">Go To</string>
+    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">This user craves only real meetings\nand is not ready to waste time on\nlong correspondence</string>
+    <string name="chat_closed">Chat Closed!</string>
+    <string name="you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form">You can always send an\ninvitation in the form of a card,\nin a more convenient form</string>
+    <string name="this_user_agrees_to_accept_only_cards">This user agrees to accept\nonly cards</string>
+    <string name="only_cards">Only cards</string>
+    <string name="type_message">Type message</string>
+    <string name="last_visit">Last visit %s</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="chat_actions">Chat actions</string>
+    <string name="reply">Reply</string>
+    <string name="edit">Edit</string>
+    <string name="add_a_caption">Add a caption…</string>
+    <string name="search_distance">Search distance</string>
+    <string name="possibility_from_0_to_300_kilometers">Possibility from 0 to 300 kilometers</string>
+    <string name="prohibit_incoming_messages">Prohibit incoming messages</string>
+    <string name="watch">Watch</string>
+    <string name="percent_symbol">%</string>
     <string name="google_oauth_server_key">320734338059-qfih51slhp529h06gplp1r09f4li41vm.apps.googleusercontent.com</string>
     <string name="facebook_app_id">1234729153762453</string>
     <string name="fb_login_protocol_scheme">fb1234729153762453</string>

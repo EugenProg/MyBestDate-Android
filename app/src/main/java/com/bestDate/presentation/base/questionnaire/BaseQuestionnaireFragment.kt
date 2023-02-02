@@ -4,20 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
+import com.bestDate.data.extension.*
+import com.bestDate.databinding.FragmentQuestionnaireBinding
+import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.base.questionnaire.confiarmation.EmailConfirmationFragment
 import com.bestDate.presentation.base.questionnaire.confiarmation.PhoneConfirmationFragment
 import com.bestDate.presentation.base.questionnaire.confiarmation.SocialConfirmationFragment
 import com.bestDate.presentation.base.questionnaire.search.SearchQuestionnaireLocationFragment
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.postDelayed
-import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.databinding.FragmentQuestionnaireBinding
-import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.view.questionnaire.itemSelectSheet.MultilineQuestionnaireSheet
 import com.bestDate.view.questionnaire.itemSelectSheet.OneLineQuestionnaireSheet
 import com.bestDate.view.questionnaire.seekBarSheet.SeekBarQuestionnaireSheet
@@ -126,21 +123,23 @@ abstract class BaseQuestionnaireFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        pagesLiveData.observe(viewLifecycleOwner) {
+        observe(pagesLiveData) {
             binding.questionnaireView.setPages(it)
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             savedQuestionnaire = it?.questionnaire
-            binding.questionnaireView.setQuestionnaire(it?.questionnaire,
-                it?.email, it?.phone, it?.photos?.size.orZero)
+            binding.questionnaireView.setQuestionnaire(
+                it?.questionnaire,
+                it?.email, it?.phone, it?.photos?.size.orZero
+            )
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             binding.questionnaireView.toggleFinishButton(it)
         }
-        viewModel.questionnaireSaveLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.questionnaireSaveLiveData) {
             forward()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
         }
     }
@@ -167,15 +166,19 @@ abstract class BaseQuestionnaireFragment :
                     }
                 }
                 QuestionnaireViewType.CONFIRMATION_EMAIL -> {
-                    val emailFragment = EmailConfirmationFragment(question,
-                        viewModel.user.value?.email_verification == true)
+                    val emailFragment = EmailConfirmationFragment(
+                        question,
+                        viewModel.user.value?.email_verification == true
+                    )
                     openPage(emailFragment)
 
                     emailFragment.backClick = { closePage(emailFragment) }
                 }
                 QuestionnaireViewType.CONFIRMATION_PHONE -> {
-                    val phoneFragment = PhoneConfirmationFragment(question,
-                        viewModel.user.value?.phone_verification == true)
+                    val phoneFragment = PhoneConfirmationFragment(
+                        question,
+                        viewModel.user.value?.phone_verification == true
+                    )
                     openPage(phoneFragment)
 
                     phoneFragment.backClick = { closePage(phoneFragment) }
@@ -206,7 +209,7 @@ abstract class BaseQuestionnaireFragment :
                     val multiLineSheet = MultilineQuestionnaireSheet()
                     multiLineSheet.setInfo(question)
                     multiLineSheet.show(childFragmentManager, multiLineSheet.tag)
-                    multiLineSheet.onClose = {
+                    multiLineSheet.onSave = {
                         binding.questionnaireView.updateQuestionnaireList(question, it, list)
                         multiLineSheet.dismiss()
                     }
@@ -216,40 +219,13 @@ abstract class BaseQuestionnaireFragment :
     }
 
     private fun openPage(fragment: Fragment) {
-        childFragmentManager.commit {
-            setCustomAnimations(R.anim.push_up_in, R.anim.push_up_out)
-            replace(R.id.container, fragment)
-        }
+        open(fragment, binding.container)
     }
 
     private fun closePage(fragment: Fragment) {
-        binding.container.animate()
-            .translationY((binding.container.height).toFloat())
-            .setDuration(300)
-            .start()
-
-        postDelayed({
-            childFragmentManager.commit {
-                fragment.let {
-                    remove(it)
-                    binding.container.isVisible = false
-                    hideKeyboardAction()
-                    reDrawBars()
-                    reDrawPage()
-                }
-            }
-        }, 350)
-    }
-
-    private fun reDrawPage() {
-        binding.container.animate()
-            .translationY(0.0f)
-            .setDuration(10)
-            .start()
-
-        postDelayed({
-            binding.container.isVisible = true
-        }, 20)
+        close(fragment, binding.container) {
+            reDrawBars()
+        }
     }
 
     override fun onCustomBackNavigation() {

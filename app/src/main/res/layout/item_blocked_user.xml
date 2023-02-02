@@ -40,12 +40,14 @@
             android:id="@+id/userName"
             style="@style/component_title"
             android:textColor="@color/white_90"
-            android:textSize="14sp" />
+            android:textSize="12sp"
+            android:singleLine="true"/>
 
         <TextView
             style="@style/component_text"
             android:text="@string/this_user_is_blocked"
-            android:textColor="@color/white_50" />
+            android:textColor="@color/white_50"
+            android:singleLine="true"/>
     </LinearLayout>
 
     <TextView

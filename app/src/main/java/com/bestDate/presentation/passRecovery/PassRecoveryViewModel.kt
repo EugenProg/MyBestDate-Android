@@ -8,6 +8,7 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.registration.RegistrationType
@@ -18,7 +19,8 @@ import javax.inject.Inject
 class PassRecoveryViewModel @Inject constructor(
     private val passRecoveryUseCase: RecoveryUseCase,
     private val authUseCase: AuthUseCase,
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val pusherCenter: PusherCenter
     ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
@@ -95,6 +97,7 @@ class PassRecoveryViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
@@ -104,6 +107,7 @@ class PassRecoveryViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }

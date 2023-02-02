@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BasePhotoEditorFragment
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentUserProfileBinding
+import com.bestDate.presentation.base.BasePhotoEditorFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -28,7 +29,6 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
-    private var mainPhotoUrl: String = ""
 
     override fun onInit() {
         super.onInit()
@@ -47,7 +47,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.backButton.onClick = {
-            navController.popBackStack()
+            goBack()
         }
         binding.signOutButton.onClick = {
             binding.signOutButton.toggleActionEnabled(true)
@@ -58,9 +58,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
         binding.matchesListButton.click = {
             navController.navigate(
-                UserProfileFragmentDirections.actionProfileToMatchesList(
-                    mainPhotoUrl
-                )
+                UserProfileFragmentDirections.actionProfileToMatchesList()
             )
         }
         binding.invitationListButton.click = {
@@ -109,7 +107,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             it.let { user ->
                 user?.getMainPhoto()?.let { image ->
                     setMainImage(image)
@@ -122,7 +120,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                     invitationListButton.badgeOn = user?.new_invitations.orZero > 0
                     likeListButton.badgeOn = user?.new_likes.orZero > 0
                     myDuelsButton.badgeOn = user?.new_duels.orZero > 0
-                    balanceButton.coinsCount = user?.coins?.toInt().orZero
+
                 }
 
                 adapter.submitList(getImageList(user?.photos)) {
@@ -130,10 +128,13 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 }
             }
         }
-        viewModel.signOutLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.coins) {
+            binding.balanceButton.coinsCount = it?.toInt().orZero
+        }
+        observe(viewModel.signOutLiveData) {
             navController.navigate(UserProfileFragmentDirections.actionGlobalAuthFragment())
         }
-        BasePhotoEditorFragment.editorAction.observe(viewLifecycleOwner) {
+        observe(BasePhotoEditorFragment.editorAction) {
             if (it != null) {
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
@@ -152,7 +153,6 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
     private fun setMainImage(image: ProfileImage?) {
         if (image == null) return
-        mainPhotoUrl = image.thumb_url.orEmpty()
         makeStatusBarTransparent(binding.refreshView)
 
         Glide.with(requireContext())

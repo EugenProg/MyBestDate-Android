@@ -4,12 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentMyDuelsBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>() {
+open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMyDuelsBinding =
         { inflater, parent, attach -> FragmentMyDuelsBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MyDuelsViewModel> = MyDuelsViewModel::class.java
@@ -25,7 +28,7 @@ class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>(
         binding.myDuelsView.adapter = adapter
 
         adapter.itemClick = {
-            navController.navigate(MyDuelsFragmentDirections.actionGlobalAnotherProfile(it))
+            navigateToUserProfile(it)
         }
 
         binding.refreshView.setOnRefreshListener {
@@ -45,20 +48,28 @@ class MyDuelsFragment: BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewModel>(
     override fun onViewLifecycle() {
         super.onViewLifecycle()
 
-        viewModel.myDuels.observe(viewLifecycleOwner) {
+        observe(viewModel.myDuels) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
-                viewModel.myDuels.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
+                viewModel.myDuels.value.isNullOrEmpty()
+            ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        navController.navigate(
+            MyDuelsFragmentDirections
+                .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
+        )
     }
 }

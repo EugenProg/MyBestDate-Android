@@ -13,7 +13,7 @@ open class OnSwipeTouchListener(context: Context) : OnTouchListener {
 
     private val gestureDetector: GestureDetector = GestureDetector(context, GestureListener())
 
-    override fun onTouch(view: View?, event: MotionEvent?): Boolean {
+    override fun onTouch(view: View?, event: MotionEvent): Boolean {
         return gestureDetector.onTouchEvent(event)
     }
 
@@ -21,21 +21,21 @@ open class OnSwipeTouchListener(context: Context) : OnTouchListener {
         private val verticalSwipeThreshold = 100
         private val horizontalSwipeThreshold = 100
 
-        override fun onDown(e: MotionEvent?): Boolean {
+        override fun onDown(e: MotionEvent): Boolean {
             return true
         }
 
         override fun onFling(
-            e1: MotionEvent?,
-            e2: MotionEvent?,
+            e1: MotionEvent,
+            e2: MotionEvent,
             velocityX: Float,
             velocityY: Float
         ): Boolean {
             var result = false
 
             try {
-                val diffY = (e2?.y ?: 0f) - (e1?.y ?: 0f)
-                val diffX = (e2?.x ?: 0f) - (e1?.x ?: 0f)
+                val diffY = (e2.y) - (e1.y)
+                val diffX = (e2.x) - (e1.x)
 
                 if (abs(diffX) > abs(diffY)) {
                     if (abs(diffX) > horizontalSwipeThreshold && abs(velocityX) > horizontalSwipeThreshold) {

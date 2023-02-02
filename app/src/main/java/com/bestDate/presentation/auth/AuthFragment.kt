@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
 import com.bestDate.presentation.base.BaseAuthFragment
+import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,10 +53,10 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.loginProcessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loginProcessLiveData) {
             binding.authButton.toggleActionEnabled(it)
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             if (viewModel.user.value != null && isLoggedIn) {
                 val language = getString(R.string.app_locale)
                 if (language != viewModel.user.value?.language) {
@@ -65,11 +66,15 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
                 }
             }
         }
-        viewModel.validationErrorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
+            isLoggedIn = false
+            showMessage(getString(R.string.wrong_auth_data))
+        }
+        observe(viewModel.validationErrorLiveData) {
             isLoggedIn = false
             showMessage(it)
         }
-        viewModel.updateLanguageSuccessLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.updateLanguageSuccessLiveData) {
             chooseRoute()
         }
     }

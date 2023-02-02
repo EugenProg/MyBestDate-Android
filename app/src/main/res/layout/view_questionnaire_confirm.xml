@@ -24,6 +24,6 @@
                 android:layout_gravity="center"
                 android:textColor="@color/bg_main"
                 android:textColorHint="@color/main_50"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
     </androidx.cardview.widget.CardView>
 </merge>

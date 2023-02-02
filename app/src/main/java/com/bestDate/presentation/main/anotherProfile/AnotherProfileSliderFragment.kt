@@ -4,9 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.NavigationResultKey
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.setNavigationResult
 import com.bestDate.databinding.FragmentAnotherProfileSliderBinding
 import com.bestDate.db.entity.Invitation
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -51,19 +54,21 @@ class AnotherProfileSliderFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.invitations.observe(viewLifecycleOwner) {
+        observe(viewModel.invitations) {
             invitationList = it
         }
-        viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.sendInvitationLiveData) {
             showMessage(R.string.invitation_is_send_successful)
         }
-        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.likeLiveData) {
             isLikeClicked = true
             viewModel.getUserById(args.userId)
-            navController.previousBackStackEntry?.savedStateHandle?.set("reload", true)
+            setNavigationResult(NavigationResultKey.RELOAD, true)
         }
-        viewModel.photos.observe(viewLifecycleOwner) { photos ->
-            binding.sliderView.setPhotos(photos, false, if (isLikeClicked) binding.sliderView.position else args.position)
+        observe(viewModel.photos) { photos ->
+            binding.sliderView.setPhotos(photos, false,
+                if (isLikeClicked) binding.sliderView.position else args.position
+            )
             binding.sliderView.handleIsLiked = { position ->
                 binding.navBox.isLiked = photos?.get(position)?.liked ?: false
             }

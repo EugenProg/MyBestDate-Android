@@ -41,6 +41,13 @@
         <attr name="start_with_loading" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="NoDataViewWithButton">
+        <attr name="no_data_text_title" format="string"/>
+        <attr name="no_data_text_desc" format="string"/>
+        <attr name="no_data_text_direction" format="string"/>
+        <attr name="start_it_with_loading" format="boolean"/>
+    </declare-styleable>
+
     <declare-styleable name="QuestionnaireTitleView">
         <attr name="questionnaire_title" format="string"/>
     </declare-styleable>
@@ -96,6 +103,10 @@
         <attr name="t_d_s_description" format="string"/>
         <attr name="t_d_s_switch_title" format="string"/>
         <attr name="t_d_s_switch_icon" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="ResultView">
+        <attr name="result_title" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="QuestionnaireInputView">

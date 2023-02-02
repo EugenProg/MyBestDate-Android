@@ -11,8 +11,8 @@ import com.bestDate.data.extension.isPhoneNumber
 import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.main.UserUseCase
-import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,6 +20,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
+    private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
@@ -31,8 +32,8 @@ class AuthViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
-    private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
-    var updateLanguageSuccessLiveData: LiveEvent<Boolean> = _updateLanguageSuccessLiveData
+    private var _updateLanguageSuccessLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var updateLanguageSuccessLiveData: LiveData<Boolean> = _updateLanguageSuccessLiveData
 
     fun logIn(login: String, password: String) {
         when {
@@ -47,6 +48,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
         }
@@ -57,6 +59,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
         }

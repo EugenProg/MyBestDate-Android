@@ -6,12 +6,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.*
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,20 +37,19 @@ class AnotherProfileFragment :
     private var user: ShortUserData? = null
     private var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
-    private var needsHeartAnim: Boolean = false
 
     override fun onInit() {
         super.onInit()
         makeStatusBarTransparent(binding.header.getTopBoxView())
         user = args.user
         viewModel.getUserById(user?.id)
-        viewModel.refreshInvitations()
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)
         binding.userInfoView.setUserInfo(user)
         binding.userBlockedView.setUserInfo(user)
         binding.navBox.isVisible = user?.blocked_me != true
         binding.navBox.isLiked = user?.getMainPhoto()?.liked == true
+        binding.navBox.hasMainPhoto = user?.main_photo != null
         isBlocked = user?.blocked == true
     }
 
@@ -74,7 +74,16 @@ class AnotherProfileFragment :
                 viewModel.sendInvitation(user?.id, it.id)
             }
         }
-        binding.navBox.hasMainPhoto = user?.main_photo != null
+        binding.navBox.chatClick = {
+            if (args.backScreen == BackScreenType.CHAT) {
+                navController.popBackStack()
+            } else {
+                navController.navigate(
+                    AnotherProfileFragmentDirections
+                        .actionGlobalAnotherProfileToChat(user, BackScreenType.ANOTHER_PROFILE)
+                )
+            }
+        }
         binding.navBox.likeClick = {
             user?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
@@ -112,20 +121,26 @@ class AnotherProfileFragment :
         }
         binding.userInfoView.openQuestionnaire = {
             navController.navigate(
-                AnotherProfileFragmentDirections
-                    .actionAnotherProfileToQuestionnaire(fullUser)
+                AnotherProfileFragmentDirections.actionAnotherProfileToQuestionnaire()
             )
         }
     }
 
     override fun goBack() {
         viewModel.clearUserData()
+        if (args.backScreen == BackScreenType.SEARCH) {
+            setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        }
+        else if (args.backScreen == BackScreenType.DUELS) {
+            setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
+        }
         super.goBack()
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
+            user?.last_online_at = it.last_online_at
             setBackground(it?.blocked_me)
             binding.header.setUserInfo(it)
             binding.userInfoView.setUserInfo(it)
@@ -136,33 +151,28 @@ class AnotherProfileFragment :
             fullUser = it
         }
 
-        viewModel.blockLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.blockLiveData) {
             val message = if (it) R.string.user_is_blocked_successful
             else R.string.user_is_unlocked_successful
             showMessage(getString(message))
         }
 
-        viewModel.invitations.observe(viewLifecycleOwner) {
+        observe(viewModel.invitations) {
             invitationList = it
         }
 
-        viewModel.sendInvitationLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.sendInvitationLiveData) {
             showMessage(R.string.invitation_is_send_successful)
         }
 
-        viewModel.likeLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.likeLiveData) {
             viewModel.getUserById(user?.id)
         }
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("reload")
-            ?.observe(viewLifecycleOwner) { result ->
-                if (result) {
-                    navController.currentBackStackEntry?.savedStateHandle?.set(
-                        "reload",
-                        false
-                    )
-                    viewModel.getUserById(user?.id)
-                }
+        getNavigationResult<Boolean>(NavigationResultKey.RELOAD) { result ->
+            if (result) {
+                setNavigationResult(NavigationResultKey.RELOAD, false)
+                viewModel.getUserById(user?.id)
             }
-
+        }
     }
 }

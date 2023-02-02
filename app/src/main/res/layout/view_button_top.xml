@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bgButtonAndShadow"
+        android:layout_width="180dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_button_and_shadow"
+        android:paddingHorizontal="45dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            style="@style/component_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="2dp"
+            android:gravity="center"
+            android:text="@string/top_50"
+            android:textColor="@color/bg_light_blue"
+            android:textSize="12sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right_blue"
+            app:drawableStartCompat="@drawable/ic_top_active"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

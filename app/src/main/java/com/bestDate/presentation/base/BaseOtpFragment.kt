@@ -8,22 +8,21 @@ import androidx.core.view.isVisible
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.FragmentBaseOtpBinding
 
-abstract class BaseOtpFragment(
-    @StringRes private val title: Int,
-    @StringRes private val text: Int,
-    @StringRes private val buttonText: Int
-) : BaseFragment<FragmentBaseOtpBinding>() {
+abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBaseOtpBinding =
         { inflater, parent, attach -> FragmentBaseOtpBinding.inflate(inflater, parent, attach) }
 
+    abstract fun getTitle(): Int
+    abstract fun getText(): Int
+    abstract fun getButtonTitle(): Int
     override val statusBarLight = true
 
     override fun onInit() {
         super.onInit()
         with(binding) {
-            headerTitle.text = getString(title)
-            headerText.text = getString(text)
-            confirmButton.title = getString(buttonText)
+            headerTitle.text = getString(getTitle())
+            headerText.text = getString(getText())
+            confirmButton.title = getString(getButtonTitle())
             otpInput.inputType = InputType.TYPE_CLASS_NUMBER
 
             otpInput.icon = null

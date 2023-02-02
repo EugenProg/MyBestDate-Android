@@ -44,7 +44,7 @@
                     android:inputType="textEmailAddress"
                     android:minHeight="48dp"
                     android:textColor="@color/white_90"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -58,20 +58,20 @@
             android:layout_height="0dp"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView23"
+            app:layout_constraintBottom_toTopOf="@+id/textViewPoweredByGoogle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputBox" />
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/textViewPoweredByGoogle"
             style="@style/component_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="@string/powered_by_google"
             android:textColor="@color/white_60"
-            android:textSize="16sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

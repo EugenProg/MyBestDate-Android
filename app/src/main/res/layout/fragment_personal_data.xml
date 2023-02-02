@@ -68,7 +68,7 @@
                     style="@style/component_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/imageView21"
                     app:layout_constraintStart_toStartOf="parent"

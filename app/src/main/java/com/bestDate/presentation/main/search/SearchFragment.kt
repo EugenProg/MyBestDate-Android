@@ -2,12 +2,20 @@ package com.bestDate.presentation.main.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bestDate.MainActivity
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.*
+import com.bestDate.data.model.AdditionalFilters
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchBinding
+import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,116 +25,161 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         { inflater, parent, attach -> FragmentSearchBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<SearchViewModel> = SearchViewModel::class.java
 
-    override val navBarColor = R.color.bg_main
     override val statusBarColor = R.color.bg_main
     private val adapter: SearchAdapter = SearchAdapter()
-    private lateinit var locationOptionsSheet: OptionsSheet
-    private lateinit var statusOptionsSheet: OptionsSheet
-    private lateinit var locationMap: MutableList<Pair<String, String>>
-    private lateinit var statusesMap: MutableList<Pair<String, String>>
-
-    override val statusBarLight = false
-    override val navBarLight = false
+    private lateinit var locationMap: LinkedHashMap<FilterType, String>
+    private lateinit var statusesMap: LinkedHashMap<FilterType, String>
+    private var selectedLocationFilter: FilterType = FilterType.ALL
+    private var selectedStatusFilter: FilterType = FilterType.NOT_SELECTED
+    private var additionalFilters: AdditionalFilters? = null
+    private var distance: Int? = null
+    private var selectedLocation: CityListItem? = null
+    private var savePosition: Boolean = false
 
     override fun onInit() {
         super.onInit()
+        getNavigationResult<Boolean>(NavigationResultKey.SAVE_POSITION) {
+            savePosition = it
+        }
         setUpSwipe()
         setUpToolbar()
         setUpUsersList()
+        setUpAdditionalFiltersView()
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        clearData()
-        getAllUsers()
-        viewModel.usersListLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.userList) {
             adapter.perPage = viewModel.perPage
             adapter.total = viewModel.total
             adapter.submitList(it) {
                 binding.swipeRefresh.isRefreshing = false
-                binding.noDataViewWithLoading.noData = it.isEmpty()
+                binding.noDataViewWithLoading.noData = it?.isEmpty() == true
             }
         }
 
-        viewModel.loadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingLiveData) {
             if (!binding.swipeRefresh.isRefreshing &&
-                viewModel.usersListLiveData.value.isNullOrEmpty()
+                viewModel.userList.value.isNullOrEmpty()
             ) binding.noDataViewWithLoading.toggleLoading(it)
         }
-        viewModel.user.observe(viewLifecycleOwner) {
+        observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
             locationMap = viewModel.getLocationMap(requireContext())
             statusesMap = viewModel.getStatusesMap(requireContext())
-            setUpLocationSheet()
-            setUpStatusSheet()
             setUpFilters()
+        }
+        observe(viewModel.locationLiveData) {
+            additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
+            viewModel.clearData()
+            getUsersByFilterInitial()
+        }
+    }
+
+    private fun setUpAdditionalFiltersView() {
+        binding.filtersView.setOnSaveClickListener {
+            val distanceFragment = DistanceFragment(
+                viewModel.user.value?.getUserLocation(),
+                distance,
+                selectedLocation
+            )
+
+            distanceFragment.saveClick = { location, distance ->
+                viewModel.getLocationByAddress(location)
+                this.selectedLocation = location
+                this.distance = distance
+                closePage(distanceFragment)
+            }
+            distanceFragment.backClick = {
+                closePage(distanceFragment)
+            }
+
+            open(distanceFragment, binding.fragmentContainer)
+            (activity as MainActivity).bottomNavView?.isVisible = false
+        }
+    }
+
+    private fun closePage(distanceFragment: DistanceFragment) {
+        close(distanceFragment, binding.fragmentContainer) {
+            reDrawBars()
+            (activity as MainActivity).bottomNavView?.isVisible = true
         }
     }
 
     private fun setUpToolbar() {
         binding.toolbar.title = getString(R.string.search)
         binding.toolbar.onProfileClick = {
-            navController.navigate(R.id.action_global_profile_nav_graph_from_search)
+            navController.navigate(SearchFragmentDirections.actionGlobalSearchToProfile())
         }
     }
 
     private fun setUpSwipe() {
         binding.swipeRefresh.setOnRefreshListener {
-            clearData()
+            viewModel.clearData()
             getUsersByFilterInitial()
         }
     }
 
     private fun setUpLocationSheet() {
-        locationOptionsSheet = OptionsSheet(
+        val locationOptionsSheet = OptionsSheet(
             locationMap, getString(R.string.location)
         )
         locationOptionsSheet.itemClick = {
-            binding.locationFilterButton.label = it?.first ?: getString(R.string.all_world)
-            saveFilters(Preferences.FILTER_LOCATION, it?.second ?: "all")
-            clearData()
-            getUsersByFilterInitial()
+            if (it.first != selectedLocationFilter || additionalFilters != null) {
+                selectedLocationFilter = it.first
+                binding.locationFilterButton.label = it.second
+                viewModel.saveFilter(Preferences.FILTER_LOCATION, it.first)
+                viewModel.clearData()
+                additionalFilters = null
+                getUsersByFilterInitial()
+            }
         }
+        locationOptionsSheet.show(childFragmentManager)
     }
 
     private fun setUpStatusSheet() {
-        statusOptionsSheet = OptionsSheet(
-            statusesMap, getString(R.string.online)
-        )
+        val statusOptionsSheet = OptionsSheet(statusesMap, getString(R.string.online))
         statusOptionsSheet.itemClick = {
-            binding.statusFilterButton.label = it?.first ?: getString(R.string.not_selected)
-            saveFilters(Preferences.FILTER_STATUS, it?.second ?: "all")
-            clearData()
-            getUsersByFilterInitial()
+            if (it.first != selectedStatusFilter || additionalFilters != null) {
+                selectedStatusFilter = it.first
+                binding.statusFilterButton.label = it.second
+                viewModel.saveFilter(Preferences.FILTER_STATUS, it.first)
+                viewModel.clearData()
+                additionalFilters = null
+                getUsersByFilterInitial()
+            }
         }
+        statusOptionsSheet.show(childFragmentManager)
     }
 
     private fun setUpUsersList() {
         binding.recyclerViewSearches.layoutManager = GridLayoutManager(requireContext(), 2)
         adapter.itemClick = {
-            navController.navigate(SearchFragmentDirections.actionGlobalAnotherProfileNavGraph2(it))
+            navController.navigate(
+                SearchFragmentDirections
+                    .actionGlobalSearchToAnotherProfile(it, BackScreenType.SEARCH)
+            )
         }
         adapter.loadMoreItems = {
             getUsersByFilter()
         }
         binding.recyclerViewSearches.adapter = adapter
+        if (!savePosition) getAllUsers()
     }
 
     private fun setUpFilters() {
-        binding.run {
-            locationFilterButton.label =
-                locationMap.find { it.second == viewModel.getFilter(Preferences.FILTER_LOCATION) }?.first
-                    ?: getString(R.string.all_world)
+        with(binding) {
+            selectedLocationFilter = viewModel.getFilter(Preferences.FILTER_LOCATION)
+            locationFilterButton.label = locationMap[selectedLocationFilter] ?: getString(R.string.all_world)
             locationFilterButton.isActive = true
             locationFilterButton.onClick = {
-                locationOptionsSheet.show(childFragmentManager, locationOptionsSheet.tag)
+                setUpLocationSheet()
             }
-            statusFilterButton.label =
-                statusesMap.find { it.second == viewModel.getFilter(Preferences.FILTER_STATUS) }?.first
-                    ?: getString(R.string.not_selected)
+            selectedStatusFilter = viewModel.getFilter(Preferences.FILTER_STATUS)
+            statusFilterButton.label = statusesMap[selectedStatusFilter] ?: getString(R.string.not_selected)
             statusFilterButton.isActive = false
             statusFilterButton.onClick = {
-                statusOptionsSheet.show(childFragmentManager, statusOptionsSheet.tag)
+                setUpStatusSheet()
             }
         }
     }
@@ -134,10 +187,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun getUsersByFilter() {
         viewModel.getUsersPaged(
             FilterOptions(
-                locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
-                    ?: "",
-                statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
-                    ?: ""
+                selectedLocationFilter.serverName,
+                selectedStatusFilter.serverName,
+                additionalFilters
             )
         )
     }
@@ -145,10 +197,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun getUsersByFilterInitial() {
         viewModel.getUsers(
             FilterOptions(
-                locationMap.firstOrNull { it.first == binding.locationFilterButton.label }?.second?.lowercase()
-                    ?: "",
-                statusesMap.firstOrNull { it.first == binding.statusFilterButton.label }?.second?.lowercase()
-                    ?: ""
+                selectedLocationFilter.serverName,
+                selectedStatusFilter.serverName,
+                additionalFilters
             )
         )
     }
@@ -156,17 +207,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun getAllUsers() {
         viewModel.getUsers(
             FilterOptions(
-                viewModel.getFilter(Preferences.FILTER_LOCATION),
-                viewModel.getFilter(Preferences.FILTER_STATUS)
+                viewModel.getFilter(Preferences.FILTER_LOCATION).serverName,
+                viewModel.getFilter(Preferences.FILTER_STATUS).serverName
             )
         )
-    }
-
-    private fun saveFilters(type: Preferences, value: String) {
-        viewModel.saveFilter(type, value)
-    }
-
-    private fun clearData() {
-        viewModel.clearData()
     }
 }

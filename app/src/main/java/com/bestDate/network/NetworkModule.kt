@@ -1,11 +1,9 @@
 package com.bestDate.network
 
 import android.content.Context
-import com.bestDate.data.extension.Core_network
-import com.bestDate.data.extension.Core_url
-import com.bestDate.data.extension.Geocoding_network
-import com.bestDate.data.extension.Geocoding_url
+import com.bestDate.data.extension.*
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.SessionManager
 import com.bestDate.network.remote.*
 import com.bestDate.network.services.*
 import dagger.Module
@@ -17,6 +15,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
@@ -31,12 +30,19 @@ object NetworkModule {
     fun providesGeocodingBaseURL(): String = "https://nominatim.openstreetmap.org"
 
     @Provides
-    fun provideInterceptor(
-        @ApplicationContext context: Context, preferences: PreferencesUtils): OkHttpClient {
+    @Translate_url
+    fun providesTranslateBaseURL(): String = "https://api-free.deepl.com/"
+
+    @Provides
+    fun provideInterceptor (
+        @ApplicationContext context: Context,
+        @Session_manager sessionManager: SessionManager
+    ): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(HeaderInterceptor(context, preferences))
+            .addInterceptor(HeaderInterceptor(context))
+            .addInterceptor(AuthorizationInterceptor(sessionManager))
             .addInterceptor(interceptor)
             .build()
     }
@@ -62,8 +68,23 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    @Translate_network
+    fun provideTranslateApi(@Translate_url BASE_URL: String, interceptor: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(interceptor)
+            .build()
+
+    @Provides
+    @Singleton
     fun coreAuthApiService(@Core_network retrofit: Retrofit): CoreAuthService =
         retrofit.create(CoreAuthService::class.java)
+
+    @Provides
+    @Singleton
+    fun duelsApiService(@Core_network retrofit: Retrofit): DuelsService =
+        retrofit.create(DuelsService::class.java)
 
     @Provides
     @Singleton
@@ -87,8 +108,23 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun chatsApiService(@Core_network retrofit: Retrofit): ChatsService =
+        retrofit.create(ChatsService::class.java)
+
+    @Provides
+    @Singleton
     fun geocodingApiService(@Geocoding_network retrofit: Retrofit): GeocodingService =
         retrofit.create(GeocodingService::class.java)
+
+    @Provides
+    @Singleton
+    fun translationApiService(@Translate_network retrofit: Retrofit): TranslateService =
+        retrofit.create(TranslateService::class.java)
+
+    @Provides
+    @Singleton
+    fun topApiService(@Core_network retrofit: Retrofit): TopService =
+        retrofit.create(TopService::class.java)
 
     @Provides
     @Singleton
@@ -117,6 +153,32 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun duelsRemoteData(apiService: DuelsService): DuelsRemoteData =
+        DuelsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun chatsRemoteData(apiService: ChatsService): ChatsRemoteData =
+        ChatsRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun topRemoteData(topService: TopService): TopRemoteData =
+        TopRemoteData(topService)
+
+    @Provides
+    @Singleton
+    @Session_manager
+    fun sessionManager(preferences: PreferencesUtils, authRemoteDataProvider: Provider<AuthRemoteData>): SessionManager =
+        SessionManager(preferences, authRemoteDataProvider)
+
+    @Provides
+    @Singleton
     fun geocodingRemoteData(apiService: GeocodingService): GeocodingRemoteData =
         GeocodingRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun translationRemoteData(apiService: TranslateService): TranslationRemoteData =
+        TranslationRemoteData(apiService)
 }

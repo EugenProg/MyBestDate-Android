@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.bestDate.R
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.SheetPhotoSetingsBinding
@@ -15,7 +16,7 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
+class PhotoSettingsSheet : BaseBottomSheet<SheetPhotoSetingsBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetPhotoSetingsBinding =
         { inflater, parent, attach -> SheetPhotoSetingsBinding.inflate(inflater, parent, attach) }
     private val viewModel: ProfilePhotoViewModel by viewModels()
@@ -57,19 +58,19 @@ class PhotoSettingsSheet: BaseBottomSheet<SheetPhotoSetingsBinding>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.updateSettingsLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.updateSettingsLiveData) {
             dismiss()
         }
-        viewModel.updateLoadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.updateLoadingLiveData) {
             binding.safeButton.toggleActionEnabled(it)
         }
-        viewModel.deleteLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.deleteLiveData) {
             dismiss()
         }
-        viewModel.deleteLoadingLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.deleteLoadingLiveData) {
             binding.deleteButton.toggleActionEnabled(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.safeButton.toggleActionEnabled(false)
             binding.deleteButton.toggleActionEnabled(false)
             showMessage(it.exception.message)

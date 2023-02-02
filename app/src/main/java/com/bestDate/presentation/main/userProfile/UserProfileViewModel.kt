@@ -1,9 +1,10 @@
 package com.bestDate.presentation.main.userProfile
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
-import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -13,9 +14,10 @@ class UserProfileViewModel @Inject constructor(
 ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
+    var coins = userUseCase.coinsCount
 
-    private var _signOutLiveData: LiveEvent<Boolean> = LiveEvent()
-    var signOutLiveData: LiveEvent<Boolean> = _signOutLiveData
+    private var _signOutLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var signOutLiveData: LiveData<Boolean> = _signOutLiveData
 
     fun updateUserData() {
         doAsync {

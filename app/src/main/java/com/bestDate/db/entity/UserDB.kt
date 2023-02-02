@@ -12,6 +12,7 @@ import com.bestDate.data.extension.getDiffYears
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
+import com.bestDate.presentation.registration.Gender
 import com.bestDate.presentation.registration.GenderType
 import kotlinx.parcelize.Parcelize
 import java.text.SimpleDateFormat
@@ -94,6 +95,11 @@ data class UserDB(
             if (it.gender == gender && it.aim.firstOrNull() == look_for?.firstOrNull()) return it
         }
         return GenderType.WOMAN_LOOKING_MAN
+    }
+
+    fun getDuelGender(): Gender {
+        return if (look_for?.first() == Gender.MAN.serverName) Gender.MAN
+        else Gender.WOMAN
     }
 
     fun getBirthDate(): Date {

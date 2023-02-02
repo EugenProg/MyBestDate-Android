@@ -4,8 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -16,9 +15,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.bestDate.R
 import com.bestDate.data.model.BaseResponse
+import com.bestDate.presentation.main.chats.ChatListAdapter
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -40,7 +44,7 @@ fun EditText.textIsChanged(textIsChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
             textIsChanged.invoke(s.toString())
@@ -61,8 +65,9 @@ fun EditText.textInputAsFlow() = callbackFlow {
 
 fun RequestBuilder<Drawable>.imageIsSet(
     owner: LifecycleOwner,
-    imageIsSet: () -> Unit): RequestBuilder<Drawable> {
-    return this.addListener(object : RequestListener<Drawable>{
+    imageIsSet: () -> Unit
+): RequestBuilder<Drawable> {
+    return this.addListener(object : RequestListener<Drawable> {
         override fun onLoadFailed(
             e: GlideException?,
             model: Any?,
@@ -93,13 +98,21 @@ fun Context.vibratePhone() {
         vibrator.vibrate(100)
     }
 }
+
 /**
  * An extension to convert numbers from dp to px
  * */
 fun Int.toPx() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,
     this.toFloat(),
-    Resources.getSystem().displayMetrics).toInt()
+    Resources.getSystem().displayMetrics
+).toInt()
+
+fun Float.toPx() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this,
+    Resources.getSystem().displayMetrics
+)
 
 @SuppressLint("SimpleDateFormat")
 fun Date.toStringFormat(): String {
@@ -114,7 +127,7 @@ fun Date.toServerFormat(): String {
 }
 
 val Int?.orZero: Int
-get() = this ?: 0
+    get() = this ?: 0
 
 
 fun Uri?.getBitmap(context: Context): Bitmap? {
@@ -145,8 +158,10 @@ fun Bitmap.toByteArray(): ByteArray {
     return stream.toByteArray()
 }
 
-fun CropLayout.cropListener(success: ((Bitmap) -> Unit)? = null,
-                            failure: ((Exception) -> Unit)? = null) {
+fun CropLayout.cropListener(
+    success: ((Bitmap) -> Unit)? = null,
+    failure: ((Exception) -> Unit)? = null
+) {
     this.addOnCropListener(object : OnCropListener {
         override fun onFailure(e: Exception) {
             failure?.invoke(e)
@@ -169,4 +184,77 @@ fun ResponseBody?.getErrorMessage(): String {
     } catch (e: Exception) {
         e.message.orEmpty()
     }
+}
+
+fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
+    ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START) {
+        val currentScrollOffset = 0
+
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            if (viewHolder is ChatListAdapter.ChatListItemViewHolder) {
+                context.vibratePhone()
+                deleteAction.invoke(viewHolder.adapterPosition)
+            }
+        }
+
+        override fun onChildDraw(
+            c: Canvas,
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            dX: Float,
+            dY: Float,
+            actionState: Int,
+            isCurrentlyActive: Boolean
+        ) {
+            if (viewHolder is ChatListAdapter.ChatListItemViewHolder &&
+                actionState == ItemTouchHelper.ACTION_STATE_SWIPE
+            ) {
+                with(viewHolder.itemView) {
+                    val paint = Paint()
+                    paint.color = ContextCompat.getColor(context, R.color.red)
+                    val back = RectF(
+                        right.toFloat() - 81.toPx(),
+                        top.toFloat(),
+                        right.toFloat(),
+                        bottom.toFloat()
+                    )
+                    c.drawRect(back, paint)
+
+                    val scrollOffset = currentScrollOffset + (-dX).toInt()
+                    if (scrollOffset < 80.toPx()) {
+                        super.onChildDraw(
+                            c,
+                            recyclerView,
+                            viewHolder,
+                            -scrollOffset.toFloat(),
+                            dY,
+                            actionState,
+                            isCurrentlyActive
+                        )
+                    }
+
+                    if (scrollOffset > 50.toPx()) {
+                        val icon =
+                            BitmapFactory.decodeResource(resources, R.drawable.ic_chat_list_delete)
+                        val iconRect =
+                            RectF(
+                                right.toFloat() - 50.toPx(),
+                                top.toFloat() + 28.toPx(),
+                                right.toFloat() - 30.toPx(),
+                                bottom.toFloat() - 30.toPx()
+                            )
+                        c.drawBitmap(icon, null, iconRect, paint)
+                    }
+                }
+            }
+        }
+    }).attachToRecyclerView(this)
 }

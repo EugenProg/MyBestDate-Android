@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white_80"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/status"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/deactive"
                 android:textColor="@color/bg_pink"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <androidx.appcompat.widget.SwitchCompat
@@ -53,8 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:thumb="@drawable/switch_thumb"
             android:clickable="false"
+            android:thumb="@drawable/switch_thumb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

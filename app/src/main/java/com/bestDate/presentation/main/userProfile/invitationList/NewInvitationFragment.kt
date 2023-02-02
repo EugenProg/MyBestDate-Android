@@ -4,17 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentInvitationBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.NewInvitationsAdapter
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewInvitationFragment: BaseVMFragment<FragmentInvitationBinding, InvitationListViewModel>() {
+class NewInvitationFragment(var navigateAction: (ShortUserData?) -> Unit) :
+    BaseVMFragment<FragmentInvitationBinding, InvitationListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInvitationBinding =
         { inflater, parent, attach -> FragmentInvitationBinding.inflate(inflater, parent, attach) }
-    override val viewModelClass: Class<InvitationListViewModel> = InvitationListViewModel::class.java
+    override val viewModelClass: Class<InvitationListViewModel> =
+        InvitationListViewModel::class.java
     override val statusBarColor = R.color.bg_main
 
     private var adapter: NewInvitationsAdapter = NewInvitationsAdapter()
@@ -40,7 +44,7 @@ class NewInvitationFragment: BaseVMFragment<FragmentInvitationBinding, Invitatio
     override fun onViewClickListener() {
         super.onViewClickListener()
         adapter.userClick = {
-            navController.navigate(InvitationListFragmentDirections.actionGlobalAnotherProfile(it))
+            navigateAction.invoke(it)
         }
 
         adapter.answerClick = { answer, id ->
@@ -51,18 +55,19 @@ class NewInvitationFragment: BaseVMFragment<FragmentInvitationBinding, Invitatio
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.newInvitations.observe(viewLifecycleOwner) {
+        observe(viewModel.newInvitations) {
             adapter.submitList(it) {
                 binding.refreshView.isRefreshing = false
                 binding.noDataView.noData = it.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!it) loaderDialog.stopLoading()
             if (!binding.refreshView.isRefreshing &&
-                viewModel.newInvitations.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
+                viewModel.newInvitations.value.isNullOrEmpty()
+            ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)

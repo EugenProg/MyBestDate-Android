@@ -2,27 +2,51 @@ package com.bestDate.presentation.main.anotherProfile.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseFragment
+import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.databinding.FragmentAnotherProfileQuestionnaireBinding
+import com.bestDate.db.entity.QuestionnaireDB
+import com.bestDate.db.entity.UserDB
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.base.questionnaire.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AnotherProfileQuestionnaireFragment: BaseFragment<FragmentAnotherProfileQuestionnaireBinding>() {
+open class AnotherProfileQuestionnaireFragment:
+    BaseVMFragment<FragmentAnotherProfileQuestionnaireBinding, AnotherProfileQuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileQuestionnaireBinding =
         { inflater, parent, attach -> FragmentAnotherProfileQuestionnaireBinding.inflate(inflater, parent, attach) }
+    override val viewModelClass: Class<AnotherProfileQuestionnaireViewModel> =
+        AnotherProfileQuestionnaireViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
-    private val args by navArgs<AnotherProfileQuestionnaireFragmentArgs>()
+    private var myUser: UserDB? = null
 
-    override fun onInit() {
-        super.onInit()
-        val user = args.user
-        val questionnaire = user?.questionnaire
+    override fun onViewLifecycle() {
+        super.onViewLifecycle()
+        observe(viewModel.translateLiveData) {
+            binding.aboutMe.setInfo(it)
+            binding.aboutMe.setTranslatable(false)
+        }
+        observe(viewModel.user) {
+            setQuestionnaireInfo(it.questionnaire)
+            setTranslateVisibility(it)
+        }
+        observe(viewModel.myUser) {
+            myUser = it
+            setTranslateVisibility(viewModel.user.value)
+        }
+    }
 
+    private fun setTranslateVisibility(selectedUser: UserDB?) {
+        binding.aboutMe.setTranslatable(
+            !selectedUser?.questionnaire?.about_me.isNullOrBlank() &&
+                    selectedUser?.language != myUser?.language
+        )
+    }
+
+    private fun setQuestionnaireInfo(questionnaire: QuestionnaireDB?) {
         with(binding) {
             aboutMe.setInfo(questionnaire?.about_me)
             myHeight.setInfo(getString(R.string.cm_unit, questionnaire?.height.orZero.toString()))
@@ -49,6 +73,9 @@ class AnotherProfileQuestionnaireFragment: BaseFragment<FragmentAnotherProfileQu
         super.onViewClickListener()
         binding.toolbar.backClick = {
             goBack()
+        }
+        binding.aboutMe.translateClick = {
+            viewModel.translate()
         }
     }
 }

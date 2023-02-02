@@ -2,45 +2,28 @@ package com.bestDate.presentation.main.userProfile.matchesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.data.extension.observe
+import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentMatchesListBinding
+import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showMatchActionDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
+open class MatchesListFragment :
+    BaseVMFragment<FragmentMatchesListBinding, MatchesListViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentMatchesListBinding =
         { inflater, parent, attach -> FragmentMatchesListBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<MatchesListViewModel> = MatchesListViewModel::class.java
 
-    private val args by navArgs<MatchesListFragmentArgs>()
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MatchesListAdapter
 
     override fun onInit() {
         super.onInit()
-
-        adapter = MatchesListAdapter(args.myPhoto)
-        binding.matchesListView.layoutManager = LinearLayoutManager(requireContext())
-        binding.matchesListView.adapter = adapter
-
-        adapter.itemClick = { item, type ->
-            if (type == MatchesSelectType.USER) {
-                navController.navigate(
-                    MatchesListFragmentDirections.actionGlobalAnotherProfile(item.user))
-            } else {
-                requireActivity().showMatchActionDialog(item, args.myPhoto, {
-                    navController.navigate(
-                        MatchesListFragmentDirections.actionGlobalAnotherProfile(it))
-                }, {
-                    showMessage("open chat")
-                })
-            }
-        }
-
         binding.refreshView.setOnRefreshListener {
             viewModel.getMatches()
         }
@@ -57,22 +40,54 @@ class MatchesListFragment : BaseVMFragment<FragmentMatchesListBinding, MatchesLi
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-
-        viewModel.matchesList.observe(viewLifecycleOwner) {
-            adapter.submitList(it) {
+        observe(viewModel.matchesList) {
+            initListData(it.second)
+            adapter.submitList(it.first) {
                 binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
+                binding.noDataView.noData = it.first.isEmpty()
             }
         }
-        viewModel.loadingMode.observe(viewLifecycleOwner) {
+        observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
-                viewModel.matchesList.value.isNullOrEmpty()
+                viewModel.matchesList.value?.first.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
+        observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
             binding.noDataView.toggleLoading(false)
             showMessage(it.exception.message)
         }
+    }
+
+    private fun initListData(myPhotoUrl: String?) {
+        adapter = MatchesListAdapter(myPhotoUrl.orEmpty())
+        binding.matchesListView.layoutManager = LinearLayoutManager(requireContext())
+        binding.matchesListView.adapter = adapter
+
+        adapter.itemClick = { item, type ->
+            if (type == MatchesSelectType.USER) {
+                navigateToUserProfile(item.user)
+            } else {
+                requireActivity().showMatchActionDialog(item, myPhotoUrl.orEmpty(), {
+                    navigateToUserProfile(it)
+                }, {
+                    navigateToChat(it)
+                })
+            }
+        }
+    }
+
+    open fun navigateToUserProfile(userData: ShortUserData?) {
+        navController.navigate(
+            MatchesListFragmentDirections
+                .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
+        )
+    }
+
+    open fun navigateToChat(userData: ShortUserData?) {
+        navController.navigate(
+            MatchesListFragmentDirections
+                .actionGlobalProfileToChat(userData, BackScreenType.PROFILE)
+        )
     }
 }

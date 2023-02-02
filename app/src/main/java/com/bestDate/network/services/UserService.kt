@@ -30,6 +30,14 @@ interface UserService {
     @GET("/api/v1/match")
     suspend fun getMatchesList(): Response<MatchesListResponse>
 
+    /**Get users for match*/
+    @GET("/api/v1/match-users")
+    suspend fun getUsersForMatch(): Response<ShortUsersDataResponse>
+
+    /**Match action*/
+    @POST("/api/v1/match")
+    suspend fun matchAction(@Body body: MatchActionRequest): Response<MatchActionResponse>
+
     /**Get user duels*/
     @GET("/api/v1/voting")
     suspend fun getMyDuels(): Response<MyDuelsResponse>
@@ -100,4 +108,8 @@ interface UserService {
     /**Delete user profile*/
     @DELETE("/api/v1/user")
     suspend fun deleteUserProfile(): Response<BaseResponse>
+
+    /**Save messaging token*/
+    @POST("/api/v1/device-token")
+    suspend fun saveMessagingDeviceToken(@Body request: SaveDeviceTokenRequest): Response<BaseResponse>
 }

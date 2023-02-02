@@ -6,9 +6,8 @@
         style="@style/title"
         android:textAllCaps="true"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:paddingTop="29dp"
         android:paddingBottom="15dp"
         android:layout_height="wrap_content"/>
-
 </merge>

@@ -8,6 +8,10 @@ class PreferencesUtils(private var preferences: SharedPreferences) {
         return preferences.getString(key.name, "").orEmpty()
     }
 
+    fun getLong(key: Preferences): Long {
+        return preferences.getLong(key.name, 0)
+    }
+
     fun getInt(key: Preferences): Int {
         return preferences.getInt(key.name, 0)
     }
@@ -35,6 +39,12 @@ class PreferencesUtils(private var preferences: SharedPreferences) {
     fun saveBoolean(key: Preferences, value: Boolean) {
         val editor = preferences.edit()
         editor.putBoolean(key.name, value)
+        editor.apply()
+    }
+
+    fun saveLong(key: Preferences, value: Long) {
+        val editor = preferences.edit()
+        editor.putLong(key.name, value)
         editor.apply()
     }
 }
