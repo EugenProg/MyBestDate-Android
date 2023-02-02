@@ -5,9 +5,12 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.toServerFormat
 import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.utils.Logger
 import com.bestDate.presentation.auth.AuthViewModel
+import com.bestDate.presentation.registration.GenderType
 import com.bestDate.view.alerts.LoaderDialog
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
@@ -17,7 +20,6 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 
@@ -28,6 +30,11 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     private lateinit var callbackManager: CallbackManager
     protected lateinit var loaderDialog: LoaderDialog
     protected var isLoggedIn = false
+
+    abstract fun navigateToMain()
+    abstract fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType)
+    abstract fun navigateToPhoto()
+    abstract fun navigateToQuestionnaire()
 
     override fun onInit() {
         super.onInit()
@@ -42,6 +49,41 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             if (it.exception.message.isBlank()) {
                 showMessage(getString(R.string.wrong_auth_data))
             } else showMessage(it.exception.message)
+        }
+        observe(viewModel.user) {
+            if (viewModel.user.value != null && isLoggedIn) {
+                val language = getString(R.string.app_locale)
+                if (language != viewModel.user.value?.language) {
+                    viewModel.changeLanguage(language)
+                } else {
+                    chooseRoute()
+                }
+            }
+        }
+        observe(viewModel.updateLanguageSuccessLiveData) {
+            chooseRoute()
+        }
+    }
+
+    private fun chooseRoute() {
+        loaderDialog.stopLoading()
+        when {
+            viewModel.registrationSocialMode -> {
+                viewModel.registrationSocialMode = false
+                val name = viewModel.user.value?.name
+                val gender = viewModel.user.value?.getGenderType() ?: GenderType.WOMAN_LOOKING_MAN
+                val birthDate = viewModel.user.value?.getBirthDate()?.toServerFormat()
+                navigateToFillData(name, birthDate, gender)
+            }
+            viewModel.user.value?.hasNoPhotos() == true -> {
+                navigateToPhoto()
+            }
+            viewModel.user.value?.questionnaireEmpty() == true -> {
+                navigateToQuestionnaire()
+            }
+            else -> {
+                navigateToMain()
+            }
         }
     }
 
@@ -67,11 +109,13 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     }
 
     protected fun loginWithFacebook() {
-        LoginManager.getInstance().logInWithReadPermissions(this, listOf("public_profile"))
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, callbackManager, listOf("public_profile"))
     }
 
     protected fun loginByGoogle() {
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        showMessage("Service is temporarily unavailable")
+       /* val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestId()
             .requestProfile()
@@ -80,10 +124,11 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         val signInIntent = googleSignInClient.signInIntent
-        googleResultLauncher.launch(signInIntent)
+        googleResultLauncher.launch(signInIntent)*/
     }
 
-    private var googleResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+    private var googleResultLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK) {
             val data: Intent? = it.data
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -98,15 +143,10 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             val account = completedTask.getResult(ApiException::class.java)
             Logger.print("Google access token: ${account.serverAuthCode}")
             loaderDialog.startLoading()
-            viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)//"ya29.a0AX9GBdWdmHCpYI0kPIjTYT-6ynTzQ9vRUoBHwqIlQuhjdEQtQsW-i_t0scXeWbbndN5bJ0jfeGx6Y0kiatEEcDs8U1DX0Ld5sVBqOaMDqcISlgs4GmkjC469wLBjN5cboA2V9MdTT0K0pRuHAu-SbcdlR9JuaCgYKAYUSARASFQHUCsbCFuww0unKzsW_YG1_1t0_Vg0163"
+            isLoggedIn = true
+            viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)
         } catch (e: Exception) {
             loaderDialog.stopLoading()
         }
-    }
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callbackManager.onActivityResult(requestCode, resultCode, data)
     }
 }

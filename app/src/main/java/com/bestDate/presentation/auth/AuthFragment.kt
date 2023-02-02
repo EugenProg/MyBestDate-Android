@@ -9,6 +9,7 @@ import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
 import com.bestDate.presentation.base.BaseAuthFragment
+import com.bestDate.presentation.registration.GenderType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,16 +55,6 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
         observe(viewModel.loginProcessLiveData) {
             binding.authButton.toggleActionEnabled(it)
         }
-        observe(viewModel.user) {
-            if (viewModel.user.value != null && isLoggedIn) {
-                val language = getString(R.string.app_locale)
-                if (language != viewModel.user.value?.language) {
-                    viewModel.changeLanguage(language)
-                } else {
-                    chooseRoute()
-                }
-            }
-        }
         observe(viewModel.errorLiveData) {
             isLoggedIn = false
             loaderDialog.stopLoading()
@@ -73,24 +64,24 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
             isLoggedIn = false
             showMessage(it)
         }
-        observe(viewModel.updateLanguageSuccessLiveData) {
-            chooseRoute()
-        }
     }
 
-    private fun chooseRoute() {
-        loaderDialog.stopLoading()
-        when {
-            viewModel.user.value?.hasNoPhotos() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
-            }
-            viewModel.user.value?.questionnaireEmpty() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
-            }
-            else -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToMain())
-            }
-        }
+    override fun navigateToMain() {
+        navController.navigate(AuthFragmentDirections.actionAuthToMain())
+    }
+
+    override fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType) {
+        navController.navigate(
+            AuthFragmentDirections
+                .actionAuthToFillRegistrationAouthData(name, birthDate, genderType))
+    }
+
+    override fun navigateToPhoto() {
+        navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
+    }
+
+    override fun navigateToQuestionnaire() {
+        navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
     }
 
     override fun scrollAction() {

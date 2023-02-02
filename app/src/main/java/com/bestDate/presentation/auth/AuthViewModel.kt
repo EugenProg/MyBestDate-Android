@@ -24,6 +24,12 @@ class AuthViewModel @Inject constructor(
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
+    var registrationSocialMode: Boolean
+    get() = authUseCase.registrationSocialMode
+    set(value) {
+        authUseCase.registrationSocialMode = value
+    }
+
     private var _validationErrorLiveData = MutableLiveData<Int>()
     val validationErrorLiveData: LiveData<Int> = _validationErrorLiveData
 
@@ -70,7 +76,7 @@ class AuthViewModel @Inject constructor(
             authUseCase.loginSocial(provider, token)
             userUseCase.refreshUser()
             pusherCenter.startPusher()
-            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
+            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
         }
     }
 

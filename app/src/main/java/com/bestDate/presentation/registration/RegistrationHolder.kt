@@ -3,6 +3,7 @@ package com.bestDate.presentation.registration
 import androidx.annotation.StringRes
 import com.bestDate.R
 import com.bestDate.data.extension.formatToPhoneNumber
+import com.bestDate.data.extension.getEighteenYearDate
 import com.bestDate.data.extension.toServerFormat
 import com.bestDate.data.model.RegistrationRequest
 import java.util.*
@@ -27,8 +28,8 @@ object RegistrationHolder {
     var login: String = ""
     var password: String = ""
     var name: String = ""
-    var birthdate: Date? = null
-    var gender: GenderType? = null
+    var birthdate: Date? = getEighteenYearDate()
+    var gender: GenderType? = GenderType.WOMAN_LOOKING_MAN
 }
 
 enum class RegistrationType {
@@ -36,10 +37,10 @@ enum class RegistrationType {
 }
 
 enum class GenderType(@StringRes val line: Int, val gender: String, val aim: MutableList<String>) {
+    WOMAN_LOOKING_MAN(R.string.woman_looking_for_a_man, "female", mutableListOf("male")),
+    WOMAN_LOOKING_WOMAN(R.string.woman_looking_for_a_woman, "female", mutableListOf("female")),
     MAN_LOOKING_MAN(R.string.man_looking_for_a_man, "male", mutableListOf("male")),
     MAN_LOOKING_WOMAN(R.string.man_looking_for_a_woman, "male", mutableListOf("female")),
-    WOMAN_LOOKING_MAN(R.string.woman_looking_for_a_man, "female", mutableListOf("male")),
-    WOMAN_LOOKING_WOMAN(R.string.woman_looking_for_a_woman, "female", mutableListOf("female"))
 }
 
 enum class Gender(val label: Int, val serverName: String) {

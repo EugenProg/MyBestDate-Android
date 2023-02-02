@@ -10,14 +10,15 @@ import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
-import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.data.extension.show
 import com.bestDate.presentation.base.BaseAuthFragment
 import com.bestDate.view.CalendarView
 import com.bestDate.view.bottomSheet.genderSheet.GenderSheet
 import com.google.android.material.datepicker.MaterialDatePicker
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
+@AndroidEntryPoint
 class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentStartRegistrationBinding =
         { inflater, parent, attach -> FragmentStartRegistrationBinding.inflate(inflater, parent, attach) }
@@ -55,6 +56,9 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
             }
             socialContainer.googleClick = {
                 loginByGoogle()
+            }
+            socialContainer.facebookClick = {
+                loginWithFacebook()
             }
             loginButton.setOnClickListener {
                 navController.navigate(StartRegistrationFragmentDirections
@@ -111,5 +115,24 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
             ViewUtils().showViews(socialContainer, loginButton, genderInput, birthInput)
             inputContainer.setPaddingBottom(90)
         }
+    }
+
+    override fun navigateToMain() {
+        navController.navigate(StartRegistrationFragmentDirections.actionStartRegistrationToMain())
+    }
+
+    override fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType) {
+        navController.navigate(StartRegistrationFragmentDirections
+            .actionStartRegistrationToFillRegistrationAouthData(name, birthDate, genderType))
+    }
+
+    override fun navigateToPhoto() {
+        navController.navigate(StartRegistrationFragmentDirections
+            .actionStartRegistrationToPhotoEditor())
+    }
+
+    override fun navigateToQuestionnaire() {
+        navController.navigate(StartRegistrationFragmentDirections
+            .actionStartRegistrationToQuestionnaire())
     }
 }

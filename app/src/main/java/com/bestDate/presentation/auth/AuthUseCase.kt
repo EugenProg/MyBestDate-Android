@@ -22,6 +22,7 @@ class AuthUseCase @Inject constructor(
 ) {
     var tokenIsFresh: Boolean = false
         private set
+    var registrationSocialMode: Boolean = false
 
     suspend fun loginByEmail(email: String, password: String) {
         val response = authRemoteData.loginByEmail(email, password)
@@ -45,6 +46,7 @@ class AuthUseCase @Inject constructor(
         val response = authRemoteData.loginSocial(provider, token)
         if (response.isSuccessful) {
             saveTokens(response.body())
+            registrationSocialMode = response.body()?.registration == true
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

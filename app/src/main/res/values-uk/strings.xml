@@ -637,4 +637,5 @@
     <string name="possibility_from_0_to_300_kilometers">Можливість від 0 до 300 кілометрів</string>
     <string name="prohibit_incoming_messages">Заборонити вхідні повідомлення</string>
     <string name="watch">Подивитися</string>
+    <string name="fill_the_required_data">Заповніть необхідні дані</string>
 </resources>
