@@ -6,7 +6,6 @@ import com.bestDate.data.model.AuthResponse
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
-import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.InvitationUseCase
@@ -18,18 +17,17 @@ class AuthUseCase @Inject constructor(
     private val authRemoteData: AuthRemoteData,
     private val userRemoteData: UserRemoteData,
     private val invitationUseCase: InvitationUseCase,
-    private val preferencesUtils: PreferencesUtils,
-    private val pusherCenter: PusherCenter
+    private val preferencesUtils: PreferencesUtils
 ) {
     var tokenIsFresh: Boolean = false
-    private set
+        private set
 
     suspend fun loginByEmail(email: String, password: String) {
         val response = authRemoteData.loginByEmail(email, password)
         if (response.isSuccessful) {
             saveTokens(response.body())
             saveDeviceToken()
-            refreshData()
+            invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
@@ -38,18 +36,13 @@ class AuthUseCase @Inject constructor(
         if (response.isSuccessful) {
             saveTokens(response.body())
             saveDeviceToken()
-            refreshData()
+            invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     private suspend fun saveDeviceToken() {
         val token = preferencesUtils.getString(Preferences.FIREBASE_TOKEN)
         if (token.isNotBlank()) userRemoteData.saveMessagingDeviceToken(token)
-    }
-
-    private suspend fun refreshData() {
-        invitationUseCase.refreshInvitations()
-        pusherCenter.startPusher()
     }
 
     suspend fun refreshToken() {

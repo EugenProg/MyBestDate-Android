@@ -43,6 +43,6 @@ enum class GenderType(@StringRes val line: Int, val gender: String, val aim: Mut
 }
 
 enum class Gender(val label: Int, val serverName: String) {
-    MAN(R.string.man, "male"),
-    WOMAN(R.string.woman, "female")
+    WOMAN(R.string.woman, "female"),
+    MAN(R.string.man, "male")
 }

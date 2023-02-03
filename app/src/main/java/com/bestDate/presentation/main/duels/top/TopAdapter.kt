@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
@@ -14,19 +16,22 @@ import com.bumptech.glide.Glide
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class TopAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TopAdapter : ListAdapter<DuelProfile, TopAdapter.TopListViewHolder>(TopListDiffUtil()) {
 
     var itemClick: ((DuelProfile?) -> Unit)? = null
 
-    var items: MutableList<DuelProfile> = mutableListOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
+    class TopListDiffUtil: DiffUtil.ItemCallback<DuelProfile>() {
+        override fun areItemsTheSame(oldItem: DuelProfile, newItem: DuelProfile): Boolean {
+            return oldItem.id == newItem.id
         }
 
+        override fun areContentsTheSame(oldItem: DuelProfile, newItem: DuelProfile): Boolean {
+            return oldItem == newItem
+        }
+    }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return GuestViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopListViewHolder {
+        return TopListViewHolder(
             ItemTopProfilesElementBinding.inflate(
                 LayoutInflater.from(
                     parent.context
@@ -35,11 +40,11 @@ class TopAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is GuestViewHolder) holder.bind(items[position], itemClick)
+    override fun onBindViewHolder(holder: TopListViewHolder, position: Int) {
+        holder.bind(getItem(position), itemClick)
     }
 
-    class GuestViewHolder(
+    class TopListViewHolder(
         override val binding: ItemTopProfilesElementBinding
     ) : BaseClickViewHolder<DuelProfile?, ((DuelProfile?) -> Unit)?, ItemTopProfilesElementBinding>(
         binding
@@ -81,6 +86,4 @@ class TopAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
     }
-
-    override fun getItemCount(): Int = items.size
 }

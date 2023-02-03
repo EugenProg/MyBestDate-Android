@@ -5,6 +5,7 @@ import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.db.dao.UserDao
 import com.bestDate.db.dao.UserSettingsDao
 import com.bestDate.db.entity.QuestionnaireDB
@@ -38,6 +39,7 @@ class UserUseCase @Inject constructor(
     private val duelsUseCase: DuelsUseCase,
     private val chatListUseCase: ChatListUseCase,
     private val topUseCase: TopUseCase,
+    private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) {
 
@@ -56,6 +58,7 @@ class UserUseCase @Inject constructor(
 
     suspend fun logout() {
         authRemoteData.logout()
+        pusherCenter.disconnect()
         clearUserData()
     }
 
@@ -95,6 +98,7 @@ class UserUseCase @Inject constructor(
 
     suspend fun deleteUserProfile() {
         userRemoteData.deleteUserProfile()
+        pusherCenter.disconnect()
         clearUserData()
     }
 }

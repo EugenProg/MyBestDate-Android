@@ -10,6 +10,7 @@ import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
+    private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
@@ -41,6 +43,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }
     }
@@ -49,6 +52,7 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.refreshUser()
+            pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
         }
     }
