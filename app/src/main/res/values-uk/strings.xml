@@ -637,4 +637,8 @@
     <string name="possibility_from_0_to_300_kilometers">Можливість від 0 до 300 кілометрів</string>
     <string name="prohibit_incoming_messages">Заборонити вхідні повідомлення</string>
     <string name="watch">Подивитися</string>
+    <string name="choose_the_plan">Виберіть план</string>
+    <string name="you_have_three_messages_available_per_day">У вас є <b>три повідомлення</b>\nна <b>день</b></string>
+    <string name="activate">Активувати</string>
+    <string name="you_have_one_invitation_card_per_day">У вас є <b>одне запрошення</b>\nна <b>день</b></string>
 </resources>

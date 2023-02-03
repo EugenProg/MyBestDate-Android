@@ -6,6 +6,8 @@
     <string name="default_notification_channel_id" translatable="false">LoveSexAndSexWithLove</string>
     <string name="miss_country" translatable="false">Miss %s</string>
     <string name="mister_country" translatable="false">Mister %s</string>
+    <string name="percent_symbol" translatable="false">%</string>
+    <string name="pro" translatable="false">Pro</string>
 
     <string name="skip">Skip</string>
     <string name="dating_without_restrictions">Dating without restrictions</string>
@@ -466,7 +468,7 @@
     <string name="code_send_to_your_email">Code sent to your email</string>
     <string name="code_send_to_your_phone">Code sent to your phone</string>
     <string name="confirmation_code_sent_to_email_address">Confirmation code sent to email address:</string>
-    <string name="confirmation_code_sent_to_phone">Код підтвердження відправлено на телефон:</string>
+    <string name="confirmation_code_sent_to_phone">The confirmation code has been sent to your phone:</string>
     <string name="photo_is_not_correct">Photo is not correct</string>
     <string name="we_cannot_accept_this_photo_for_one_of_the_following_reasons">We cannot accept this photo for one of the following reasons:</string>
     <string name="i_can_t_see_your_face">I can’t see your face</string>
@@ -645,5 +647,8 @@
     <string name="possibility_from_0_to_300_kilometers">Possibility from 0 to 300 kilometers</string>
     <string name="prohibit_incoming_messages">Prohibit incoming messages</string>
     <string name="watch">Watch</string>
-    <string name="percent_symbol">%</string>
+    <string name="choose_the_plan">Choose the plan</string>
+    <string name="you_have_three_messages_available_per_day">You have <b>three messages</b>\navailable per <b>day</b></string>
+    <string name="activate">Activate</string>
+    <string name="you_have_one_invitation_card_per_day">You have <b>one invitation card</b>\nper <b>day</b></string>
 </resources>
