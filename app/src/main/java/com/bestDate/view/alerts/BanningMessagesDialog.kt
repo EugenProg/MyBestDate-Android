@@ -8,22 +8,18 @@ import com.bestDate.databinding.DialogBanningMessagesBinding
 fun FragmentActivity.showBanningMessagesDialog(navigateAction: (() -> Unit)) {
     val binding = DialogBanningMessagesBinding.inflate(layoutInflater)
 
-    val dialog = getDialog(binding.root, position = Gravity.TOP)
+    val dialog = getDialog(binding.root, position = Gravity.CENTER)
 
     with(binding) {
-        box.showWithSlideBottomAnimation {}
+        box.showWithSlideTopAnimation {}
 
         closeBtn.setOnSaveClickListener {
-            dialog.closeWithSlideTopAnimation(root, this@showBanningMessagesDialog)
+            dialog.closeWithAnimation(root, this@showBanningMessagesDialog)
         }
 
-        root.setOnSaveClickListener {
-            dialog.closeWithSlideTopAnimation(root, this@showBanningMessagesDialog)
+        choosePlanBtn.onClick = {
+            dialog.closeWithAnimation(root, this@showBanningMessagesDialog)
             navigateAction.invoke()
         }
-
-        postDelayed({
-            dialog.closeWithSlideTopAnimation(root, this@showBanningMessagesDialog)
-        }, 3000)
     }
 }

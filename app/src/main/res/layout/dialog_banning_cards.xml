@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/box"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="550dp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="18dp"
         android:background="@drawable/bg_gradient_dialog">
@@ -135,30 +135,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
-        <LinearLayout
-            android:id="@+id/writeMessageBtn"
-            android:layout_width="248dp"
-            android:layout_height="46dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="34dp"
-            android:background="@drawable/white_rectangle"
-            android:backgroundTint="@color/bg_light_blue"
-            android:gravity="center"
-            android:orientation="horizontal"
+        <com.bestDate.view.button.BlueButton
+            android:id="@+id/choosePlanBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="72dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="46dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15">
-
-            <TextView
-                style="@style/component_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="13dp"
-                android:text="@string/choose_the_plan"
-                android:textColor="@color/bg_main"
-                android:textSize="16sp" />
-        </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:title="@string/choose_the_plan" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

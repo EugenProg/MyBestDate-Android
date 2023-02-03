@@ -8,22 +8,18 @@ import com.bestDate.databinding.DialogBanningCardsBinding
 fun FragmentActivity.showBanningCardsDialog(navigateAction: (() -> Unit)) {
     val binding = DialogBanningCardsBinding.inflate(layoutInflater)
 
-    val dialog = getDialog(binding.root, position = Gravity.TOP)
+    val dialog = getDialog(binding.root, position = Gravity.CENTER)
 
     with(binding) {
-        box.showWithSlideBottomAnimation {}
+        box.showWithSlideTopAnimation {}
 
         closeBtn.setOnSaveClickListener {
-            dialog.closeWithSlideTopAnimation(root, this@showBanningCardsDialog)
+            dialog.closeWithAnimation(root, this@showBanningCardsDialog)
         }
 
-        root.setOnSaveClickListener {
-            dialog.closeWithSlideTopAnimation(root, this@showBanningCardsDialog)
+        choosePlanBtn.onClick = {
+            dialog.closeWithAnimation(root, this@showBanningCardsDialog)
             navigateAction.invoke()
         }
-
-        postDelayed({
-            dialog.closeWithSlideTopAnimation(root, this@showBanningCardsDialog)
-        }, 3000)
     }
 }

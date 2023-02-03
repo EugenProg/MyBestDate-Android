@@ -638,7 +638,7 @@
     <string name="prohibit_incoming_messages">Запретить входящие сообщения</string>
     <string name="watch">Watch</string>
     <string name="choose_the_plan">Выберите план</string>
-    <string name="you_have_three_messages_available_per_day">Вам доступны три\nсообщения в день</string>
+    <string name="you_have_three_messages_available_per_day">Вам доступны <b>три сообщения</b>\nв <b>день</b></string>
     <string name="activate">Активировать</string>
-    <string name="you_have_one_invitation_card_per_day">У вас есть одна пригласительная открытка\nв день</string>
+    <string name="you_have_one_invitation_card_per_day">У вас есть <b>одна пригласительная открытка</b>\nв <b>день</b></string>
 </resources>

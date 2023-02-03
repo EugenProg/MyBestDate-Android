@@ -53,3 +53,19 @@ class BlueButton @JvmOverloads constructor(
         binding.button.isEnabled = enabled
     }
 }
+
+class PinkButton @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+): BaseButton(context, attrs, defStyleAttr,
+    buttonColor = R.color.bg_pink,
+    textColor = R.color.bg_main,
+    progressColor = R.color.bg_main) {
+
+    override fun setEnabled(enabled: Boolean) {
+        super.setEnabled(enabled)
+        binding.button.setTextColor(ContextCompat.getColor(context,
+            if (enabled) R.color.bg_main else R.color.main_10)
+        )
+        binding.button.isEnabled = enabled
+    }
+}
