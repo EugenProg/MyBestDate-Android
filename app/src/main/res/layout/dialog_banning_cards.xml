@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="18dp"
+        android:background="@drawable/bg_gradient_dialog">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.15"
+            android:src="@drawable/splash_decor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/closeBtn"
+            android:layout_width="48dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="28dp"
+            android:background="@drawable/buttons_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_close" />
+        </FrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/closeBtn">
+
+            <FrameLayout
+                android:id="@+id/star"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:background="@drawable/buttons_box"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/star" />
+            </FrameLayout>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="-10dp"
+                android:src="@drawable/ic_pink_card_rotated"
+                app:layout_constraintStart_toEndOf="@id/star"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textView13"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/invitation_card"
+            android:textAllCaps="true"
+            android:textColor="@color/bg_light_blue"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@id/viewActivatePro"
+            app:layout_constraintTop_toBottomOf="@+id/viewActivatePro" />
+
+        <LinearLayout
+            android:id="@+id/viewActivatePro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewStar">
+
+            <TextView
+                android:id="@+id/textView14"
+                style="@style/component_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activate"
+                android:textColor="#c6deeb"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/textViewPro"
+                style="@style/component_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/pro"
+                android:textColor="@color/bg_light_blue"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView14"
+                app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView15"
+            style="@style/component_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="88dp"
+            android:gravity="center_horizontal"
+            android:text="@string/you_have_one_invitation_card_per_day"
+            android:textColor="#c6deeb"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <com.bestDate.view.button.BlueButton
+            android:id="@+id/choosePlanBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="72dp"
+            android:layout_marginTop="85dp"
+            android:layout_marginBottom="46dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:title="@string/choose_the_plan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
