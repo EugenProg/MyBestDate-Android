@@ -72,4 +72,8 @@ class AuthUseCase @Inject constructor(
         preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, expiresAt - 3600)
         tokenIsFresh = true
     }
+
+    fun clearData() {
+        tokenIsFresh = false
+    }
 }

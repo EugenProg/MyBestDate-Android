@@ -133,7 +133,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/messagesSettingsFragment"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -579,7 +579,7 @@
         <action
             android:id="@+id/action_global_authFragment"
             app:destination="@id/authFragment"
-            app:popUpTo="@id/main_nav_graph"
+            app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <fragment
             android:id="@+id/globalLikePushScreen"

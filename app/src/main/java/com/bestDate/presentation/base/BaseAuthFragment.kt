@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
+import com.bestDate.data.extension.copyToClipboard
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.toServerFormat
 import com.bestDate.data.model.SocialProvider
@@ -20,6 +21,7 @@ import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 
@@ -114,8 +116,8 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     }
 
     protected fun loginByGoogle() {
-        showMessage("Service is temporarily unavailable")
-       /* val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        //showMessage("Service is temporarily unavailable")
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestId()
             .requestProfile()
@@ -124,7 +126,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         val signInIntent = googleSignInClient.signInIntent
-        googleResultLauncher.launch(signInIntent)*/
+        googleResultLauncher.launch(signInIntent)
     }
 
     private var googleResultLauncher = registerForActivityResult(
@@ -141,10 +143,11 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     private fun handleGoogleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            Logger.print("Google access token: ${account.serverAuthCode}")
-            loaderDialog.startLoading()
-            isLoggedIn = true
-            viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)
+           // Logger.print("Google access token: ${account.serverAuthCode}")
+            //loaderDialog.startLoading()
+            //isLoggedIn = true
+            account.serverAuthCode.copyToClipboard(requireContext())
+           // viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)
         } catch (e: Exception) {
             loaderDialog.stopLoading()
         }
