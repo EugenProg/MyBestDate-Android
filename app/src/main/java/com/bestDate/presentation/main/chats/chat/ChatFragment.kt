@@ -37,6 +37,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         user = args.user
         setUserInfo()
         viewModel.getChatMessages(user?.id)
+        getNavigationResult<ShortUserData?>(NavigationResultKey.USER) {
+            it?.let { user = it }
+        }
     }
 
     override fun onViewClickListener() {
@@ -139,7 +142,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             showMessage(R.string.invitation_is_send_successful)
         }
         observe(viewModel.messages) {
-            binding.chatView.setMessages(it)
+            it?.let {
+                binding.chatView.setMessages(it)
+            }
         }
         observe(viewModel.sendMessageLiveData) {
             binding.chatView.stopSendLoading()

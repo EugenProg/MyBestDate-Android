@@ -127,7 +127,7 @@ fun View.showWithSlideTopAndRotateAnimation(showViews: (() -> Unit)? = null) {
         this.animate()
             .translationY(0f)
             .rotationY(0f)
-            .setDuration(450)
+            .setDuration(300)
             .start()
     }, 100)
 }

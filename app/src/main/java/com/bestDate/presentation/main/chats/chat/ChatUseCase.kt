@@ -4,10 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getDateString
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
-import com.bestDate.data.model.ChatItemType
-import com.bestDate.data.model.InternalException
-import com.bestDate.data.model.Message
-import com.bestDate.data.model.ParentMessage
+import com.bestDate.data.model.*
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
@@ -24,7 +21,7 @@ class ChatUseCase @Inject constructor(
     private val chatsRemoteData: ChatsRemoteData,
     private val translateRemoteData: TranslationRemoteData
 ) {
-    var messages: MutableLiveData<MutableList<Message>> = MutableLiveData(mutableListOf())
+    var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData()
     var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
     var translatedText: String? = ""
     private var originalList: MutableList<Message>? = null
@@ -117,7 +114,7 @@ class ChatUseCase @Inject constructor(
     }
 
     fun clearChatData() {
-        messages.value = mutableListOf()
+        messages.value = null
         currentUserId = null
     }
 

@@ -18,7 +18,7 @@ class ChatView @JvmOverloads constructor(
 
     private val binding: ViewChatBinding =
         ViewChatBinding.inflate(LayoutInflater.from(context), this)
-    private var messageList: MutableList<Message> = mutableListOf()
+    private var messageList: MutableList<Message>? = null
     private var parentMessage: Message? = null
     private var user: ShortUserData? = null
     private var editMode: Boolean = false
@@ -93,16 +93,18 @@ class ChatView @JvmOverloads constructor(
 
     private fun setVisibility() {
         with(binding) {
-            topPanelView.setVisibility(user, messageList.isNotEmpty())
-            chatInvitation.setVisibility(user, messageList.isNotEmpty())
+            topPanelView.setVisibility(user, messageList?.isNotEmpty())
+            chatInvitation.setVisibility(user, messageList?.isNotEmpty())
             bottomPanelView.setUser(user)
         }
     }
 
     fun setMessages(messages: MutableList<Message>?) {
-        messageList = messages ?: mutableListOf()
-        adapter.submitList(messageList) {
-            binding.messagesListView.scrollToPosition(0)
+        messageList = messages
+        if (user?.allow_chat == true || user?.isBot() == true) {
+            adapter.submitList(messageList) {
+                binding.messagesListView.scrollToPosition(0)
+            }
         }
         setVisibility()
     }

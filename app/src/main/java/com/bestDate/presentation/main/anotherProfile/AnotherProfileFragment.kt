@@ -140,7 +140,7 @@ class AnotherProfileFragment :
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.user) {
-            user?.last_online_at = it.last_online_at
+            user = it.getShortUser(user)
             setBackground(it?.blocked_me)
             binding.header.setUserInfo(it)
             binding.userInfoView.setUserInfo(it)
@@ -149,6 +149,7 @@ class AnotherProfileFragment :
             binding.navBox.isLiked = it?.getMainPhoto()?.liked == true
             isBlocked = it?.blocked == true
             fullUser = it
+            validateChatUser()
         }
 
         observe(viewModel.blockLiveData) {
@@ -173,6 +174,12 @@ class AnotherProfileFragment :
                 setNavigationResult(NavigationResultKey.RELOAD, false)
                 viewModel.getUserById(user?.id)
             }
+        }
+    }
+
+    private fun validateChatUser() {
+        if (args.backScreen == BackScreenType.CHAT) {
+            setNavigationResult(NavigationResultKey.USER, user)
         }
     }
 }
