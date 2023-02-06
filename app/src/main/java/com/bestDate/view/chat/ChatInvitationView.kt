@@ -18,14 +18,15 @@ class ChatInvitationView @JvmOverloads constructor(
     var goToClick: (() -> Unit)? = null
 
     init {
+        binding.root.isVisible = false
         binding.invitationButton.setOnSaveClickListener {
             goToClick?.invoke()
         }
     }
 
-    fun setVisibility(user: ShortUserData?, hasMessages: Boolean) {
+    fun setVisibility(user: ShortUserData?, hasMessages: Boolean?) {
         when {
-            user?.isBot() == true -> binding.root.isVisible = false
+            user?.isBot() == true || hasMessages == null -> binding.root.isVisible = false
             user?.allow_chat == false -> showOnlyCardsView()
             !hasMessages -> showNoMessagesView()
             else -> binding.root.isVisible = false
@@ -34,6 +35,7 @@ class ChatInvitationView @JvmOverloads constructor(
 
     private fun showNoMessagesView() {
         with(binding) {
+            binding.root.isVisible = true
             noMessagesView.isVisible = true
             onlyCardsTitle.isVisible = false
             onlyCardsText.isVisible = false
@@ -42,6 +44,7 @@ class ChatInvitationView @JvmOverloads constructor(
 
     private fun showOnlyCardsView() {
         with(binding) {
+            binding.root.isVisible = true
             noMessagesView.isVisible = false
             onlyCardsTitle.isVisible = true
             onlyCardsText.isVisible = true

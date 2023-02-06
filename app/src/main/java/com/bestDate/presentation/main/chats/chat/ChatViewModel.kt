@@ -1,12 +1,11 @@
 package com.bestDate.presentation.main.chats.chat
 
 import android.graphics.Bitmap
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,14 +19,14 @@ class ChatViewModel @Inject constructor(
     var messages = chatUseCase.messages
     var typingMode = chatUseCase.typingMode
 
-    private var _sendInvitationLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
+    private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
+    var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
 
-    private var _sendMessageLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    var sendMessageLiveData: LiveData<Boolean> = _sendMessageLiveData
+    private var _sendMessageLiveData: LiveEvent<Boolean> = LiveEvent()
+    var sendMessageLiveData: LiveEvent<Boolean> = _sendMessageLiveData
 
-    private var _translateLiveData: MutableLiveData<String?> = MutableLiveData()
-    var translateLiveData: LiveData<String?> = _translateLiveData
+    private var _translateLiveData: LiveEvent<String?> = LiveEvent()
+    var translateLiveData: LiveEvent<String?> = _translateLiveData
 
     fun sendInvitation(userId: Int?, invitationId: Int) {
         doAsync {

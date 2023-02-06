@@ -18,12 +18,13 @@ class ChatTopView @JvmOverloads constructor(
     var goToClick: (() -> Unit)? = null
 
     init {
+        binding.root.isVisible = false
         binding.goToButton.setOnSaveClickListener {
             goToClick?.invoke()
         }
     }
     
-    fun setVisibility(user: ShortUserData?, hasMessages: Boolean) {
-        binding.root.isVisible = hasMessages && user?.isBot() != true
+    fun setVisibility(user: ShortUserData?, hasMessages: Boolean?) {
+        binding.root.isVisible = hasMessages == true && user?.isBot() != true
     }
 }

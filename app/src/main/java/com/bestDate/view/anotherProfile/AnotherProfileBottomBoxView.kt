@@ -32,9 +32,11 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
     init {
         with(binding) {
             chatBox.setOnSaveClickListener {
+                stopAnimation()
                 chatClick?.invoke()
             }
             cardBox.setOnSaveClickListener {
+                stopAnimation()
                 cardClick?.invoke()
             }
             likeBox.setOnSaveClickListener {
@@ -54,10 +56,14 @@ class AnotherProfileBottomBoxView @JvmOverloads constructor(
                 animationView.playAnimation()
 
                 postDelayed({
-                    animationView.isVisible = false
-                    animationView.pauseAnimation()
+                    stopAnimation()
                 }, animationView.duration)
             }
         }
+    }
+
+    private fun stopAnimation() {
+        binding.animationView.isVisible = false
+        binding.animationView.pauseAnimation()
     }
 }
