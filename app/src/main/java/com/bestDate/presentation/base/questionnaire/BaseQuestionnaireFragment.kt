@@ -57,8 +57,10 @@ abstract class BaseQuestionnaireFragment :
 
         binding.skipButton.isVisible = showSkipButton
 
-        lifecycleScope.launchWhenStarted {
-            pagesLiveData.postValue(QuestionnaireItemsList().getPages())
+        lifecycleScope.launchWhenResumed {
+            postDelayed({
+                pagesLiveData.postValue(QuestionnaireItemsList().getPages())
+            }, 310)
         }
     }
 
