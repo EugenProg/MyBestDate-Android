@@ -56,3 +56,10 @@ private fun getCalendar(date: Date?): Calendar? {
     }
     return cal
 }
+
+fun getEighteenYearDate(): Date {
+    val calendar = Calendar.getInstance()
+    calendar.add(Calendar.YEAR, -18)
+    calendar.add(Calendar.DATE, -1)
+    return calendar.time
+}

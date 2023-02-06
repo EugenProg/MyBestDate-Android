@@ -11,8 +11,8 @@ class AuthRemoteData @Inject constructor(private val service: CoreAuthService) {
     suspend fun loginByPhone(phone: String, password: String) =
         service.loginByPhone(PhoneAuthRequest(phone, password))
 
-    suspend fun loginSocial(provider: SocialProvider, token: String) =
-        service.loginSocial(SocialAuthRequest(provider.serverName, token))
+    suspend fun loginSocial(provider: SocialProvider, token: String?) =
+        service.loginSocial(SocialAuthRequest(provider.serverName, token.orEmpty()))
 
     suspend fun refreshToken(token: String) = service.refreshToken(RefreshRequest(token))
 

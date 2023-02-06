@@ -176,3 +176,10 @@ data class SaveDeviceTokenRequest(
 data class MatchActionRequest(
     var user_id: Int
 )
+
+data class GetGoogleAccessTokenRequest(
+    val grant_type: String = "authorization_code",
+    val client_id: String = "320734338059-qfih51slhp529h06gplp1r09f4li41vm.apps.googleusercontent.com",
+    val client_secret: String = "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",
+    val code: String
+)

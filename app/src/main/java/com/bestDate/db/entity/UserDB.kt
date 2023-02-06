@@ -68,7 +68,9 @@ data class UserDB(
         val incomingFormatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         val dateFormatter = SimpleDateFormat("dd MMMM yyyy")
 
-        return incomingFormatter.parse(birthday.orEmpty())?.let { dateFormatter.format(it) }
+        return birthday?.let { bd ->
+            incomingFormatter.parse(bd)?.let { dateFormatter.format(it) }
+        }
     }
 
     fun getMainPhoto(): ProfileImage {

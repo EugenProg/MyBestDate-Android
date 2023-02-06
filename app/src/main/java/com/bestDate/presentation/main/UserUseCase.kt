@@ -12,6 +12,7 @@ import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
+import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.duels.top.TopUseCase
@@ -39,6 +40,7 @@ class UserUseCase @Inject constructor(
     private val duelsUseCase: DuelsUseCase,
     private val chatListUseCase: ChatListUseCase,
     private val topUseCase: TopUseCase,
+    private val authUseCase: AuthUseCase,
     private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) {
@@ -74,6 +76,7 @@ class UserUseCase @Inject constructor(
         guestsUseCase.clearData()
         blockedUserUseCase.clearData()
         chatListUseCase.clearData()
+        authUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, 0L)
