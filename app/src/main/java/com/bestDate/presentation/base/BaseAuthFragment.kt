@@ -5,11 +5,9 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
-import com.bestDate.data.extension.copyToClipboard
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.toServerFormat
 import com.bestDate.data.model.SocialProvider
-import com.bestDate.data.utils.Logger
 import com.bestDate.presentation.auth.AuthViewModel
 import com.bestDate.presentation.registration.GenderType
 import com.bestDate.view.alerts.LoaderDialog
@@ -116,12 +114,10 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     }
 
     protected fun loginByGoogle() {
-        //showMessage("Service is temporarily unavailable")
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestId()
             .requestProfile()
-            .requestIdToken(getString(R.string.google_oauth_server_key))
             .requestServerAuthCode(getString(R.string.google_oauth_server_key))
             .build()
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
@@ -143,11 +139,9 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     private fun handleGoogleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-           // Logger.print("Google access token: ${account.serverAuthCode}")
-            //loaderDialog.startLoading()
-            //isLoggedIn = true
-            account.serverAuthCode.copyToClipboard(requireContext())
-           // viewModel.loginSocial(SocialProvider.GOOGLE, account.serverAuthCode)
+            loaderDialog.startLoading()
+            isLoggedIn = true
+            viewModel.loginByGoogle(account.serverAuthCode)
         } catch (e: Exception) {
             loaderDialog.stopLoading()
         }

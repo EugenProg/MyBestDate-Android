@@ -80,6 +80,15 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun loginByGoogle(authCode: String?) {
+        doAsync {
+            authUseCase.loginWithGoogle(authCode)
+            userUseCase.refreshUser()
+            pusherCenter.startPusher()
+            preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
+        }
+    }
+
     fun changeLanguage(language: String) {
         doAsync {
             userUseCase.changeLanguage(language)

@@ -327,7 +327,7 @@ data class Message(
             parent, isLast, type
         )
     }
-    
+
     fun getDate(context: Context): String {
         val dateBetween = getDaysBetween(created_at.getDateWithTimeOffset(), Date())
         return when {
@@ -389,4 +389,13 @@ data class PusherReadingResponse(
 data class PusherTypingResponse(
     var id: Int? = null,
     var sender_id: Int? = null
+)
+
+data class GoogleAccessTokenResponse(
+    var access_token: String? = null,
+    var expires_in: Int? = null,
+    var refresh_token: String? = null,
+    var scope: String? = null,
+    var token_type: String? = null,
+    var id_token: String? = null
 )

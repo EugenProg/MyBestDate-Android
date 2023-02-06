@@ -8,6 +8,7 @@ import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.AuthRemoteData
+import com.bestDate.network.remote.GoogleAuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.InvitationUseCase
 import javax.inject.Inject
@@ -18,6 +19,7 @@ class AuthUseCase @Inject constructor(
     private val authRemoteData: AuthRemoteData,
     private val userRemoteData: UserRemoteData,
     private val invitationUseCase: InvitationUseCase,
+    private val googleAuthRemoteData: GoogleAuthRemoteData,
     private val preferencesUtils: PreferencesUtils
 ) {
     var tokenIsFresh: Boolean = false
@@ -48,6 +50,13 @@ class AuthUseCase @Inject constructor(
             saveTokens(response.body())
             registrationSocialMode = response.body()?.registration == true
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    suspend fun loginWithGoogle(authCode: String?) {
+        val response = googleAuthRemoteData.getGoogleAuthToken(authCode)
+        if (response.isSuccessful) {
+            loginSocial(SocialProvider.GOOGLE, response.body()?.access_token)
+        } else throw InternalException.OperationException(response.message())
     }
 
     private suspend fun saveDeviceToken() {
