@@ -127,12 +127,16 @@ abstract class BaseQuestionnaireFragment :
         super.onViewLifecycle()
         observe(pagesLiveData) {
             binding.questionnaireView.setPages(it)
+            viewModel.user.value?.let { user ->
+                binding.questionnaireView.setQuestionnaire(
+                    user.questionnaire, user.email, user.phone, user.photos?.size.orZero
+                )
+            }
         }
         observe(viewModel.user) {
             savedQuestionnaire = it?.questionnaire
             binding.questionnaireView.setQuestionnaire(
-                it?.questionnaire,
-                it?.email, it?.phone, it?.photos?.size.orZero
+                it?.questionnaire, it?.email, it?.phone, it?.photos?.size.orZero
             )
         }
         observe(viewModel.loadingMode) {
