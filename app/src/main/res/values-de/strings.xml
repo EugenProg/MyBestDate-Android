@@ -637,4 +637,9 @@
     <string name="possibility_from_0_to_300_kilometers">Möglichkeit von 0 bis 300 Kilometer</string>
     <string name="prohibit_incoming_messages">Eingehende Nachrichten verbieten</string>
     <string name="watch">Ansehen</string>
+    <string name="choose_the_plan">Wählen Sie den Plan</string>
+    <string name="you_have_three_messages_available_per_day">Sie haben <b>drei Nachrichten</b>\npro <b>Tag</b> zur Verfügung</string>
+    <string name="activate">Aktivieren Sie</string>
+    <string name="you_have_one_invitation_card_per_day">Sie haben <b>eine Einladungskarte</b>\npro <b>Tag</b></string>
+    <string name="fill_the_required_data">Füllen Sie die erforderlichen Daten aus</string>
 </resources>

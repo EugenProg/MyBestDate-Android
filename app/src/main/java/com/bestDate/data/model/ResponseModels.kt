@@ -21,7 +21,8 @@ data class AuthResponse(
     var token_type: String? = null,
     var expires_in: Int? = null,
     var access_token: String? = null,
-    var refresh_token: String? = null
+    var refresh_token: String? = null,
+    var registration: Boolean? = null
 )
 
 data class ProfileImageResponse(
@@ -66,12 +67,16 @@ data class MatchesListResponse(
     val data: MutableList<Match>
 ) : BaseResponse()
 
+data class MatchActionResponse(
+    val data: Match? = null
+) : BaseResponse()
+
 data class MyDuelsResponse(
     val data: MutableList<MyDuel>
 ) : BaseResponse()
 
-data class ShortUserDataResponse(
-    val data: ShortUserData
+data class ShortUsersDataResponse(
+    val data: MutableList<ShortUserData>
 ) : BaseResponse()
 
 data class ShortUserListDataResponse(
@@ -271,7 +276,8 @@ data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null,
-    var type: ChatListItemType? = null
+    var type: ChatListItemType? = null,
+    var typingMode: Boolean? = null
 ) {
     fun transform(itemType: ChatListItemType): Chat {
         return Chat(
@@ -299,7 +305,7 @@ enum class ChatListItemType {
 }
 
 enum class BackScreenType {
-    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS
+    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS, DUELS
 }
 
 data class Message(
@@ -321,7 +327,7 @@ data class Message(
             parent, isLast, type
         )
     }
-    
+
     fun getDate(context: Context): String {
         val dateBetween = getDaysBetween(created_at.getDateWithTimeOffset(), Date())
         return when {
@@ -364,4 +370,32 @@ data class TranslationResponse(
 data class Translation(
     var detected_source_language: String? = null,
     var text: String? = null
+)
+
+data class PusherMessageResponse(
+    val message: Message? = null
+)
+
+data class PusherCoinsResponse(
+    var id: Int? = null,
+    val coins: String? = null
+)
+
+data class PusherReadingResponse(
+    var id: Int? = null,
+    var last_message: Message? = null
+)
+
+data class PusherTypingResponse(
+    var id: Int? = null,
+    var sender_id: Int? = null
+)
+
+data class GoogleAccessTokenResponse(
+    var access_token: String? = null,
+    var expires_in: Int? = null,
+    var refresh_token: String? = null,
+    var scope: String? = null,
+    var token_type: String? = null,
+    var id_token: String? = null
 )

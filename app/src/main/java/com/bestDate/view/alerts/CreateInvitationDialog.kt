@@ -21,7 +21,7 @@ fun FragmentActivity.showCreateInvitationDialog(invitationList: MutableList<Invi
     with(binding) {
         box.showWithSlideTopAndRotateAnimation()
         rotateBtn.onSafeClick = {
-            root.rotateHorizontally {
+            box.rotateHorizontally {
                 frontBox.isVisible = false
                 backBox.isVisible = true
             }
@@ -30,6 +30,10 @@ fun FragmentActivity.showCreateInvitationDialog(invitationList: MutableList<Invi
         actionsList.layoutManager = LinearLayoutManager(this@showCreateInvitationDialog)
         actionsList.adapter = InvitationActionsListAdapter(invitationList) {
             itemClick.invoke(it)
+            dialog.closeWithAnimation(root, owner = this@showCreateInvitationDialog)
+        }
+
+        root.setOnSaveClickListener {
             dialog.closeWithAnimation(root, owner = this@showCreateInvitationDialog)
         }
     }

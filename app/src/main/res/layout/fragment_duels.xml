@@ -13,6 +13,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.bestDate.view.ButtonTopView
+        android:id="@+id/topButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="-10dp"
+        android:layout_marginBottom="-20dp"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.bestDate.view.filter.FilterButton
         android:id="@+id/locationFilterButton"
         android:layout_width="wrap_content"
@@ -150,7 +160,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/coinView"
                 app:no_data_text_desc="@string/you_voted_for_all_the_photos"
                 app:no_data_text_direction="@string/but_you_can_also_go_to_the_top"
-                app:no_data_text_title="@string/you_dont_have_a_match_yet"
+                app:no_data_text_title="@string/duels_are_over"
                 app:start_with_loading="true"
                 tools:visibility="gone" />
 

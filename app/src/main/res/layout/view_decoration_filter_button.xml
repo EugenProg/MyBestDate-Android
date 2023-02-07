@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bgView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxWidth="170dp"
+        android:background="@color/decoration_blue">
+
+        <View
+            android:id="@+id/decorationView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/component_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawablePadding="5.5dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingVertical="9dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="12.5dp"
+            android:textSize="12sp"
+            app:drawableEndCompat="@drawable/ic_arrow_down"
+            app:drawableStartCompat="@drawable/ic_crown"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/online" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</merge>

@@ -34,6 +34,10 @@ object NetworkModule {
     fun providesTranslateBaseURL(): String = "https://api-free.deepl.com/"
 
     @Provides
+    @GoogleAuthCode_url
+    fun providesGoogleAuthCodeBaseURL(): String = "https://www.googleapis.com"
+
+    @Provides
     fun provideInterceptor (
         @ApplicationContext context: Context,
         @Session_manager sessionManager: SessionManager
@@ -74,6 +78,15 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(interceptor)
+            .build()
+
+    @Provides
+    @Singleton
+    @GoogleAuthCode_network
+    fun provideGoogleAuthApi(@GoogleAuthCode_url BASE_URL: String): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 
     @Provides
@@ -123,6 +136,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun topApiService(@Core_network retrofit: Retrofit): TopService =
+        retrofit.create(TopService::class.java)
+
+    @Provides
+    @Singleton
+    fun getAuthToken(@GoogleAuthCode_network retrofit: Retrofit): GoogleAuthService =
+        retrofit.create(GoogleAuthService::class.java)
+
+    @Provides
+    @Singleton
     fun authRemoteData(apiService: CoreAuthService): AuthRemoteData =
         AuthRemoteData(apiService)
 
@@ -158,6 +181,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun topRemoteData(topService: TopService): TopRemoteData =
+        TopRemoteData(topService)
+
+    @Provides
+    @Singleton
     @Session_manager
     fun sessionManager(preferences: PreferencesUtils, authRemoteDataProvider: Provider<AuthRemoteData>): SessionManager =
         SessionManager(preferences, authRemoteDataProvider)
@@ -171,4 +199,9 @@ object NetworkModule {
     @Singleton
     fun translationRemoteData(apiService: TranslateService): TranslationRemoteData =
         TranslationRemoteData(apiService)
+
+    @Provides
+    @Singleton
+    fun googleAuthRemoteData(apiService: GoogleAuthService): GoogleAuthRemoteData =
+        GoogleAuthRemoteData(apiService)
 }

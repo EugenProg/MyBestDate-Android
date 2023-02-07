@@ -10,6 +10,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.getDateWithTimeOffset
 import com.bestDate.data.extension.getDiffYears
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
 import com.bestDate.presentation.registration.Gender
@@ -68,7 +69,9 @@ data class UserDB(
         val incomingFormatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
         val dateFormatter = SimpleDateFormat("dd MMMM yyyy")
 
-        return incomingFormatter.parse(birthday.orEmpty())?.let { dateFormatter.format(it) }
+        return birthday?.let { bd ->
+            incomingFormatter.parse(bd)?.let { dateFormatter.format(it) }
+        }
     }
 
     fun getMainPhoto(): ProfileImage {
@@ -107,4 +110,25 @@ data class UserDB(
     fun hasNoPhotos() = photos.isNullOrEmpty()
     fun questionnaireEmpty() = questionnaire?.isEmpty()
     fun questionnaireFull() = questionnaire?.isFull()
+
+    fun getShortUser(oldUserData: ShortUserData?): ShortUserData {
+        return ShortUserData(
+            id = id,
+            name = name,
+            gender = gender,
+            language = language,
+            birthday = birthday,
+            full_questionnaire = questionnaireFull(),
+            role = oldUserData?.role,
+            blocked = blocked,
+            blocked_me = blocked_me,
+            block_messages = block_messages,
+            allow_chat = oldUserData?.allow_chat,
+            is_online = is_online,
+            last_online_at = last_online_at,
+            distance = distance,
+            main_photo = getMainPhoto(),
+            location = location
+        )
+    }
 }

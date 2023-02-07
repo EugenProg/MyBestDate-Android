@@ -21,7 +21,6 @@ open class MatchesListFragment :
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MatchesListAdapter
-    private var myPhotoUrl: String? = null
 
     override fun onInit() {
         super.onInit()
@@ -41,20 +40,16 @@ open class MatchesListFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-
-        observe(viewModel.myUser) {
-            myPhotoUrl = it?.getMainPhotoThumbUrl()
-            initListData()
-        }
         observe(viewModel.matchesList) {
-            adapter.submitList(it) {
+            initListData(it.second)
+            adapter.submitList(it.first) {
                 binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
+                binding.noDataView.noData = it.first.isEmpty()
             }
         }
         observe(viewModel.loadingMode) {
             if (!binding.refreshView.isRefreshing &&
-                viewModel.matchesList.value.isNullOrEmpty()
+                viewModel.matchesList.value?.first.isNullOrEmpty()
             ) binding.noDataView.toggleLoading(it)
         }
         observe(viewModel.errorLiveData) {
@@ -64,7 +59,7 @@ open class MatchesListFragment :
         }
     }
 
-    private fun initListData() {
+    private fun initListData(myPhotoUrl: String?) {
         adapter = MatchesListAdapter(myPhotoUrl.orEmpty())
         binding.matchesListView.layoutManager = LinearLayoutManager(requireContext())
         binding.matchesListView.adapter = adapter

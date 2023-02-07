@@ -8,18 +8,18 @@ import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentAuthBinding
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.base.BaseAuthFragment
+import com.bestDate.presentation.registration.GenderType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
+class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAuthBinding =
         { inflater, parent, attach -> FragmentAuthBinding.inflate(inflater, parent, attach) }
     override val viewModelClass: Class<AuthViewModel> = AuthViewModel::class.java
 
     override val navBarColor = R.color.main_dark
     override val statusBarLight = true
-    private var isLoggedIn = false
 
     override fun onViewClickListener() {
         super.onViewClickListener()
@@ -31,12 +31,10 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
                 validate()
             }
             socialContainer.googleClick = {
-                //TODO: sign up with Google
-                showMessage("google")
+                loginByGoogle()
             }
             socialContainer.facebookClick = {
-                //TODO: sign up with Facebook
-                showMessage("facebook")
+                loginWithFacebook()
             }
             passForgotButton.setOnClickListener {
                 navController.navigate(
@@ -54,44 +52,36 @@ class AuthFragment : BaseVMFragment<FragmentAuthBinding, AuthViewModel>() {
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        observe(viewModel.loadingMode) {
+        observe(viewModel.loginProcessLiveData) {
             binding.authButton.toggleActionEnabled(it)
-        }
-        observe(viewModel.user) {
-            if (viewModel.user.value != null && isLoggedIn) {
-                val language = getString(R.string.app_locale)
-                if (language != viewModel.user.value?.language) {
-                    viewModel.changeLanguage(language)
-                } else {
-                    chooseRoute()
-                }
-            }
         }
         observe(viewModel.errorLiveData) {
             isLoggedIn = false
+            loaderDialog.stopLoading()
             showMessage(getString(R.string.wrong_auth_data))
         }
         observe(viewModel.validationErrorLiveData) {
             isLoggedIn = false
             showMessage(it)
         }
-        observe(viewModel.updateLanguageSuccessLiveData) {
-            chooseRoute()
-        }
     }
 
-    private fun chooseRoute() {
-        when {
-            viewModel.user.value?.hasNoPhotos() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
-            }
-            viewModel.user.value?.questionnaireEmpty() == true -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
-            }
-            else -> {
-                navController.navigate(AuthFragmentDirections.actionAuthToMain())
-            }
-        }
+    override fun navigateToMain() {
+        navController.navigate(AuthFragmentDirections.actionAuthToMain())
+    }
+
+    override fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType) {
+        navController.navigate(
+            AuthFragmentDirections
+                .actionAuthToFillRegistrationAouthData(name, birthDate, genderType))
+    }
+
+    override fun navigateToPhoto() {
+        navController.navigate(AuthFragmentDirections.actionAuthToProfilePhotoEditing())
+    }
+
+    override fun navigateToQuestionnaire() {
+        navController.navigate(AuthFragmentDirections.actionAuthToQuestionnaire())
     }
 
     override fun scrollAction() {

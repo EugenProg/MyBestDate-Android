@@ -77,4 +77,17 @@ class ChatListUseCase @Inject constructor(
         chatList.postValue(mutableListOf())
         hasNewChats.postValue(false)
     }
+
+    fun setTypingEvent(senderId: Int?, isOn: Boolean) {
+        synchronized(this) {
+            val list: MutableList<Chat> = mutableListOf()
+            chatList.value?.forEach {
+                if (it.user?.id == senderId) {
+                    list.add(it.copy(typingMode = isOn))
+                } else list.add(it)
+            }
+
+            chatList.postValue(list)
+        }
+    }
 }

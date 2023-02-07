@@ -1,6 +1,8 @@
 package com.bestDate.data.extension
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import com.bestDate.R
 import com.bestDate.data.utils.notifications.NotificationType
@@ -111,4 +113,9 @@ fun String?.getDateString(): String {
 fun String.getPushType(): NotificationType {
     if (this.isBlank()) return NotificationType.DEFAULT_PUSH
     return NotificationType.values().firstOrNull { it.code == this } ?: NotificationType.DEFAULT_PUSH
+}
+
+fun String?.copyToClipboard(context: Context) {
+    val manager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    manager.setPrimaryClip(ClipData.newPlainText("token", this))
 }

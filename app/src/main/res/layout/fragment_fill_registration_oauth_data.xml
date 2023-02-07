@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
+
+    <com.bestDate.view.ToolbarView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        style="@style/component_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/fill_the_required_data"
+        android:layout_marginHorizontal="32dp"
+        android:textSize="18sp"/>
+
+    <com.bestDate.view.StandardInputView
+        android:id="@+id/nameInput"
+        style="@style/standard_input"
+        app:hint="@string/name"
+        app:src="@drawable/ic_user"
+        android:layout_marginTop="35dp" />
+
+    <com.bestDate.view.StandardInfoView
+        android:id="@+id/genderInput"
+        style="@style/standard_input"
+        app:standard_info_hint="@string/gender"
+        app:standard_info_icon="@drawable/ic_gender"
+        android:layout_marginTop="20dp" />
+
+    <com.bestDate.view.StandardInfoView
+        android:id="@+id/birthInput"
+        style="@style/standard_input"
+        app:standard_info_hint="@string/birth_date"
+        app:standard_info_icon="@drawable/ic_calendar"
+        android:layout_marginTop="20dp" />
+
+    <com.bestDate.view.button.WhiteButton
+        android:id="@+id/next_button"
+        style="@style/standard_button"
+        app:title="@string/next"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp" />
+</LinearLayout>

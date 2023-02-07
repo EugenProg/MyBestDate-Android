@@ -18,7 +18,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
 
     private var tokenIsRefreshed: Boolean = false
     override val statusBarColor = R.color.bg_main
-    override val navBarColor = R.color.bg_main
+    override val navBarColor = R.color.main_dark
 
     override fun onInit() {
         super.onInit()
@@ -71,6 +71,7 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
                 navController.navigate(StartFragmentDirections.actionStartToQuestionnaire())
             }
             else -> {
+                viewModel.startPusher()
                 navController.navigate(StartFragmentDirections.actionStartToMainGraph())
             }
         }

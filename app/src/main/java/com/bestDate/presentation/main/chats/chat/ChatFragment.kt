@@ -37,6 +37,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         user = args.user
         setUserInfo()
         viewModel.getChatMessages(user?.id)
+        getNavigationResult<ShortUserData?>(NavigationResultKey.USER) {
+            it?.let { user = it }
+        }
     }
 
     override fun onViewClickListener() {
@@ -85,6 +88,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             }
             chatView.addImageClick = {
                 imageListSheet.show(childFragmentManager, imageListSheet.tag)
+            }
+            chatView.typingEvent = {
+                viewModel.sendTypingEvent()
             }
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
@@ -136,7 +142,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             showMessage(R.string.invitation_is_send_successful)
         }
         observe(viewModel.messages) {
-            binding.chatView.setMessages(it)
+            it?.let {
+                binding.chatView.setMessages(it)
+            }
         }
         observe(viewModel.sendMessageLiveData) {
             binding.chatView.stopSendLoading()
@@ -149,6 +157,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             with(binding.chatView) {
                 stopSendLoading()
                 stopTranslateLoading()
+            }
+        }
+        observe(viewModel.typingMode) {
+            if (it != null) {
+                binding.statusView.setStatus(it)
+                binding.online.isVisible = true
             }
         }
     }
@@ -171,8 +185,8 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 .into(avatar)
             name.text = user?.name
             online.isVisible = user?.is_online == true
-            if (user?.is_online == true) status.setStatus(ChatStatusType.ONLINE)
-            else status.setStatus(ChatStatusType.LAST_ONLINE, user?.last_online_at)
+            if (user?.is_online == true) statusView.setStatus(ChatStatusType.ONLINE)
+            else statusView.setStatus(ChatStatusType.LAST_ONLINE, user?.last_online_at)
 
             chatView.setUser(user)
         }
