@@ -222,46 +222,66 @@
                 <action
                     android:id="@+id/action_profile_to_photoEditor"
                     app:destination="@id/userProfilePhotoEditorFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/fade_in"
-                    app:popExitAnim="@anim/fade_out" />
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_likesList"
                     app:destination="@id/likesListFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/push_down_in"
-                    app:popExitAnim="@anim/push_down_out" />
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_matchesList"
                     app:destination="@id/matchesListFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/push_down_in"
-                    app:popExitAnim="@anim/push_down_out" />
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_myDuels"
                     app:destination="@id/myDuelsFragment"
-                    app:enterAnim="@anim/push_up_in"
-                    app:exitAnim="@anim/push_up_out"
-                    app:popEnterAnim="@anim/push_down_in"
-                    app:popExitAnim="@anim/push_down_out" />
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_slider"
-                    app:destination="@id/userProfileSliderFragment" />
+                    app:destination="@id/userProfileSliderFragment"
+                    app:enterAnim="@anim/scale_in"
+                    app:exitAnim="@anim/fade_out"
+                    app:popEnterAnim="@anim/fade_in"
+                    app:popExitAnim="@anim/scale_out" />
                 <action
                     android:id="@+id/action_profile_to_invitationList"
-                    app:destination="@id/invitationListFragment" />
+                    app:destination="@id/invitationListFragment"
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_personalData"
-                    app:destination="@id/personalDataFragment" />
+                    app:destination="@id/personalDataFragment"
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right" />
                 <action
                     android:id="@+id/action_profile_to_settings"
-                    app:destination="@id/settingsFragment" />
+                    app:destination="@id/settingsFragment"
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right"  />
                 <action
                     android:id="@+id/action_profile_to_questionnaire"
-                    app:destination="@id/profileQuestionnaireFragment" />
+                    app:destination="@id/profileQuestionnaireFragment"
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right"  />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"
@@ -390,10 +410,14 @@
                     app:argType="com.bestDate.data.model.BackScreenType" />
                 <action
                     android:id="@+id/action_anotherProfile_to_questionnaire"
-                    app:destination="@id/anotherProfileQuestionnaire" />
+                    app:destination="@id/anotherProfileQuestionnaire"
+                    app:enterAnim="@anim/slide_in_top_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_top_right"
+                    app:popExitAnim="@anim/slide_out_right"  />
                 <action
                     android:id="@+id/action_anotherProfile_to_slider"
-                    app:destination="@id/anotherProfileSliderFragment" />
+                    app:destination="@id/anotherProfileSliderFragment"/>
             </fragment>
             <fragment
                 android:id="@+id/anotherProfileQuestionnaire"

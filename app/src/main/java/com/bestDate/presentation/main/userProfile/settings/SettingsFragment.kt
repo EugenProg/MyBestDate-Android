@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.show
 import com.bestDate.data.model.SettingsType
 import com.bestDate.databinding.FragmentSettingsBinding
@@ -25,8 +26,10 @@ class SettingsFragment : BaseVMFragment<FragmentSettingsBinding, SettingsViewMod
 
     override fun onInit() {
         super.onInit()
-        viewModel.refreshUserSettings()
         loader = LoaderDialog(requireActivity())
+        postDelayed({
+            viewModel.refreshUserSettings()
+        }, 310)
     }
 
     override fun onViewClickListener() {

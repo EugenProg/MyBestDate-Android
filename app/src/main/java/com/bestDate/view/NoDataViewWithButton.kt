@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.setAttrs
@@ -18,6 +17,8 @@ class NoDataViewWithButton @JvmOverloads constructor(
         LayoutInflater.from(context), this
     )
 
+    var onClick: (() -> Unit)? = null
+
     init {
         setAttrs(attrs, R.styleable.NoDataViewWithButton) {
             binding.title.text = it.getString(R.styleable.NoDataViewWithButton_no_data_text_title)
@@ -27,27 +28,10 @@ class NoDataViewWithButton @JvmOverloads constructor(
             binding.loader.isVisible = showLoader
             binding.title.isVisible = !showLoader
         }
-    }
 
-    fun setTitle(title: String) {
-        binding.title.text = title
-    }
-
-    fun setTitle(@StringRes titleRes: Int) {
-        binding.title.setText(titleRes)
-    }
-
-
-    fun setDesc(desc: String) {
-        binding.desc.text = desc
-    }
-
-    fun setDesc(@StringRes descRes: Int) {
-        binding.desc.setText(descRes)
-    }
-
-    fun setDirectionsText(@StringRes descRes: Int) {
-        binding.directionsText.setText(descRes)
+        binding.topButton.onClick = {
+            onClick?.invoke()
+        }
     }
 
     var noData: Boolean = false

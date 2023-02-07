@@ -3,6 +3,7 @@ package com.bestDate.db.entity
 import android.os.Parcelable
 import androidx.room.Entity
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.utils.Logger
 import com.bestDate.view.seekBar.RangeBarView
 import com.google.gson.Gson
 import kotlinx.parcelize.Parcelize
@@ -57,10 +58,15 @@ data class QuestionnaireDB(
     }
 
     fun setAgeRange(answer: String?) {
-        val gson = Gson()
-        val range = gson.fromJson(answer, RangeBarView.Range::class.java)
-        search_age_max = range.max
-        search_age_min = range.min
+        if (answer != null) {
+            try {
+                val range = Gson().fromJson(answer, RangeBarView.Range::class.java)
+                search_age_max = range.max
+                search_age_min = range.min
+            } catch (e: Exception) {
+                Logger.print("Parsing error: ${e.message}")
+            }
+        }
     }
 
     fun isEmpty(): Boolean {

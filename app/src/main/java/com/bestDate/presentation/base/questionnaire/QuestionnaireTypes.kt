@@ -57,6 +57,7 @@ class KidsCount : QuestionnaireType {
 
     override fun getServerName(context: Context, answer: String?): String? {
         return when (answer) {
+            context.getString(R.string.no_kids) -> "No"
             context.getString(R.string.one) -> "1"
             context.getString(R.string.two) -> "2"
             context.getString(R.string.three) -> "3"

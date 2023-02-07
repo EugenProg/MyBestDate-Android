@@ -44,6 +44,11 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 DuelsFragmentDirections.actionDuelsToTop(viewModel.gender)
             )
         }
+        binding.noDataView.onClick = {
+            navController.navigate(
+                DuelsFragmentDirections.actionDuelsToTop(viewModel.gender)
+            )
+        }
     }
 
     private fun setUpFilterButtons() {
