@@ -25,7 +25,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
         super.onViewClickListener()
         with(binding) {
             backButton.onClick = {
-                navController.popBackStack()
+                goBack()
             }
             authButton.onSafeClick = {
                 validate()
@@ -55,15 +55,15 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
         observe(viewModel.loginProcessLiveData) {
             binding.authButton.toggleActionEnabled(it)
         }
-        observe(viewModel.errorLiveData) {
-            isLoggedIn = false
-            loaderDialog.stopLoading()
-            showMessage(getString(R.string.wrong_auth_data))
-        }
         observe(viewModel.validationErrorLiveData) {
             isLoggedIn = false
             showMessage(it)
         }
+    }
+
+    override fun errorAction() {
+        binding.authButton.toggleActionEnabled(false)
+        super.errorAction()
     }
 
     override fun navigateToMain() {
@@ -115,5 +115,10 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
                 }
             }
         }
+    }
+
+    override fun goBack() {
+        if (navController.backQueue.count() !in 3..4) requireActivity().finish()
+        else super.goBack()
     }
 }
