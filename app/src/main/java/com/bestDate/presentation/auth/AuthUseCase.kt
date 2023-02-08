@@ -48,6 +48,7 @@ class AuthUseCase @Inject constructor(
         val response = authRemoteData.loginSocial(provider, token)
         if (response.isSuccessful) {
             saveTokens(response.body())
+            saveDeviceToken()
             registrationSocialMode = response.body()?.registration == true
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
@@ -69,6 +70,7 @@ class AuthUseCase @Inject constructor(
             authRemoteData.refreshToken(preferencesUtils.getString(Preferences.REFRESH_TOKEN))
         if (response.isSuccessful) {
             saveTokens(response.body())
+            saveDeviceToken()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

@@ -1,7 +1,5 @@
 package com.bestDate.presentation.auth
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.R
 import com.bestDate.presentation.base.BaseViewModel
@@ -13,6 +11,7 @@ import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.main.UserUseCase
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -30,16 +29,16 @@ class AuthViewModel @Inject constructor(
         authUseCase.registrationSocialMode = value
     }
 
-    private var _validationErrorLiveData = MutableLiveData<Int>()
-    val validationErrorLiveData: LiveData<Int> = _validationErrorLiveData
+    private var _validationErrorLiveData = LiveEvent<Int>()
+    val validationErrorLiveData: LiveEvent<Int> = _validationErrorLiveData
 
-    private var _loginProcessLiveData = MutableLiveData<Boolean>()
-    val loginProcessLiveData: LiveData<Boolean> = _loginProcessLiveData
+    private var _loginProcessLiveData = LiveEvent<Boolean>()
+    val loginProcessLiveData: LiveEvent<Boolean> = _loginProcessLiveData
 
     var user = userUseCase.getMyUser.asLiveData()
 
-    private var _updateLanguageSuccessLiveData: MutableLiveData<Boolean> = MutableLiveData()
-    var updateLanguageSuccessLiveData: LiveData<Boolean> = _updateLanguageSuccessLiveData
+    private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
+    var updateLanguageSuccessLiveData: LiveEvent<Boolean> = _updateLanguageSuccessLiveData
 
     fun logIn(login: String, password: String) {
         when {

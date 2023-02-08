@@ -44,11 +44,8 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        viewModel.errorLiveData.observe(viewLifecycleOwner) {
-            loaderDialog.stopLoading()
-            if (it.exception.message.isBlank()) {
-                showMessage(getString(R.string.wrong_auth_data))
-            } else showMessage(it.exception.message)
+        observe(viewModel.errorLiveData) {
+            errorAction()
         }
         observe(viewModel.user) {
             if (viewModel.user.value != null && isLoggedIn) {
@@ -63,6 +60,12 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
         observe(viewModel.updateLanguageSuccessLiveData) {
             chooseRoute()
         }
+    }
+
+    protected open fun errorAction() {
+        isLoggedIn = false
+        loaderDialog.stopLoading()
+        showMessage(getString(R.string.wrong_auth_data))
     }
 
     private fun chooseRoute() {
