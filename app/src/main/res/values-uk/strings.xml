@@ -27,9 +27,8 @@
     <string name="gender">Стать</string>
     <string name="birth_date">Дата народження</string>
     <string name="create_new_account">Створити\nНовий обліковий запис</string>
-    <string name="when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy">Під час створення нового облікового запису ми рекомендуємо ознайомитися з політикою конфіденційності та умовами використання додатка для знайомств.</string>
     <string name="one_step_to_your_dream">Один крок до Вашої мрії</string>
-    <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">Натискаючи на кнопку «Зареєструватися», ви погоджуєтеся з нашою політикою конфіденційності та умовами використання</string>
+    <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">Натискаючи на кнопку «Створити акаунт», ви погоджуєтеся з нашою політикою конфіденційності та умовами використання</string>
     <string name="create_account">Створити акаунт</string>
     <string name="set_a_profile_photo">Встановити фото\nпрофілю</string>
     <string name="you_can_upload_up_to_9_photos_to_your_profile">Ви можете завантажити до 9 фотографій\nу свій профіль</string>
@@ -642,4 +641,5 @@
     <string name="you_have_three_messages_available_per_day">У вас є <b>три повідомлення</b>\nна <b>день</b></string>
     <string name="activate">Активувати</string>
     <string name="you_have_one_invitation_card_per_day">У вас є <b>одне запрошення</b>\nна <b>день</b></string>
+    <string name="i_agree_and_accept">Я згоден і приймаю <u><b>Політику конфіденційності</b></u></string>
 </resources>

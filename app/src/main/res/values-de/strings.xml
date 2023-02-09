@@ -27,9 +27,8 @@
     <string name="gender">Gender</string>
     <string name="birth_date">Geburtsdatum</string>
     <string name="create_new_account">Neues\nKonto erstellen</string>
-    <string name="when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy">Wenn Sie ein neues Konto erstellen, empfehlen wir Ihnen, unsere Datenschutzrichtlinien und die Nutzungsbedingungen für die Dating-App zu lesen.</string>
     <string name="one_step_to_your_dream">Ein Schritt zu Ihrem Traum</string>
-    <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">Wenn Sie auf die Taste “Registrieren“ klicken, erklären Sie sich mit unseren Datenschutzrichtlinien und Nutzungsbedingungen einverstanden.</string>
+    <string name="by_clicking_the_sign_up_button_you_agree_to_our_privacy_policy_and_terms_of_use">Wenn Sie auf die Taste “Konto erstellen“ klicken, erklären Sie sich mit unseren Datenschutzrichtlinien und Nutzungsbedingungen einverstanden.</string>
     <string name="create_account">Konto erstellen</string>
     <string name="set_a_profile_photo">Profilphoto\nfestlegen</string>
     <string name="you_can_upload_up_to_9_photos_to_your_profile">Sie können bis zu 9 Fotos\nin Ihr Profil hochladen</string>
@@ -642,4 +641,5 @@
     <string name="activate">Aktivieren Sie</string>
     <string name="you_have_one_invitation_card_per_day">Sie haben <b>eine Einladungskarte</b>\npro <b>Tag</b></string>
     <string name="fill_the_required_data">Füllen Sie die erforderlichen Daten aus</string>
+    <string name="i_agree_and_accept">Ich bin einverstanden und akzeptiere <u><b>Datenschutzbestimmungen</b></u></string>
 </resources>

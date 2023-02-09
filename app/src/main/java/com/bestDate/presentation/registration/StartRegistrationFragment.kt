@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
+import com.bestDate.data.extension.openAsLink
 import com.bestDate.data.extension.setPaddingBottom
 import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.utils.ViewUtils
@@ -74,6 +75,9 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
                 RegistrationHolder.gender = it
                 genderInput.text = getString(it.line)
             }
+            privacyPolicyCheckBox.textClick = {
+                "https://dev-api.bestdate.info/privacy-policy".openAsLink(requireContext())
+            }
         }
     }
 
@@ -90,6 +94,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
                 nameInput.text.isBlank() -> nameInput.setError()
                 genderInput.text.isBlank() -> genderInput.setError()
                 birthInput.text.isBlank() -> birthInput.setError()
+                !privacyPolicyCheckBox.checked -> privacyPolicyCheckBox.setError()
                 else -> {
                     RegistrationHolder.name = nameInput.text
                     navController.navigate(StartRegistrationFragmentDirections
@@ -102,7 +107,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
     override fun scrollAction() {
         super.scrollAction()
         with(binding) {
-            ViewUtils().hideViews(socialContainer, loginButton, genderInput, birthInput)
+            ViewUtils().hideViews(socialContainer, loginButton, genderInput, birthInput, privacyPolicyCheckBox)
             inputContainer.setPaddingBottom(0)
             scroll.fullScroll(View.FOCUS_DOWN)
             if (nameInput.hasFocus) nameInput.setFocus()
@@ -112,7 +117,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
     override fun hideAction() {
         super.hideAction()
         with(binding) {
-            ViewUtils().showViews(socialContainer, loginButton, genderInput, birthInput)
+            ViewUtils().showViews(socialContainer, loginButton, genderInput, birthInput, privacyPolicyCheckBox)
             inputContainer.setPaddingBottom(90)
         }
     }

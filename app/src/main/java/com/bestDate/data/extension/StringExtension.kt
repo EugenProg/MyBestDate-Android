@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.bestDate.R
+import com.bestDate.data.utils.Logger
 import com.bestDate.data.utils.notifications.NotificationType
 import java.text.SimpleDateFormat
 import java.util.*
@@ -118,4 +121,13 @@ fun String.getPushType(): NotificationType {
 fun String?.copyToClipboard(context: Context) {
     val manager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     manager.setPrimaryClip(ClipData.newPlainText("token", this))
+}
+
+fun String?.openAsLink(context: Context) {
+    try {
+        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(this)))
+    } catch (e: Exception) {
+        Logger.print("Error by open link: ${e.message}")
+    }
+
 }
