@@ -36,28 +36,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/backButton" />
 
-            <TextView
-                android:id="@+id/placeholder"
-                style="@style/text"
-                android:layout_marginTop="4dp"
-                android:lineSpacingExtra="3dp"
-                android:text="@string/when_creating_a_new_account_we_recommend_that_you_read_our_privacy_policy"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
-
             <LinearLayout
                 android:id="@+id/inputContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/bottom_dark_sheet"
                 android:orientation="vertical"
                 android:paddingBottom="90dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/placeholder">
+                app:layout_constraintTop_toBottomOf="@+id/headerTitle">
 
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/nameInput"
@@ -79,6 +69,12 @@
                     app:standard_info_hint="@string/birth_date"
                     app:standard_info_icon="@drawable/ic_calendar"
                     android:layout_marginTop="20dp" />
+
+                <com.bestDate.view.checkbox.CheckBoxView
+                    android:id="@+id/privacyPolicyCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"/>
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/next_button"
