@@ -103,7 +103,7 @@ class AnotherProfileFragment :
             }
         }
         binding.header.clickAvatar = {
-            fullUser?.photos?.toTypedArray()?.let {
+            fullUser?.photos?.let {
                 if (it.firstOrNull()?.id.orZero > 0) {
                     navController.navigate(
                         AnotherProfileFragmentDirections
@@ -114,7 +114,7 @@ class AnotherProfileFragment :
         }
         binding.userInfoView.imageClick = { photo ->
             val position = fullUser?.photos?.indexOfFirst { it.id == photo?.id } ?: 0
-            fullUser?.photos?.toTypedArray()?.let {
+            fullUser?.photos?.let {
                 navController.navigate(
                     AnotherProfileFragmentDirections
                         .actionAnotherProfileToSlider(position, fullUser?.id ?: 0)

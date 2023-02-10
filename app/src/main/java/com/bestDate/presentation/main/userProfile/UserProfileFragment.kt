@@ -70,8 +70,11 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             navController.navigate(UserProfileFragmentDirections.actionProfileToMyDuels())
         }
         binding.avatarContainer.setOnSaveClickListener {
-            viewModel.user.value?.photos?.toTypedArray()?.let {
-                navController.navigate(UserProfileFragmentDirections.actionProfileToSlider(it))
+            val photos = viewModel.user.value?.photos
+            if (photos?.isNotEmpty() == true) {
+                navController.navigate(
+                    UserProfileFragmentDirections.actionProfileToSlider(photos.toTypedArray())
+                )
             }
         }
         adapter.addClick = {
