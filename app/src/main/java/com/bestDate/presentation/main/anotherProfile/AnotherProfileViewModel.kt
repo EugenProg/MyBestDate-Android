@@ -27,6 +27,9 @@ class AnotherProfileViewModel @Inject constructor(
     private var _blockLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var blockLiveData: LiveData<Boolean> = _blockLiveData
 
+    private var _complainLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var complainLiveData: LiveData<Boolean> = _complainLiveData
+
     private var _sendInvitationLiveData: MutableLiveData<Boolean> = LiveEvent()
     var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
 
@@ -68,6 +71,13 @@ class AnotherProfileViewModel @Inject constructor(
     fun like(photo_id: Int) {
         doAsync {
             likesUseCase.like(LikesBody(photo_id))
+        }
+    }
+
+    fun complain(userId: Int?) {
+        doAsync {
+            anotherProfileUseCase.complain(userId)
+            _complainLiveData.postValue(true)
         }
     }
 }

@@ -656,4 +656,6 @@
     <string name="activate">Activate</string>
     <string name="you_have_one_invitation_card_per_day">You have <b>one invitation card</b>\nper <b>day</b></string>
     <string name="i_agree_and_accept">I agree and accept <u><b>Privacy Policy</b></u></string>
+    <string name="complain_about_content">Complain about content</string>
+    <string name="complain_is_send_successful">Complaint was successfully sent</string>
 </resources>
