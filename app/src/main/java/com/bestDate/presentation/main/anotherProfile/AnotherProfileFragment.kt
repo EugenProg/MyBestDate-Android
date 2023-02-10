@@ -94,10 +94,12 @@ class AnotherProfileFragment :
             sheet.shareClick = {
 
             }
-
             sheet.blockClick = {
                 if (isBlocked) viewModel.unlockUser(user?.id)
                 else viewModel.blockUser(user?.id)
+            }
+            sheet.complainClick = {
+                viewModel.complain(user?.id)
             }
         }
         binding.header.clickAvatar = {
@@ -156,6 +158,9 @@ class AnotherProfileFragment :
             val message = if (it) R.string.user_is_blocked_successful
             else R.string.user_is_unlocked_successful
             showMessage(getString(message))
+        }
+        observe(viewModel.complainLiveData) {
+            showMessage(getString(R.string.complain_is_send_successful))
         }
 
         observe(viewModel.invitations) {

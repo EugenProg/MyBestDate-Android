@@ -642,4 +642,6 @@
     <string name="you_have_one_invitation_card_per_day">У вас есть <b>одна пригласительная открытка</b>\nв <b>день</b></string>
     <string name="fill_the_required_data">Заполните необходимые данные</string>
     <string name="i_agree_and_accept">Я согласен и принимаю <u><b>Политику конфиденциальности</b></u></string>
+    <string name="complain_about_content">Пожаловаться на контент</string>
+    <string name="complain_is_send_successful">Жалоба успешно отправлена</string>
 </resources>

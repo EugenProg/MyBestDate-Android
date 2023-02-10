@@ -20,7 +20,7 @@ class AnotherProfileUseCase @Inject constructor(
 ) {
 
     var user: MutableLiveData<UserDB> = MutableLiveData()
-    var photos:  MutableLiveData<MutableList<ProfileImage>?> = MutableLiveData()
+    var photos: MutableLiveData<MutableList<ProfileImage>?> = MutableLiveData()
     var translatedText: String? = null
 
     suspend fun getUserById(id: Int?) {
@@ -54,5 +54,12 @@ class AnotherProfileUseCase @Inject constructor(
         if (response.isSuccessful) {
             translatedText = response.body()?.translations?.firstOrNull()?.text ?: text
         } else throw InternalException.OperationException(response.message())
+    }
+
+    suspend fun complain(id: Int?) {
+        val response = userRemoteData.complain(id.orZero)
+        if (!response.isSuccessful) throw InternalException.OperationException(
+            response.errorBody()?.getErrorMessage()
+        )
     }
 }

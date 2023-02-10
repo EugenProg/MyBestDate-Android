@@ -37,6 +37,8 @@ class UserRemoteData @Inject constructor(
 
     suspend fun unlockUser(id: Int) = service.unlockUser(id)
 
+    suspend fun complain(id: Int) = service.complain(MatchActionRequest(id))
+
     suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
 
     suspend fun getUserInvitations(filter: InvitationFilter) =

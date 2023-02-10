@@ -41,8 +41,7 @@
         android:id="@+id/blockBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="8dp"
         android:paddingHorizontal="18dp"
         android:paddingTop="16dp">
 
@@ -54,6 +53,33 @@
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:text="@string/block_profile"
+            android:textColor="#f28ab6"
+            android:textSize="18sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/white_10" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/complainBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        android:paddingHorizontal="18dp"
+        android:paddingTop="16dp">
+
+        <TextView
+            android:id="@+id/complainTitle"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:text="@string/complain_about_content"
             android:textColor="#f28ab6"
             android:textSize="18sp" />
 

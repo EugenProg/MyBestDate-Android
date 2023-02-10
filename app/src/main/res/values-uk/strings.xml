@@ -642,4 +642,6 @@
     <string name="activate">Активувати</string>
     <string name="you_have_one_invitation_card_per_day">У вас є <b>одне запрошення</b>\nна <b>день</b></string>
     <string name="i_agree_and_accept">Я згоден і приймаю <u><b>Політику конфіденційності</b></u></string>
+    <string name="complain_about_content">Поскаржитися на зміст</string>
+    <string name="complain_is_send_successful">Скаргу успішно надіслано</string>
 </resources>
