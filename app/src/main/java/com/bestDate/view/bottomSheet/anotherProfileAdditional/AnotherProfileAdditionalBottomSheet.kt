@@ -20,6 +20,7 @@ class AnotherProfileAdditionalBottomSheet(var isBlocked: Boolean) :
 
     var shareClick: (() -> Unit)? = null
     var blockClick: (() -> Unit)? = null
+    var complainClick: (() -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
@@ -36,6 +37,10 @@ class AnotherProfileAdditionalBottomSheet(var isBlocked: Boolean) :
             blockBox.setOnSaveClickListener {
                 dismiss()
                 blockClick?.invoke()
+            }
+            complainBox.setOnSaveClickListener {
+                dismiss()
+                complainClick?.invoke()
             }
         }
     }
