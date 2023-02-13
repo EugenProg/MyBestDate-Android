@@ -129,5 +129,12 @@ fun String?.openAsLink(context: Context) {
     } catch (e: Exception) {
         Logger.print("Error by open link: ${e.message}")
     }
+}
 
+fun String.share(context: Context) {
+    val intent = Intent()
+    intent.action = Intent.ACTION_SEND
+    intent.putExtra(Intent.EXTRA_TEXT, this)
+    intent.type = "text/plain"
+    context.startActivity(Intent.createChooser(intent, "Choose one"))
 }

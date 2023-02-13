@@ -9,6 +9,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.utils.DeeplinkCreator
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
@@ -92,7 +93,7 @@ class AnotherProfileFragment :
             sheet.show(childFragmentManager, sheet.tag)
 
             sheet.shareClick = {
-
+                DeeplinkCreator(user?.id, user?.name).get()?.share(requireContext())
             }
             sheet.blockClick = {
                 if (isBlocked) viewModel.unlockUser(user?.id)
