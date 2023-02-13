@@ -71,10 +71,18 @@
                     android:layout_marginTop="20dp" />
 
                 <com.bestDate.view.checkbox.CheckBoxView
+                    android:id="@+id/termsOfUseCheckBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:check_box_link="@string/terms_of_use"/>
+
+                <com.bestDate.view.checkbox.CheckBoxView
                     android:id="@+id/privacyPolicyCheckBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="20dp"
+                    app:check_box_link="@string/privacy_policy"/>
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/next_button"

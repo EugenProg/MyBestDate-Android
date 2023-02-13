@@ -641,7 +641,9 @@
     <string name="you_have_three_messages_available_per_day">У вас є <b>три повідомлення</b>\nна <b>день</b></string>
     <string name="activate">Активувати</string>
     <string name="you_have_one_invitation_card_per_day">У вас є <b>одне запрошення</b>\nна <b>день</b></string>
-    <string name="i_agree_and_accept">Я згоден і приймаю <u><b>Політику конфіденційності</b></u></string>
+    <string name="i_agree_and_accept">Я згоден і приймаю</string>
+    <string name="privacy_policy">Політику конфіденційності</string>
+    <string name="terms_of_use">Правила використання</string>
     <string name="complain_about_content">Поскаржитися на зміст</string>
     <string name="complain_is_send_successful">Скаргу успішно надіслано</string>
 </resources>

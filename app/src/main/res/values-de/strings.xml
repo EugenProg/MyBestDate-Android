@@ -641,7 +641,9 @@
     <string name="activate">Aktivieren Sie</string>
     <string name="you_have_one_invitation_card_per_day">Sie haben <b>eine Einladungskarte</b>\npro <b>Tag</b></string>
     <string name="fill_the_required_data">Füllen Sie die erforderlichen Daten aus</string>
-    <string name="i_agree_and_accept">Ich bin einverstanden und akzeptiere <u><b>Datenschutzbestimmungen</b></u></string>
+    <string name="i_agree_and_accept">Ich bin einverstanden und akzeptiere</string>
+    <string name="privacy_policy">Datenschutzbestimmungen</string>
+    <string name="terms_of_use">Nutzungsbedingungen</string>
     <string name="complain_about_content">Sich über den Inhalt beschweren</string>
     <string name="complain_is_send_successful">Reklamation erfolgreich abgeschickt</string>
 </resources>
