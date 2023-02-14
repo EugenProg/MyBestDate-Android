@@ -50,14 +50,21 @@ class PassRecoverySetNewFragment :
 
     private fun chooseRoute() {
         when {
-            viewModel.user.value?.hasNoPhotos() == true -> {
-                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalProfilePhotoEditingFragment())
+            viewModel.user.value?.hasNoPhotos() == true && viewModel.getSkipImageCount() < 3 -> {
+                navController.navigate(
+                    PassRecoverySetNewFragmentDirections.actionGlobalProfilePhotoEditingFragment()
+                )
             }
-            viewModel.user.value?.questionnaireEmpty() == true -> {
-                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalQuestionnaireFragment())
+            viewModel.user.value?.questionnaireEmpty() == true &&
+                    viewModel.getSkipQuestionnaireCount() < 3 -> {
+                navController.navigate(
+                    PassRecoverySetNewFragmentDirections.actionGlobalQuestionnaireFragment()
+                )
             }
             else -> {
-                navController.navigate(PassRecoverySetNewFragmentDirections.actionGlobalMainNavGraph())
+                navController.navigate(
+                    PassRecoverySetNewFragmentDirections.actionGlobalMainNavGraph()
+                )
             }
         }
     }

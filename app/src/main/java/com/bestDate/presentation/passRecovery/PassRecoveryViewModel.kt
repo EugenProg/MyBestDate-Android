@@ -8,6 +8,8 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
@@ -20,7 +22,8 @@ class PassRecoveryViewModel @Inject constructor(
     private val passRecoveryUseCase: RecoveryUseCase,
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
-    private val pusherCenter: PusherCenter
+    private val pusherCenter: PusherCenter,
+    private val preferencesUtils: PreferencesUtils
     ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
@@ -36,6 +39,10 @@ class PassRecoveryViewModel @Inject constructor(
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
+    fun getSkipQuestionnaireCount() = preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT)
+
+    fun getSkipImageCount() = preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT)
 
     fun sendPassRecoveryCode(login: String) {
         when {

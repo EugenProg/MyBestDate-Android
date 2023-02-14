@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.orZero
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
-import com.bestDate.presentation.main.anotherProfile.AnotherProfileUseCase
+import com.bestDate.presentation.base.anotherProfile.AnotherProfileUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

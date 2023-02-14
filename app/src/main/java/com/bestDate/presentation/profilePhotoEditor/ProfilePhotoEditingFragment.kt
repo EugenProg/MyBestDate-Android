@@ -65,6 +65,7 @@ class ProfilePhotoEditingFragment :
                 BasePhotoEditorFragment.editorAction.value = null
             }
             nextButton.setOnSaveClickListener {
+                viewModel.increaseImageSkipCount()
                 navController.navigate(
                     ProfilePhotoEditingFragmentDirections
                         .actionGlobalQuestionnaireFragment()

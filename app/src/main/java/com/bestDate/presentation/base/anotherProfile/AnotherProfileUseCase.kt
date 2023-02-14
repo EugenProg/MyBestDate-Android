@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.anotherProfile
+package com.bestDate.presentation.base.anotherProfile
 
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getErrorMessage

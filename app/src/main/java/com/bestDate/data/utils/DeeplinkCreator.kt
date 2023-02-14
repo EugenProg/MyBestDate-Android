@@ -17,9 +17,9 @@ class DeeplinkCreator(private val id: Int?, private val name: String?) {
                 appStoreId = "1635182272"
             }
             socialMetaTagParameters {
-                title = "Link to $name profile in My Best Date"
+                title = "Link to $name's profile in My Best Date"
                 description = "This link opens the user profile in My Best Date application"
-                imageUrl = Uri.parse("https://dev-api.bestdate.info/images/default_photo.jpg")
+                imageUrl = Uri.parse("https://dev-api.bestdate.info/images/ic_launcher-playstore.png")
             }
         }.uri.toString()
     }

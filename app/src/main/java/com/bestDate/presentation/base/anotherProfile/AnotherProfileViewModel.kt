@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.anotherProfile
+package com.bestDate.presentation.base.anotherProfile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

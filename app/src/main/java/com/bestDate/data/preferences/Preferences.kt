@@ -9,5 +9,7 @@ enum class Preferences {
     FIRST_ENTER,
     ARG_EXPIRES_AT,
     FIREBASE_TOKEN,
-    LANGUAGE
+    LANGUAGE,
+    IMAGE_SKIP_COUNT,
+    QUESTIONNAIRE_SKIP_COUNT
 }

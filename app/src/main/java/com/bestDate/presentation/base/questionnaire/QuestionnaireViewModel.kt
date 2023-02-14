@@ -73,5 +73,13 @@ class QuestionnaireViewModel @Inject constructor(
         }
     }
 
-    fun isFirstEnter() = preferencesUtils.getBooleanWithDefault(Preferences.FIRST_ENTER, true)
+    fun isFirstEnter() =
+        preferencesUtils.getBooleanWithDefault(Preferences.FIRST_ENTER, true)
+
+    fun increaseQuestionnaireSkipCount() {
+        preferencesUtils.saveInt(
+            Preferences.QUESTIONNAIRE_SKIP_COUNT,
+            preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT) + 1
+        )
+    }
 }

@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.anotherProfile
+package com.bestDate.presentation.base.anotherProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -14,7 +14,7 @@ import com.bestDate.view.alerts.showCreateInvitationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AnotherProfileSliderFragment :
+abstract class AnotherProfileSliderFragment :
     BaseVMFragment<FragmentAnotherProfileSliderBinding, AnotherProfileViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileSliderBinding =
         { inflater, parent, attach ->
@@ -27,14 +27,16 @@ class AnotherProfileSliderFragment :
     override val statusBarColor = R.color.bg_main
     override val viewModelClass: Class<AnotherProfileViewModel> =
         AnotherProfileViewModel::class.java
-    private val args by navArgs<AnotherProfileSliderFragmentArgs>()
+
+    abstract fun getPosition(): Int
+    abstract fun getUserId(): Int
 
     private var invitationList: MutableList<Invitation> = mutableListOf()
     private var isLikeClicked: Boolean = false
 
     override fun onInit() {
         super.onInit()
-        binding.sliderView.setPhotos(viewModel.photos.value, false, args.position)
+        binding.sliderView.setPhotos(viewModel.photos.value, false, getPosition())
     }
 
     override fun onViewClickListener() {
@@ -62,12 +64,12 @@ class AnotherProfileSliderFragment :
         }
         observe(viewModel.likeLiveData) {
             isLikeClicked = true
-            viewModel.getUserById(args.userId)
+            viewModel.getUserById(getUserId())
             setNavigationResult(NavigationResultKey.RELOAD, true)
         }
         observe(viewModel.photos) { photos ->
             binding.sliderView.setPhotos(photos, false,
-                if (isLikeClicked) binding.sliderView.position else args.position
+                if (isLikeClicked) binding.sliderView.position else getPosition()
             )
             binding.sliderView.handleIsLiked = { position ->
                 binding.navBox.isLiked = photos?.get(position)?.liked ?: false
