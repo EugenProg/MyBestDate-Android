@@ -79,7 +79,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
                 "https://dev-api.bestdate.info/privacy-policy".openAsLink(requireContext())
             }
             termsOfUseCheckBox.textClick = {
-                "https://dev-api.bestdate.info/terms-of-use".openAsLink(requireContext())
+                "https://dev-api.bestdate.info/use-agreement".openAsLink(requireContext())
             }
         }
     }
