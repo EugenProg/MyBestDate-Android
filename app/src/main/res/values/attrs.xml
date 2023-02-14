@@ -113,4 +113,8 @@
         <attr name="questionnaire_input_icon" format="reference"/>
         <attr name="questionnaire_input_hint" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CheckBoxView">
+        <attr name="check_box_link" format="string"/>
+    </declare-styleable>
 </resources>
