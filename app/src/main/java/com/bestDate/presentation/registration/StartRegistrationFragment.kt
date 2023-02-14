@@ -78,6 +78,9 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
             privacyPolicyCheckBox.textClick = {
                 "https://dev-api.bestdate.info/privacy-policy".openAsLink(requireContext())
             }
+            termsOfUseCheckBox.textClick = {
+                "https://dev-api.bestdate.info/use-agreement".openAsLink(requireContext())
+            }
         }
     }
 
@@ -94,6 +97,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
                 nameInput.text.isBlank() -> nameInput.setError()
                 genderInput.text.isBlank() -> genderInput.setError()
                 birthInput.text.isBlank() -> birthInput.setError()
+                !termsOfUseCheckBox.checked -> termsOfUseCheckBox.setError()
                 !privacyPolicyCheckBox.checked -> privacyPolicyCheckBox.setError()
                 else -> {
                     RegistrationHolder.name = nameInput.text
@@ -107,7 +111,8 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
     override fun scrollAction() {
         super.scrollAction()
         with(binding) {
-            ViewUtils().hideViews(socialContainer, loginButton, genderInput, birthInput, privacyPolicyCheckBox)
+            ViewUtils().hideViews(socialContainer, loginButton, genderInput, birthInput,
+                termsOfUseCheckBox, privacyPolicyCheckBox)
             inputContainer.setPaddingBottom(0)
             scroll.fullScroll(View.FOCUS_DOWN)
             if (nameInput.hasFocus) nameInput.setFocus()
@@ -117,7 +122,8 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
     override fun hideAction() {
         super.hideAction()
         with(binding) {
-            ViewUtils().showViews(socialContainer, loginButton, genderInput, birthInput, privacyPolicyCheckBox)
+            ViewUtils().showViews(socialContainer, loginButton, genderInput, birthInput,
+                termsOfUseCheckBox, privacyPolicyCheckBox)
             inputContainer.setPaddingBottom(90)
         }
     }
