@@ -4,14 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.data.extension.observe
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.setOnSaveClickListener
-import com.bestDate.data.extension.toPx
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.data.utils.DeeplinkCreator
 import com.bestDate.databinding.FragmentUserProfileBinding
 import com.bestDate.presentation.base.BasePhotoEditorFragment
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.bottomSheet.ShareMainProfileBottomSheet
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -105,6 +104,18 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
         binding.questionnaireButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToQuestionnaire())
+        }
+        binding.additionalAction.setOnSaveClickListener {
+            val sheet = ShareMainProfileBottomSheet()
+
+            sheet.shareClick = {
+                DeeplinkCreator(
+                    viewModel.user.value?.id,
+                    viewModel.user.value?.name
+                ).get().share(requireContext())
+            }
+
+            sheet.show(childFragmentManager)
         }
     }
 
