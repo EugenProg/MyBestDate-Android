@@ -53,6 +53,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
 
+                <ImageView
+                    android:id="@+id/additionalAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:paddingVertical="32dp"
+                    android:paddingStart="32dp"
+                    android:paddingEnd="32dp"
+                    android:src="@drawable/ic_menu_dots"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
                 <FrameLayout
                     android:id="@+id/avatarContainer"
                     android:layout_width="wrap_content"

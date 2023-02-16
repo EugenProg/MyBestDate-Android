@@ -38,6 +38,10 @@ class StartViewModel @Inject constructor(
 
     fun isRefreshTokenValid() = preferencesUtils.getString(Preferences.REFRESH_TOKEN).isNotBlank()
 
+    fun getSkipQuestionnaireCount() = preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT)
+
+    fun getSkipImageCount() = preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT)
+
     fun refreshUser() {
         doAsync {
             userUseCase.refreshUser()

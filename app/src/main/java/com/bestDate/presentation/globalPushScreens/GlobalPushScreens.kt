@@ -3,6 +3,7 @@ package com.bestDate.presentation.globalPushScreens
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.Like
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.presentation.base.anotherProfile.BaseAnotherProfileFragment
 import com.bestDate.presentation.main.chats.chat.ChatFragment
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListFragment
 import com.bestDate.presentation.main.userProfile.likesList.LikesListFragment

@@ -305,7 +305,7 @@ enum class ChatListItemType {
 }
 
 enum class BackScreenType {
-    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS, DUELS
+    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS, DUELS, START
 }
 
 data class Message(

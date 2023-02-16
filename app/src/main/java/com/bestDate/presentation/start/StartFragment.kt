@@ -64,10 +64,11 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
 
     private fun chooseRoute() {
         when {
-            viewModel.user.value?.hasNoPhotos() == true -> {
+            viewModel.user.value?.hasNoPhotos() == true && viewModel.getSkipImageCount() < 3 -> {
                 navController.navigate(StartFragmentDirections.actionStartToProfilePhotoEditing())
             }
-            viewModel.user.value?.questionnaireEmpty() == true -> {
+            viewModel.user.value?.questionnaireEmpty() == true &&
+                    viewModel.getSkipQuestionnaireCount() < 3 -> {
                 navController.navigate(StartFragmentDirections.actionStartToQuestionnaire())
             }
             else -> {

@@ -7,6 +7,8 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.toByteArray
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.main.UserUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfilePhotoViewModel @Inject constructor(
     private val photoUseCase: ProfilePhotoUseCase,
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    private val preferencesUtils: PreferencesUtils
 ): BaseViewModel() {
 
     val user = userUseCase.getMyUser.asLiveData()
@@ -61,5 +64,12 @@ class ProfilePhotoViewModel @Inject constructor(
             _deleteLiveData.postValue(true)
             _deleteLoadingLiveData.postValue(false)
         }
+    }
+
+    fun increaseImageSkipCount() {
+        preferencesUtils.saveInt(
+            Preferences.IMAGE_SKIP_COUNT,
+            preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT) + 1
+        )
     }
 }

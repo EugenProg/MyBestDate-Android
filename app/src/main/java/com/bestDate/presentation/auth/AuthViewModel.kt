@@ -37,6 +37,10 @@ class AuthViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
+    fun getSkipQuestionnaireCount() = preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT)
+
+    fun getSkipImageCount() = preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT)
+
     private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
     var updateLanguageSuccessLiveData: LiveEvent<Boolean> = _updateLanguageSuccessLiveData
 

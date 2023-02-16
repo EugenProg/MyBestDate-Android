@@ -1,4 +1,4 @@
-package com.bestDate
+package com.bestDate.presentation.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData

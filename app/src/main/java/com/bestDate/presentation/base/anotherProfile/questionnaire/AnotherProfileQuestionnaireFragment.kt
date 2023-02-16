@@ -1,4 +1,4 @@
-package com.bestDate.presentation.main.anotherProfile.questionnaire
+package com.bestDate.presentation.base.anotherProfile.questionnaire
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

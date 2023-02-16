@@ -78,10 +78,11 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
                 val birthDate = viewModel.user.value?.getBirthDate()?.toServerFormat()
                 navigateToFillData(name, birthDate, gender)
             }
-            viewModel.user.value?.hasNoPhotos() == true -> {
+            viewModel.user.value?.hasNoPhotos() == true && viewModel.getSkipImageCount() < 3 -> {
                 navigateToPhoto()
             }
-            viewModel.user.value?.questionnaireEmpty() == true -> {
+            viewModel.user.value?.questionnaireEmpty() == true &&
+                    viewModel.getSkipQuestionnaireCount() < 3 -> {
                 navigateToQuestionnaire()
             }
             else -> {
