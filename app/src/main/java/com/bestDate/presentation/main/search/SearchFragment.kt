@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import com.bestDate.MainActivity
+import com.bestDate.presentation.mainActivity.MainActivity
 import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.AdditionalFilters

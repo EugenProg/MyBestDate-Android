@@ -1,23 +1,22 @@
-package com.bestDate
+package com.bestDate.presentation.mainActivity
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import com.bestDate.data.extension.*
-import com.bestDate.data.utils.Logger
-import com.bestDate.data.utils.notifications.TypingEventCoordinator
+import com.bestDate.R
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
+import com.bestDate.data.extension.isBottomNavVisible
+import com.bestDate.data.extension.observe
 import com.bestDate.data.utils.notifications.NotificationType
+import com.bestDate.data.utils.notifications.TypingEventCoordinator
 import com.bestDate.databinding.ActivityMainBinding
-import com.bestDate.view.alerts.LoaderDialog
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 
 //HG3g8wnkTaUGgQHxFcw4
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var chatListTypingEventCoordinator: TypingEventCoordinator
     private lateinit var chatTypingEventCoordinator: TypingEventCoordinator
-    private lateinit var loaderDialog: LoaderDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         setUpPusherObserver()
         setUpChatListTypingCoordinator()
         setUpChatTypingListener()
-        loaderDialog = LoaderDialog(this)
         bottomNavView = binding.bottomNavigationView
 
         observe(viewModel.loggedOut) {
@@ -123,11 +120,6 @@ class MainActivity : AppCompatActivity() {
         observe(viewModel.coinsLiveData) {
             viewModel.setCoinsCount(it)
         }
-        observe(viewModel.getUserLiveData) {
-            loaderDialog.stopLoading()
-            navController.navigate(R.id.deeplink_another_profile_nav_graph,
-                bundleOf("fullUser" to it))
-        }
     }
 
     private fun setUpChatListTypingCoordinator() {
@@ -145,24 +137,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshData()
-        checkForDeeplink()
-    }
-
-    private fun checkForDeeplink() {
-        Firebase.dynamicLinks
-            .getDynamicLink(intent)
-            .addOnSuccessListener {
-                it?.let {
-                    //loaderDialog.startLoading()
-                    val userId = it.link?.toString()?.substring(22).safetyToInt()
-                    //viewModel.getUserById(userId)
-                    navController.navigate(R.id.deeplink_another_profile_nav_graph,
-                        bundleOf("userId" to userId))
-                }
-            }
-            .addOnFailureListener {
-                Logger.print("Deeplink read exception: ${it.message}")
-            }
     }
 
     override fun onPause() {
@@ -182,7 +156,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.bottomNavigationView.setupWithNavController(navController)
-
     }
 
     private fun setUpUserObserver() {

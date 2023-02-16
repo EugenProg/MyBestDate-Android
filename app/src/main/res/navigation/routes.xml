@@ -207,72 +207,6 @@
             app:popUpToInclusive="true" />
     </fragment>
     <navigation
-        android:id="@+id/deeplink_another_profile_nav_graph"
-        app:startDestination="@id/anotherProfileDeeplink">
-        <argument
-            android:name="userId"
-            app:argType="integer" />
-        <argument
-            android:name="backScreen"
-            app:argType="com.bestDate.data.model.BackScreenType" />
-        <fragment
-            android:id="@+id/anotherProfileDeeplink"
-            android:name="com.bestDate.presentation.deeplinkScreens.GlobalAnotherProfileDeeplinkScreen"
-            android:label="DeeplinkAnotherProfileFragment">
-            <argument
-                android:name="userId"
-                app:argType="integer" />
-            <argument
-                android:name="backScreen"
-                app:argType="com.bestDate.data.model.BackScreenType" />
-            <action
-                android:id="@+id/action_deeplink_anotherProfile_to_questionnaire"
-                app:destination="@id/globalAnotherProfileQuestionnaireDeeplink"
-                app:enterAnim="@anim/slide_in_top_left"
-                app:exitAnim="@anim/slide_out_left"
-                app:popEnterAnim="@anim/slide_in_top_right"
-                app:popExitAnim="@anim/slide_out_right"  />
-            <action
-                android:id="@+id/action_deeplink_anotherProfile_to_slider"
-                app:destination="@id/globalAnotherProfileSliderFragmentDeeplink"/>
-            <action
-                android:id="@+id/action_global_another_profile_to_chat"
-                app:destination="@id/globalChatDeeplinkScreen" />
-        </fragment>
-        <fragment
-            android:id="@+id/globalAnotherProfileQuestionnaireDeeplink"
-            android:name="com.bestDate.presentation.deeplinkScreens.GlobalAnotherProfileDeeplinkQuestionnaireScreen"
-            android:label="DeeplinkAnotherProfileQuestionnaireFragment"/>
-        <fragment
-            android:id="@+id/globalAnotherProfileSliderFragmentDeeplink"
-            android:name="com.bestDate.presentation.deeplinkScreens.GlobalAnotherProfileDeeplinkSliderScreen"
-            android:label="DeeplinkAnotherProfileSliderFragment">
-            <argument
-                android:name="position"
-                android:defaultValue="0"
-                app:argType="integer" />
-            <argument
-                android:name="userId"
-                android:defaultValue="0"
-                app:argType="integer" />
-        </fragment>
-        <fragment
-            android:id="@+id/globalChatDeeplinkScreen"
-            android:name="com.bestDate.presentation.deeplinkScreens.GlobalChatDeeplinkScreen"
-            android:label="GlobalChatDeeplinkScreen">
-            <argument
-                android:name="user"
-                app:argType="com.bestDate.data.model.ShortUserData"
-                app:nullable="true" />
-            <argument
-                android:name="backScreen"
-                app:argType="com.bestDate.data.model.BackScreenType" />
-        </fragment>
-        <action
-            android:id="@+id/action_global_deeplink_to_main"
-            app:destination="@id/main_nav_graph" />
-    </navigation>
-    <navigation
         android:id="@+id/main_nav_graph"
         app:startDestination="@id/search_nav_graph">
 
@@ -509,6 +443,11 @@
             <action
                 android:id="@+id/action_global_another_profile_to_chat"
                 app:destination="@id/chat_nav_graph" />
+            <action
+                android:id="@+id/action_global_another_profile_to_search"
+                app:destination="@id/search_nav_graph"
+                app:popUpTo="@id/another_profile_nav_graph"
+                app:popUpToInclusive="true"/>
         </navigation>
         <navigation
             android:id="@+id/search_nav_graph"

@@ -35,4 +35,10 @@ class MainAnotherProfileFragment: BaseAnotherProfileFragment() {
             MainAnotherProfileFragmentDirections.actionAnotherProfileToQuestionnaire()
         )
     }
+
+    override fun navigateToSearch() {
+        navController.navigate(
+            MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToSearch()
+        )
+    }
 }

@@ -1,19 +1,15 @@
-package com.bestDate
+package com.bestDate.presentation.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.model.Message
 import com.bestDate.data.utils.SessionManager
 import com.bestDate.data.utils.notifications.NotificationCenter
 import com.bestDate.data.utils.notifications.PusherCenter
-import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.UserUseCase
-import com.bestDate.presentation.base.anotherProfile.AnotherProfileUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.chats.chat.ChatUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +23,6 @@ class MainViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val invitationUseCase: InvitationUseCase,
     private val notificationCenter: NotificationCenter,
-    private val anotherProfileUseCase: AnotherProfileUseCase,
     private val pusherCenter: PusherCenter,
     sessionManager: SessionManager
 ) : BaseViewModel() {
@@ -43,9 +38,6 @@ class MainViewModel @Inject constructor(
     val readingLiveData = pusherCenter.readingLiveData
     val typingLiveData = pusherCenter.typingLiveData
     val coinsLiveData = pusherCenter.coinsLiveData
-
-    private var _getUserLiveData: MutableLiveData<UserDB> = MutableLiveData()
-    var getUserLiveData: LiveData<UserDB> = _getUserLiveData
 
     fun refreshChatList() {
         doAsync {
@@ -122,13 +114,6 @@ class MainViewModel @Inject constructor(
     fun deleteChatMessage(message: Message?) {
         doAsync {
             chatUseCase.deletePusherMessage(message)
-        }
-    }
-
-    fun getUserById(userId: Int) {
-        doAsync {
-            anotherProfileUseCase.getUserById(userId)
-            _getUserLiveData.postValue(anotherProfileUseCase.user.value)
         }
     }
 }

@@ -41,6 +41,7 @@ abstract class BaseAnotherProfileFragment :
     abstract fun navigateToChat()
     abstract fun navigateToSlider(position: Int)
     abstract fun navigateToQuestionnaire()
+    abstract fun navigateToSearch()
 
     override fun onInit() {
         super.onInit()
@@ -84,7 +85,7 @@ abstract class BaseAnotherProfileFragment :
             }
         }
         binding.navBox.likeClick = {
-            user?.getMainPhoto()?.id?.let { viewModel.like(it) }
+            fullUser?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
         binding.header.clickAdditionally = {
             val sheet = AnotherProfileAdditionalBottomSheet(isBlocked)
@@ -121,13 +122,20 @@ abstract class BaseAnotherProfileFragment :
 
     override fun goBack() {
         viewModel.clearUserData()
-        if (getBackScreen() == BackScreenType.SEARCH) {
-            setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        when(getBackScreen()) {
+            BackScreenType.SEARCH -> {
+                setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+                super.goBack()
+            }
+            BackScreenType.DUELS -> {
+                setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
+                super.goBack()
+            }
+            BackScreenType.START -> {
+                navigateToSearch()
+            }
+            else -> super.goBack()
         }
-        else if (getBackScreen() == BackScreenType.DUELS) {
-            setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
-        }
-        super.goBack()
     }
 
     override fun onViewLifecycle() {
@@ -163,7 +171,7 @@ abstract class BaseAnotherProfileFragment :
         }
     }
 
-    protected fun setFullUserInfo(fullUser: UserDB) {
+    private fun setFullUserInfo(fullUser: UserDB) {
         user = fullUser.getShortUser(user)
         setBackground(fullUser.blocked_me)
         binding.header.setUserInfo(fullUser)
@@ -171,6 +179,7 @@ abstract class BaseAnotherProfileFragment :
         binding.userBlockedView.setUserInfo(fullUser)
         binding.navBox.isVisible = fullUser.blocked_me != true
         binding.navBox.isLiked = fullUser.getMainPhoto().liked == true
+        binding.navBox.hasMainPhoto = user?.main_photo != null
         isBlocked = fullUser.blocked == true
         this.fullUser = fullUser
         validateChatUser()
