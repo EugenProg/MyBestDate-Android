@@ -49,16 +49,8 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
         }
         observe(viewModel.user) {
             if (viewModel.user.value != null && isLoggedIn) {
-                val language = getString(R.string.app_locale)
-                if (language != viewModel.user.value?.language) {
-                    viewModel.changeLanguage(language)
-                } else {
-                    chooseRoute()
-                }
+                chooseRoute()
             }
-        }
-        observe(viewModel.updateLanguageSuccessLiveData) {
-            chooseRoute()
         }
     }
 
@@ -98,7 +90,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
                 override fun onSuccess(result: LoginResult) {
                     loaderDialog.startLoading()
                     isLoggedIn = true
-                    viewModel.loginSocial(SocialProvider.FACEBOOK, result.accessToken.token)
+                    viewModel.loginSocial(SocialProvider.FACEBOOK, result.accessToken.token, getString(R.string.app_locale))
                 }
 
                 override fun onCancel() {
@@ -145,7 +137,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             val account = completedTask.getResult(ApiException::class.java)
             loaderDialog.startLoading()
             isLoggedIn = true
-            viewModel.loginByGoogle(account.serverAuthCode)
+            viewModel.loginByGoogle(account.serverAuthCode, getString(R.string.app_locale))
         } catch (e: Exception) {
             loaderDialog.stopLoading()
         }

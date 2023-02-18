@@ -68,15 +68,15 @@ class PassRecoveryViewModel @Inject constructor(
         }
     }
 
-    fun confirmPassRecovery() {
+    fun confirmPassRecovery(appLanguage: String) {
         if (PassRecoveryDataHolder.type == RegistrationType.EMAIL) {
-            confirmEmailPassRecovery()
+            confirmEmailPassRecovery(appLanguage)
         } else {
-            confirmPhonePassRecovery()
+            confirmPhonePassRecovery(appLanguage)
         }
     }
 
-    private fun confirmEmailPassRecovery() {
+    private fun confirmEmailPassRecovery(appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetEmailPassword(
@@ -84,11 +84,11 @@ class PassRecoveryViewModel @Inject constructor(
                 PassRecoveryDataHolder.code,
                 PassRecoveryDataHolder.password
             )
-            loginByEmail(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password)
+            loginByEmail(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)
         }
     }
 
-    private fun confirmPhonePassRecovery() {
+    private fun confirmPhonePassRecovery(appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetPhonePassword(
@@ -96,24 +96,24 @@ class PassRecoveryViewModel @Inject constructor(
                 PassRecoveryDataHolder.code,
                 PassRecoveryDataHolder.password
             )
-            loginByPhone(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password)
+            loginByPhone(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)
         }
     }
 
-    private fun loginByEmail(login: String, password: String) {
+    private fun loginByEmail(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
     }
 
-    private fun loginByPhone(login: String, password: String) {
+    private fun loginByPhone(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)

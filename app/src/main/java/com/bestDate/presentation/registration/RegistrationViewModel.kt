@@ -60,58 +60,58 @@ class RegistrationViewModel @Inject constructor(
         }
     }
 
-    fun confirmRegistration(code: String) {
+    fun confirmRegistration(code: String, appLanguage: String) {
         _loadingLiveData.value = true
         preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, true)
         if (RegistrationHolder.type == RegistrationType.PHONE) {
-            confirmPhoneOtp(code)
+            confirmPhoneOtp(code, appLanguage)
         } else {
-            confirmEmailOtp(code)
+            confirmEmailOtp(code, appLanguage)
         }
     }
 
-    private fun confirmEmailOtp(code: String) {
+    private fun confirmEmailOtp(code: String, appLanguage: String) {
         doAsync {
             registrationUseCase.confirmEmailCode(RegistrationHolder.login, code)
-            createAccountByEmail()
+            createAccountByEmail(appLanguage)
         }
     }
 
-    private fun createAccountByEmail() {
+    private fun createAccountByEmail(appLanguage: String) {
         doAsync {
             registrationUseCase.createUserByEmail(RegistrationHolder.getRegistrationData())
-            loginByEmail(RegistrationHolder.login, RegistrationHolder.password)
+            loginByEmail(RegistrationHolder.login, RegistrationHolder.password, appLanguage)
         }
     }
 
-    private fun confirmPhoneOtp(code: String) {
+    private fun confirmPhoneOtp(code: String, appLanguage: String) {
         doAsync {
             registrationUseCase.confirmPhoneCode(RegistrationHolder.login, code)
-            createAccountByPhone()
+            createAccountByPhone(appLanguage)
         }
     }
 
-    private fun createAccountByPhone() {
+    private fun createAccountByPhone(appLanguage: String) {
         doAsync {
             registrationUseCase.createUserByPhone(RegistrationHolder.getRegistrationData())
-            loginByPhone(RegistrationHolder.login, RegistrationHolder.password)
+            loginByPhone(RegistrationHolder.login, RegistrationHolder.password, appLanguage)
         }
     }
 
-    private fun loginByEmail(login: String, password: String) {
+    private fun loginByEmail(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _registrationLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
     }
 
-    private fun loginByPhone(login: String, password: String) {
+    private fun loginByPhone(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _registrationLiveData.postValue(true)
             _loadingLiveData.postValue(false)
