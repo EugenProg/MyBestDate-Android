@@ -94,8 +94,10 @@ class UserUseCase @Inject constructor(
     suspend fun changeLanguage(language: String) {
         val response = userRemoteData.changeLanguage(language)
         if (response.isSuccessful) {
-            val user = response.body()?.data
-            userDao.validate(user ?: UserDB(id = 0))
+            response.body()?.data?.let {
+                userDao.validate(it)
+                coinsCount.postValue(it.coins)
+            }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

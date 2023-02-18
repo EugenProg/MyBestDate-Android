@@ -111,7 +111,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
                 passInput.text.isBlank() || passInput.text.length < 6 -> passInput.setError()
                 else -> {
                     isLoggedIn = true
-                    viewModel.logIn(emailInput.text, passInput.text)
+                    viewModel.logIn(emailInput.text, passInput.text, getString(R.string.app_locale))
                 }
             }
         }

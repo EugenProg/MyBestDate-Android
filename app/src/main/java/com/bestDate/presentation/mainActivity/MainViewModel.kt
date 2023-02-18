@@ -73,10 +73,10 @@ class MainViewModel @Inject constructor(
         return chatUseCase.isCurrentUserChat(notificationCenter.getUserId())
     }
 
-    fun refreshData() {
+    fun refreshData(appLanguage: String) {
         if (authUseCase.tokenIsFresh) {
             doAsync {
-                userUseCase.refreshUser()
+                userUseCase.changeLanguage(appLanguage)
                 invitationUseCase.refreshInvitations()
                 pusherCenter.startPusher()
             }
