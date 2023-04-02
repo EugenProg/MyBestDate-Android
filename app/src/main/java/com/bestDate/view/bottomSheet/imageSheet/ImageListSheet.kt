@@ -28,7 +28,7 @@ class ImageListSheet : BaseBottomSheet<SheetItemListBinding>() {
         { inflater, parent, attach -> SheetItemListBinding.inflate(inflater, parent, attach) }
 
     private lateinit var adapter: ImageSheetAdapter
-    private var imageList: MutableLiveData<MutableList<Uri>> = MutableLiveData(ArrayList())
+    private var imageList: MutableLiveData<MutableList<Uri>?> = MutableLiveData()
     var itemClick: ((Image) -> Unit)? = null
 
     override fun onInit() {
@@ -53,15 +53,21 @@ class ImageListSheet : BaseBottomSheet<SheetItemListBinding>() {
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(imageList) {
-            adapter.submitList(it) {
-                binding.progress.isVisible = it.isEmpty()
+            it?.let {
+                adapter.submitList(it) {
+                    binding.progress.isVisible = false
+                    binding.emptyView.isVisible = it.isEmpty()
+                }
             }
         }
     }
 
     private fun openGallery() {
+        binding.progress.isVisible = true
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-            val files = File("/sdcard/" + Environment.DIRECTORY_DCIM).getImages()
+            val files: MutableList<File> = mutableListOf()
+            files.addAll(File("/sdcard/" + Environment.DIRECTORY_DCIM).getImages())
+            files.addAll(File("/sdcard/" + Environment.DIRECTORY_PICTURES).getImages())
 
             files.sortByDescending { it.lastModified() }
 
@@ -85,7 +91,7 @@ class ImageListSheet : BaseBottomSheet<SheetItemListBinding>() {
             if (it) {
                 openGallery()
             } else {
-                //showMessage(getString(R.string.no_permission))
+                showMessage(getString(R.string.no_permission))
             }
         }
 }

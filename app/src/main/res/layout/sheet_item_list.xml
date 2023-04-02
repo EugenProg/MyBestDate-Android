@@ -30,5 +30,16 @@
             android:layout_gravity="center"
             android:visibility="invisible"
             android:indeterminateTint="@color/white"/>
+
+        <TextView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/component_text"
+            android:text="@string/images_not_found"
+            android:textSize="16sp"
+            android:visibility="gone"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginTop="16dp"/>
     </FrameLayout>
 </LinearLayout>
