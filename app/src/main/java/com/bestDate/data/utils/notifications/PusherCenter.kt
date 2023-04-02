@@ -7,6 +7,7 @@ import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
 import com.bestDate.db.dao.UserDao
+import com.bestDate.network.NetworkModule
 import com.google.gson.Gson
 import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
@@ -66,7 +67,7 @@ class PusherCenter @Inject constructor(
     }
 
     private fun createConnection() {
-        val authorizer = HttpAuthorizer("https://dev-api.bestdate.info/broadcasting/auth")
+        val authorizer = HttpAuthorizer("${NetworkModule.providesCoreBaseURL()}/broadcasting/auth")
         authorizer.setHeaders(
             hashMapOf(Pair("Authorization", preferencesUtils.getString(Preferences.ACCESS_TOKEN))
             )
