@@ -16,7 +16,7 @@ class DuelsViewModel @Inject constructor(
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
     val coins = userUseCase.coinsCount
-    val duelImages = duelUseCase.duelProfiles
+    val duelImages = duelUseCase.duelImages
     val duelResults = duelUseCase.duelResults
     var gender: Gender
         get() = duelUseCase.gender
@@ -41,7 +41,7 @@ class DuelsViewModel @Inject constructor(
     fun postVote(winningPhoto: Int, loserPhoto: Int) {
         doAsync {
             duelUseCase.postVote(winningPhoto, loserPhoto)
-            getDuels()
+            duelUseCase.getMyDuels()
         }
     }
 
