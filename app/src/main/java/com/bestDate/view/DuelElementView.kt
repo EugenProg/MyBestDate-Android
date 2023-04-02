@@ -21,7 +21,7 @@ class DuelElementView @JvmOverloads constructor(
     var image: String? = ""
         set(value) {
             isLiked = false
-            Glide.with(binding.root.context)
+            Glide.with(context)
                 .load(value)
                 .placeholder(R.drawable.ic_default_photo)
                 .into(binding.profileImageView)
