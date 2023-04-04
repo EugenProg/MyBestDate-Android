@@ -30,12 +30,6 @@ class GuestsViewModel @Inject constructor(
         }
     }
 
-    fun refreshUser() {
-        doAsync {
-            userUseCase.refreshUser()
-        }
-    }
-
     fun markGuestsViewed(list: MutableList<Int?>) {
         doAsync {
             guestsUseCase.markGuestsViewed(
