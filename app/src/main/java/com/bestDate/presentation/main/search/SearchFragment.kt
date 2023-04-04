@@ -143,7 +143,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
 
     private fun setUpLocationSheet() {
         val locationOptionsSheet = OptionsSheet(
-            locationMap, getString(R.string.location)
+            locationMap, getString(R.string.location), selectedLocationFilter
         )
         locationOptionsSheet.itemClick = {
             if (it.first != selectedLocationFilter || additionalFilters != null) {
@@ -159,7 +159,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     }
 
     private fun setUpStatusSheet() {
-        val statusOptionsSheet = OptionsSheet(statusesMap, getString(R.string.online))
+        val statusOptionsSheet = OptionsSheet(statusesMap, getString(R.string.online), selectedStatusFilter)
         statusOptionsSheet.itemClick = {
             if (it.first != selectedStatusFilter || additionalFilters != null) {
                 selectedStatusFilter = it.first

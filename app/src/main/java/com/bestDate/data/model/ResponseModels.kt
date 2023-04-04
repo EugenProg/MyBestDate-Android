@@ -256,7 +256,8 @@ data class DuelProfileImageListResponse(
 ) : BaseResponse()
 
 data class DuelProfileResponse(
-    val data: MutableList<DuelProfile>? = null
+    val data: MutableList<DuelProfile>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class DuelProfile(

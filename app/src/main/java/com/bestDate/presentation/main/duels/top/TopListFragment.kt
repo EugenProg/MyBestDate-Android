@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bestDate.R
-import com.bestDate.data.extension.*
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.onPageChanged
 import com.bestDate.databinding.FragmentTopListBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.ViewPagerAdapter
@@ -20,7 +21,6 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
 
     override val statusBarColor = R.color.bg_main
     private lateinit var loader: LoaderDialog
-    private var isInited: Boolean = false
 
     override fun onInit() {
         super.onInit()
@@ -28,18 +28,12 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
         binding.toolbar.backClick = { goBack() }
         setUpPager()
         setUpSelectorView()
-        viewModel.getTop()
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.errorLiveData) {
             showMessage(it.exception.message)
-        }
-        observe(viewModel.loadingMode) {
-            if (it && viewModel.topsMan.value.isNullOrEmpty() &&
-                viewModel.topsWoman.value.isNullOrEmpty()) loader.startLoading()
-            else loader.stopLoading()
         }
     }
 
@@ -57,22 +51,19 @@ class TopListFragment : BaseVMFragment<FragmentTopListBinding, TopViewModel>() {
                 when (it) {
                     0 -> {
                         binding.selectorView.setGender(Gender.WOMAN)
-                        if (isInited) viewModel.gender = Gender.WOMAN
+                        viewModel.gender = Gender.WOMAN
                         binding.decoratedFilterButton.gender = Gender.WOMAN
                     }
                     1 -> {
                         binding.selectorView.setGender(Gender.MAN)
-                        if (isInited) viewModel.gender = Gender.MAN
+                        viewModel.gender = Gender.MAN
                         binding.decoratedFilterButton.gender = Gender.MAN
                     }
                 }
             }
         }
 
-        postDelayed({
-            isInited = true
-            binding.pager.currentItem = viewModel.gender.ordinal
-        }, 200)
+        binding.pager.setCurrentItem(viewModel.gender.ordinal, false)
     }
 
     private fun setUpSelectorView() {
