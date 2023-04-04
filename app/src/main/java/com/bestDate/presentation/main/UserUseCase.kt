@@ -9,13 +9,11 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.db.dao.UserDao
 import com.bestDate.db.dao.UserSettingsDao
 import com.bestDate.db.entity.QuestionnaireDB
-import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
-import com.bestDate.presentation.main.duels.top.TopUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
@@ -39,7 +37,6 @@ class UserUseCase @Inject constructor(
     private val blockedUserUseCase: BlockedUserUseCase,
     private val duelsUseCase: DuelsUseCase,
     private val chatListUseCase: ChatListUseCase,
-    private val topUseCase: TopUseCase,
     private val authUseCase: AuthUseCase,
     private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
@@ -70,7 +67,6 @@ class UserUseCase @Inject constructor(
         likesListUseCase.clearData()
         duelsUseCase.clearData()
         matchesListUseCase.clearData()
-        topUseCase.clearData()
         myDuelsUseCase.clearData()
         invitationUseCase.clearData()
         guestsUseCase.clearData()

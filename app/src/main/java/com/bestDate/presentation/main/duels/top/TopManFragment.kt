@@ -2,6 +2,8 @@ package com.bestDate.presentation.main.duels.top
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -22,8 +24,8 @@ class TopManFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
     override fun onInit() {
         super.onInit()
         with(binding) {
-            root.layoutManager = GridLayoutManager(requireContext(), 2)
-            root.adapter = adapter
+            listView.layoutManager = GridLayoutManager(requireContext(), 2)
+            listView.adapter = adapter
         }
 
         adapter.itemClick = {
@@ -32,12 +34,15 @@ class TopManFragment : BaseVMFragment<FragmentTopBinding, TopViewModel>() {
                     .actionGlobalTopToAnotherProfile(it?.user, BackScreenType.DUELS)
             )
         }
+        adapter.addLoadStateListener {
+            binding.progress.isVisible = (it.source.refresh is LoadState.Loading) == true
+        }
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.topsMan) {
-            adapter.submitList(it)
+            adapter.submitData(lifecycle, it)
         }
     }
 }

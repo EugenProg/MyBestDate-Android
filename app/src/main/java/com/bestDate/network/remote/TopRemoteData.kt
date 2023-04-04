@@ -7,6 +7,6 @@ import javax.inject.Inject
 class TopRemoteData @Inject constructor(
     private val topService: TopService
 ) {
-    suspend fun getTop(gender: String, country: String? = null) =
-        topService.getTop(DuelRequest(gender, country))
+    suspend fun getTop(gender: String, page: Int, country: String? = null) =
+        topService.getTop(DuelRequest(gender, country), page)
 }
