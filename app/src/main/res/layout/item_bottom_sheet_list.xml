@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="61dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_main"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/name"
         style="@style/component_title"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/white_90"
         android:textSize="18sp"
-        tools:text="@string/gender" />
+        tools:text="@string/gender"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/check" />
+
+    <ImageView
+        android:id="@+id/check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        app:tint="@color/white" />
 
     <View
+        android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_marginHorizontal="2dp"
         android:layout_marginTop="8dp"
-        android:background="@color/white_10" />
-</LinearLayout>
+        android:background="@color/white_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/name" />
+</androidx.constraintlayout.widget.ConstraintLayout>
