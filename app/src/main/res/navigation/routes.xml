@@ -657,6 +657,10 @@
             <action
                 android:id="@+id/action_invitationPush_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <argument
+                android:name="page"
+                app:argType="com.bestDate.view.button.InvitationActions"
+                android:defaultValue="NEW" />
         </fragment>
         <fragment
             android:id="@+id/globalChatPushScreen"

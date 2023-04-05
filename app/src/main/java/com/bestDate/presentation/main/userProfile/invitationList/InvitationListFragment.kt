@@ -68,4 +68,8 @@ open class InvitationListFragment : BaseFragment<FragmentInvitationListBinding>(
                 .actionGlobalAnotherProfile(userData, BackScreenType.PROFILE)
         )
     }
+
+    protected fun setPage(page: InvitationActions) {
+        binding.pager.setCurrentItem(page.ordinal, false)
+    }
 }

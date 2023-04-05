@@ -29,7 +29,7 @@ class UserRemoteData @Inject constructor(
 
     suspend fun matchAction(userId: Int) = service.matchAction(MatchActionRequest(userId))
 
-    suspend fun getMyDuels() = service.getMyDuels()
+    suspend fun getMyDuels(page: Int) = service.getMyDuels(page)
 
     suspend fun getBlockedUsers() = service.getBlockedUsers()
 

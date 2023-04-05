@@ -11,10 +11,10 @@ import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
 import com.bestDate.db.dao.UserDao
-import com.bestDate.view.alerts.showDefaultPush
 import com.bestDate.view.alerts.showInvitationPush
 import com.bestDate.view.alerts.showLikePush
 import com.bestDate.view.alerts.showMatchPush
+import com.bestDate.view.button.InvitationActions
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -45,7 +45,7 @@ class NotificationCenter @Inject constructor() {
     }
 
     fun showPush(activity: AppCompatActivity) {
-        when(notificationType) {
+        when (notificationType) {
             NotificationType.LIKE -> activity.showLikePush(user) {
                 _navigationAction.postValue(Pair(notificationType.destination, null))
             }
@@ -53,22 +53,40 @@ class NotificationCenter @Inject constructor() {
                 _navigationAction.postValue(Pair(notificationType.destination, null))
             }
             NotificationType.INVITATION -> activity.showInvitationPush(user) {
-                _navigationAction.postValue(Pair(notificationType.destination, null))
+                _navigationAction.postValue(
+                    Pair(
+                        notificationType.destination,
+                        createInvitationBundle(InvitationActions.NEW)
+                    )
+                )
             }
-            else -> {
-                activity.showDefaultPush(title, body) {
-                    val bundle =
-                        if (notificationType == NotificationType.MESSAGE) createMessageBundle()
-                        else null
-                    _navigationAction.postValue(Pair(notificationType.destination, bundle))
-                }
+            NotificationType.INVITATION_ANSWER -> activity.showInvitationPush(user) {
+                _navigationAction.postValue(
+                    Pair(
+                        notificationType.destination,
+                        createInvitationBundle(InvitationActions.SENT)
+                    )
+                )
             }
+            /* else -> {
+                 activity.showDefaultPush(title, body) {
+                     val bundle =
+                         if (notificationType == NotificationType.MESSAGE) createMessageBundle()
+                         else null
+                     _navigationAction.postValue(Pair(notificationType.destination, bundle))
+                 }
+             }*/
         }
     }
 
     private fun createMessageBundle(): Bundle =
-        bundleOf("user" to user,
-            "backScreen" to BackScreenType.PROFILE)
+        bundleOf(
+            "user" to user,
+            "backScreen" to BackScreenType.PROFILE
+        )
+
+    private fun createInvitationBundle(type: InvitationActions) =
+        bundleOf("page" to type)
 
     private fun getUser(user: String?): ShortUserData? {
         if (user.isNullOrBlank()) return null
