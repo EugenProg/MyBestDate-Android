@@ -65,7 +65,8 @@ data class LikeResponse(
 ) : BaseResponse()
 
 data class MatchesListResponse(
-    val data: MutableList<Match>
+    val data: MutableList<Match>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class MatchActionResponse(

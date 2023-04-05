@@ -28,7 +28,7 @@ interface UserService {
 
     /**Get user matches list*/
     @GET("/api/v1/match")
-    suspend fun getMatchesList(): Response<MatchesListResponse>
+    suspend fun getMatchesList(@Query("page") page: Int): Response<MatchesListResponse>
 
     /**Get users for match*/
     @GET("/api/v1/match-users")

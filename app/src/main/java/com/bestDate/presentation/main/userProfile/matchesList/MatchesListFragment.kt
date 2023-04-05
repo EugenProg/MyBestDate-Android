@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.userProfile.matchesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -22,15 +23,6 @@ open class MatchesListFragment :
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MatchesListAdapter
 
-    override fun onInit() {
-        super.onInit()
-        binding.refreshView.setOnRefreshListener {
-            viewModel.getMatches()
-        }
-
-        viewModel.getMatches()
-    }
-
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.toolbar.backClick = {
@@ -40,17 +32,8 @@ open class MatchesListFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        observe(viewModel.matchesList) {
-            initListData(it.second)
-            adapter.submitList(it.first) {
-                binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.first.isEmpty()
-            }
-        }
-        observe(viewModel.loadingMode) {
-            if (!binding.refreshView.isRefreshing &&
-                viewModel.matchesList.value?.first.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
+        observe(viewModel.user) {
+            initListData(it?.getMainPhotoThumbUrl())
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
@@ -73,6 +56,26 @@ open class MatchesListFragment :
                 }, {
                     navigateToChat(it)
                 })
+            }
+        }
+        initListObserver()
+    }
+
+    private fun initListObserver() {
+        observe(viewModel.matchesList) {
+            adapter.submitData(lifecycle, it)
+        }
+
+        with(binding) {
+            refreshView.setOnRefreshListener {
+                adapter.refresh()
+            }
+
+            adapter.addLoadStateListener {
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+                noDataView.noData =
+                    it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshView.isRefreshing)
             }
         }
     }
