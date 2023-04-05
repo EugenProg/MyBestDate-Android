@@ -72,7 +72,8 @@ data class MatchActionResponse(
 ) : BaseResponse()
 
 data class MyDuelsResponse(
-    val data: MutableList<MyDuel>
+    val data: MutableList<MyDuel>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class ShortUsersDataResponse(

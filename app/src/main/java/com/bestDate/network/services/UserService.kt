@@ -40,7 +40,7 @@ interface UserService {
 
     /**Get user duels*/
     @GET("/api/v1/voting")
-    suspend fun getMyDuels(): Response<MyDuelsResponse>
+    suspend fun getMyDuels(@Query("page") page: Int): Response<MyDuelsResponse>
 
     /**Get blocked users*/
     @GET("/api/v1/blocked-users")

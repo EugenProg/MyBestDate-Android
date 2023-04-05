@@ -51,14 +51,14 @@ class TopAdapter : PagingDataAdapter<DuelProfile, TopAdapter.TopListViewHolder>(
         @SuppressLint("SetTextI18n")
         override fun bindView(item: DuelProfile?, itemClick: ((DuelProfile?) -> Unit)?) {
             binding.run {
-                val color = when (adapterPosition) {
+                val color = when (absoluteAdapterPosition) {
                     0 -> R.color.gold
                     1 -> R.color.silver
                     2 -> R.color.bronze
                     else -> R.color.black
                 }
 
-                val colorAward = when (adapterPosition) {
+                val colorAward = when (absoluteAdapterPosition) {
                     0 -> R.color.gold
                     1 -> R.color.silver
                     2 -> R.color.bronze
@@ -72,7 +72,7 @@ class TopAdapter : PagingDataAdapter<DuelProfile, TopAdapter.TopListViewHolder>(
                     ContextCompat.getColor(itemView.context, colorAward),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 );
-                placeStatus.text = "№${adapterPosition + 1}"
+                placeStatus.text = "№${absoluteAdapterPosition + 1}"
                 percentNumber.text =
                     (item?.rating?.setScale(1, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
                 Glide.with(itemView.context)

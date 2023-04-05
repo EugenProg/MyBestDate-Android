@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.userProfile.myDuels
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -32,10 +33,14 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         }
 
         binding.refreshView.setOnRefreshListener {
-            viewModel.getMyDuels()
+            adapter.refresh()
         }
 
-        viewModel.getMyDuels()
+        adapter.addLoadStateListener {
+            binding.refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+            binding.noDataView.noData = it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
+            binding.noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !binding.refreshView.isRefreshing)
+        }
     }
 
     override fun onViewClickListener() {
@@ -49,15 +54,7 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         super.onViewLifecycle()
 
         observe(viewModel.myDuels) {
-            adapter.submitList(it) {
-                binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
-            }
-        }
-        observe(viewModel.loadingMode) {
-            if (!binding.refreshView.isRefreshing &&
-                viewModel.myDuels.value.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
+            adapter.submitData(lifecycle, it)
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
