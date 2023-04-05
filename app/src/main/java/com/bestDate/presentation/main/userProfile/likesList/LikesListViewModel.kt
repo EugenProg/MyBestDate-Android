@@ -1,21 +1,15 @@
 package com.bestDate.presentation.main.userProfile.likesList
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.bestDate.presentation.base.BaseViewModel
-import com.bestDate.data.model.Like
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class LikesListViewModel @Inject constructor(
-    private val likesUseCase: LikesListUseCase
-): BaseViewModel() {
+class LikesListViewModel @Inject constructor(likesUseCase: LikesListUseCase) : BaseViewModel() {
 
-    var likesList: MutableLiveData<MutableList<Like>> = likesUseCase.likesList
-
-    fun getLikes() {
-        doAsync {
-            likesUseCase.getLikes()
-        }
-    }
+    var likesList = likesUseCase.likesList.asLiveData()
+        .cachedIn(viewModelScope)
 }

@@ -20,7 +20,7 @@ interface UserService {
 
     /**Get user likes list*/
     @GET("/api/v1/likes")
-    suspend fun getLikesList(): Response<LikesListResponse>
+    suspend fun getLikesList(@Query("page") page: Int): Response<LikesListResponse>
 
     /**Post like*/
     @POST("/api/v1/likes")
