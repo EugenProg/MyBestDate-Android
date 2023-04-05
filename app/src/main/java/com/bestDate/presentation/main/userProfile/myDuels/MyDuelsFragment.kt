@@ -25,21 +25,24 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         super.onInit()
 
         adapter = MyDuelsAdapter()
-        binding.myDuelsView.layoutManager = LinearLayoutManager(requireContext())
-        binding.myDuelsView.adapter = adapter
+        with(binding) {
+            myDuelsView.layoutManager = LinearLayoutManager(requireContext())
+            myDuelsView.adapter = adapter
 
-        adapter.itemClick = {
-            navigateToUserProfile(it)
-        }
+            adapter.itemClick = {
+                navigateToUserProfile(it)
+            }
 
-        binding.refreshView.setOnRefreshListener {
-            adapter.refresh()
-        }
+            refreshView.setOnRefreshListener {
+                adapter.refresh()
+            }
 
-        adapter.addLoadStateListener {
-            binding.refreshView.isRefreshing = it.source.refresh is LoadState.Loading
-            binding.noDataView.noData = it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
-            binding.noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !binding.refreshView.isRefreshing)
+            adapter.addLoadStateListener {
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+                noDataView.noData =
+                    it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshView.isRefreshing)
+            }
         }
     }
 

@@ -56,7 +56,8 @@ data class UserDataResponse(
 ) : BaseResponse()
 
 data class LikesListResponse(
-    val data: MutableList<Like>
+    val data: MutableList<Like>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class LikeResponse(

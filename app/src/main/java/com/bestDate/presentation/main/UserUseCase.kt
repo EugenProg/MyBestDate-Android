@@ -16,7 +16,6 @@ import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
-import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListUseCase
 import com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUserUseCase
 import javax.inject.Inject
@@ -27,7 +26,6 @@ class UserUseCase @Inject constructor(
     private val userDao: UserDao,
     private val authRemoteData: AuthRemoteData,
     private val userRemoteData: UserRemoteData,
-    private val likesListUseCase: LikesListUseCase,
     private val matchesListUseCase: MatchesListUseCase,
     private val invitationUseCase: InvitationListUseCase,
     private val guestsUseCase: GuestsUseCase,
@@ -62,7 +60,6 @@ class UserUseCase @Inject constructor(
     fun clearUserData() {
         userDao.delete()
         userSettingsDao.delete()
-        likesListUseCase.clearData()
         duelsUseCase.clearData()
         matchesListUseCase.clearData()
         invitationUseCase.clearData()
