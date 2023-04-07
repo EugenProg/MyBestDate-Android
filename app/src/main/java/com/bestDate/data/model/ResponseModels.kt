@@ -305,7 +305,7 @@ data class Chat(
 }
 
 enum class ChatListItemType {
-    HEADER, NEW_ITEM, OLD_ITEM, BOT
+    HEADER, NEW_ITEM, OLD_ITEM, BOT, LOADER
 }
 
 enum class BackScreenType {
