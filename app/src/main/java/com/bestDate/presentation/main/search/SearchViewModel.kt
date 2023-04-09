@@ -79,11 +79,21 @@ class SearchViewModel @Inject constructor(
         preferencesUtils.saveString(type, value.name)
     }
 
+    fun saveFilter(type: Preferences, value: GenderFilter) {
+        preferencesUtils.saveString(type, value.name)
+    }
+
     fun getFilter(type: Preferences): FilterType {
         val value = FilterType.values().firstOrNull {
             it.name == preferencesUtils.getString(type)
         } ?: if (type == Preferences.FILTER_LOCATION) FilterType.ALL else FilterType.NOT_SELECTED
         return value
+    }
+
+    fun getGenderFilter(): GenderFilter {
+        return GenderFilter.values().firstOrNull {
+            it.name == preferencesUtils.getString(Preferences.FILTER_GENDER)
+        } ?: GenderFilter.ALL
     }
 }
 
@@ -95,4 +105,10 @@ enum class FilterType(var serverName: String) {
     ONLINE("online"),
     NOT_SELECTED("all"),
     RECENTLY("recently")
+}
+
+enum class GenderFilter(val filterName: Int, var serverName: String?) {
+    MEN(R.string.men, "male"),
+    WOMEN(R.string.women ,"female"),
+    ALL(R.string.all_gender, null)
 }
