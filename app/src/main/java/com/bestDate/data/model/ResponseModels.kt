@@ -8,6 +8,7 @@ import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.db.entity.UserSettings
+import com.bestDate.network.NetworkModule
 import com.bestDate.presentation.main.search.FilterType
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
@@ -47,8 +48,8 @@ data class ProfileImage(
     }
 
     fun getDefaultPhoto() = ProfileImage(
-        full_url = "https://dev-api.bestdate.info/images/default_photo.jpg",
-        thumb_url = "https://dev-api.bestdate.info/images/default_photo.jpg"
+        full_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg",
+        thumb_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg"
     )
 }
 
