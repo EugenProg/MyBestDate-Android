@@ -1,47 +1,38 @@
 package com.bestDate.presentation.main.userProfile.invitationList
 
-import androidx.lifecycle.MutableLiveData
-import com.bestDate.presentation.base.BaseViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.bestDate.data.model.InvitationAnswer
-import com.bestDate.data.model.InvitationCard
+import com.bestDate.presentation.base.BaseViewModel
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class InvitationListViewModel @Inject constructor(
     private val invitationListUseCase: InvitationListUseCase
-): BaseViewModel() {
+) : BaseViewModel() {
 
-    var newInvitations: MutableLiveData<MutableList<InvitationCard>> =
-        invitationListUseCase.newInvitations
-    var answeredInvitations: MutableLiveData<MutableList<InvitationCard>> =
-        invitationListUseCase.answeredInvitations
-    var sentInvitations: MutableLiveData<MutableList<InvitationCard>> =
-        invitationListUseCase.sentInvitations
+    private var _answerLiveData: LiveEvent<Boolean> = LiveEvent()
+    var answerLiveData: LiveEvent<Boolean> = _answerLiveData
 
-    fun refreshNewInvitationList() {
-        doAsync {
-            invitationListUseCase.refreshNewInvitations()
-        }
-    }
+    var newInvitations = invitationListUseCase.newInvitations
+        .asLiveData()
+        .cachedIn(viewModelScope)
 
-    fun refreshAnsweredInvitationList() {
-        doAsync {
-            invitationListUseCase.refreshAnsweredInvitations()
-        }
-    }
+    var answeredInvitations = invitationListUseCase.answeredInvitations
+        .asLiveData()
+        .cachedIn(viewModelScope)
 
-    fun refreshSentInvitationList() {
-        doAsync {
-            invitationListUseCase.refreshSentInvitations()
-        }
-    }
+    var sentInvitations = invitationListUseCase.sentInvitations
+        .asLiveData()
+        .cachedIn(viewModelScope)
 
     fun answerToInvitation(answer: InvitationAnswer, invitationId: Int?) {
         doAsync {
             invitationListUseCase.answerToInvitation(invitationId, answer)
-            invitationListUseCase.refreshNewInvitations()
-            refreshAnsweredInvitationList()
+            _answerLiveData.postValue(true)
         }
     }
 }

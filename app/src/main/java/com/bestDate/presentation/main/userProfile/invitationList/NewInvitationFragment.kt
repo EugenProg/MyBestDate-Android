@@ -1,52 +1,31 @@
 package com.bestDate.presentation.main.userProfile.invitationList
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.model.ShortUserData
-import com.bestDate.databinding.FragmentInvitationBinding
-import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.main.userProfile.invitationList.adapters.BaseInvitationAdapter
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.NewInvitationsAdapter
 import com.bestDate.view.alerts.LoaderDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewInvitationFragment(var navigateAction: (ShortUserData?) -> Unit) :
-    BaseVMFragment<FragmentInvitationBinding, InvitationListViewModel>() {
-    override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInvitationBinding =
-        { inflater, parent, attach -> FragmentInvitationBinding.inflate(inflater, parent, attach) }
-    override val viewModelClass: Class<InvitationListViewModel> =
-        InvitationListViewModel::class.java
-    override val statusBarColor = R.color.bg_main
-
-    private var adapter: NewInvitationsAdapter = NewInvitationsAdapter()
+class NewInvitationFragment(override var navigateAction: (ShortUserData?) -> Unit) :
+    BaseInvitationFragment(navigateAction) {
     private lateinit var loaderDialog: LoaderDialog
+
+    override fun getInvitationAdapter(): BaseInvitationAdapter {
+        return NewInvitationsAdapter()
+    }
+
+    override fun getNoDataTitle(): Int = R.string.you_have_no_new_invitations
 
     override fun onInit() {
         super.onInit()
         loaderDialog = LoaderDialog(requireActivity())
-        with(binding) {
-            noDataView.setTitle(getString(R.string.you_have_no_new_invitations))
-
-            invitationListView.layoutManager = LinearLayoutManager(requireContext())
-            invitationListView.adapter = adapter
-
-            refreshView.setOnRefreshListener {
-                viewModel.refreshNewInvitationList()
-            }
-        }
-
-        viewModel.refreshNewInvitationList()
     }
 
     override fun onViewClickListener() {
         super.onViewClickListener()
-        adapter.userClick = {
-            navigateAction.invoke(it)
-        }
-
         adapter.answerClick = { answer, id ->
             loaderDialog.startLoading()
             viewModel.answerToInvitation(answer, id)
@@ -56,21 +35,13 @@ class NewInvitationFragment(var navigateAction: (ShortUserData?) -> Unit) :
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.newInvitations) {
-            adapter.submitList(it) {
-                binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
+            loadItems(it)
+        }
+        observe(viewModel.answerLiveData) {
+            if (it) {
+                loaderDialog.stopLoading()
+                adapter.refresh()
             }
-        }
-        observe(viewModel.loadingMode) {
-            if (!it) loaderDialog.stopLoading()
-            if (!binding.refreshView.isRefreshing &&
-                viewModel.newInvitations.value.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
-        }
-        observe(viewModel.errorLiveData) {
-            binding.refreshView.isRefreshing = false
-            binding.noDataView.toggleLoading(false)
-            showMessage(it.exception.message)
         }
     }
 }

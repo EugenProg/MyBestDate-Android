@@ -41,9 +41,9 @@ class UserRemoteData @Inject constructor(
 
     suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
 
-    suspend fun getUserInvitations(filter: InvitationFilter) =
+    suspend fun getUserInvitations(filter: InvitationFilter, page: Int) =
         service.getInvitations(
-            UserInvitationRequest(filter.serverName)
+            UserInvitationRequest(filter.serverName), page
         )
 
     suspend fun updateUserData(userRequest: UpdateUserRequest) = service.updateUserData(userRequest)

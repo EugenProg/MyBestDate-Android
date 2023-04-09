@@ -99,7 +99,8 @@ data class InvitationsListResponse(
 ) : BaseResponse()
 
 data class UserInvitationsResponse(
-    val data: MutableList<InvitationCard>
+    val data: MutableList<InvitationCard>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class UserSettingsResponse(

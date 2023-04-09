@@ -3,25 +3,21 @@ package com.bestDate.presentation.main.userProfile.invitationList.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
-import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.InvitationAnswer
 import com.bestDate.data.model.InvitationCard
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemSentInvitationBinding
+import com.bestDate.presentation.base.InvitationBaseViewHolder
 import com.bumptech.glide.Glide
 
-class SentInvitationsAdapter : ListAdapter<InvitationCard,
-        SentInvitationsAdapter.SentInvitationViewHolder>(InvitationCardDiffUtil()) {
-
-    var userClick: ((ShortUserData?) -> Unit)? = null
+class SentInvitationsAdapter : BaseInvitationAdapter() {
 
     class SentInvitationViewHolder(
         override var binding: ItemSentInvitationBinding,
         var userClick: ((ShortUserData?) -> Unit)?
-    ) : BaseViewHolder<InvitationCard, ItemSentInvitationBinding>(binding) {
+    ) : InvitationBaseViewHolder<ItemSentInvitationBinding>(binding) {
         override fun bind(item: InvitationCard) {
             super.bind(item)
             with(binding) {
@@ -64,12 +60,7 @@ class SentInvitationsAdapter : ListAdapter<InvitationCard,
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            ),
-            userClick
+            ), userClick
         )
-    }
-
-    override fun onBindViewHolder(holder: SentInvitationViewHolder, position: Int) {
-        holder.bind(getItem(position))
     }
 }

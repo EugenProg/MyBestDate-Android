@@ -588,7 +588,7 @@
     <string name="deactive">Неактивно</string>
     <string name="active">Активно</string>
     <string name="blocking_messages">Блокировка сообщений</string>
-    <string name="you_will_not_be_able_to_send_messages">Вы не сможете отправлять сообщения, а только лишь приглашения.</string>
+    <string name="you_will_not_be_able_to_send_messages">Вы не сможете получать сообщения, а только лишь приглашения.</string>
     <string name="messages">Сообщения</string>
     <string name="participation_in_matches">Анонимный поиск совпадений</string>
     <string name="the_ability_to_view_other_peoples_profiles">Возможность незаметно просматривать профили других людей.</string>
@@ -657,4 +657,6 @@
     <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
     <string name="unlimited_messages">Unlimited Messages</string>
     <string name="images_not_found">Изображения не найдены</string>
+    <string name="messages_blocked">Сообщения заблокированы</string>
+    <string name="messages_unlocked">Сообщения разблокированы</string>
 </resources>

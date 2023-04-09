@@ -588,7 +588,7 @@
     <string name="deactive">Неактивно</string>
     <string name="active">Активно</string>
     <string name="blocking_messages">Блокування повідомлень</string>
-    <string name="you_will_not_be_able_to_send_messages">Ви не зможете надсилати повідомлення, а лише запрошення.</string>
+    <string name="you_will_not_be_able_to_send_messages">Ви не зможете отримувати повідомлення, а лише запрошення.</string>
     <string name="messages">Повідомлення</string>
     <string name="participation_in_matches">Анонімний пошук збіжностей</string>
     <string name="the_ability_to_view_other_peoples_profiles">Можливість непомітно переглядати профілі інших людей.</string>
@@ -657,4 +657,6 @@
     <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
     <string name="unlimited_messages">Unlimited Messages</string>
     <string name="images_not_found">Зображення не знайдені</string>
+    <string name="messages_blocked">Повідомлення заблоковані</string>
+    <string name="messages_unlocked">Повідомлення розблоковано</string>
 </resources>
