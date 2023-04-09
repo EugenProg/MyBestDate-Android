@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.chats
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import com.bestDate.data.model.Meta
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ class ChatListViewModel @Inject constructor(
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
     val chatList = chatsListUseCase.chatList
+    var meta: Meta = Meta()
 
     private var _deleteLiveData: MutableLiveData<Boolean> = MutableLiveData()
     var deleteLiveData: LiveData<Boolean> = _deleteLiveData
@@ -22,6 +24,14 @@ class ChatListViewModel @Inject constructor(
     fun refreshChatList() {
         doAsync {
             chatsListUseCase.refreshChatList()
+            meta = chatsListUseCase.meta
+        }
+    }
+
+    fun loadNextPage() {
+        doAsync {
+            chatsListUseCase.getNextPage()
+            meta = chatsListUseCase.meta
         }
     }
 

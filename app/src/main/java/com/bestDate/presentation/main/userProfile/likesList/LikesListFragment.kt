@@ -22,6 +22,7 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: LikesListAdapter
+    private var refreshingMode: Boolean = false
 
     open fun navigateToUserProfile(like: Like) {
         navController.navigate(
@@ -43,14 +44,15 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
             }
 
             refreshView.setOnRefreshListener {
+                refreshingMode = true
                 adapter.refresh()
             }
 
             adapter.addLoadStateListener {
-                refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading && refreshingMode
                 noDataView.noData =
                     it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
-                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshView.isRefreshing)
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshingMode)
             }
         }
 

@@ -273,7 +273,8 @@ data class DuelProfile(
 )
 
 data class ChatListResponse(
-    var data: MutableList<Chat>? = mutableListOf()
+    var data: MutableList<Chat>? = mutableListOf(),
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class Chat(
@@ -305,7 +306,7 @@ data class Chat(
 }
 
 enum class ChatListItemType {
-    HEADER, NEW_ITEM, OLD_ITEM, BOT
+    HEADER, NEW_ITEM, OLD_ITEM, BOT, LOADER
 }
 
 enum class BackScreenType {

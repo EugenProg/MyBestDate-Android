@@ -37,6 +37,7 @@ class UserUseCase @Inject constructor(
 ) {
 
     val getMyUser = userDao.getUserFlow()
+    var userMainPhotoUrl: MutableLiveData<String?> = MutableLiveData()
     var coinsCount: MutableLiveData<String?> = MutableLiveData("0")
 
     suspend fun refreshUser() {
@@ -44,6 +45,7 @@ class UserUseCase @Inject constructor(
         if (response.isSuccessful) {
             response.body()?.data?.let {
                 userDao.validate(it)
+                userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
                 coinsCount.postValue(it.coins)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
@@ -83,6 +85,7 @@ class UserUseCase @Inject constructor(
         if (response.isSuccessful) {
             response.body()?.data?.let {
                 userDao.validate(it)
+                userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
                 coinsCount.postValue(it.coins)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
