@@ -1,6 +1,5 @@
 package com.bestDate.presentation.base
 
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
@@ -44,6 +43,7 @@ abstract class BasePhotoEditorFragment :
 
         with(binding) {
             saveButton.isEnabled = false
+            saveButton.loaderVisibility = false
 
             lifecycleScope.launch(Dispatchers.IO) {
                 if (selectedImage?.bitmap == null) {
@@ -73,6 +73,7 @@ abstract class BasePhotoEditorFragment :
         observe(imageLiveData) {
             with(binding) {
                 saveButton.isEnabled = true
+                saveButton.loaderVisibility = true
                 progress.visibility = View.INVISIBLE
                 photoEditor.setBitmap(it)
             }
@@ -93,7 +94,8 @@ abstract class BasePhotoEditorFragment :
     private fun successCrop(): (Bitmap) -> Unit {
         return {
             binding.saveButton.toggleActionEnabled(false)
-            val detector = FaceDetectorUtils()
+            viewModel.savePhoto(it)
+           /* val detector = FaceDetectorUtils()
             detector.detectFaces(it)
 
             detector.completion = { faces ->
@@ -102,7 +104,7 @@ abstract class BasePhotoEditorFragment :
                 } else {
                     notCorrectSheet.show(childFragmentManager, notCorrectSheet.tag)
                 }
-            }
+            }*/
         }
     }
 

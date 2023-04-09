@@ -26,7 +26,8 @@ val File.isImage: Boolean
     get() = this.isFile &&
             (this.extension.lowercase() == "jpg" ||
                     this.extension.lowercase() == "jpeg" ||
-                    this.extension.lowercase() == "png")
+                    this.extension.lowercase() == "png") &&
+            this.canRead()
 
 fun URL.toBitmap(errorCallBack: (() -> Unit)? = null): Bitmap? {
     return try {
