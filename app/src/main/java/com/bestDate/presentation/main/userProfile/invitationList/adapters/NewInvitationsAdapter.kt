@@ -3,28 +3,22 @@ package com.bestDate.presentation.main.userProfile.invitationList.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.rotateHorizontally
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.InvitationAnswer
 import com.bestDate.data.model.InvitationCard
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemNewInvitationBinding
+import com.bestDate.presentation.base.InvitationBaseViewHolder
 import com.bumptech.glide.Glide
 
-class NewInvitationsAdapter : ListAdapter<InvitationCard,
-        NewInvitationsAdapter.NewInvitationViewHolder>(InvitationCardDiffUtil()) {
-
-    var answerClick: ((InvitationAnswer, Int?) -> Unit)? = null
-    var userClick: ((ShortUserData?) -> Unit)? = null
+class NewInvitationsAdapter : BaseInvitationAdapter() {
 
     class NewInvitationViewHolder(
         override var binding: ItemNewInvitationBinding,
         var answerClick: ((InvitationAnswer, Int?) -> Unit)?,
         var userClick: ((ShortUserData?) -> Unit)?
-    ) : BaseViewHolder<InvitationCard, ItemNewInvitationBinding>(binding) {
+    ) : InvitationBaseViewHolder<ItemNewInvitationBinding>(binding) {
         override fun bind(item: InvitationCard) {
             super.bind(item)
             with(binding) {
@@ -65,24 +59,10 @@ class NewInvitationsAdapter : ListAdapter<InvitationCard,
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewInvitationViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InvitationBaseViewHolder<*> {
         return NewInvitationViewHolder(
             ItemNewInvitationBinding.inflate(LayoutInflater.from(parent.context), parent, false),
             answerClick, userClick
         )
-    }
-
-    override fun onBindViewHolder(holder: NewInvitationViewHolder, position: Int) {
-        holder.bind(getItem(position))
-    }
-}
-
-class InvitationCardDiffUtil : DiffUtil.ItemCallback<InvitationCard>() {
-    override fun areItemsTheSame(oldItem: InvitationCard, newItem: InvitationCard): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: InvitationCard, newItem: InvitationCard): Boolean {
-        return oldItem == newItem
     }
 }

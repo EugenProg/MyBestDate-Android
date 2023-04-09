@@ -4,10 +4,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
-import com.bestDate.data.model.Chat
-import com.bestDate.data.model.Guest
-import com.bestDate.data.model.ListItemType
-import com.bestDate.data.model.Message
+import com.bestDate.data.model.*
 import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 
 abstract class BaseViewHolder<T, VB : ViewBinding>(open val binding: VB) :
@@ -69,6 +66,10 @@ abstract class ChatBaseViewHolder<VB : ViewBinding>(
     override val binding: VB,
     val itemClick: ((Message) -> Unit)?
 ) : BaseViewHolder<Message, VB>(binding)
+
+abstract class InvitationBaseViewHolder<VB: ViewBinding>(
+    override val binding: VB
+): BaseViewHolder<InvitationCard, VB>(binding)
 
 abstract class QuestionnaireBaseViewHolder<VB : ViewBinding>(override val binding: VB) :
     BaseClickViewHolder<QuestionnaireQuestion, ((QuestionnaireQuestion) -> Unit)?, VB>(binding)

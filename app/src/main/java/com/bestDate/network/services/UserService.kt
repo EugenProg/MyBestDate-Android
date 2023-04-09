@@ -71,7 +71,8 @@ interface UserService {
 
     /**Get user invitations*/
     @POST("/api/v1/user/invitations")
-    suspend fun getInvitations(@Body body: UserInvitationRequest): Response<UserInvitationsResponse>
+    suspend fun getInvitations(@Body body: UserInvitationRequest,
+                               @Query("page") page: Int): Response<UserInvitationsResponse>
 
     /**Update user data*/
     @PUT("/api/v1/user")
