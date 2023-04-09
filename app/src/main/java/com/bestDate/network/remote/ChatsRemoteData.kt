@@ -12,7 +12,7 @@ class ChatsRemoteData @Inject constructor(
 ) {
     suspend fun getChatList(page: Int) = service.getChatList(page)
 
-    suspend fun getChatMessages(id: Int) = service.getChatMessages(id)
+    suspend fun getChatMessages(id: Int, page: Int) = service.getChatMessages(id, page)
 
     suspend fun deleteChat(id: Int) = service.deleteChat(id)
 

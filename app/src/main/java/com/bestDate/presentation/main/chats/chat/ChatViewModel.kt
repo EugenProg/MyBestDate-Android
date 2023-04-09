@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.chats.chat
 import android.graphics.Bitmap
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
+import com.bestDate.data.model.Meta
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -18,6 +19,7 @@ class ChatViewModel @Inject constructor(
     var invitations = invitationUseCase.invitations.asLiveData()
     var messages = chatUseCase.messages
     var typingMode = chatUseCase.typingMode
+    var meta: Meta = Meta()
 
     private var _sendInvitationLiveData: LiveEvent<Boolean> = LiveEvent()
     var sendInvitationLiveData: LiveEvent<Boolean> = _sendInvitationLiveData
@@ -59,6 +61,14 @@ class ChatViewModel @Inject constructor(
     fun getChatMessages(userId: Int?) {
         doAsync {
             chatUseCase.getChatMessages(userId)
+            meta = chatUseCase.meta
+        }
+    }
+
+    fun loadNextPage() {
+        doAsync {
+            chatUseCase.getNextPage()
+            meta = chatUseCase.meta
         }
     }
 

@@ -13,7 +13,8 @@ interface ChatsService {
 
     /**Get user chat messages*/
     @GET("/api/v1/chat/{id}")
-    suspend fun getChatMessages(@Path("id") id: Int): Response<ChatMessagesResponse>
+    suspend fun getChatMessages(@Path("id") id: Int,
+                                @Query("page") page: Int): Response<ChatMessagesResponse>
 
     /**Delete chat*/
     @DELETE("/api/v1/chat/{id}")
