@@ -1,41 +1,39 @@
 package com.bestDate.presentation.main.guests
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.IdListRequest
+import com.bestDate.data.model.Meta
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class GuestsViewModel @Inject constructor(
-    private val userUseCase: UserUseCase,
+    userUseCase: UserUseCase,
     private val guestsUseCase: GuestsUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
-    val guestsListNew = guestsUseCase.guestsListNew
-    val guestsListPrev = guestsUseCase.guestsListPrev
     val guestsList = guestsUseCase.guestsList
-
-    private var _loadingLiveData = MutableLiveData<Boolean>()
-    val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+    var meta: Meta = Meta()
 
     fun getGuests() {
-        _loadingLiveData.postValue(true)
         doAsync {
             guestsUseCase.getGuestsList()
-            _loadingLiveData.postValue(false)
+            meta = guestsUseCase.meta
+        }
+    }
+
+    fun loadNextPage() {
+        doAsync {
+            guestsUseCase.getNextPage()
+            meta = guestsUseCase.meta
         }
     }
 
     fun markGuestsViewed(list: MutableList<Int?>) {
         doAsync {
-            guestsUseCase.markGuestsViewed(
-                IdListRequest(list)
-            )
-            userUseCase.refreshUser()
+            guestsUseCase.markGuestsViewed(IdListRequest(list))
         }
     }
 }

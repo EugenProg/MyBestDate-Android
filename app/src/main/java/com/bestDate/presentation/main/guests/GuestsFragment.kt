@@ -2,11 +2,11 @@ package com.bestDate.presentation.main.guests
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.Guest
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
 import com.bestDate.presentation.base.BaseVMFragment
@@ -19,8 +19,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     override val viewModelClass: Class<GuestsViewModel> = GuestsViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
-    private val adapterNew: GuestsAdapter = GuestsAdapter()
-    private val adapterPrev: GuestsAdapter = GuestsAdapter()
+    private val adapter: GuestsAdapter = GuestsAdapter()
 
     override fun onInit() {
         super.onInit()
@@ -28,6 +27,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         setUpGuestsList()
         setUpSwipe()
         viewModel.getGuests()
+        binding.noDataViewWithLoading.toggleLoading(true)
     }
 
     private fun setUpToolbar() {
@@ -38,24 +38,15 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
     }
 
     private fun setUpGuestsList() {
-        binding.run {
-            newHeader.root.text = getString(R.string.new_guests)
-            recyclerViewGuestsNew.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapterNew.itemClick = {
-                    goToAnotherProfile(it?.guest)
-                }
-                adapter = adapterNew
+        with(binding) {
+            guestsView.layoutManager = LinearLayoutManager(requireContext())
+            guestsView.adapter = adapter
 
+            adapter.itemClick = {
+                goToAnotherProfile(it?.guest)
             }
-
-            prevHeader.root.text = getString(R.string.prev_guests)
-            recyclerViewGuestsPrev.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapterPrev.itemClick = {
-                    goToAnotherProfile(it?.guest)
-                }
-                adapter = adapterPrev
+            adapter.loadMoreItems = {
+                viewModel.loadNextPage()
             }
         }
     }
@@ -78,33 +69,29 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
         }
-        observe(viewModel.guestsListNew) { guestsList ->
-            adapterNew.submitList(guestsList) {
+        observe(viewModel.guestsList) {
+            adapter.submitList(it) {
+                adapter.meta = viewModel.meta
                 binding.swipeRefresh.isRefreshing = false
-                binding.newHeader.root.isVisible = guestsList.isNotEmpty()
-                if (guestsList.isNotEmpty()) viewModel.markGuestsViewed(guestsList.map { it.id }
-                    .toMutableList())
+                binding.noDataViewWithLoading.toggleLoading(false)
+                binding.noDataViewWithLoading.noData = it.isNullOrEmpty()
+                markAsViewed(it)
             }
-        }
-
-        observe(viewModel.guestsListPrev) {
-            adapterPrev.submitList(it) {
-                binding.swipeRefresh.isRefreshing = false
-                binding.prevHeader.root.isVisible = it.isNotEmpty()
-                binding.noDataViewWithLoading.noData = viewModel.guestsList.value.isNullOrEmpty()
-            }
-        }
-
-        observe(viewModel.loadingLiveData) {
-            if (!binding.swipeRefresh.isRefreshing &&
-                viewModel.guestsList.value.isNullOrEmpty()
-            ) binding.noDataViewWithLoading.toggleLoading(it)
         }
 
         observe(viewModel.errorLiveData) {
             binding.swipeRefresh.isRefreshing = false
             binding.noDataViewWithLoading.toggleLoading(false)
             showMessage(it.exception.message)
+        }
+    }
+
+    private fun markAsViewed(it: MutableList<Guest>?) {
+        if (!it.isNullOrEmpty()) {
+            val list = it.filter { guest -> guest.viewed != true }
+                .map { guest -> guest.id }
+                .toMutableList()
+            if (list.isNotEmpty()) viewModel.markGuestsViewed(list)
         }
     }
 }

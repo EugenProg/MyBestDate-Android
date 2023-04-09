@@ -58,9 +58,9 @@ class ChatListUseCase @Inject constructor(
         val oldList: MutableList<Chat> = mutableListOf(createOldHeader())
         list?.forEach {
             if (it.last_message?.read_at == null && it.last_message?.sender_id != userId) {
-                newList.add(it.transform(ChatListItemType.NEW_ITEM))
+                newList.add(it.transform(ListItemType.NEW_ITEM))
             } else {
-                oldList.add(it.transform(ChatListItemType.OLD_ITEM))
+                oldList.add(it.transform(ListItemType.OLD_ITEM))
             }
         }
         hasNewChats.postValue(newList.size > 1)
@@ -80,10 +80,10 @@ class ChatListUseCase @Inject constructor(
     }
 
     private fun createNewHeader(): Chat =
-        Chat(id = -2, last_message = Message(id = R.string.new_message), type = ChatListItemType.HEADER)
+        Chat(id = -2, last_message = Message(id = R.string.new_message), type = ListItemType.HEADER)
 
     private fun createOldHeader(): Chat =
-        Chat(id = -1, last_message = Message(id = R.string.all_message), type = ChatListItemType.HEADER)
+        Chat(id = -1, last_message = Message(id = R.string.all_message), type = ListItemType.HEADER)
 
     fun clearData() {
         chatList.postValue(mutableListOf())

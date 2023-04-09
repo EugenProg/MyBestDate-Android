@@ -193,14 +193,16 @@ data class MyDuel(
 }
 
 data class GuestsResponse(
-    val data: MutableList<Guest>? = null
+    val data: MutableList<Guest>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class Guest(
     val id: Int? = null,
     val visit_at: String? = null,
     val viewed: Boolean? = null,
-    val guest: ShortUserData? = null
+    val guest: ShortUserData? = null,
+    val itemType: ListItemType? = null
 )
 
 data class InvitationCard(
@@ -281,15 +283,15 @@ data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null,
-    var type: ChatListItemType? = null,
+    var type: ListItemType? = null,
     var typingMode: Boolean? = null
 ) {
-    fun transform(itemType: ChatListItemType): Chat {
+    fun transform(itemType: ListItemType): Chat {
         return Chat(
             user?.id,
             user,
             last_message,
-            if (user?.isBot() == true) ChatListItemType.BOT else itemType
+            if (user?.isBot() == true) ListItemType.BOT else itemType
         )
     }
 
@@ -305,7 +307,7 @@ data class Chat(
     }
 }
 
-enum class ChatListItemType {
+enum class ListItemType {
     HEADER, NEW_ITEM, OLD_ITEM, BOT, LOADER
 }
 

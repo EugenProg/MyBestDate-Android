@@ -9,7 +9,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.Chat
-import com.bestDate.data.model.ChatListItemType
+import com.bestDate.data.model.ListItemType
 import com.bestDate.data.model.Meta
 import com.bestDate.databinding.ItemChatBotBinding
 import com.bestDate.databinding.ItemChatListBinding
@@ -115,21 +115,21 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListBaseViewHolder<*> {
         return when (viewType) {
-            ChatListItemType.HEADER.ordinal -> {
+            ListItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     ItemChatListHeaderBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
             }
-            ChatListItemType.BOT.ordinal -> {
+            ListItemType.BOT.ordinal -> {
                 BotViewHolder(
                     ItemChatBotBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     ), clickAction
                 )
             }
-            ChatListItemType.LOADER.ordinal -> {
+            ListItemType.LOADER.ordinal -> {
                 LoaderViewHolder(
                     ItemLoaderBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
@@ -169,5 +169,5 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
     }
 
     private var loadingItem: Chat =
-        Chat(id = 0, type = ChatListItemType.LOADER)
+        Chat(id = 0, type = ListItemType.LOADER)
 }

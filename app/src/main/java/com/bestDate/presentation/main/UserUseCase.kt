@@ -2,6 +2,7 @@ package com.bestDate.presentation.main
 
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getErrorMessage
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
@@ -47,6 +48,7 @@ class UserUseCase @Inject constructor(
                 userDao.validate(it)
                 userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
                 coinsCount.postValue(it.coins)
+                guestsUseCase.hasNewGuests.postValue(it.new_guests.orZero > 0)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
@@ -87,6 +89,7 @@ class UserUseCase @Inject constructor(
                 userDao.validate(it)
                 userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
                 coinsCount.postValue(it.coins)
+                guestsUseCase.hasNewGuests.postValue(it.new_guests.orZero > 0)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
