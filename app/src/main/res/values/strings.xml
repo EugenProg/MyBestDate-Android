@@ -601,7 +601,7 @@
     <string name="deactive">Deactive</string>
     <string name="active">Active</string>
     <string name="blocking_messages">Blocking messages</string>
-    <string name="you_will_not_be_able_to_send_messages">You will not be able to send messages, but only invitations.</string>
+    <string name="you_will_not_be_able_to_send_messages">You can not get messages, but only invitations.</string>
     <string name="messages">Messages</string>
     <string name="participation_in_matches">Participation in matches</string>
     <string name="the_ability_to_view_other_peoples_profiles">The ability to view other people’s profiles unnoticed.</string>
