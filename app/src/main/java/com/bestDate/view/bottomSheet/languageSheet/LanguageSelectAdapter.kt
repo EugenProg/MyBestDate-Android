@@ -2,22 +2,26 @@ package com.bestDate.view.bottomSheet.languageSheet
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ItemBottomSheetListBinding
 import com.bestDate.presentation.base.BaseClickViewHolder
 
-class LanguageSelectAdapter(private val languages: MutableList<LanguageType>) :
+class LanguageSelectAdapter(private val languages: MutableList<LanguageType>,
+                            private val selectedItem: LanguageType) :
     RecyclerView.Adapter<LanguageSelectAdapter.LanguageSelectViewHolder>() {
 
     var itemClick: ((LanguageType) -> Unit)? = null
 
-    class LanguageSelectViewHolder(override val binding: ItemBottomSheetListBinding) :
+    class LanguageSelectViewHolder(override val binding: ItemBottomSheetListBinding,
+                                   private val selectedItem: LanguageType) :
         BaseClickViewHolder<LanguageType, ((LanguageType) -> Unit)?, ItemBottomSheetListBinding>(
             binding
         ) {
         override fun bindView(item: LanguageType, itemClick: ((LanguageType) -> Unit)?) {
             binding.name.text = item.language
+            binding.check.isVisible = item == selectedItem
 
             itemView.setOnSaveClickListener {
                 itemClick?.invoke(item)
@@ -29,7 +33,7 @@ class LanguageSelectAdapter(private val languages: MutableList<LanguageType>) :
         return LanguageSelectViewHolder(
             ItemBottomSheetListBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ), selectedItem
         )
     }
 
