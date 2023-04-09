@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.bestDate.R
 import com.bestDate.data.model.Chat
-import com.bestDate.data.model.ChatListItemType
+import com.bestDate.data.model.Guest
+import com.bestDate.data.model.ListItemType
 import com.bestDate.data.model.Message
 import com.bestDate.presentation.base.questionnaire.QuestionnaireQuestion
 
@@ -32,32 +33,37 @@ abstract class ChatListBaseViewHolder<VB : ViewBinding>(
     val itemClick: ((Chat) -> Unit)?
 ) : BaseViewHolder<Chat, VB>(binding) {
 
-    protected fun getTextColor(itemType: ChatListItemType?, typingMode: Boolean?): Int {
+    protected fun getTextColor(itemType: ListItemType?, typingMode: Boolean?): Int {
         return ContextCompat.getColor(
             itemView.context,
             when {
                 typingMode == true -> R.color.green
-                itemType == ChatListItemType.NEW_ITEM -> R.color.white_90
+                itemType == ListItemType.NEW_ITEM -> R.color.white_90
                 else -> R.color.white_30
             }
         )
     }
 
-    protected fun getTitleColor(itemType: ChatListItemType?): Int {
+    protected fun getTitleColor(itemType: ListItemType?): Int {
         return ContextCompat.getColor(
             itemView.context,
-            if (itemType == ChatListItemType.NEW_ITEM) R.color.white_90 else R.color.white_60
+            if (itemType == ListItemType.NEW_ITEM) R.color.white_90 else R.color.white_60
         )
     }
 
     protected fun getMessageIcon(item: Chat): Int {
         return when {
-            item.type == ChatListItemType.NEW_ITEM -> R.drawable.ic_new_message
+            item.type == ListItemType.NEW_ITEM -> R.drawable.ic_new_message
             item.last_message?.read_at == null -> return R.drawable.ic_message_not_checked
             else -> R.drawable.ic_message_checked
         }
     }
 }
+
+abstract class GuestBaseViewHolder<VB: ViewBinding>(
+    override val binding: VB,
+    open val itemClick: ((Guest) -> Unit)?
+): BaseViewHolder<Guest, VB>(binding)
 
 abstract class ChatBaseViewHolder<VB : ViewBinding>(
     override val binding: VB,

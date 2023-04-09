@@ -159,17 +159,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpUserObserver() {
-        observe(viewModel.myUser) {
-            val newGuests = it?.new_guests ?: 0
-            binding.bottomNavigationView.setBadge(
-                BottomButton.GUESTS,
-                newGuests > 0
-            )
+        observe(viewModel.hasNewGuests) {
+            binding.bottomNavigationView.setBadge(BottomButton.GUESTS, it)
         }
     }
 
     private fun setUpUserListObserver() {
-        viewModel.hasNewChats.observe(this) {
+        observe(viewModel.hasNewChats) {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, it)
         }
     }
