@@ -9,7 +9,7 @@ import retrofit2.http.*
 interface ChatsService {
     /**Get chat list*/
     @GET("/api/v1/chats")
-    suspend fun getChatList(): Response<ChatListResponse>
+    suspend fun getChatList(@Query("page") page: Int): Response<ChatListResponse>
 
     /**Get user chat messages*/
     @GET("/api/v1/chat/{id}")

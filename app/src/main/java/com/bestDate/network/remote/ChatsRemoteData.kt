@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ChatsRemoteData @Inject constructor(
     private val service: ChatsService
 ) {
-    suspend fun getChatList() = service.getChatList()
+    suspend fun getChatList(page: Int) = service.getChatList(page)
 
     suspend fun getChatMessages(id: Int) = service.getChatMessages(id)
 

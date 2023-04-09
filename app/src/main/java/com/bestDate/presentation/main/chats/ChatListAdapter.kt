@@ -150,9 +150,24 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
         holder.bind(getItem(position))
 
         if (position >= itemCount - 1 && meta?.current_page.orZero < meta?.last_page.orZero && !loadingMode) {
-
-            loadingMode = true
-            loadMoreItems?.invoke()
+            setLoadingMode()
         }
     }
+
+    private fun setLoadingMode() {
+        val newList: MutableList<Chat> = mutableListOf()
+        newList.addAll(currentList)
+        newList.add(loadingItem)
+        submitList(newList)
+        loadingMode = true
+        loadMoreItems?.invoke()
+    }
+
+    override fun submitList(list: MutableList<Chat>?) {
+        loadingMode = false
+        super.submitList(list)
+    }
+
+    private var loadingItem: Chat =
+        Chat(id = 0, type = ChatListItemType.LOADER)
 }
