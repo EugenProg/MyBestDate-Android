@@ -1,6 +1,7 @@
 package com.bestDate.data.utils
 
 import android.net.Uri
+import com.bestDate.network.NetworkModule
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.ShortDynamicLink
 import com.google.firebase.dynamiclinks.ktx.*
@@ -19,7 +20,7 @@ class DeeplinkCreator(private val id: Int?, private val name: String?) {
             socialMetaTagParameters {
                 title = "Link to $name's profile in My Best Date"
                 description = "This link opens the user profile in My Best Date application"
-                imageUrl = Uri.parse("https://dev-api.bestdate.info/images/ic_launcher-playstore.png")
+                imageUrl = Uri.parse("${NetworkModule.providesCoreBaseURL()}/images/ic_launcher-playstore.png")
             }
         }.uri.toString()
     }

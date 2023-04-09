@@ -12,6 +12,7 @@ import com.bestDate.data.extension.toStringFormat
 import com.bestDate.data.utils.ViewUtils
 import com.bestDate.databinding.FragmentStartRegistrationBinding
 import com.bestDate.data.extension.show
+import com.bestDate.network.NetworkModule
 import com.bestDate.presentation.base.BaseAuthFragment
 import com.bestDate.view.CalendarView
 import com.bestDate.view.bottomSheet.genderSheet.GenderSheet
@@ -76,10 +77,10 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
                 genderInput.text = getString(it.line)
             }
             privacyPolicyCheckBox.textClick = {
-                "https://dev-api.bestdate.info/privacy-policy".openAsLink(requireContext())
+                "${NetworkModule.providesCoreBaseURL()}/privacy-policy".openAsLink(requireContext())
             }
             termsOfUseCheckBox.textClick = {
-                "https://dev-api.bestdate.info/use-agreement".openAsLink(requireContext())
+                "${NetworkModule.providesCoreBaseURL()}/use-agreement".openAsLink(requireContext())
             }
         }
     }
