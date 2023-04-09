@@ -20,6 +20,7 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MyDuelsAdapter
+    private var refreshingMode: Boolean = false
 
     override fun onInit() {
         super.onInit()
@@ -34,14 +35,15 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
             }
 
             refreshView.setOnRefreshListener {
+                refreshingMode = true
                 adapter.refresh()
             }
 
             adapter.addLoadStateListener {
-                refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading && refreshingMode
                 noDataView.noData =
                     it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
-                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshView.isRefreshing)
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshingMode)
             }
         }
     }

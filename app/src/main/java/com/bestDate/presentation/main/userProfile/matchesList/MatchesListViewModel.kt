@@ -17,5 +17,6 @@ class MatchesListViewModel @Inject constructor(
     var matchesList = matchesUseCase.matchesList.asLiveData()
         .cachedIn(viewModelScope)
 
+    val userPhoto = userUseCase.userMainPhotoUrl
     val user = userUseCase.getMyUser.asLiveData()
 }

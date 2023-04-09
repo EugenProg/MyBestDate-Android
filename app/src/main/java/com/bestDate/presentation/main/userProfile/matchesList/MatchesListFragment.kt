@@ -22,6 +22,7 @@ open class MatchesListFragment :
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MatchesListAdapter
+    private var refreshingMode: Boolean = false
 
     override fun onViewClickListener() {
         super.onViewClickListener()
@@ -32,8 +33,8 @@ open class MatchesListFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        observe(viewModel.user) {
-            initListData(it?.getMainPhotoThumbUrl())
+        observe(viewModel.userPhoto) {
+            initListData(it)
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
@@ -68,14 +69,15 @@ open class MatchesListFragment :
 
         with(binding) {
             refreshView.setOnRefreshListener {
+                refreshingMode = true
                 adapter.refresh()
             }
 
             adapter.addLoadStateListener {
-                refreshView.isRefreshing = it.source.refresh is LoadState.Loading
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading && refreshingMode
                 noDataView.noData =
                     it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
-                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshView.isRefreshing)
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshingMode)
             }
         }
     }
