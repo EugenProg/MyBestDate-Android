@@ -64,4 +64,10 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
             binding.progress.visibility = View.INVISIBLE
         }
     }
+
+    var loaderVisibility: Boolean = true
+        set(value) {
+        field = value
+        binding.progress.visibility = if (value) View.VISIBLE else View.INVISIBLE
+    }
 }

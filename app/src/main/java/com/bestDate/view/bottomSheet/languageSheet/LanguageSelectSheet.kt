@@ -22,7 +22,7 @@ class LanguageSelectSheet : BaseBottomSheet<SheetItemListBinding>() {
         }
         binding.title.text = getString(R.string.language)
 
-        adapter = LanguageSelectAdapter(languageList)
+        adapter = LanguageSelectAdapter(languageList, getSelectedItem())
         binding.itemList.adapter = adapter
         binding.itemList.layoutManager = LinearLayoutManager(requireContext())
 
@@ -30,5 +30,11 @@ class LanguageSelectSheet : BaseBottomSheet<SheetItemListBinding>() {
             dismiss()
             if (it.settingsName != getString(R.string.app_locale)) itemClick?.invoke(it)
         }
+    }
+
+    private fun getSelectedItem(): LanguageType {
+        return LanguageType.values().firstOrNull {
+            it.settingsName == getString(R.string.app_locale)
+        } ?: LanguageType.ENGLISH
     }
 }
