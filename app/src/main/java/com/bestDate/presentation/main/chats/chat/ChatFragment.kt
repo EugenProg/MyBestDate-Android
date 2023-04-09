@@ -92,6 +92,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.typingEvent = {
                 viewModel.sendTypingEvent()
             }
+            chatView.loadNextPage = {
+                viewModel.loadNextPage()
+            }
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
                 val fragment = ChatAddImageFragment(user, it)
@@ -143,7 +146,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         }
         observe(viewModel.messages) {
             it?.let {
-                binding.chatView.setMessages(it)
+                binding.chatView.setMessages(it, viewModel.meta)
             }
         }
         observe(viewModel.sendMessageLiveData) {

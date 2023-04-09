@@ -24,6 +24,7 @@ class ChatUseCase @Inject constructor(
     var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData()
     var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
     var translatedText: String? = ""
+    var meta: Meta = Meta()
     private var originalList: MutableList<Message>? = null
     private var myId: Int? = null
     private var currentUserId: Int? = null
@@ -79,13 +80,27 @@ class ChatUseCase @Inject constructor(
 
     suspend fun getChatMessages(userId: Int?) {
         currentUserId = userId
-        val response = chatsRemoteData.getChatMessages(userId.orZero)
+        val response = chatsRemoteData.getChatMessages(userId.orZero, 0)
         if (response.isSuccessful) {
             response.body()?.let {
                 originalList = it.data
+                meta = it.meta ?: Meta()
                 messages.postValue(transformMessageList(it.data))
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
+    }
+
+    suspend fun getNextPage() {
+        val page = meta.current_page.orZero + 1
+
+        val response = chatsRemoteData.getChatMessages(currentUserId.orZero, page)
+        if (response.isSuccessful) {
+            response.body()?.let {
+                originalList?.addAll(it.data.orEmpty())
+                meta = it.meta ?: Meta()
+                messages.postValue(transformMessageList(originalList))
+            }
+        }
     }
 
     suspend fun translate(text: String?, language: String?) {

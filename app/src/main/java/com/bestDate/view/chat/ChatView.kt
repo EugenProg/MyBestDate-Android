@@ -5,10 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bestDate.data.model.ChatImage
-import com.bestDate.data.model.ChatItemType
-import com.bestDate.data.model.Message
-import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.model.*
 import com.bestDate.databinding.ViewChatBinding
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 
@@ -32,6 +29,7 @@ class ChatView @JvmOverloads constructor(
     var addImageClick: (() -> Unit)? = null
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
+    var loadNextPage: (() -> Unit)? = null
 
     init {
         with(binding) {
@@ -66,6 +64,9 @@ class ChatView @JvmOverloads constructor(
             adapter.imageOpenClick = {
                 imageOpenClick?.invoke(it)
             }
+            adapter.loadMoreItems = {
+                loadNextPage?.invoke()
+            }
 
             messagesListView.layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, true)
@@ -99,11 +100,12 @@ class ChatView @JvmOverloads constructor(
         }
     }
 
-    fun setMessages(messages: MutableList<Message>?) {
+    fun setMessages(messages: MutableList<Message>?, meta: Meta) {
         messageList = messages
         if (user?.allow_chat == true || user?.isBot() == true) {
+            adapter.meta = meta
             adapter.submitList(messageList) {
-                binding.messagesListView.scrollToPosition(0)
+                //binding.messagesListView.scrollToPosition(0)
             }
         }
         setVisibility()
