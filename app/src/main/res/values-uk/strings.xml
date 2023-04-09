@@ -659,4 +659,7 @@
     <string name="images_not_found">Зображення не знайдені</string>
     <string name="messages_blocked">Повідомлення заблоковані</string>
     <string name="messages_unlocked">Повідомлення розблоковано</string>
+    <string name="men">Чоловічий</string>
+    <string name="women">Жіночий</string>
+    <string name="all_gender">Все</string>
 </resources>

@@ -8,6 +8,7 @@ import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.db.entity.UserSettings
+import com.bestDate.presentation.main.search.FilterType
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.util.*
@@ -143,8 +144,9 @@ data class ShortUserData(
 }
 
 data class FilterOptions(
-    val location: String? = "all",
-    val online: String? = "all",
+    val location: String? = FilterType.ALL.serverName,
+    val online: String? = FilterType.ALL.serverName,
+    val gender: String? = null,
     val filters: AdditionalFilters? = null
 )
 

@@ -659,4 +659,7 @@
     <string name="images_not_found">Keine Bilder gefunden</string>
     <string name="messages_blocked">Nachrichten sind blockiert</string>
     <string name="messages_unlocked">Nachrichten freigeschaltet</string>
+    <string name="men">Mann</string>
+    <string name="women">Frau</string>
+    <string name="all_gender">Alle</string>
 </resources>

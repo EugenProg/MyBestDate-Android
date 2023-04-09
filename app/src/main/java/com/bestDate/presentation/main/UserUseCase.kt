@@ -10,12 +10,16 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.db.dao.UserDao
 import com.bestDate.db.dao.UserSettingsDao
 import com.bestDate.db.entity.QuestionnaireDB
+import com.bestDate.db.entity.UserDB
 import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
+import com.bestDate.presentation.main.search.FilterType
+import com.bestDate.presentation.main.search.GenderFilter
+import com.bestDate.presentation.main.search.SearchUseCase
 import com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUserUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +35,7 @@ class UserUseCase @Inject constructor(
     private val duelsUseCase: DuelsUseCase,
     private val chatListUseCase: ChatListUseCase,
     private val authUseCase: AuthUseCase,
+    private val searchUseCase: SearchUseCase,
     private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) {
@@ -43,12 +48,17 @@ class UserUseCase @Inject constructor(
         val response = userRemoteData.getUserData()
         if (response.isSuccessful) {
             response.body()?.data?.let {
-                userDao.validate(it)
-                userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
-                coinsCount.postValue(it.coins)
-                guestsUseCase.hasNewGuests.postValue(it.new_guests.orZero > 0)
+                setUser(it)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    private fun setUser(user: UserDB) {
+        userDao.validate(user)
+        userMainPhotoUrl.postValue(user.getMainPhotoThumbUrl())
+        setUserGenderFilter(user.getGenderFilter())
+        coinsCount.postValue(user.coins)
+        guestsUseCase.hasNewGuests.postValue(user.new_guests.orZero > 0)
     }
 
     suspend fun logout() {
@@ -65,11 +75,13 @@ class UserUseCase @Inject constructor(
         blockedUserUseCase.clearData()
         chatListUseCase.clearData()
         authUseCase.clearData()
+        searchUseCase.clearPagingData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, 0L)
-        preferencesUtils.saveString(Preferences.FILTER_LOCATION, "all")
-        preferencesUtils.saveString(Preferences.FILTER_STATUS, "all")
+        preferencesUtils.saveString(Preferences.FILTER_LOCATION, FilterType.ALL.serverName)
+        preferencesUtils.saveString(Preferences.FILTER_STATUS, FilterType.NOT_SELECTED.serverName)
+        preferencesUtils.saveString(Preferences.FILTER_GENDER, "")
     }
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {
@@ -83,12 +95,15 @@ class UserUseCase @Inject constructor(
         val response = userRemoteData.changeLanguage(language)
         if (response.isSuccessful) {
             response.body()?.data?.let {
-                userDao.validate(it)
-                userMainPhotoUrl.postValue(it.getMainPhotoThumbUrl())
-                coinsCount.postValue(it.coins)
-                guestsUseCase.hasNewGuests.postValue(it.new_guests.orZero > 0)
+                setUser(it)
             }
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    private fun setUserGenderFilter(filter: GenderFilter) {
+        if (preferencesUtils.getString(Preferences.FILTER_GENDER).isBlank()) {
+            preferencesUtils.saveString(Preferences.FILTER_GENDER, filter.name)
+        }
     }
 
     suspend fun deleteUserProfile() {

@@ -673,4 +673,7 @@
     <string name="images_not_found">Images not found</string>
     <string name="messages_blocked">Messages blocked</string>
     <string name="messages_unlocked">Messages unlocked</string>
+    <string name="men">Men</string>
+    <string name="women">Women</string>
+    <string name="all_gender">All</string>
 </resources>

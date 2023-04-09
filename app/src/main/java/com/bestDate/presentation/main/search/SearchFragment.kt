@@ -15,6 +15,7 @@ import com.bestDate.databinding.FragmentSearchBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.presentation.mainActivity.MainActivity
+import com.bestDate.view.bottomSheet.genderFilterSheet.GenderFilterBottomSheet
 import com.bestDate.view.bottomSheet.optionsSheet.OptionsSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +30,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private lateinit var statusesMap: LinkedHashMap<FilterType, String>
     private var selectedLocationFilter: FilterType = FilterType.ALL
     private var selectedStatusFilter: FilterType = FilterType.NOT_SELECTED
+    private var selectedGenderFilter: GenderFilter = GenderFilter.ALL
     private var additionalFilters: AdditionalFilters? = null
     private var distance: Int? = null
     private var selectedLocation: CityListItem? = null
@@ -85,6 +87,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
                     FilterOptions(
                         selectedLocationFilter.serverName,
                         selectedStatusFilter.serverName,
+                        selectedGenderFilter.serverName,
                         additionalFilters
                     )
                 )
@@ -129,7 +132,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         viewModel.getUsers(
             FilterOptions(
                 viewModel.getFilter(Preferences.FILTER_LOCATION).serverName,
-                viewModel.getFilter(Preferences.FILTER_STATUS).serverName
+                viewModel.getFilter(Preferences.FILTER_STATUS).serverName,
+                viewModel.getGenderFilter().serverName
             )
         )
     }
@@ -138,6 +142,24 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         binding.toolbar.title = getString(R.string.search)
         binding.toolbar.onProfileClick = {
             navController.navigate(SearchFragmentDirections.actionGlobalSearchToProfile())
+        }
+    }
+
+    private fun setUpGenderSheet() {
+        binding.gender.setOnSaveClickListener {
+            val genderSheet = GenderFilterBottomSheet(selectedGenderFilter)
+
+            genderSheet.itemClick = {
+                if (it != selectedGenderFilter) {
+                    selectedGenderFilter = it
+                    binding.gender.text = getString(it.filterName)
+                    viewModel.saveFilter(Preferences.FILTER_GENDER, it)
+                    viewModel.clearData()
+                    getUsersByFilterInitial()
+                }
+            }
+
+            genderSheet.show(childFragmentManager)
         }
     }
 
@@ -159,7 +181,8 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     }
 
     private fun setUpStatusSheet() {
-        val statusOptionsSheet = OptionsSheet(statusesMap, getString(R.string.online), selectedStatusFilter)
+        val statusOptionsSheet =
+            OptionsSheet(statusesMap, getString(R.string.online), selectedStatusFilter)
         statusOptionsSheet.itemClick = {
             if (it.first != selectedStatusFilter || additionalFilters != null) {
                 selectedStatusFilter = it.first
@@ -176,17 +199,24 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
     private fun setUpFilters() {
         with(binding) {
             selectedLocationFilter = viewModel.getFilter(Preferences.FILTER_LOCATION)
-            locationFilterButton.label = locationMap[selectedLocationFilter] ?: getString(R.string.all_world)
+            locationFilterButton.label =
+                locationMap[selectedLocationFilter] ?: getString(R.string.all_world)
             locationFilterButton.isActive = true
             locationFilterButton.onClick = {
                 setUpLocationSheet()
             }
             selectedStatusFilter = viewModel.getFilter(Preferences.FILTER_STATUS)
-            statusFilterButton.label = statusesMap[selectedStatusFilter] ?: getString(R.string.not_selected)
+            statusFilterButton.label =
+                statusesMap[selectedStatusFilter] ?: getString(R.string.not_selected)
             statusFilterButton.isActive = false
             statusFilterButton.onClick = {
                 setUpStatusSheet()
             }
+            viewModel.getGenderFilter().apply {
+                selectedGenderFilter = this
+                gender.text = getString(this.filterName)
+            }
+            setUpGenderSheet()
         }
     }
 
@@ -195,6 +225,7 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             FilterOptions(
                 selectedLocationFilter.serverName,
                 selectedStatusFilter.serverName,
+                selectedGenderFilter.serverName,
                 additionalFilters
             )
         )
