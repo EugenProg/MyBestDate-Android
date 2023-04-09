@@ -4,9 +4,8 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.DuelProfile
@@ -16,11 +15,11 @@ import com.bumptech.glide.Glide
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class TopAdapter : ListAdapter<DuelProfile, TopAdapter.TopListViewHolder>(TopListDiffUtil()) {
+class TopAdapter : PagingDataAdapter<DuelProfile, TopAdapter.TopListViewHolder>(TopListDiffUtil()) {
 
     var itemClick: ((DuelProfile?) -> Unit)? = null
 
-    class TopListDiffUtil: DiffUtil.ItemCallback<DuelProfile>() {
+    class TopListDiffUtil : DiffUtil.ItemCallback<DuelProfile>() {
         override fun areItemsTheSame(oldItem: DuelProfile, newItem: DuelProfile): Boolean {
             return oldItem.id == newItem.id
         }
@@ -52,14 +51,14 @@ class TopAdapter : ListAdapter<DuelProfile, TopAdapter.TopListViewHolder>(TopLis
         @SuppressLint("SetTextI18n")
         override fun bindView(item: DuelProfile?, itemClick: ((DuelProfile?) -> Unit)?) {
             binding.run {
-                val color = when (adapterPosition) {
+                val color = when (absoluteAdapterPosition) {
                     0 -> R.color.gold
                     1 -> R.color.silver
                     2 -> R.color.bronze
                     else -> R.color.black
                 }
 
-                val colorAward = when (adapterPosition) {
+                val colorAward = when (absoluteAdapterPosition) {
                     0 -> R.color.gold
                     1 -> R.color.silver
                     2 -> R.color.bronze
@@ -73,7 +72,7 @@ class TopAdapter : ListAdapter<DuelProfile, TopAdapter.TopListViewHolder>(TopLis
                     ContextCompat.getColor(itemView.context, colorAward),
                     android.graphics.PorterDuff.Mode.SRC_IN
                 );
-                placeStatus.text = "№${adapterPosition + 1}"
+                placeStatus.text = "№${absoluteAdapterPosition + 1}"
                 percentNumber.text =
                     (item?.rating?.setScale(1, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
                 Glide.with(itemView.context)

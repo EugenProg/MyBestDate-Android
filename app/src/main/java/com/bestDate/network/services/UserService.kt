@@ -20,7 +20,7 @@ interface UserService {
 
     /**Get user likes list*/
     @GET("/api/v1/likes")
-    suspend fun getLikesList(): Response<LikesListResponse>
+    suspend fun getLikesList(@Query("page") page: Int): Response<LikesListResponse>
 
     /**Post like*/
     @POST("/api/v1/likes")
@@ -28,7 +28,7 @@ interface UserService {
 
     /**Get user matches list*/
     @GET("/api/v1/match")
-    suspend fun getMatchesList(): Response<MatchesListResponse>
+    suspend fun getMatchesList(@Query("page") page: Int): Response<MatchesListResponse>
 
     /**Get users for match*/
     @GET("/api/v1/match-users")
@@ -40,7 +40,7 @@ interface UserService {
 
     /**Get user duels*/
     @GET("/api/v1/voting")
-    suspend fun getMyDuels(): Response<MyDuelsResponse>
+    suspend fun getMyDuels(@Query("page") page: Int): Response<MyDuelsResponse>
 
     /**Get blocked users*/
     @GET("/api/v1/blocked-users")
@@ -71,7 +71,8 @@ interface UserService {
 
     /**Get user invitations*/
     @POST("/api/v1/user/invitations")
-    suspend fun getInvitations(@Body body: UserInvitationRequest): Response<UserInvitationsResponse>
+    suspend fun getInvitations(@Body body: UserInvitationRequest,
+                               @Query("page") page: Int): Response<UserInvitationsResponse>
 
     /**Update user data*/
     @PUT("/api/v1/user")

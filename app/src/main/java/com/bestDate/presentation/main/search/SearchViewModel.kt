@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.R
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.model.Meta
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.CityListItem
@@ -24,8 +25,7 @@ class SearchViewModel @Inject constructor(
 
     val user = userUseCase.getMyUser.asLiveData()
     val userList = searchUseCase.usersList
-    var perPage: Int = 0
-    var total: Int = 0
+    var meta: Meta? = Meta()
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
@@ -35,8 +35,7 @@ class SearchViewModel @Inject constructor(
         _loadingLiveData.postValue(true)
         doAsync {
             searchUseCase.getUsers(filters)
-            perPage = searchUseCase.perPage
-            total = searchUseCase.total
+            meta = searchUseCase.meta
             _loadingLiveData.postValue(false)
         }
     }
@@ -80,11 +79,21 @@ class SearchViewModel @Inject constructor(
         preferencesUtils.saveString(type, value.name)
     }
 
+    fun saveFilter(type: Preferences, value: GenderFilter) {
+        preferencesUtils.saveString(type, value.name)
+    }
+
     fun getFilter(type: Preferences): FilterType {
         val value = FilterType.values().firstOrNull {
             it.name == preferencesUtils.getString(type)
         } ?: if (type == Preferences.FILTER_LOCATION) FilterType.ALL else FilterType.NOT_SELECTED
         return value
+    }
+
+    fun getGenderFilter(): GenderFilter {
+        return GenderFilter.values().firstOrNull {
+            it.name == preferencesUtils.getString(Preferences.FILTER_GENDER)
+        } ?: GenderFilter.ALL
     }
 }
 
@@ -96,4 +105,10 @@ enum class FilterType(var serverName: String) {
     ONLINE("online"),
     NOT_SELECTED("all"),
     RECENTLY("recently")
+}
+
+enum class GenderFilter(val filterName: Int, var serverName: String?) {
+    MEN(R.string.men, "male"),
+    WOMEN(R.string.women ,"female"),
+    ALL(R.string.all_gender, null)
 }

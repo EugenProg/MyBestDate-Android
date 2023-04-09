@@ -1,4 +1,4 @@
-package com.bestDate
+package com.bestDate.presentation.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.asLiveData
@@ -12,6 +12,7 @@ import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.chats.chat.ChatUseCase
+import com.bestDate.presentation.main.guests.GuestsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -22,6 +23,7 @@ class MainViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
     private val authUseCase: AuthUseCase,
     private val invitationUseCase: InvitationUseCase,
+    private val guestsUseCase: GuestsUseCase,
     private val notificationCenter: NotificationCenter,
     private val pusherCenter: PusherCenter,
     sessionManager: SessionManager
@@ -29,6 +31,7 @@ class MainViewModel @Inject constructor(
 
     val myUser = userUseCase.getMyUser.asLiveData()
     val hasNewChats = chatListUseCase.hasNewChats
+    val hasNewGuests = guestsUseCase.hasNewGuests
     var loggedOut = sessionManager.loggedOut
     val notificationsAction = notificationCenter.notificationsAction
     val navigationAction = notificationCenter.navigationAction
@@ -73,10 +76,10 @@ class MainViewModel @Inject constructor(
         return chatUseCase.isCurrentUserChat(notificationCenter.getUserId())
     }
 
-    fun refreshData() {
+    fun refreshData(appLanguage: String) {
         if (authUseCase.tokenIsFresh) {
             doAsync {
-                userUseCase.refreshUser()
+                userUseCase.changeLanguage(appLanguage)
                 invitationUseCase.refreshInvitations()
                 pusherCenter.startPusher()
             }

@@ -37,61 +37,55 @@ class AuthViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
-    private var _updateLanguageSuccessLiveData: LiveEvent<Boolean> = LiveEvent()
-    var updateLanguageSuccessLiveData: LiveEvent<Boolean> = _updateLanguageSuccessLiveData
+    fun getSkipQuestionnaireCount() = preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT)
 
-    fun logIn(login: String, password: String) {
+    fun getSkipImageCount() = preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT)
+
+    fun logIn(login: String, password: String, appLanguage: String) {
         when {
-            login.isPhoneNumber() -> loginByPhone(login, password)
-            login.isAEmail() -> loginByEmail(login, password)
+            login.isPhoneNumber() -> loginByPhone(login, password, appLanguage)
+            login.isAEmail() -> loginByEmail(login, password, appLanguage)
             else -> _validationErrorLiveData.value = R.string.enter_email_or_phone
         }
     }
 
-    private fun loginByEmail(login: String, password: String) {
+    private fun loginByEmail(login: String, password: String, appLanguage: String) {
         _loginProcessLiveData.value = true
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
         }
     }
 
-    private fun loginByPhone(login: String, password: String) {
+    private fun loginByPhone(login: String, password: String, appLanguage: String) {
         _loginProcessLiveData.value = true
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
         }
     }
 
-    fun loginSocial(provider: SocialProvider, token: String?) {
+    fun loginSocial(provider: SocialProvider, token: String?, appLanguage: String) {
         doAsync {
             authUseCase.loginSocial(provider, token)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
         }
     }
 
-    fun loginByGoogle(authCode: String?) {
+    fun loginByGoogle(authCode: String?, appLanguage: String) {
         doAsync {
             authUseCase.loginWithGoogle(authCode)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
-        }
-    }
-
-    fun changeLanguage(language: String) {
-        doAsync {
-            userUseCase.changeLanguage(language)
-            _updateLanguageSuccessLiveData.postValue(true)
         }
     }
 }

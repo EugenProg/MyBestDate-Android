@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentMatchesBinding
@@ -77,6 +78,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
         super.onViewLifecycle()
         observe(viewModel.user) {
             mainPhoto = it?.getMainPhotoThumbUrl().orEmpty()
+            binding.matchesListButton.badgeOn = it?.new_matches.orZero > 0
             binding.toolbar.photo = mainPhoto
         }
         observe(viewModel.matchesList) {

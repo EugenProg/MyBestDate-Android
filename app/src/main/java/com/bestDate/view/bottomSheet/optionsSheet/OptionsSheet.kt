@@ -9,7 +9,8 @@ import com.bestDate.view.base.BaseBottomSheet
 
 class OptionsSheet(
     private var optionsList: LinkedHashMap<FilterType, String>,
-    private var title: String
+    private var title: String,
+    private var selectedItem: FilterType
 ) : BaseBottomSheet<SheetItemListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> SheetItemListBinding =
         { inflater, parent, attach -> SheetItemListBinding.inflate(inflater, parent, attach) }
@@ -23,7 +24,7 @@ class OptionsSheet(
         optionsList.forEach { (filterType, name) ->
             list.add(Pair(filterType, name))
         }
-        adapter = FilterListAdapter(list) {
+        adapter = FilterListAdapter(list, selectedItem) {
             dismiss()
             itemClick?.invoke(it)
         }

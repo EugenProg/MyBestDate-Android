@@ -12,6 +12,7 @@ import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.ChatImage
 import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
+import com.bestDate.data.model.Meta
 import com.bestDate.databinding.*
 import com.bestDate.presentation.base.ChatBaseViewHolder
 import com.bumptech.glide.Glide
@@ -21,6 +22,9 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
     var messageClick: ((Message) -> Unit)? = null
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var imageLongClick: ((Message) -> Unit)? = null
+    var loadMoreItems: (() -> Unit)? = null
+    var meta: Meta? = Meta()
+    var loadingMode: Boolean = false
 
     class ChatDiffUtil : DiffUtil.ItemCallback<Message>() {
         override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
@@ -68,6 +72,13 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                     ), messageClick, imageOpenClick, imageLongClick
                 )
             }
+            ChatItemType.LOADER.ordinal -> {
+                LoaderViewHolder(
+                    ItemChatLoaderBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    )
+                )
+            }
             else -> UserTextMessageViewHolder(
                 ItemUserTextMessageBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
@@ -78,6 +89,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
 
     override fun onBindViewHolder(holder: ChatBaseViewHolder<*>, position: Int) {
         holder.bind(getItem(position))
+
+        if (position >= itemCount - 1 && meta?.current_page.orZero < meta?.last_page.orZero && !loadingMode) {
+            setLoadingMode()
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -223,4 +238,24 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
             binding.dateView.text = item.getDate(itemView.context)
         }
     }
+
+    class LoaderViewHolder(override val binding: ItemChatLoaderBinding) :
+        ChatBaseViewHolder<ItemChatLoaderBinding>(binding, null)
+
+    private fun setLoadingMode() {
+        val newList: MutableList<Message> = mutableListOf()
+        newList.addAll(currentList)
+        newList.add(loadingItem)
+        submitList(newList)
+        loadingMode = true
+        loadMoreItems?.invoke()
+    }
+
+    override fun submitList(list: MutableList<Message>?) {
+        loadingMode = false
+        super.submitList(list)
+    }
+
+    private var loadingItem: Message =
+        Message(id = 0, viewType = ChatItemType.LOADER)
 }

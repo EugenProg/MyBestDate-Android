@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.userProfile.myDuels
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -19,23 +20,32 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: MyDuelsAdapter
+    private var refreshingMode: Boolean = false
 
     override fun onInit() {
         super.onInit()
 
         adapter = MyDuelsAdapter()
-        binding.myDuelsView.layoutManager = LinearLayoutManager(requireContext())
-        binding.myDuelsView.adapter = adapter
+        with(binding) {
+            myDuelsView.layoutManager = LinearLayoutManager(requireContext())
+            myDuelsView.adapter = adapter
 
-        adapter.itemClick = {
-            navigateToUserProfile(it)
+            adapter.itemClick = {
+                navigateToUserProfile(it)
+            }
+
+            refreshView.setOnRefreshListener {
+                refreshingMode = true
+                adapter.refresh()
+            }
+
+            adapter.addLoadStateListener {
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading && refreshingMode
+                noDataView.noData =
+                    it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshingMode)
+            }
         }
-
-        binding.refreshView.setOnRefreshListener {
-            viewModel.getMyDuels()
-        }
-
-        viewModel.getMyDuels()
     }
 
     override fun onViewClickListener() {
@@ -49,15 +59,7 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
         super.onViewLifecycle()
 
         observe(viewModel.myDuels) {
-            adapter.submitList(it) {
-                binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
-            }
-        }
-        observe(viewModel.loadingMode) {
-            if (!binding.refreshView.isRefreshing &&
-                viewModel.myDuels.value.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
+            adapter.submitData(lifecycle, it)
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false

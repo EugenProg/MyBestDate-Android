@@ -115,7 +115,8 @@ fun String?.getDateString(): String {
 
 fun String.getPushType(): NotificationType {
     if (this.isBlank()) return NotificationType.DEFAULT_PUSH
-    return NotificationType.values().firstOrNull { it.code == this } ?: NotificationType.DEFAULT_PUSH
+    return NotificationType.values().firstOrNull { it.code == this }
+        ?: NotificationType.DEFAULT_PUSH
 }
 
 fun String?.copyToClipboard(context: Context) {
@@ -129,5 +130,17 @@ fun String?.openAsLink(context: Context) {
     } catch (e: Exception) {
         Logger.print("Error by open link: ${e.message}")
     }
+}
 
+fun String.share(context: Context) {
+    val intent = Intent()
+    intent.action = Intent.ACTION_SEND
+    intent.putExtra(Intent.EXTRA_TEXT, this)
+    intent.type = "text/plain"
+    context.startActivity(Intent.createChooser(intent, "Choose one"))
+}
+
+fun String?.safetyToInt(): Int {
+    return if (this?.matches(Regex("[0-9]+")) == true) this.toInt()
+    else 0
 }

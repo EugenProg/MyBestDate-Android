@@ -2,23 +2,19 @@ package com.bestDate.presentation.main.userProfile.invitationList.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
-import com.bestDate.presentation.base.BaseViewHolder
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.InvitationCard
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ItemAnsweredInvitationBinding
+import com.bestDate.presentation.base.InvitationBaseViewHolder
 import com.bumptech.glide.Glide
 
-class AnsweredInvitationsAdapter : ListAdapter<InvitationCard,
-        AnsweredInvitationsAdapter.AnsweredInvitationViewHolder>(InvitationCardDiffUtil()) {
-
-    var userClick: ((ShortUserData?) -> Unit)? = null
+class AnsweredInvitationsAdapter : BaseInvitationAdapter() {
 
     class AnsweredInvitationViewHolder(
         override var binding: ItemAnsweredInvitationBinding,
         var userClick: ((ShortUserData?) -> Unit)?
-    ) : BaseViewHolder<InvitationCard, ItemAnsweredInvitationBinding>(binding) {
+    ) : InvitationBaseViewHolder<ItemAnsweredInvitationBinding>(binding) {
         override fun bind(item: InvitationCard) {
             super.bind(item)
             with(binding) {
@@ -55,9 +51,5 @@ class AnsweredInvitationsAdapter : ListAdapter<InvitationCard,
             ),
             userClick
         )
-    }
-
-    override fun onBindViewHolder(holder: AnsweredInvitationViewHolder, position: Int) {
-        holder.bind(getItem(position))
     }
 }

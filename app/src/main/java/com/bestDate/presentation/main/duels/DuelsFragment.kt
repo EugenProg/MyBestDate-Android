@@ -1,12 +1,12 @@
 package com.bestDate.presentation.main.duels
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
-import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.DuelElementView
@@ -97,14 +97,13 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
 
     private fun setUpElement(
         duelElementView: DuelElementView,
-        profileImage: ProfileImage?,
-        anotherProfileImage: ProfileImage?
+        profileImage: Pair<Bitmap?, Int?>,
+        anotherProfileImage: Pair<Bitmap?, Int?>
     ) {
         duelElementView.apply {
-            image = profileImage?.full_url
-            photoId = profileImage?.id.orZero
-            likeClick = { winningId ->
-                viewModel.postVote(winningId, anotherProfileImage?.id.orZero)
+            setBitmap(profileImage.first)
+            likeClick = {
+                viewModel.postVote(profileImage.second.orZero, anotherProfileImage.second.orZero)
             }
         }
     }

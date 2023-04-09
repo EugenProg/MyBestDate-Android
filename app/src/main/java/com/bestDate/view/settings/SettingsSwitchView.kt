@@ -23,6 +23,8 @@ class SettingsSwitchView @JvmOverloads constructor(
     private var progressMode: Boolean = false
 
     var checkAction: ((checked: Boolean) -> Unit)? = null
+    var activeText: String = context.getString(R.string.active)
+    var unActiveText: String = context.getString(R.string.deactive)
 
     init {
         setAttrs(attrs, R.styleable.SettingsSwitchView) {
@@ -76,7 +78,7 @@ class SettingsSwitchView @JvmOverloads constructor(
 
     private fun toggleSwitchStatus(active: Boolean) {
         with(binding) {
-            status.text = context.getString(if (active) R.string.active else R.string.deactive)
+            status.text = if (active) activeText else unActiveText
             val color = ContextCompat.getColor(context,
                 if (active) R.color.bg_light_blue else R.color.bg_pink)
             status.setTextColor(color)

@@ -23,7 +23,7 @@ import javax.inject.Singleton
 object NetworkModule {
     @Provides
     @Core_url
-    fun providesCoreBaseURL(): String = "https://dev-api.bestdate.info"
+    fun providesCoreBaseURL(): String = "https://api.bestdate.info"
 
     @Provides
     @Geocoding_url

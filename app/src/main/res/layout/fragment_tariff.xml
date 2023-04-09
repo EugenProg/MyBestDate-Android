@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="48dp"
+        android:background="@drawable/tariff_item_back">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/component_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="37dp"
+            android:textAllCaps="true"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/popular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/popular"
+            style="@style/component_title"
+            android:layout_width="75dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="26dp"
+            android:background="@drawable/small_blue_button"
+            android:textColor="@color/bg_main"
+            android:textSize="10sp"
+            android:text="Popular"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="SmallSp" />
+
+        <ImageView
+            android:id="@+id/imageView29"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tariff_logo"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title" />
+
+        <TextView
+            android:id="@+id/amountView"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="58sp"
+            android:paddingTop="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView29"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView29" />
+
+        <TextView
+            android:id="@+id/periodView"
+            style="@style/component_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/white_40"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amountView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button"
+            style="@style/component_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginHorizontal="26dp"
+            app:cornerRadius="23dp"
+            android:textColor="@color/bg_main"
+            android:textSize="12sp"
+            android:text="@string/get_started"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/periodView" />
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/light_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <TextView
+            android:id="@+id/textView28"
+            style="@style/component_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/features"
+            android:textAllCaps="true"
+            android:textColor="@color/white_80"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+        <TextView
+            android:id="@+id/textView29"
+            style="@style/component_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="26dp"
+            android:layout_marginTop="3dp"
+            android:text="@string/everything_in_this_plan"
+            android:textColor="@color/white_40"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+        <ImageView
+            android:id="@+id/imageView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/ic_settings_invitations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <ImageView
+            android:id="@+id/cardsSwitch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="26dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView31"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView31" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check"
+            app:tint="@color/bg_main"
+            app:layout_constraintTop_toTopOf="@id/cardsSwitch"
+            app:layout_constraintStart_toStartOf="@id/cardsSwitch"
+            app:layout_constraintEnd_toEndOf="@id/cardsSwitch"
+            app:layout_constraintBottom_toBottomOf="@id/cardsSwitch"/>
+
+        <TextView
+            android:id="@+id/textView30"
+            style="@style/component_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="11dp"
+            android:layout_marginTop="27dp"
+            android:text="@string/unlimited_invite_cards"
+            android:textColor="@color/white_80"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/cardsSwitch"
+            app:layout_constraintStart_toEndOf="@+id/imageView31"
+            app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+        <TextView
+            android:id="@+id/textView32"
+            style="@style/component_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="11dp"
+            android:text="@string/active"
+            android:textColor="@color/bg_light_blue"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/cardsSwitch"
+            app:layout_constraintStart_toEndOf="@+id/imageView31"
+            app:layout_constraintTop_toBottomOf="@+id/textView30" />
+
+        <ImageView
+            android:id="@+id/imageView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/ic_settings_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView31" />
+
+        <ImageView
+            android:id="@+id/messageSwitch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="26dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imageView30" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check"
+            app:tint="@color/bg_main"
+            app:layout_constraintTop_toTopOf="@id/messageSwitch"
+            app:layout_constraintStart_toStartOf="@id/messageSwitch"
+            app:layout_constraintEnd_toEndOf="@id/messageSwitch"
+            app:layout_constraintBottom_toBottomOf="@id/messageSwitch"/>
+
+        <TextView
+            android:id="@+id/textView31"
+            style="@style/component_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="11dp"
+            android:text="@string/unlimited_messages"
+            android:textColor="@color/white_80"
+            android:layout_marginTop="17dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/messageSwitch"
+            app:layout_constraintStart_toEndOf="@+id/imageView30"
+            app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+        <TextView
+            style="@style/component_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="11dp"
+            android:text="@string/active"
+            android:textColor="@color/bg_light_blue"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toStartOf="@+id/messageSwitch"
+            app:layout_constraintStart_toEndOf="@+id/imageView30"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

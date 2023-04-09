@@ -1,5 +1,6 @@
 package com.bestDate.presentation.globalPushScreens
 
+import androidx.navigation.fragment.navArgs
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.Like
 import com.bestDate.data.model.ShortUserData
@@ -7,6 +8,7 @@ import com.bestDate.presentation.main.chats.chat.ChatFragment
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListFragment
 import com.bestDate.presentation.main.userProfile.likesList.LikesListFragment
 import com.bestDate.presentation.main.userProfile.matchesList.MatchesListFragment
+import com.bestDate.view.button.InvitationActions
 
 class GlobalLikePushScreen : LikesListFragment() {
 
@@ -60,6 +62,13 @@ class GlobalMatchPushScreen : MatchesListFragment() {
 }
 
 class GlobalInvitationPushScreen : InvitationListFragment() {
+
+    private val args by navArgs<GlobalInvitationPushScreenArgs>()
+
+    override fun onInit() {
+        super.onInit()
+        if (args.page != InvitationActions.NEW) setPage(args.page)
+    }
 
     override fun navigateToUserProfile(userData: ShortUserData?) {
         navController.navigate(

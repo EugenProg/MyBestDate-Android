@@ -1,14 +1,14 @@
-package com.bestDate.presentation.main.anotherProfile
+package com.bestDate.presentation.base.anotherProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.utils.DeeplinkCreator
 import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
@@ -18,7 +18,7 @@ import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAddi
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AnotherProfileFragment :
+abstract class BaseAnotherProfileFragment :
     BaseVMFragment<FragmentAnotherProfileBinding, AnotherProfileViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileBinding =
         { inflater, parent, attach ->
@@ -31,18 +31,21 @@ class AnotherProfileFragment :
     override val viewModelClass: Class<AnotherProfileViewModel> =
         AnotherProfileViewModel::class.java
     override val statusBarLight = true
-    private val args by navArgs<AnotherProfileFragmentArgs>()
 
-    var isBlocked: Boolean = false
-    private var user: ShortUserData? = null
-    private var fullUser: UserDB? = null
+    private var isBlocked: Boolean = false
+    protected var user: ShortUserData? = null
+    protected var fullUser: UserDB? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
+
+    abstract fun getBackScreen(): BackScreenType
+    abstract fun navigateToChat()
+    abstract fun navigateToSlider(position: Int)
+    abstract fun navigateToQuestionnaire()
+    abstract fun navigateToSearch()
 
     override fun onInit() {
         super.onInit()
         makeStatusBarTransparent(binding.header.getTopBoxView())
-        user = args.user
-        viewModel.getUserById(user?.id)
         setBackground(user?.blocked_me)
         binding.header.setUserInfo(user)
         binding.userInfoView.setUserInfo(user)
@@ -75,24 +78,21 @@ class AnotherProfileFragment :
             }
         }
         binding.navBox.chatClick = {
-            if (args.backScreen == BackScreenType.CHAT) {
+            if (getBackScreen() == BackScreenType.CHAT) {
                 navController.popBackStack()
             } else {
-                navController.navigate(
-                    AnotherProfileFragmentDirections
-                        .actionGlobalAnotherProfileToChat(user, BackScreenType.ANOTHER_PROFILE)
-                )
+                navigateToChat()
             }
         }
         binding.navBox.likeClick = {
-            user?.getMainPhoto()?.id?.let { viewModel.like(it) }
+            fullUser?.getMainPhoto()?.id?.let { viewModel.like(it) }
         }
         binding.header.clickAdditionally = {
             val sheet = AnotherProfileAdditionalBottomSheet(isBlocked)
             sheet.show(childFragmentManager, sheet.tag)
 
             sheet.shareClick = {
-
+                DeeplinkCreator(user?.id, user?.name).get().share(requireContext())
             }
             sheet.blockClick = {
                 if (isBlocked) viewModel.unlockUser(user?.id)
@@ -105,55 +105,44 @@ class AnotherProfileFragment :
         binding.header.clickAvatar = {
             fullUser?.photos?.let {
                 if (it.firstOrNull()?.id.orZero > 0) {
-                    navController.navigate(
-                        AnotherProfileFragmentDirections
-                            .actionAnotherProfileToSlider(0, fullUser?.id ?: 0)
-                    )
+                    navigateToSlider(0)
                 }
             }
         }
         binding.userInfoView.imageClick = { photo ->
             val position = fullUser?.photos?.indexOfFirst { it.id == photo?.id } ?: 0
             fullUser?.photos?.let {
-                navController.navigate(
-                    AnotherProfileFragmentDirections
-                        .actionAnotherProfileToSlider(position, fullUser?.id ?: 0)
-                )
+                navigateToSlider(position)
             }
         }
         binding.userInfoView.openQuestionnaire = {
-            navController.navigate(
-                AnotherProfileFragmentDirections.actionAnotherProfileToQuestionnaire()
-            )
+            navigateToQuestionnaire()
         }
     }
 
     override fun goBack() {
         viewModel.clearUserData()
-        if (args.backScreen == BackScreenType.SEARCH) {
-            setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+        when(getBackScreen()) {
+            BackScreenType.SEARCH -> {
+                setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
+                super.goBack()
+            }
+            BackScreenType.DUELS -> {
+                setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
+                super.goBack()
+            }
+            BackScreenType.START -> {
+                navigateToSearch()
+            }
+            else -> super.goBack()
         }
-        else if (args.backScreen == BackScreenType.DUELS) {
-            setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
-        }
-        super.goBack()
     }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
         observe(viewModel.user) {
-            user = it.getShortUser(user)
-            setBackground(it?.blocked_me)
-            binding.header.setUserInfo(it)
-            binding.userInfoView.setUserInfo(it)
-            binding.userBlockedView.setUserInfo(it)
-            binding.navBox.isVisible = it?.blocked_me != true
-            binding.navBox.isLiked = it?.getMainPhoto()?.liked == true
-            isBlocked = it?.blocked == true
-            fullUser = it
-            validateChatUser()
+            it?.let { setFullUserInfo(it) }
         }
-
         observe(viewModel.blockLiveData) {
             val message = if (it) R.string.user_is_blocked_successful
             else R.string.user_is_unlocked_successful
@@ -182,8 +171,22 @@ class AnotherProfileFragment :
         }
     }
 
+    private fun setFullUserInfo(fullUser: UserDB) {
+        user = fullUser.getShortUser(user)
+        setBackground(fullUser.blocked_me)
+        binding.header.setUserInfo(fullUser)
+        binding.userInfoView.setUserInfo(fullUser)
+        binding.userBlockedView.setUserInfo(fullUser)
+        binding.navBox.isVisible = fullUser.blocked_me != true
+        binding.navBox.isLiked = fullUser.getMainPhoto().liked == true
+        binding.navBox.hasMainPhoto = user?.main_photo != null
+        isBlocked = fullUser.blocked == true
+        this.fullUser = fullUser
+        validateChatUser()
+    }
+
     private fun validateChatUser() {
-        if (args.backScreen == BackScreenType.CHAT) {
+        if (getBackScreen() == BackScreenType.CHAT) {
             setNavigationResult(NavigationResultKey.USER, user)
         }
     }

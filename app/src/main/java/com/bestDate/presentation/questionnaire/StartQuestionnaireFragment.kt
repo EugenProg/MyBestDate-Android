@@ -8,6 +8,7 @@ class StartQuestionnaireFragment : BaseQuestionnaireFragment() {
     }
 
     override fun forward() {
+        viewModel.increaseQuestionnaireSkipCount()
         if (viewModel.isFirstEnter()) {
             navController.navigate(
                 StartQuestionnaireFragmentDirections

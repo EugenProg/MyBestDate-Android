@@ -13,6 +13,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/gender"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.6"
+        tools:text="Мужской" />
+
     <com.bestDate.view.filter.FilterButton
         android:id="@+id/locationFilterButton"
         android:layout_width="wrap_content"
@@ -66,37 +81,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
 
-    <com.bestDate.view.NoDataViewWithLoading
-        android:id="@+id/noDataViewWithLoading"
-        app:no_data_text="@string/by_params_not_found"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_view" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+    <com.bestDate.view.search.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginHorizontal="2dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_view">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewSearches"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="55dp"
-            tools:itemCount="4"
-            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_search_profiles_element"
-            tools:spanCount="2" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        app:layout_constraintTop_toBottomOf="@+id/_view" />
 
     <FrameLayout
         android:id="@+id/fragmentContainer"

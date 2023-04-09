@@ -50,6 +50,7 @@ class AuthUseCase @Inject constructor(
             saveTokens(response.body())
             saveDeviceToken()
             registrationSocialMode = response.body()?.registration == true
+            invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

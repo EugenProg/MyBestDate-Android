@@ -8,6 +8,8 @@ import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.extension.formatToPhoneNumber
 import com.bestDate.data.extension.isAEmail
 import com.bestDate.data.extension.isPhoneNumber
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
@@ -20,7 +22,8 @@ class PassRecoveryViewModel @Inject constructor(
     private val passRecoveryUseCase: RecoveryUseCase,
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
-    private val pusherCenter: PusherCenter
+    private val pusherCenter: PusherCenter,
+    private val preferencesUtils: PreferencesUtils
     ): BaseViewModel() {
 
     var user = userUseCase.getMyUser.asLiveData()
@@ -36,6 +39,10 @@ class PassRecoveryViewModel @Inject constructor(
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
+
+    fun getSkipQuestionnaireCount() = preferencesUtils.getInt(Preferences.QUESTIONNAIRE_SKIP_COUNT)
+
+    fun getSkipImageCount() = preferencesUtils.getInt(Preferences.IMAGE_SKIP_COUNT)
 
     fun sendPassRecoveryCode(login: String) {
         when {
@@ -61,15 +68,15 @@ class PassRecoveryViewModel @Inject constructor(
         }
     }
 
-    fun confirmPassRecovery() {
+    fun confirmPassRecovery(appLanguage: String) {
         if (PassRecoveryDataHolder.type == RegistrationType.EMAIL) {
-            confirmEmailPassRecovery()
+            confirmEmailPassRecovery(appLanguage)
         } else {
-            confirmPhonePassRecovery()
+            confirmPhonePassRecovery(appLanguage)
         }
     }
 
-    private fun confirmEmailPassRecovery() {
+    private fun confirmEmailPassRecovery(appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetEmailPassword(
@@ -77,11 +84,11 @@ class PassRecoveryViewModel @Inject constructor(
                 PassRecoveryDataHolder.code,
                 PassRecoveryDataHolder.password
             )
-            loginByEmail(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password)
+            loginByEmail(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)
         }
     }
 
-    private fun confirmPhonePassRecovery() {
+    private fun confirmPhonePassRecovery(appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetPhonePassword(
@@ -89,24 +96,24 @@ class PassRecoveryViewModel @Inject constructor(
                 PassRecoveryDataHolder.code,
                 PassRecoveryDataHolder.password
             )
-            loginByPhone(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password)
+            loginByPhone(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)
         }
     }
 
-    private fun loginByEmail(login: String, password: String) {
+    private fun loginByEmail(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)
         }
     }
 
-    private fun loginByPhone(login: String, password: String) {
+    private fun loginByPhone(login: String, password: String, appLanguage: String) {
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
-            userUseCase.refreshUser()
+            userUseCase.changeLanguage(appLanguage)
             pusherCenter.startPusher()
             _recoveryLiveData.postValue(true)
             _loadingLiveData.postValue(false)

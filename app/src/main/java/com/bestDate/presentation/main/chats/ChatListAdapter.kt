@@ -6,18 +6,24 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.model.Chat
-import com.bestDate.data.model.ChatListItemType
+import com.bestDate.data.model.ListItemType
+import com.bestDate.data.model.Meta
 import com.bestDate.databinding.ItemChatBotBinding
 import com.bestDate.databinding.ItemChatListBinding
 import com.bestDate.databinding.ItemChatListHeaderBinding
+import com.bestDate.databinding.ItemLoaderBinding
 import com.bestDate.presentation.base.ChatListBaseViewHolder
 import com.bumptech.glide.Glide
 
 class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDiffUtil()) {
 
     var clickAction: ((Chat) -> Unit)? = null
+    var loadMoreItems: (() -> Unit)? = null
+    var meta: Meta? = Meta()
+    var loadingMode: Boolean = false
 
     class ChatListDiffUtil : DiffUtil.ItemCallback<Chat>() {
         override fun areItemsTheSame(oldItem: Chat, newItem: Chat): Boolean {
@@ -100,22 +106,32 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
         }
     }
 
+    class LoaderViewHolder(override val binding: ItemLoaderBinding, itemClick: ((Chat) -> Unit)?) :
+        ChatListBaseViewHolder<ItemLoaderBinding>(binding, itemClick)
+
     override fun getItemViewType(position: Int): Int {
         return getItem(position).type?.ordinal ?: 0
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListBaseViewHolder<*> {
         return when (viewType) {
-            ChatListItemType.HEADER.ordinal -> {
+            ListItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     ItemChatListHeaderBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     )
                 )
             }
-            ChatListItemType.BOT.ordinal -> {
+            ListItemType.BOT.ordinal -> {
                 BotViewHolder(
                     ItemChatBotBinding.inflate(
+                        LayoutInflater.from(parent.context), parent, false
+                    ), clickAction
+                )
+            }
+            ListItemType.LOADER.ordinal -> {
+                LoaderViewHolder(
+                    ItemLoaderBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
                     ), clickAction
                 )
@@ -132,5 +148,26 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
 
     override fun onBindViewHolder(holder: ChatListBaseViewHolder<*>, position: Int) {
         holder.bind(getItem(position))
+
+        if (position >= itemCount - 1 && meta?.current_page.orZero < meta?.last_page.orZero && !loadingMode) {
+            setLoadingMode()
+        }
     }
+
+    private fun setLoadingMode() {
+        val newList: MutableList<Chat> = mutableListOf()
+        newList.addAll(currentList)
+        newList.add(loadingItem)
+        submitList(newList)
+        loadingMode = true
+        loadMoreItems?.invoke()
+    }
+
+    override fun submitList(list: MutableList<Chat>?) {
+        loadingMode = false
+        super.submitList(list)
+    }
+
+    private var loadingItem: Chat =
+        Chat(id = 0, type = ListItemType.LOADER)
 }

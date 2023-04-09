@@ -16,20 +16,20 @@ class UserRemoteData @Inject constructor(
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) =
         service.saveQuestionnaire(questionnaire)
 
-    suspend fun getUserLikes() = service.getLikesList()
+    suspend fun getUserLikes(page: Int) = service.getLikesList(page)
 
     suspend fun like(body: LikesBody) = service.like(body)
 
     suspend fun getUsers(filters: FilterOptions, page: Int) =
         service.getUsers(filters, page)
 
-    suspend fun getUserMatches() = service.getMatchesList()
+    suspend fun getUserMatches(page: Int) = service.getMatchesList(page)
 
     suspend fun getUsersForMatch() = service.getUsersForMatch()
 
     suspend fun matchAction(userId: Int) = service.matchAction(MatchActionRequest(userId))
 
-    suspend fun getMyDuels() = service.getMyDuels()
+    suspend fun getMyDuels(page: Int) = service.getMyDuels(page)
 
     suspend fun getBlockedUsers() = service.getBlockedUsers()
 
@@ -41,9 +41,9 @@ class UserRemoteData @Inject constructor(
 
     suspend fun changeLanguage(language: String) = service.changeLanguage(RequestLanguage(language))
 
-    suspend fun getUserInvitations(filter: InvitationFilter) =
+    suspend fun getUserInvitations(filter: InvitationFilter, page: Int) =
         service.getInvitations(
-            UserInvitationRequest(filter.serverName)
+            UserInvitationRequest(filter.serverName), page
         )
 
     suspend fun updateUserData(userRequest: UpdateUserRequest) = service.updateUserData(userRequest)

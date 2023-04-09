@@ -588,7 +588,7 @@
     <string name="deactive">Неактивно</string>
     <string name="active">Активно</string>
     <string name="blocking_messages">Блокування повідомлень</string>
-    <string name="you_will_not_be_able_to_send_messages">Ви не зможете надсилати повідомлення, а лише запрошення.</string>
+    <string name="you_will_not_be_able_to_send_messages">Ви не зможете отримувати повідомлення, а лише запрошення.</string>
     <string name="messages">Повідомлення</string>
     <string name="participation_in_matches">Анонімний пошук збіжностей</string>
     <string name="the_ability_to_view_other_peoples_profiles">Можливість непомітно переглядати профілі інших людей.</string>
@@ -646,4 +646,20 @@
     <string name="terms_of_use">Правила використання</string>
     <string name="complain_about_content">Поскаржитися на зміст</string>
     <string name="complain_is_send_successful">Скаргу успішно надіслано</string>
+    <string name="montly_plan">Monthly plan</string>
+    <string name="per_montly">Per monthly</string>
+    <string name="three_months_plan">Three months plan</string>
+    <string name="per_three_monthly">Per three monthly</string>
+    <string name="six_months_plan">Six months plan</string>
+    <string name="per_six_monthly">Per six monthly</string>
+    <string name="features">Features</string>
+    <string name="everything_in_this_plan">Everything in this plan</string>
+    <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
+    <string name="unlimited_messages">Unlimited Messages</string>
+    <string name="images_not_found">Зображення не знайдені</string>
+    <string name="messages_blocked">Повідомлення заблоковані</string>
+    <string name="messages_unlocked">Повідомлення розблоковано</string>
+    <string name="men">Чоловічий</string>
+    <string name="women">Жіночий</string>
+    <string name="all_gender">Все</string>
 </resources>

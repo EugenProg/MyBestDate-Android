@@ -133,7 +133,7 @@
     <string name="no_hair">Kein Haar</string>
     <string name="blond">Blond</string>
     <string name="brunette">Brünett</string>
-    <string name="redhead">Rotschopf</string>
+    <string name="redhead">Rotkopf</string>
     <string name="friendship">Freundschaft</string>
     <string name="love">Liebe</string>
     <string name="communication">Kommunikation</string>
@@ -146,8 +146,8 @@
     <string name="do_not_specify_height">Höhe nicht angeben</string>
     <string name="cancel">Abbrechen</string>
     <string name="no_education">Keine Bildung</string>
-    <string name="secondary">Sekundarschulbildung</string>
-    <string name="higher">Höhere</string>
+    <string name="secondary">Abitur</string>
+    <string name="higher">Uni/Fachhochschule</string>
     <string name="walking_around_the_city">Spaziergang durch die Stadt</string>
     <string name="sitting_in_best_date">Sitzen in Bestdate</string>
     <string name="going_on_dates">Auf Verabredungen gehen</string>
@@ -478,7 +478,7 @@
     <string name="wrong_auth_data">Falsches Login oder Passwort</string>
     <string name="wrong_otp_code">Falscher Code</string>
     <string name="balance">Guthaben</string>
-    <string name="matches_list">Treffer Liste</string>
+    <string name="matches_list">Matches Liste</string>
     <string name="my_duels">Meine Duelle</string>
     <string name="likes">Likes</string>
     <string name="cards">Karten</string>
@@ -554,7 +554,7 @@
     <string name="answered">Beantwortete</string>
     <string name="sent">Gesendete</string>
     <string name="you_have_no_new_invitations">Sie haben leider keine neue Einladungen</string>
-    <string name="you_have_no_answered_invitations">Sie haben leider keine Einladungen beantwortet</string>
+    <string name="you_have_no_answered_invitations">Sie haben leider noch keine Einladungen gekriegt</string>
     <string name="you_have_no_invitations_sent">Sie haben leider keine Einladungen verschickt</string>
     <string name="invitations">Einladungen</string>
     <string name="yes_i_agree">Ja, ich bin einverstanden</string>
@@ -588,7 +588,7 @@
     <string name="deactive">Deaktiviert</string>
     <string name="active">Aktiv</string>
     <string name="blocking_messages">Blockierung von Nachrichten</string>
-    <string name="you_will_not_be_able_to_send_messages">Sie können keine Nachrichten senden, sondern nur Einladungen.</string>
+    <string name="you_will_not_be_able_to_send_messages">Sie können keine Nachrichten bekommen, sondern nur Einladungen.</string>
     <string name="messages">Messages</string>
     <string name="participation_in_matches">Anonyme Treffersuche</string>
     <string name="the_ability_to_view_other_peoples_profiles">Die Möglichkeit, die Profile anderer Personen unbemerkt zu sehen.</string>
@@ -646,4 +646,20 @@
     <string name="terms_of_use">Nutzungsbedingungen</string>
     <string name="complain_about_content">Sich über den Inhalt beschweren</string>
     <string name="complain_is_send_successful">Reklamation erfolgreich abgeschickt</string>
+    <string name="montly_plan">Monthly plan</string>
+    <string name="per_montly">Per monthly</string>
+    <string name="three_months_plan">Three months plan</string>
+    <string name="per_three_monthly">Per three monthly</string>
+    <string name="six_months_plan">Six months plan</string>
+    <string name="per_six_monthly">Per six monthly</string>
+    <string name="features">Features</string>
+    <string name="everything_in_this_plan">Everything in this plan</string>
+    <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
+    <string name="unlimited_messages">Unlimited Messages</string>
+    <string name="images_not_found">Keine Bilder gefunden</string>
+    <string name="messages_blocked">Nachrichten sind blockiert</string>
+    <string name="messages_unlocked">Nachrichten freigeschaltet</string>
+    <string name="men">Mann</string>
+    <string name="women">Frau</string>
+    <string name="all_gender">Alle</string>
 </resources>

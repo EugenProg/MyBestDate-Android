@@ -33,48 +33,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_view">
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/guestsView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include
-                    android:id="@+id/newHeader"
-                    layout="@layout/item_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewGuestsNew"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:nestedScrollingEnabled="false" />
-
-                <include
-                    android:id="@+id/prevHeader"
-                    layout="@layout/item_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="18dp"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="gone" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewGuestsPrev"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:paddingBottom="55dp" />
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingBottom="55dp" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.bestDate.view.NoDataViewWithLoading
@@ -84,5 +48,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/_view"
+        app:start_with_loading="true"
         app:no_data_text="@string/you_have_no_guests_yet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

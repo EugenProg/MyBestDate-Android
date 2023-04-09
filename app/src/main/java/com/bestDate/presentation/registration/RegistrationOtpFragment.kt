@@ -41,6 +41,6 @@ class RegistrationOtpFragment : BaseOtpFragment() {
     }
 
     override fun sendOtp(code: String) {
-        viewModel.confirmRegistration(code)
+        viewModel.confirmRegistration(code, getString(R.string.app_locale))
     }
 }

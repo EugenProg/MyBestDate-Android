@@ -8,6 +8,8 @@ import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.LocationDB
 import com.bestDate.db.entity.UserDB
 import com.bestDate.db.entity.UserSettings
+import com.bestDate.network.NetworkModule
+import com.bestDate.presentation.main.search.FilterType
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.util.*
@@ -46,8 +48,8 @@ data class ProfileImage(
     }
 
     fun getDefaultPhoto() = ProfileImage(
-        full_url = "https://dev-api.bestdate.info/images/default_photo.jpg",
-        thumb_url = "https://dev-api.bestdate.info/images/default_photo.jpg"
+        full_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg",
+        thumb_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg"
     )
 }
 
@@ -56,7 +58,8 @@ data class UserDataResponse(
 ) : BaseResponse()
 
 data class LikesListResponse(
-    val data: MutableList<Like>
+    val data: MutableList<Like>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class LikeResponse(
@@ -64,7 +67,8 @@ data class LikeResponse(
 ) : BaseResponse()
 
 data class MatchesListResponse(
-    val data: MutableList<Match>
+    val data: MutableList<Match>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class MatchActionResponse(
@@ -72,7 +76,8 @@ data class MatchActionResponse(
 ) : BaseResponse()
 
 data class MyDuelsResponse(
-    val data: MutableList<MyDuel>
+    val data: MutableList<MyDuel>,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class ShortUsersDataResponse(
@@ -96,7 +101,8 @@ data class InvitationsListResponse(
 ) : BaseResponse()
 
 data class UserInvitationsResponse(
-    val data: MutableList<InvitationCard>
+    val data: MutableList<InvitationCard>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class UserSettingsResponse(
@@ -139,8 +145,9 @@ data class ShortUserData(
 }
 
 data class FilterOptions(
-    val location: String? = "all",
-    val online: String? = "all",
+    val location: String? = FilterType.ALL.serverName,
+    val online: String? = FilterType.ALL.serverName,
+    val gender: String? = null,
     val filters: AdditionalFilters? = null
 )
 
@@ -190,14 +197,16 @@ data class MyDuel(
 }
 
 data class GuestsResponse(
-    val data: MutableList<Guest>? = null
+    val data: MutableList<Guest>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class Guest(
     val id: Int? = null,
     val visit_at: String? = null,
     val viewed: Boolean? = null,
-    val guest: ShortUserData? = null
+    val guest: ShortUserData? = null,
+    val itemType: ListItemType? = null
 )
 
 data class InvitationCard(
@@ -256,7 +265,8 @@ data class DuelProfileImageListResponse(
 ) : BaseResponse()
 
 data class DuelProfileResponse(
-    val data: MutableList<DuelProfile>? = null
+    val data: MutableList<DuelProfile>? = null,
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class DuelProfile(
@@ -269,22 +279,23 @@ data class DuelProfile(
 )
 
 data class ChatListResponse(
-    var data: MutableList<Chat>? = mutableListOf()
+    var data: MutableList<Chat>? = mutableListOf(),
+    val meta: Meta? = null
 ) : BaseResponse()
 
 data class Chat(
     var id: Int? = null,
     var user: ShortUserData? = null,
     var last_message: Message? = null,
-    var type: ChatListItemType? = null,
+    var type: ListItemType? = null,
     var typingMode: Boolean? = null
 ) {
-    fun transform(itemType: ChatListItemType): Chat {
+    fun transform(itemType: ListItemType): Chat {
         return Chat(
             user?.id,
             user,
             last_message,
-            if (user?.isBot() == true) ChatListItemType.BOT else itemType
+            if (user?.isBot() == true) ListItemType.BOT else itemType
         )
     }
 
@@ -300,12 +311,12 @@ data class Chat(
     }
 }
 
-enum class ChatListItemType {
-    HEADER, NEW_ITEM, OLD_ITEM, BOT
+enum class ListItemType {
+    HEADER, NEW_ITEM, OLD_ITEM, BOT, LOADER
 }
 
 enum class BackScreenType {
-    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS, DUELS
+    ANOTHER_PROFILE, CHAT, CHAT_LIST, MATCHES, SEARCH, PROFILE, GUESTS, DUELS, START
 }
 
 data class Message(
@@ -345,7 +356,7 @@ data class ParentMessage(
 )
 
 enum class ChatItemType {
-    DATE, MY_TEXT_MESSAGE, USER_TEXT_MESSAGE, MY_IMAGE_MESSAGE, USER_IMAGE_MESSAGE
+    DATE, MY_TEXT_MESSAGE, USER_TEXT_MESSAGE, MY_IMAGE_MESSAGE, USER_IMAGE_MESSAGE, LOADER
 }
 
 data class ChatImage(

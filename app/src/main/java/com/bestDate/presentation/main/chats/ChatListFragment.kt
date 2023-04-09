@@ -61,6 +61,10 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
                     .actionGlobalChatListToChat(it.user, BackScreenType.CHAT_LIST)
             )
         }
+
+        adapter.loadMoreItems = {
+            viewModel.loadNextPage()
+        }
     }
 
     override fun onViewLifecycle() {
@@ -70,6 +74,7 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
         }
         observe(viewModel.chatList) {
             adapter.submitList(it) {
+                adapter.meta = viewModel.meta
                 loader.stopLoading()
             }
         }

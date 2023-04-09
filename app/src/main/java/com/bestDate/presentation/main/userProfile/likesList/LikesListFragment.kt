@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.userProfile.likesList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -21,6 +22,7 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
 
     override val statusBarColor = R.color.bg_main
     private lateinit var adapter: LikesListAdapter
+    private var refreshingMode: Boolean = false
 
     open fun navigateToUserProfile(like: Like) {
         navController.navigate(
@@ -33,18 +35,27 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
         super.onInit()
 
         adapter = LikesListAdapter()
-        binding.likesListView.layoutManager = LinearLayoutManager(requireContext())
-        binding.likesListView.adapter = adapter
+        with(binding) {
+            likesListView.layoutManager = LinearLayoutManager(requireContext())
+            likesListView.adapter = adapter
 
-        adapter.itemClick = {
-            navigateToUserProfile(it)
+            adapter.itemClick = {
+                navigateToUserProfile(it)
+            }
+
+            refreshView.setOnRefreshListener {
+                refreshingMode = true
+                adapter.refresh()
+            }
+
+            adapter.addLoadStateListener {
+                refreshView.isRefreshing = it.source.refresh is LoadState.Loading && refreshingMode
+                noDataView.noData =
+                    it.source.refresh !is LoadState.Loading && adapter.itemCount == 0
+                noDataView.toggleLoading(it.source.refresh is LoadState.Loading && !refreshingMode)
+            }
         }
 
-        binding.refreshView.setOnRefreshListener {
-            viewModel.getLikes()
-        }
-
-        viewModel.getLikes()
     }
 
     override fun onViewClickListener() {
@@ -58,15 +69,7 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
         super.onViewLifecycle()
 
         observe(viewModel.likesList) {
-            adapter.submitList(it) {
-                binding.refreshView.isRefreshing = false
-                binding.noDataView.noData = it.isEmpty()
-            }
-        }
-        observe(viewModel.loadingMode) {
-            if (!binding.refreshView.isRefreshing &&
-                viewModel.likesList.value.isNullOrEmpty()
-            ) binding.noDataView.toggleLoading(it)
+            adapter.submitData(lifecycle, it)
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false

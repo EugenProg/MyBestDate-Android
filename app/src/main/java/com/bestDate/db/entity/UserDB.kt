@@ -13,6 +13,7 @@ import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.db.converters.PhotoConverter
 import com.bestDate.db.converters.StringConverter
+import com.bestDate.presentation.main.search.GenderFilter
 import com.bestDate.presentation.registration.Gender
 import com.bestDate.presentation.registration.GenderType
 import kotlinx.parcelize.Parcelize
@@ -62,6 +63,11 @@ data class UserDB(
             gender == "female" && look_for?.contains("male") == true -> R.string.woman_looking_for_a_man
             else -> R.string.man_looking_for_a_woman
         }
+    }
+
+    fun getGenderFilter(): GenderFilter {
+        return if (look_for?.contains("male") == true) GenderFilter.MEN
+                else GenderFilter.WOMEN
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -119,11 +125,11 @@ data class UserDB(
             language = language,
             birthday = birthday,
             full_questionnaire = questionnaireFull(),
-            role = oldUserData?.role,
+            role = oldUserData?.role ?: "user",
             blocked = blocked,
             blocked_me = blocked_me,
             block_messages = block_messages,
-            allow_chat = oldUserData?.allow_chat,
+            allow_chat = oldUserData?.allow_chat ?: true,
             is_online = is_online,
             last_online_at = last_online_at,
             distance = distance,

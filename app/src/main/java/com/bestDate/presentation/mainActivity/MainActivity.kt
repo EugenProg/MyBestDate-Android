@@ -1,4 +1,4 @@
-package com.bestDate
+package com.bestDate.presentation.mainActivity
 
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -7,9 +7,13 @@ import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
-import com.bestDate.data.extension.*
-import com.bestDate.data.utils.notifications.TypingEventCoordinator
+import com.bestDate.R
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
+import com.bestDate.data.extension.isBottomNavVisible
+import com.bestDate.data.extension.observe
 import com.bestDate.data.utils.notifications.NotificationType
+import com.bestDate.data.utils.notifications.TypingEventCoordinator
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
@@ -132,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshData()
+        viewModel.refreshData(getString(R.string.app_locale))
     }
 
     override fun onPause() {
@@ -152,21 +156,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
         binding.bottomNavigationView.setupWithNavController(navController)
-
     }
 
     private fun setUpUserObserver() {
-        observe(viewModel.myUser) {
-            val newGuests = it?.new_guests ?: 0
-            binding.bottomNavigationView.setBadge(
-                BottomButton.GUESTS,
-                newGuests > 0
-            )
+        observe(viewModel.hasNewGuests) {
+            binding.bottomNavigationView.setBadge(BottomButton.GUESTS, it)
         }
     }
 
     private fun setUpUserListObserver() {
-        viewModel.hasNewChats.observe(this) {
+        observe(viewModel.hasNewChats) {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, it)
         }
     }

@@ -1,11 +1,11 @@
-package com.bestDate.presentation.main.anotherProfile.questionnaire
+package com.bestDate.presentation.base.anotherProfile.questionnaire
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
-import com.bestDate.presentation.main.anotherProfile.AnotherProfileUseCase
+import com.bestDate.presentation.base.anotherProfile.AnotherProfileUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -601,7 +601,7 @@
     <string name="deactive">Deactive</string>
     <string name="active">Active</string>
     <string name="blocking_messages">Blocking messages</string>
-    <string name="you_will_not_be_able_to_send_messages">You will not be able to send messages, but only invitations.</string>
+    <string name="you_will_not_be_able_to_send_messages">You can not get messages, but only invitations.</string>
     <string name="messages">Messages</string>
     <string name="participation_in_matches">Participation in matches</string>
     <string name="the_ability_to_view_other_peoples_profiles">The ability to view other people’s profiles unnoticed.</string>
@@ -660,4 +660,20 @@
     <string name="terms_of_use">Terms of Use</string>
     <string name="complain_about_content">Complain about content</string>
     <string name="complain_is_send_successful">Complaint was successfully sent</string>
+    <string name="montly_plan">Monthly plan</string>
+    <string name="per_montly">Per monthly</string>
+    <string name="three_months_plan">Three months plan</string>
+    <string name="per_three_monthly">Per three monthly</string>
+    <string name="six_months_plan">Six months plan</string>
+    <string name="per_six_monthly">Per six monthly</string>
+    <string name="features">Features</string>
+    <string name="everything_in_this_plan">Everything in this plan</string>
+    <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
+    <string name="unlimited_messages">Unlimited Messages</string>
+    <string name="images_not_found">Images not found</string>
+    <string name="messages_blocked">Messages blocked</string>
+    <string name="messages_unlocked">Messages unlocked</string>
+    <string name="men">Men</string>
+    <string name="women">Women</string>
+    <string name="all_gender">All</string>
 </resources>

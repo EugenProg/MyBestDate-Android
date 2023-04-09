@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GuestsRemoteData @Inject constructor(
     private val service: GuestsService
 ) {
-    suspend fun getGuestsList() = service.getGuestsList()
+    suspend fun getGuestsList(page: Int) = service.getGuestsList(page)
     suspend fun markGuestsViewed(body: IdListRequest) = service.markGuestsViewed(body)
 }
