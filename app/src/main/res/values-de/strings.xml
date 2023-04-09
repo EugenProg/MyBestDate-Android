@@ -657,4 +657,6 @@
     <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
     <string name="unlimited_messages">Unlimited Messages</string>
     <string name="images_not_found">Keine Bilder gefunden</string>
+    <string name="messages_blocked">Nachrichten sind blockiert</string>
+    <string name="messages_unlocked">Nachrichten freigeschaltet</string>
 </resources>

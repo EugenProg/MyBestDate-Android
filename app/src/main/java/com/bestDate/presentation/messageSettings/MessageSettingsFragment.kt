@@ -25,6 +25,12 @@ class MessageSettingsFragment :
 
     override val statusBarColor: Int = R.color.bg_main
 
+    override fun onInit() {
+        super.onInit()
+        binding.switchView.activeText = getString(R.string.messages_blocked)
+        binding.switchView.unActiveText = getString(R.string.messages_unlocked)
+    }
+
     override fun onViewClickListener() {
         super.onViewClickListener()
         with(binding) {

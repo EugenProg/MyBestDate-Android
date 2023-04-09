@@ -29,11 +29,27 @@ class TitleDescriptionSwitchView @JvmOverloads constructor(
                     R.styleable.TitleDescriptionSwitchView_t_d_s_switch_icon,
                     R.drawable.ic_settings_message
                 )
+                setActiveText(
+                    it.getString(R.styleable.TitleDescriptionSwitchView_t_d_s_active_text))
+                setUnActiveText(
+                    it.getString(R.styleable.TitleDescriptionSwitchView_t_d_s_un_active_text))
             }
         }
 
         binding.switchView.checkAction = {
             checkAction?.invoke(it)
+        }
+    }
+
+    private fun setActiveText(text: String?) {
+        text?.let {
+            binding.switchView.activeText = text
+        }
+    }
+
+    private fun setUnActiveText(text: String?) {
+        text?.let {
+            binding.switchView.unActiveText = text
         }
     }
 
