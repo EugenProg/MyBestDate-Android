@@ -20,6 +20,7 @@ import com.bestDate.presentation.main.guests.GuestsUseCase
 import com.bestDate.presentation.main.search.FilterType
 import com.bestDate.presentation.main.search.GenderFilter
 import com.bestDate.presentation.main.search.SearchUseCase
+import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
 import com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUserUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -37,12 +38,16 @@ class UserUseCase @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val searchUseCase: SearchUseCase,
     private val pusherCenter: PusherCenter,
+    private val invitationUseCase: InvitationListUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
 
     val getMyUser = userDao.getUserFlow()
     var userMainPhotoUrl: MutableLiveData<String?> = MutableLiveData()
     var coinsCount: MutableLiveData<String?> = MutableLiveData("0")
+    var hasNewLikes: MutableLiveData<Boolean> = MutableLiveData(false)
+    var hasNewMatches: MutableLiveData<Boolean> = MutableLiveData(false)
+    var hasNewDuels: MutableLiveData<Boolean> = MutableLiveData(false)
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -59,6 +64,10 @@ class UserUseCase @Inject constructor(
         setUserGenderFilter(user.getGenderFilter())
         coinsCount.postValue(user.coins)
         guestsUseCase.hasNewGuests.postValue(user.new_guests.orZero > 0)
+        invitationUseCase.hasNewInvitations.postValue(user.new_invitations.orZero > 0)
+        hasNewLikes.postValue(user.new_likes.orZero > 0)
+        hasNewMatches.postValue(user.new_matches.orZero > 0)
+        hasNewDuels.postValue(user.new_duels.orZero > 0)
     }
 
     suspend fun logout() {

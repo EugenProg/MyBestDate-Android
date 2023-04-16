@@ -65,6 +65,7 @@ open class MatchesListFragment :
     private fun initListObserver() {
         observe(viewModel.matchesList) {
             adapter.submitData(lifecycle, it)
+            viewModel.areMatchesViewed()
         }
 
         with(binding) {

@@ -1,5 +1,6 @@
 package com.bestDate.presentation.main.userProfile.invitationList
 
+import androidx.lifecycle.MutableLiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.bestDate.data.extension.getErrorMessage
@@ -16,10 +17,16 @@ class InvitationListUseCase @Inject constructor(
     private var userRemoteData: UserRemoteData,
     private var invitationRemoteData: InvitationsRemoteData
 ) {
+    var hasNewInvitations: MutableLiveData<Boolean> = MutableLiveData(false)
 
     var newInvitations = Pager(
         config = PagingConfig(pageSize = 20, enablePlaceholders = false, initialLoadSize = 1),
-        pagingSourceFactory = { InvitationPagingSource(userRemoteData, InvitationFilter.NEW) }
+        pagingSourceFactory = {
+            val source = InvitationPagingSource(userRemoteData, InvitationFilter.NEW)
+
+            source.hasNewInvitations = { hasNewInvitations.postValue(it) }
+            source
+        }
     ).flow
 
     var answeredInvitations = Pager(
