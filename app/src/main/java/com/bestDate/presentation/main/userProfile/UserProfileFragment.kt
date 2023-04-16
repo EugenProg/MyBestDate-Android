@@ -130,17 +130,24 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                     name.text = user?.name
                     birthdate.text = user?.getFormattedBirthday()
                     verifyView.isVerified = user?.questionnaireFull()
-                    matchesListButton.badgeOn = user?.new_matches.orZero > 0
-                    invitationListButton.badgeOn = user?.new_invitations.orZero > 0
-                    likeListButton.badgeOn = user?.new_likes.orZero > 0
-                    myDuelsButton.badgeOn = user?.new_duels.orZero > 0
-
                 }
 
                 adapter.submitList(getImageList(user?.photos)) {
                     binding.refreshView.isRefreshing = false
                 }
             }
+        }
+        observe(viewModel.hasNewLikes) {
+            binding.likeListButton.badgeOn = it
+        }
+        observe(viewModel.hasNewMatches) {
+            binding.matchesListButton.badgeOn = it
+        }
+        observe(viewModel.hasNewDuels) {
+            binding.myDuelsButton.badgeOn = it
+        }
+        observe(viewModel.hasNewInvitations) {
+            binding.invitationListButton.badgeOn = it
         }
         observe(viewModel.coins) {
             binding.balanceButton.coinsCount = it?.toInt().orZero

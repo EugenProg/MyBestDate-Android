@@ -77,7 +77,9 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         }
         observe(viewModel.user) {
             binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-            binding.myDuelsButton.badgeOn = it?.new_duels.orZero > 0
+        }
+        observe(viewModel.hasNewDuels) {
+            binding.myDuelsButton.badgeOn = it
         }
         observe(viewModel.duelResults) {
             binding.resultView.isVisible = it?.isNotEmpty() == true

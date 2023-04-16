@@ -10,6 +10,9 @@ import com.bestDate.network.remote.UserRemoteData
 class InvitationPagingSource(private val remoteData: UserRemoteData,
                              private val type: InvitationFilter):
     PagingSource<Int, InvitationCard>() {
+
+    var hasNewInvitations: ((Boolean) -> Unit)? = null
+
     override fun getRefreshKey(state: PagingState<Int, InvitationCard>): Int = 0
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, InvitationCard> {
@@ -18,8 +21,12 @@ class InvitationPagingSource(private val remoteData: UserRemoteData,
             val nextPage = if (response?.meta?.current_page.orZero < response?.meta?.last_page.orZero) {
                 response?.meta?.current_page.orZero + 1
             } else null
+
+            val data = response?.data ?: mutableListOf()
+            if (type == InvitationFilter.NEW) hasNewInvitations?.invoke(response?.meta?.total.orZero > 0)
+
             LoadResult.Page(
-                data = response?.data ?: mutableListOf(),
+                data = data,
                 prevKey = null,
                 nextKey = nextPage
             )

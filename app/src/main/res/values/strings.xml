@@ -676,4 +676,5 @@
     <string name="men">Men</string>
     <string name="women">Women</string>
     <string name="all_gender">All</string>
+    <string name="the_image_is_out_of_frames">The image is out of bounds. Please correct the image</string>
 </resources>

@@ -11,11 +11,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DuelsViewModel @Inject constructor(
-    private val userUseCase: UserUseCase,
+    userUseCase: UserUseCase,
     private val duelUseCase: DuelsUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
     val coins = userUseCase.coinsCount
+    val hasNewDuels = userUseCase.hasNewDuels
     val duelImages = duelUseCase.duelImages
     val duelResults = duelUseCase.duelResults
     var gender: Gender

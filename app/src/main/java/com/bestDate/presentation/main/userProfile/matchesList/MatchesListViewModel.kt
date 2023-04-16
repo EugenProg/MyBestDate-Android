@@ -11,12 +11,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MatchesListViewModel @Inject constructor(
     matchesUseCase: MatchesListUseCase,
-    userUseCase: UserUseCase
+    private val userUseCase: UserUseCase
 ) : BaseViewModel() {
 
     var matchesList = matchesUseCase.matchesList.asLiveData()
         .cachedIn(viewModelScope)
 
     val userPhoto = userUseCase.userMainPhotoUrl
-    val user = userUseCase.getMyUser.asLiveData()
+
+    fun areMatchesViewed() {
+        userUseCase.hasNewMatches.postValue(false)
+    }
 }

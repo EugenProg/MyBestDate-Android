@@ -70,6 +70,7 @@ open class LikesListFragment : BaseVMFragment<FragmentLikesListBinding, LikesLis
 
         observe(viewModel.likesList) {
             adapter.submitData(lifecycle, it)
+            viewModel.likesAreViewed()
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false
