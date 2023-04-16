@@ -36,6 +36,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import okhttp3.ResponseBody
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
@@ -142,6 +143,17 @@ fun Uri?.getBitmap(context: Context): Bitmap? {
     return bitmap.copy(Bitmap.Config.ARGB_8888, true)
 }
 
+
+fun String?.getBitmap(context: Context): Bitmap? {
+    val file = this?.let { File(it) }
+    file?.let {
+        if (file.canRead()) {
+            return Uri.fromFile(it).getBitmap(context)
+        }
+    }
+    return null
+}
+
 fun Bitmap.scale(size: Double? = 2048.0): Bitmap {
     val readySize = size ?: 0.0
 
@@ -201,7 +213,7 @@ fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             if (viewHolder is ChatListAdapter.ChatListItemViewHolder) {
                 context.vibratePhone()
-                deleteAction.invoke(viewHolder.adapterPosition)
+                deleteAction.invoke(viewHolder.absoluteAdapterPosition)
             }
         }
 

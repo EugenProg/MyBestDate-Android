@@ -105,7 +105,7 @@ class ChatView @JvmOverloads constructor(
         if (user?.allow_chat == true || user?.isBot() == true) {
             adapter.meta = meta
             adapter.submitList(messageList) {
-                //binding.messagesListView.scrollToPosition(0)
+                binding.messagesListView.scrollToPosition(0)
             }
         }
         setVisibility()

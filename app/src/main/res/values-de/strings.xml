@@ -662,4 +662,5 @@
     <string name="men">Mann</string>
     <string name="women">Frau</string>
     <string name="all_gender">Alle</string>
+    <string name="the_image_is_out_of_frames">Das Bild ist nicht maßstabsgerecht. Bitte korrigieren Sie das Bild</string>
 </resources>
