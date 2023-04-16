@@ -662,4 +662,5 @@
     <string name="men">Чоловічий</string>
     <string name="women">Жіночий</string>
     <string name="all_gender">Все</string>
+    <string name="the_image_is_out_of_frames">Зображення виходить за межі. Будь ласка, виправте зображення</string>
 </resources>

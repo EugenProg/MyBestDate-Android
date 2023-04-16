@@ -60,6 +60,7 @@ open class MyDuelsFragment : BaseVMFragment<FragmentMyDuelsBinding, MyDuelsViewM
 
         observe(viewModel.myDuels) {
             adapter.submitData(lifecycle, it)
+            viewModel.areDuelsViewed()
         }
         observe(viewModel.errorLiveData) {
             binding.refreshView.isRefreshing = false

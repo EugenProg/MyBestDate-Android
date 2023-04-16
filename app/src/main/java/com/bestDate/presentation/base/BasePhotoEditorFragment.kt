@@ -57,8 +57,10 @@ abstract class BasePhotoEditorFragment :
     override fun onViewClickListener() {
         super.onViewClickListener()
         binding.saveButton.onSafeClick = {
-            binding.saveButton.toggleActionEnabled(true)
-            binding.photoEditor.crop()
+            if (!binding.photoEditor.isOffFrame()) {
+                binding.saveButton.toggleActionEnabled(true)
+                binding.photoEditor.crop()
+            } else showMessage(getString(R.string.the_image_is_out_of_frames))
         }
         binding.backButton.onClick = {
             editorAction.value = null
@@ -68,7 +70,7 @@ abstract class BasePhotoEditorFragment :
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()
-        binding.photoEditor.cropListener(success = successCrop())
+        binding.photoEditor.cropListener(success = successCrop(), failure = failureCrop())
 
         observe(imageLiveData) {
             with(binding) {
@@ -105,6 +107,12 @@ abstract class BasePhotoEditorFragment :
                     notCorrectSheet.show(childFragmentManager, notCorrectSheet.tag)
                 }
             }*/
+        }
+    }
+
+    private fun failureCrop(): ((Exception) -> Unit) {
+        return {
+            binding.saveButton.toggleActionEnabled(false)
         }
     }
 
