@@ -610,6 +610,7 @@
     <string name="result">Результат</string>
     <string name="duels_are_over">Дуэли закончились</string>
     <string name="you_voted_for_all_the_photos">Извините, вы проголосовали за все фотографии</string>
+    <string name="you_voted_for_all_the_photos_">Извините, вы проголосовали за все фотографии</string>
     <string name="but_you_can_also_go_to_the_top">Но вы пока можете посмотреть\nТоп-50</string>
     <string name="duels">Дуэль</string>
     <string name="you_have_no_guests_yet">У вас пока нет гостей</string>

@@ -137,6 +137,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshData(getString(R.string.app_locale))
+        if (isInChatList()) viewModel.refreshChatList()
     }
 
     override fun onPause() {
