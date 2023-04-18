@@ -1,5 +1,6 @@
 package com.bestDate.view.bottomSheet.imageSheet
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,23 +10,23 @@ import com.bestDate.databinding.ItemImageBinding
 import com.bestDate.presentation.base.BaseClickViewHolder
 import com.bumptech.glide.Glide
 
-class ImageSheetAdapter(private val imageClick: (String) -> Unit) :
-    ListAdapter<String, ImageSheetAdapter.ImageSheetViewHolder>(DiffCallback()) {
+class ImageSheetAdapter(private val imageClick: (Uri) -> Unit) :
+    ListAdapter<Uri, ImageSheetAdapter.ImageSheetViewHolder>(DiffCallback()) {
 
-    private class DiffCallback : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    private class DiffCallback : DiffUtil.ItemCallback<Uri>() {
+        override fun areItemsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: Uri, newItem: Uri): Boolean {
             return oldItem == newItem
         }
     }
 
     class ImageSheetViewHolder(override val binding: ItemImageBinding) :
-        BaseClickViewHolder<String, (String) -> Unit, ItemImageBinding>(binding) {
+        BaseClickViewHolder<Uri, (Uri) -> Unit, ItemImageBinding>(binding) {
 
-        override fun bindView(item: String, itemClick: (String) -> Unit) {
+        override fun bindView(item: Uri, itemClick: (Uri) -> Unit) {
             Glide.with(itemView.context).load(item).into(binding.image)
 
             itemView.setOnSaveClickListener { itemClick.invoke(item) }

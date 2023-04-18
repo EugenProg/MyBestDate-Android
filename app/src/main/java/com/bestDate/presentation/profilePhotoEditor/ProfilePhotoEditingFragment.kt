@@ -4,17 +4,21 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.model.Image
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
 import com.bestDate.presentation.base.BasePhotoEditorFragment
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.ImageLineAdapter
+import com.bestDate.presentation.main.userProfile.UserProfileFragmentDirections
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide
@@ -55,7 +59,8 @@ class ProfilePhotoEditingFragment :
         with(binding) {
             uploadButton.onClick = {
                 if (imageList.value?.size.orZero < 9) {
-                    imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                    if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+                    else imageListSheet.show(childFragmentManager, imageListSheet.tag)
                 } else {
                     showMessage(getString(R.string.you_can_upload_only_9_photo))
                 }
@@ -111,6 +116,20 @@ class ProfilePhotoEditingFragment :
                 imageList.value = it?.photos
                 it?.getMainPhoto()?.let { photo -> setMainImage(photo) }
             }
+        }
+    }
+
+    private fun showPhotoPicker() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            val image = Image(uri = it)
+            navController.navigate(
+                ProfilePhotoEditingFragmentDirections
+                    .actionProfilePhotoEditingFragmentToPhotoEditorFragment(image)
+            )
         }
     }
 
