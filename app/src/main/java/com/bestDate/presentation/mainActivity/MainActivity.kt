@@ -1,8 +1,12 @@
 package com.bestDate.presentation.mainActivity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
@@ -42,6 +46,10 @@ class MainActivity : AppCompatActivity() {
         setUpChatTypingListener()
         bottomNavView = binding.bottomNavigationView
 
+        if (!allPermissionsGranted()) {
+            pushPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
         observe(viewModel.loggedOut) {
             if (it) {
                 viewModel.clearUserData()
@@ -61,6 +69,14 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(it.first, it.second)
         }
     }
+
+    var pushPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { }
+
+    private fun allPermissionsGranted() =
+        ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
 
     private fun setUpPusherObserver() {
         observe(viewModel.newMessageLiveData) {
