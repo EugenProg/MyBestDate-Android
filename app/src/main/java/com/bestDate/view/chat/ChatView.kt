@@ -92,7 +92,7 @@ class ChatView @JvmOverloads constructor(
                 else ChatActions.values().toMutableList()
             }
             ChatItemType.USER_TEXT_MESSAGE,
-            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY)
+            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY, ChatActions.COPY)
             else -> mutableListOf()
         }
     }

@@ -678,4 +678,6 @@
     <string name="women">Women</string>
     <string name="all_gender">All</string>
     <string name="the_image_is_out_of_frames">The image is out of bounds. Please correct the image</string>
+    <string name="copy">Copy</string>
+    <string name="message_is_copied_to_clipboard">Message is copied to clipboard</string>
 </resources>

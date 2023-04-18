@@ -2,16 +2,20 @@ package com.bestDate.presentation.main.chats.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.Image
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.presentation.main.userProfile.UserProfileFragmentDirections
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
@@ -87,7 +91,8 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.addImageClick = {
-                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+                else imageListSheet.show(childFragmentManager, imageListSheet.tag)
             }
             chatView.typingEvent = {
                 viewModel.sendTypingEvent()
@@ -97,14 +102,18 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             }
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
-                val fragment = ChatAddImageFragment(user, it)
-                open(fragment, binding.container)
+                openImageEditor(it)
+            }
+        }
+    }
 
-                fragment.closeAction = {
-                    close(fragment, binding.container) {
-                        reDrawBars()
-                    }
-                }
+    private fun openImageEditor(image: Image) {
+        val fragment = ChatAddImageFragment(user, image)
+        open(fragment, binding.container)
+
+        fragment.closeAction = {
+            close(fragment, binding.container) {
+                reDrawBars()
             }
         }
     }
@@ -132,6 +141,10 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             }
             ChatActions.DELETE -> {
                 viewModel.deleteMessage(message?.id)
+            }
+            ChatActions.COPY -> {
+                message?.text?.copyToClipboard(requireContext())
+                showMessage(getString(R.string.message_is_copied_to_clipboard))
             }
         }
     }
@@ -175,6 +188,17 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
     override fun goBack() {
         viewModel.clearMessages()
         super.goBack()
+    }
+
+    private fun showPhotoPicker() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            val image = Image(uri = it)
+            openImageEditor(image)
+        }
     }
 
     private fun setUserInfo() {

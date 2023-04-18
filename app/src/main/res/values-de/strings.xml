@@ -620,7 +620,7 @@
     <string name="picture">Bild</string>
     <string name="typing">tippen…</string>
     <string name="go_to">Einladen</string>
-    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Dieser Nutzer sehnt sich nur nach echten Treffen\nund ist nicht bereit, Zeit für\nlange Korrespondenz zu verschwenden</string>
+    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Dieser Nutzer sehnt sich nur nach echten Treffen und ist nicht bereit, Zeit für lange Korrespondenz zu verschwenden</string>
     <string name="chat_closed">CHAT GESCHLOSSEN!</string>
     <string name="you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form">Sie können jederzeit eine\nEinladung in Form einer Karte verschicken,\nin einer bequemeren Form</string>
     <string name="this_user_agrees_to_accept_only_cards">Dieser Benutzer akzeptiert\nnur Karten</string>
@@ -664,4 +664,6 @@
     <string name="women">Frau</string>
     <string name="all_gender">Alle</string>
     <string name="the_image_is_out_of_frames">Das Bild ist nicht maßstabsgerecht. Bitte korrigieren Sie das Bild</string>
+    <string name="copy">Kopieren</string>
+    <string name="message_is_copied_to_clipboard">Nachricht in Zwischenablage kopiert</string>
 </resources>
