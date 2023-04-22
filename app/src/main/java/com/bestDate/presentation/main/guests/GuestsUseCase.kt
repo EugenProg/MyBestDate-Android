@@ -65,6 +65,7 @@ class GuestsUseCase @Inject constructor(
             newList.size > 1 && oldList.size == 1 -> {
                 guestsList.postValue(newList)
             }
+            else -> guestsList.postValue(mutableListOf())
         }
     }
 

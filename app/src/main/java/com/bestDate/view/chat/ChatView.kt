@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.*
 import com.bestDate.databinding.ViewChatBinding
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
@@ -20,6 +21,7 @@ class ChatView @JvmOverloads constructor(
     private var user: ShortUserData? = null
     private var editMode: Boolean = false
     private var adapter: ChatAdapter = ChatAdapter()
+    private var scrollToEditedId: Int? = null
 
     var showInvitationClick: (() -> Unit)? = null
     var sendClick: ((text: String, parentId: Int?) -> Unit)? = null
@@ -34,7 +36,10 @@ class ChatView @JvmOverloads constructor(
     init {
         with(binding) {
             bottomPanelView.sendClick = {
-                if (editMode) editClick?.invoke(it, parentMessage?.id)
+                if (editMode) {
+                    scrollToEditedId = parentMessage?.id
+                    editClick?.invoke(it, parentMessage?.id)
+                }
                 else sendClick?.invoke(it, parentMessage?.id)
             }
             bottomPanelView.translateClick = {
@@ -87,7 +92,7 @@ class ChatView @JvmOverloads constructor(
                 else ChatActions.values().toMutableList()
             }
             ChatItemType.USER_TEXT_MESSAGE,
-            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY)
+            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY, ChatActions.COPY)
             else -> mutableListOf()
         }
     }
@@ -101,11 +106,19 @@ class ChatView @JvmOverloads constructor(
     }
 
     fun setMessages(messages: MutableList<Message>?, meta: Meta) {
+        val scroll = adapter.meta?.current_page == meta.current_page
         messageList = messages
         if (user?.allow_chat == true || user?.isBot() == true) {
             adapter.meta = meta
             adapter.submitList(messageList) {
-                binding.messagesListView.scrollToPosition(0)
+                if (scroll) {
+                    var position = 0
+                    if (scrollToEditedId != null) {
+                        position = messages?.indexOfFirst { it.id == scrollToEditedId }.orZero
+                        scrollToEditedId = null
+                    }
+                    binding.messagesListView.scrollToPosition(position)
+                }
             }
         }
         setVisibility()

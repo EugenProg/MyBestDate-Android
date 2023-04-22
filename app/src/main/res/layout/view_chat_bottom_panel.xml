@@ -10,6 +10,7 @@
             android:id="@+id/openBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +181,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/closedBox"
             android:layout_width="match_parent"
-            android:layout_height="161dp"
+            android:layout_height="wrap_content"
+            android:minHeight="161dp"
             android:background="@drawable/chat_bottom_panel_background"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -217,9 +219,9 @@
                 android:text="@string/chat_closed"
                 android:textAllCaps="true"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/textView25"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="@+id/textView25"
-                app:layout_constraintHorizontal_bias="0.55"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView25" />
 
             <TextView
@@ -235,7 +237,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView26" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

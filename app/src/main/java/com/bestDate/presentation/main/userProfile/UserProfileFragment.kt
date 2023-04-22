@@ -2,9 +2,12 @@ package com.bestDate.presentation.main.userProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.model.Image
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.utils.DeeplinkCreator
 import com.bestDate.databinding.FragmentUserProfileBinding
@@ -78,7 +81,8 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
-                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+                else imageListSheet.show(childFragmentManager, imageListSheet.tag)
             } else {
                 showMessage(getString(R.string.you_can_upload_only_9_photo))
             }
@@ -116,6 +120,17 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             }
 
             sheet.show(childFragmentManager)
+        }
+    }
+
+    private fun showPhotoPicker() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            val image = Image(uri = it)
+            navController.navigate(UserProfileFragmentDirections.actionProfileToPhotoEditor(image))
         }
     }
 

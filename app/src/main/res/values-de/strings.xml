@@ -4,7 +4,7 @@
     <string name="dating_without_restrictions">Dating ohne Einschränkungen</string>
     <string name="communicate_and_get_to_know_people_from_all_over_the_world">Kommunizieren Sie und lernen Sie Menschen aus der ganzen Welt kennen, und ein praktischer automatischer Sprachübersetzer wird Ihnen dabei helfen.</string>
     <string name="no_loneliness_just_reality">Keine Einsamkeit, nur Realität</string>
-    <string name="it_s_very_simple_i_signed_off_threw_an_invitation_card_and_got_a_meeting_of_my_destiny">Es ist ganz einfach, man schreibt sich ab, wirft eine Einladungskarte ein und bekommt ein Treffen seines Schicksals.</string>
+    <string name="it_s_very_simple_i_signed_off_threw_an_invitation_card_and_got_a_meeting_of_my_destiny">Es ist ganz einfach, man schreibt sich an, wirft eine Einladungskarte ein und bekommt ein Treffen seines Schicksals.</string>
     <string name="back">Zurück</string>
     <string name="hello_login_now">Hallo!\nMelden Sie sich jetzt an.</string>
     <string name="welcome_to_our_kind_and_cozy_home">Willkommen in unserem freundlichen und gemütlichen Haus, wo Sie immer willkommen sind und Sie sind der wichtigste handelnde Person</string>
@@ -103,7 +103,7 @@
     <!--ANSWERS-->
     <string name="married">Verheiratet</string>
     <string name="divorced">Geschieden</string>
-    <string name="single">Einzeln</string>
+    <string name="single">Ledig</string>
     <string name="it_s_complicated">Es ist kompliziert</string>
     <string name="in_love">Verliebt</string>
     <string name="engaged">Engagiert</string>
@@ -115,7 +115,7 @@
     <string name="four">4</string>
     <string name="five_or_more">5 oder mehr</string>
     <string name="student">Studenten</string>
-    <string name="working">Arbeiten</string>
+    <string name="working">Angestellter</string>
     <string name="unemployed">Arbeitslos</string>
     <string name="businessman">Geschäftsmann</string>
     <string name="looking_for_my_self">Suche nach mir selbst</string>
@@ -482,7 +482,7 @@
     <string name="my_duels">Meine Duelle</string>
     <string name="likes">Likes</string>
     <string name="cards">Karten</string>
-    <string name="questionnaire">Fragebogen</string>
+    <string name="questionnaire">Profilfragen</string>
     <string name="personal_data">Persönliche Daten</string>
     <string name="settings">Einstellungen</string>
 
@@ -557,9 +557,9 @@
     <string name="you_have_no_answered_invitations">Sie haben leider noch keine Einladungen gekriegt</string>
     <string name="you_have_no_invitations_sent">Sie haben leider keine Einladungen verschickt</string>
     <string name="invitations">Einladungen</string>
-    <string name="yes_i_agree">Ja, ich bin einverstanden</string>
+    <string name="yes_i_agree">Ja, ich bin dafür</string>
     <string name="yes_i_will_but_next_time">Ja, ich will, aber das nächste Mal</string>
-    <string name="thanks_but_i_cant_yet">Danke, aber ich kann noch nicht</string>
+    <string name="thanks_but_i_cant_yet">Danke, aber leider keine Zeit</string>
     <string name="no">Nein</string>
     <string name="you_have_received_an_invitation_please_give_an_answer">Sie haben eine Einladung erhalten,\nbitte geben Sie eine Antwort</string>
     <string name="answer_choice">Antwort wählen</string>
@@ -609,8 +609,9 @@
     <string name="get_started">Los geht\'s!</string>
     <string name="result">Ergebnis</string>
     <string name="duels_are_over">Duelle sind vorbei</string>
-    <string name="you_voted_for_all_the_photos">Tut mir leid, dass Sie für alle Fotos gestimmt haben</string>
-    <string name="but_you_can_also_go_to_the_top">Aber Sie können auch zu den\nTop 50 gehen</string>
+    <string name="you_voted_for_all_the_photos">Sie haben für alle Fotos gestimmt, besuchen Sie es später</string>
+    <string name="you_voted_for_all_the_photos_">Sie haben für alle Fotos gestimmt, besuchen Sie uns später noch einmal</string>
+    <string name="but_you_can_also_go_to_the_top">Sie können auch gerne unsere\nTop 50 anschauen</string>
     <string name="duels">Duell</string>
     <string name="you_have_no_guests_yet">Sie haben noch keine Gäste</string>
     <string name="bd_coin">BD coin</string>
@@ -619,7 +620,7 @@
     <string name="picture">Bild</string>
     <string name="typing">tippen…</string>
     <string name="go_to">Einladen</string>
-    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Dieser Nutzer sehnt sich nur nach echten Treffen\nund ist nicht bereit, Zeit für\nlange Korrespondenz zu verschwenden</string>
+    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Dieser Nutzer sehnt sich nur nach echten Treffen und ist nicht bereit, Zeit für lange Korrespondenz zu verschwenden</string>
     <string name="chat_closed">CHAT GESCHLOSSEN!</string>
     <string name="you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form">Sie können jederzeit eine\nEinladung in Form einer Karte verschicken,\nin einer bequemeren Form</string>
     <string name="this_user_agrees_to_accept_only_cards">Dieser Benutzer akzeptiert\nnur Karten</string>
@@ -663,4 +664,6 @@
     <string name="women">Frau</string>
     <string name="all_gender">Alle</string>
     <string name="the_image_is_out_of_frames">Das Bild ist nicht maßstabsgerecht. Bitte korrigieren Sie das Bild</string>
+    <string name="copy">Kopieren</string>
+    <string name="message_is_copied_to_clipboard">Nachricht in Zwischenablage kopiert</string>
 </resources>
