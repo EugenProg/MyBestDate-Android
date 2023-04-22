@@ -108,14 +108,13 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ProgressBar
+                <com.bestDate.view.LoadingDotsView
                     android:id="@+id/progress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="visible"
-                    android:elevation="5dp"
-                    android:indeterminateTint="@color/bg_main"/>
+                    android:elevation="5dp"/>
             </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
 
             <TextView

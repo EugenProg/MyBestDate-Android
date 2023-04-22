@@ -9,16 +9,17 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:itemCount="4"
+        tools:itemCount="0"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_top_profiles_element"
         tools:spanCount="2" />
 
-    <ProgressBar
+    <com.bestDate.view.LoadingDotsView
         android:id="@+id/progress"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/buttons_box"
         android:layout_marginTop="32dp"
         android:indeterminateTint="@color/white" />
 </FrameLayout>
