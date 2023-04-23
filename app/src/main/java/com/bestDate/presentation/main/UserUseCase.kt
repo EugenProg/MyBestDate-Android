@@ -17,6 +17,7 @@ import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.duels.DuelsUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
+import com.bestDate.presentation.main.matches.MatchUseCase
 import com.bestDate.presentation.main.search.FilterType
 import com.bestDate.presentation.main.search.GenderFilter
 import com.bestDate.presentation.main.search.SearchUseCase
@@ -37,6 +38,7 @@ class UserUseCase @Inject constructor(
     private val chatListUseCase: ChatListUseCase,
     private val authUseCase: AuthUseCase,
     private val searchUseCase: SearchUseCase,
+    private val matchUseCase: MatchUseCase,
     private val pusherCenter: PusherCenter,
     private val invitationUseCase: InvitationListUseCase,
     private val preferencesUtils: PreferencesUtils
@@ -85,6 +87,7 @@ class UserUseCase @Inject constructor(
         chatListUseCase.clearData()
         authUseCase.clearData()
         searchUseCase.clearPagingData()
+        matchUseCase.clearData()
         preferencesUtils.saveString(Preferences.ACCESS_TOKEN, "")
         preferencesUtils.saveString(Preferences.REFRESH_TOKEN, "")
         preferencesUtils.saveLong(Preferences.ARG_EXPIRES_AT, 0L)

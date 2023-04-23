@@ -31,7 +31,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
         loaderDialog = LoaderDialog(requireActivity())
         setUpToolbar()
         setUpMatchesView()
-        viewModel.getMatches()
+        if (viewModel.listIsEmpty()) viewModel.getMatches()
     }
 
     private fun setUpToolbar() {
@@ -59,8 +59,9 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
         }
         matchView.nextUser = {
             viewModel.nextUser()
-            binding.noDataView.noData = it
-            matchView.isVisible = !it
+            val listIsEmpty = it && viewModel.listIsEmpty()
+            binding.noDataView.noData = listIsEmpty
+            matchView.isVisible = !listIsEmpty
         }
         matchView.openQuestionnaireClick = {
             loaderDialog.startLoading()

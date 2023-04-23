@@ -6,19 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/bg_main">
 
-    <FrameLayout
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageBackThumb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
             android:id="@+id/imageBack"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-    </FrameLayout>
+            android:layout_height="match_parent" />
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
 
     <View
         android:layout_width="match_parent"

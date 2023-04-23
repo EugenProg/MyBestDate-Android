@@ -197,6 +197,10 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             .into(binding.avatar)
 
         Glide.with(requireContext())
+            .load(image.thumb_url)
+            .into(binding.imageBackThumb)
+
+        Glide.with(requireContext())
             .load(image.full_url)
             .into(binding.imageBack)
     }
