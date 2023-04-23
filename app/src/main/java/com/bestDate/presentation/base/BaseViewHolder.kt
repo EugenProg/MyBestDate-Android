@@ -73,3 +73,6 @@ abstract class InvitationBaseViewHolder<VB: ViewBinding>(
 
 abstract class QuestionnaireBaseViewHolder<VB : ViewBinding>(override val binding: VB) :
     BaseClickViewHolder<QuestionnaireQuestion, ((QuestionnaireQuestion) -> Unit)?, VB>(binding)
+
+abstract class ImageLineBaseViewHolder<VB: ViewBinding, IC>(override val binding: VB) :
+        BaseClickViewHolder<ProfileImage, IC, VB>(binding)

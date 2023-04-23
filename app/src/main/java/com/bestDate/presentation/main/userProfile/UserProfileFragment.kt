@@ -183,7 +183,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     private fun getImageList(images: MutableList<ProfileImage>?): MutableList<ProfileImage> {
         val list = mutableListOf<ProfileImage>()
         list.addAll(images ?: mutableListOf())
-        list.add(ProfileImage(id = -1))
+        list.add(ProfileImage(viewType = ProfileImage.ViewType.ADD))
         return list
     }
 

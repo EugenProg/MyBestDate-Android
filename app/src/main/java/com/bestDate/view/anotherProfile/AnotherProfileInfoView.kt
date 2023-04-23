@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bestDate.data.extension.toPx
+import com.bestDate.data.extension.hideWithAlphaAnimation
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.model.ShortUserData
+import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.ViewAnotherProfileInfoBinding
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.main.userProfile.ImageLineAdapter
@@ -29,7 +30,7 @@ class AnotherProfileInfoView @JvmOverloads constructor(
             openQuestionnaire?.invoke()
         }
 
-        val height = (resources.displayMetrics.widthPixels - 8.toPx()) / 3
+        val height = resources.displayMetrics.widthPixels / 3
         adapter = ImageLineAdapter(height, false)
         with(binding) {
             imageListView.layoutManager =
@@ -58,6 +59,8 @@ class AnotherProfileInfoView @JvmOverloads constructor(
         val isBlocked = user?.blocked_me != false
         binding.root.isVisible = !isBlocked
         if (!isBlocked) {
+            binding.imageListView.isVisible = true
+            binding.imageLinePreview.hideWithAlphaAnimation()
             with(binding.userInfoView) {
                 adapter.submitList(user?.photos)
                 name.text = user?.name
