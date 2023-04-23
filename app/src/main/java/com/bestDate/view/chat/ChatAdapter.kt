@@ -172,8 +172,7 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
     class UserTextMessageViewHolder(
         override val binding: ItemUserTextMessageBinding,
         itemClick: ((Message) -> Unit)?
-    ) :
-        ChatBaseViewHolder<ItemUserTextMessageBinding>(binding, itemClick) {
+    ) : ChatBaseViewHolder<ItemUserTextMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
             with(binding) {
@@ -203,8 +202,7 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
         itemClick: ((Message) -> Unit)?,
         private val imageOpen: ((ChatImage?) -> Unit)?,
         private val itemLongClick: ((Message) -> Unit)?
-    ) :
-        ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
+    ) : ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
             with(binding) {

@@ -335,7 +335,9 @@ data class Message(
     var created_at: String? = null,
     var parentMessage: ParentMessage? = null,
     var isLastMessage: Boolean? = null,
-    var viewType: ChatItemType? = null
+    var viewType: ChatItemType? = null,
+    var translatedText: String? = null,
+    var translateStatus: TranslateStatus = TranslateStatus.UN_ACTIVE
 ) {
     fun transform(type: ChatItemType, parent: ParentMessage?, isLast: Boolean?): Message {
         return Message(
@@ -351,6 +353,10 @@ data class Message(
             dateBetween == 1 -> context.getString(R.string.yesterday)
             else -> created_at.toShortDate()
         }
+    }
+
+    enum class TranslateStatus {
+        UN_ACTIVE, LOADING, TRANSLATED
     }
 }
 
