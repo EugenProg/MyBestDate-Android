@@ -32,6 +32,8 @@ class MatchesViewModel @Inject constructor(
         }
     }
 
+    fun listIsEmpty(): Boolean = matchUseCase.fullList.isEmpty()
+
     fun matchAction(userId: Int?) {
         doAsync {
             matchUseCase.matchAction(userId.orZero)

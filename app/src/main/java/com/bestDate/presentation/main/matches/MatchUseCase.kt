@@ -17,11 +17,15 @@ class MatchUseCase @Inject constructor(
     val matchesList: MutableLiveData<MutableList<ShortUserData>> = MutableLiveData(mutableListOf())
     val matchAction: MutableLiveData<Match?> = MutableLiveData()
 
+    var fullList: MutableList<ShortUserData> = mutableListOf()
+    private val pageSize: Int = 10
+
     suspend fun getUsersForMatch() {
         val response = remoteData.getUsersForMatch()
         if (response.isSuccessful) {
             response.body()?.data?.let {
-                matchesList.postValue(it)
+                fullList = it
+                setCurrentPage()
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
@@ -35,11 +39,32 @@ class MatchUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
+    private fun setCurrentPage() {
+        val list: MutableList<ShortUserData> = mutableListOf()
+        val endIndex = if (pageSize > fullList.size) fullList.lastIndex else pageSize
+
+        for (index in 0..endIndex) {
+            list.add(fullList[index])
+        }
+        matchesList.postValue(list)
+
+
+        fullList = if (endIndex >= fullList.lastIndex) mutableListOf()
+                    else fullList.subList(endIndex + 1, fullList.lastIndex)
+    }
+
     fun nextUser() {
         matchesList.value?.removeLast()
+
+        if (fullList.isNotEmpty() && matchesList.value.isNullOrEmpty()) setCurrentPage()
     }
 
     fun clearMatch() {
         matchAction.value = null
+    }
+
+    fun clearData() {
+        fullList = mutableListOf()
+        matchesList.postValue(mutableListOf())
     }
 }

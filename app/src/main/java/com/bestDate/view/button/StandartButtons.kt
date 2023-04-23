@@ -10,8 +10,7 @@ class WhiteButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): BaseButton(context, attrs, defStyleAttr,
     buttonColor = R.color.white,
-    textColor = R.color.bg_main,
-    progressColor = R.color.bg_main) {
+    textColor = R.color.bg_main) {
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
@@ -26,8 +25,7 @@ class BlackButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): BaseButton(context, attrs, defStyleAttr,
     buttonColor = R.color.bg_main,
-    textColor = R.color.white,
-    progressColor = R.color.white_90) {
+    textColor = R.color.white) {
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
@@ -42,8 +40,7 @@ class BlueButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): BaseButton(context, attrs, defStyleAttr,
     buttonColor = R.color.bg_light_blue,
-    textColor = R.color.bg_main,
-    progressColor = R.color.white) {
+    textColor = R.color.bg_main) {
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)
@@ -58,8 +55,7 @@ class PinkButton @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ): BaseButton(context, attrs, defStyleAttr,
     buttonColor = R.color.bg_pink,
-    textColor = R.color.bg_main,
-    progressColor = R.color.bg_main) {
+    textColor = R.color.bg_main) {
 
     override fun setEnabled(enabled: Boolean) {
         super.setEnabled(enabled)

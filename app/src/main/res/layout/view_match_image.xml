@@ -10,13 +10,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:cardCornerRadius="33dp"
-            app:cardElevation="1dp">
+            app:cardElevation="1dp"
+            app:cardBackgroundColor="@color/bg_main">
+
+            <com.bestDate.view.LoadingDotsView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <ImageView
+                android:id="@+id/avatar_thumb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0.5dp"/>
 
             <ImageView
                 android:id="@+id/avatar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg_main"/>
+                android:layout_height="match_parent"/>
         </androidx.cardview.widget.CardView>
 
         <ImageView

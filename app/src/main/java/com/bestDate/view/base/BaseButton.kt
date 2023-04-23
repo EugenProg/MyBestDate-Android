@@ -14,7 +14,7 @@ import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.databinding.ViewButtonBinding
 
 abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0,
-    private val buttonColor: Int, private val textColor: Int, private val progressColor: Int):
+    private val buttonColor: Int, private val textColor: Int):
     ConstraintLayout(context, attrs, defStyleAttr) {
 
     protected var binding: ViewButtonBinding = ViewButtonBinding
@@ -39,11 +39,6 @@ abstract class BaseButton (context: Context, attrs: AttributeSet? = null, defSty
     private fun setButtonColor(context: Context) {
         binding.button.setBackgroundColor(ContextCompat.getColor(context, buttonColor))
         binding.button.setTextColor(ContextCompat.getColor(context, textColor))
-        binding.progress.indeterminateDrawable.colorFilter =
-            PorterDuffColorFilter(
-                ContextCompat.getColor(context, progressColor),
-                PorterDuff.Mode.MULTIPLY
-            )
     }
 
     var title: String

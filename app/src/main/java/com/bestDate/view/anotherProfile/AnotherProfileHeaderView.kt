@@ -42,7 +42,7 @@ class AnotherProfileHeaderView @JvmOverloads constructor(
     fun getTopBoxView(): View = binding.topBox
 
     fun setUserInfo(user: ShortUserData?) {
-        Glide.with(context).load(user?.getMainPhoto()?.full_url).into(binding.avatar)
+        Glide.with(context).load(user?.getMainPhoto()?.thumb_url).into(binding.avatarThump)
         binding.online.isVisible = user?.is_online == true
         binding.distance.text =
             context.getString(R.string.distance_unit, user?.distance?.roundToInt().orZero)

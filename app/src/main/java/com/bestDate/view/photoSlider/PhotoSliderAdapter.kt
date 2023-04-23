@@ -31,6 +31,10 @@ class PhotoSliderAdapter:
 
         override fun bind(item: ProfileImage?) {
             Glide.with(itemView.context)
+                .load(item?.thumb_url)
+                .into(binding.photo)
+
+            Glide.with(itemView.context)
                 .load(item?.full_url)
                 .into(binding.photo)
 

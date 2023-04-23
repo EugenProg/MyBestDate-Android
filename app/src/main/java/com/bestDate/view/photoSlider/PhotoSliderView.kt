@@ -3,13 +3,13 @@ package com.bestDate.view.photoSlider
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.bestDate.R
 import com.bestDate.data.extension.onPageChanged
 import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.setHeight
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.ViewPhotoSliderBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -30,7 +30,6 @@ class PhotoSliderView @JvmOverloads constructor(
 
     init {
         with(binding) {
-            pager.setHeight(resources.displayMetrics.widthPixels)
             pager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             pager.offscreenPageLimit = 1
             pager.adapter = adapter
@@ -70,10 +69,10 @@ class PhotoSliderView @JvmOverloads constructor(
         position = selectPosition
         topPositionVisibility = showPosition
         adapter.submitList(photoList) {
-            postDelayed({
-                binding.pager.currentItem = selectPosition
-                setPhotoSettings(selectPosition)
-            }, 100)
+            binding.pager.setCurrentItem(selectPosition, false)
+            setPhotoSettings(selectPosition)
+            binding.tabLayout.visibility = if (photoList?.size.orZero < 2) View.INVISIBLE
+                                            else View.VISIBLE
         }
     }
 }

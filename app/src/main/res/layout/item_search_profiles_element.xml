@@ -46,7 +46,7 @@
                     android:maxLines="1"
                     android:textColor="@color/white"
                     android:textSize="14sp"
-                    tools:text="Alice Lebedeva Pavlovna Lalalalalallalaallaallalalalalalallalalalalallala" />
+                    tools:text="Alice Lebedeva Pavlovna" />
 
                 <com.bestDate.view.verification.VerifyView
                     android:id="@+id/verifyView"
@@ -55,9 +55,7 @@
                     android:layout_marginStart="7dp" />
 
             </TableRow>
-
         </TableLayout>
-
 
         <TextView
             android:id="@+id/locationTextView"
@@ -104,18 +102,22 @@
     <com.bestDate.view.squareFrameLayout.SquareFrameLayout
         android:id="@+id/avatarView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.bestDate.view.LoadingDotsView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
         <ImageView
             android:id="@+id/profileImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="2dp"
-            android:background="@drawable/bg_light_stroke"
-            android:src="@drawable/bg_pink_square"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/bg_light_stroke" />
     </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
 
     <View

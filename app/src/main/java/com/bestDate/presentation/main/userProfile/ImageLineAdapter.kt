@@ -5,24 +5,22 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bestDate.R
-import com.bestDate.presentation.base.BaseClickViewHolder
-import com.bestDate.data.extension.setHeight
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.setWidth
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.databinding.ItemAddImageBinding
 import com.bestDate.databinding.ItemImageListBinding
+import com.bestDate.databinding.ItemImagePreviewBinding
+import com.bestDate.presentation.base.ImageLineBaseViewHolder
 import com.bumptech.glide.Glide
 
-class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean):
-    ListAdapter<ProfileImage, ViewHolder>(ImageListDiffUtils()) {
+class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean) :
+    ListAdapter<ProfileImage, ImageLineBaseViewHolder<*, *>>(ImageListDiffUtils()) {
 
     var imageClick: ((ProfileImage) -> Unit)? = null
     var addClick: (() -> Unit)? = null
 
-    class ImageListDiffUtils: DiffUtil.ItemCallback<ProfileImage>() {
+    class ImageListDiffUtils : DiffUtil.ItemCallback<ProfileImage>() {
         override fun areItemsTheSame(oldItem: ProfileImage, newItem: ProfileImage): Boolean {
             return oldItem.id == newItem.id
         }
@@ -32,13 +30,13 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean):
         }
     }
 
-    class ImageListViewHolder(override val binding: ItemImageListBinding,
-                              private val viewHeight: Int, private val showTop: Boolean):
-        BaseClickViewHolder<ProfileImage, ((ProfileImage) -> Unit)?, ItemImageListBinding>(binding) {
+    class ImageListViewHolder(
+        override val binding: ItemImageListBinding,
+        private val viewHeight: Int, private val showTop: Boolean
+    ) : ImageLineBaseViewHolder<ItemImageListBinding, ((ProfileImage) -> Unit)?>(binding) {
 
         override fun bindView(item: ProfileImage, itemClick: ((ProfileImage) -> Unit)?) {
             itemView.apply {
-                itemView.setHeight(viewHeight)
                 itemView.setWidth(viewHeight)
                 Glide.with(itemView.context)
                     .load(item.thumb_url)
@@ -51,38 +49,59 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean):
         }
     }
 
-    class AddImageViewHolder(override val binding: ItemAddImageBinding, private val viewHeight: Int):
-        BaseClickViewHolder<ProfileImage, (() -> Unit)?, ItemAddImageBinding>(binding) {
+    class AddImageViewHolder(
+        override val binding: ItemAddImageBinding,
+        private val viewHeight: Int
+    ) : ImageLineBaseViewHolder<ItemAddImageBinding, (() -> Unit)?>(binding) {
         override fun bindView(item: ProfileImage, itemClick: (() -> Unit)?) {
             itemView.apply {
-                itemView.setHeight(viewHeight)
                 itemView.setWidth(viewHeight)
                 setOnSaveClickListener { itemClick?.invoke() }
             }
         }
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return if (getItem(position).id == -1) R.layout.item_add_image
-        else R.layout.item_image_list
+    class ImagePreviewHolder(override val binding: ItemImagePreviewBinding,
+                             private val viewHeight: Int) :
+        ImageLineBaseViewHolder<ItemImagePreviewBinding, (() -> Unit)?>(binding) {
+        override fun bindView(item: ProfileImage, itemClick: (() -> Unit)?) {
+            itemView.setWidth(viewHeight)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return if (viewType == R.layout.item_add_image) {
-            AddImageViewHolder(ItemAddImageBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false),
-                viewHeight
+    override fun getItemViewType(position: Int): Int {
+        return getItem(position).viewType.ordinal
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ImageLineBaseViewHolder<*, *> {
+        return when (viewType) {
+            ProfileImage.ViewType.ADD.ordinal -> AddImageViewHolder(
+                ItemAddImageBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ), viewHeight
             )
-        } else {
-            ImageListViewHolder(ItemImageListBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false),
+            ProfileImage.ViewType.PREVIEW.ordinal -> ImagePreviewHolder(
+                ItemImagePreviewBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ), viewHeight
+            )
+            else -> ImageListViewHolder(
+                ItemImageListBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                ),
                 viewHeight, showTop
             )
         }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (holder is AddImageViewHolder) holder.bind(getItem(position), addClick)
-        if (holder is ImageListViewHolder) holder.bind(getItem(position), imageClick)
+    override fun onBindViewHolder(holder: ImageLineBaseViewHolder<*, *>, position: Int) {
+        when (holder) {
+            is AddImageViewHolder -> holder.bind(getItem(position), addClick)
+            is ImageListViewHolder -> holder.bind(getItem(position), imageClick)
+            is ImagePreviewHolder -> holder.bind(getItem(position))
+        }
     }
 }

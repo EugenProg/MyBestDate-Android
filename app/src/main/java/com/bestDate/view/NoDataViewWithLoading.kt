@@ -20,7 +20,7 @@ class NoDataViewWithLoading @JvmOverloads constructor(
         setAttrs(attrs, R.styleable.NoDataViewWithLoading) {
             binding.title.text = it.getString(R.styleable.NoDataViewWithLoading_no_data_text)
             val showLoader = it.getBoolean(R.styleable.ToolbarView_toolbar_action_visible, true)
-            binding.loader.isVisible = showLoader
+            binding.loaderAnim.isVisible = showLoader
             binding.title.isVisible = !showLoader
         }
     }
@@ -37,7 +37,7 @@ class NoDataViewWithLoading @JvmOverloads constructor(
 
     fun toggleLoading(show: Boolean) {
         binding.root.isVisible = show || noData
-        binding.loader.isVisible = show
+        binding.loaderAnim.isVisible = show
         binding.title.isVisible = !show
     }
 }

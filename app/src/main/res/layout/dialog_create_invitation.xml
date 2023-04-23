@@ -92,13 +92,12 @@
                 tools:itemCount="6"
                 tools:listitem="@layout/item_card_invitation" />
 
-            <ProgressBar
+            <com.bestDate.view.LoadingDotsView
                 android:id="@+id/progress"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="invisible"
-                android:indeterminateTint="@color/white" />
+                android:visibility="invisible" />
         </FrameLayout>
     </FrameLayout>
 </FrameLayout>

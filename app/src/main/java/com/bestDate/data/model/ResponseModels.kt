@@ -41,16 +41,21 @@ data class ProfileImage(
     var top_place: Int? = null,
     var liked: Boolean? = null,
     var likes: Int? = null,
-    var created_at: String? = null
+    var created_at: String? = null,
+    var viewType: ViewType = ViewType.PHOTO
 ) : Parcelable {
     fun copy(): ProfileImage {
-        return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes)
+        return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes, viewType = viewType)
     }
 
     fun getDefaultPhoto() = ProfileImage(
         full_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg",
         thumb_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg"
     )
+
+    enum class ViewType {
+        PHOTO, ADD, PREVIEW
+    }
 }
 
 data class UserDataResponse(
