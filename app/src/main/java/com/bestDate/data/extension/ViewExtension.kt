@@ -22,6 +22,12 @@ fun View.setMarginTop(marginTop: Int) {
     this.layoutParams = menuLayoutParams
 }
 
+fun View.setMargin(start: Int = 0, top: Int = 0, end: Int = 0, bottom: Int = 0) {
+    val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+    menuLayoutParams.setMargins(start, top, end, bottom)
+    this.layoutParams = menuLayoutParams
+}
+
 fun View.animateError() {
     this.startAnimation(
         AnimationUtils.loadAnimation(context, R.anim.show_shake)
