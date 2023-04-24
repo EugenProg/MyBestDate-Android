@@ -88,6 +88,7 @@ class ChatListUseCase @Inject constructor(
     fun clearData() {
         chatList.postValue(mutableListOf())
         hasNewChats.postValue(false)
+        currentList = null
     }
 
     fun setTypingEvent(senderId: Int?, isOn: Boolean) {

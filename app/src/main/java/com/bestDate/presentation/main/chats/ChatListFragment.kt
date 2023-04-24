@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.chats
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
@@ -46,6 +47,7 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
                 }
             }
         }
+        binding.loader.isVisible = viewModel.chatList.value.isNullOrEmpty()
         viewModel.refreshChatList()
     }
 
@@ -76,6 +78,7 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
             adapter.submitList(it) {
                 adapter.meta = viewModel.meta
                 loader.stopLoading()
+                binding.loader.isVisible = false
             }
         }
         observe(viewModel.deleteLiveData) {

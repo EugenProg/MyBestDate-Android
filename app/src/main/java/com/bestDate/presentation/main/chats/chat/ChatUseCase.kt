@@ -152,6 +152,7 @@ class ChatUseCase @Inject constructor(
     fun clearChatData() {
         messages.value = null
         currentUserId = null
+        myId = null
     }
 
     private fun addNewMessage(message: Message): MutableList<Message> {
