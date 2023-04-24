@@ -337,12 +337,12 @@ data class Message(
     var isLastMessage: Boolean? = null,
     var viewType: ChatItemType? = null,
     var translatedText: String? = null,
-    var translateStatus: TranslateStatus = TranslateStatus.UN_ACTIVE
+    var translateStatus: TranslateStatus? = null
 ) {
     fun transform(type: ChatItemType, parent: ParentMessage?, isLast: Boolean?): Message {
         return Message(
             id, sender_id, recipient_id, parent_id, text, image, read_at, created_at,
-            parent, isLast, type
+            parent, isLast, type, translatedText, translateStatus
         )
     }
 
@@ -352,6 +352,14 @@ data class Message(
             created_at.isToday() -> context.getString(R.string.today)
             dateBetween == 1 -> context.getString(R.string.yesterday)
             else -> created_at.toShortDate()
+        }
+    }
+
+    fun getStatus(): TranslateStatus {
+        return when {
+            translateStatus != null -> translateStatus ?: TranslateStatus.UN_ACTIVE
+            translatedText == null -> TranslateStatus.UN_ACTIVE
+            else -> TranslateStatus.TRANSLATED
         }
     }
 

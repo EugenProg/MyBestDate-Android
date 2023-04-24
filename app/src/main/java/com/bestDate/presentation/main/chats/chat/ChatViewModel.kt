@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.chats.chat
 import android.graphics.Bitmap
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
+import com.bestDate.data.model.Message
 import com.bestDate.data.model.Meta
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
@@ -88,6 +89,18 @@ class ChatViewModel @Inject constructor(
         doAsync {
             chatUseCase.translate(text, language)
             _translateLiveData.postValue(chatUseCase.translatedText)
+        }
+    }
+
+    fun translateMessage(message: Message) {
+        doAsync {
+            chatUseCase.translateMessage(message)
+        }
+    }
+
+    fun returnMessage(message: Message) {
+        doAsync {
+            chatUseCase.returnMessage(message)
         }
     }
 

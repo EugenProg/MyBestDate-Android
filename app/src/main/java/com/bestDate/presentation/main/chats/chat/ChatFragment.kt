@@ -66,6 +66,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.translateClick = {
                 viewModel.translateText(it, user?.language)
             }
+            chatView.translateMessageClick = {
+                viewModel.translateMessage(it)
+            }
+            chatView.returnMessageClick = {
+                viewModel.returnMessage(it)
+            }
             chatView.showInvitationClick = {
                 requireActivity().showCreateInvitationDialog(invitationList) {
                     viewModel.sendInvitation(user?.id, it.id)

@@ -27,6 +27,8 @@ class ChatView @JvmOverloads constructor(
     var sendClick: ((text: String, parentId: Int?) -> Unit)? = null
     var editClick: ((text: String, messageId: Int?) -> Unit)? = null
     var translateClick: ((text: String) -> Unit)? = null
+    var translateMessageClick: ((message: Message) -> Unit)? = null
+    var returnMessageClick: ((message: Message) -> Unit)? = null
     var typingEvent: (() -> Unit)? = null
     var addImageClick: (() -> Unit)? = null
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
@@ -62,6 +64,14 @@ class ChatView @JvmOverloads constructor(
             }
             adapter.messageClick = {
                 openActionSheet?.invoke(it, getActions(it))
+            }
+            adapter.translateClick = {
+                scrollToEditedId = it.id
+                translateMessageClick?.invoke(it)
+            }
+            adapter.returnClick = {
+                scrollToEditedId = it.id
+                returnMessageClick?.invoke(it)
             }
             adapter.imageLongClick = {
                 openActionSheet?.invoke(it, getActions(it))

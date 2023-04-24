@@ -110,6 +110,27 @@ class ChatUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.message())
     }
 
+    suspend fun translateMessage(message: Message) {
+        val myLanguage = userDao.getUser()?.language
+        val response =
+            translateRemoteData.translate(message.text.orEmpty(), (myLanguage ?: "EN").uppercase())
+        if (response.isSuccessful) {
+            val newMessage = message.copy(
+                translatedText = response.body()?.translations?.firstOrNull()?.text,
+                translateStatus = Message.TranslateStatus.TRANSLATED
+            )
+            messages.postValue(editMessageList(newMessage))
+        } else throw InternalException.OperationException(response.message())
+    }
+
+    fun returnMessage(message: Message) {
+            val newMessage = message.copy(
+                translatedText = null,
+                translateStatus = Message.TranslateStatus.UN_ACTIVE
+            )
+            messages.postValue(editMessageList(newMessage))
+    }
+
     fun addPusherMessage(message: Message?) {
         message?.let {
             messages.postValue(addNewMessage(it))
