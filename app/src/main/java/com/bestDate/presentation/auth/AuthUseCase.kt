@@ -11,6 +11,7 @@ import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.GoogleAuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +21,7 @@ class AuthUseCase @Inject constructor(
     private val userRemoteData: UserRemoteData,
     private val invitationUseCase: InvitationUseCase,
     private val googleAuthRemoteData: GoogleAuthRemoteData,
+    private val chatListUseCase: ChatListUseCase,
     private val preferencesUtils: PreferencesUtils
 ) {
     var tokenIsFresh: Boolean = false
@@ -31,6 +33,7 @@ class AuthUseCase @Inject constructor(
         if (response.isSuccessful) {
             saveTokens(response.body())
             saveDeviceToken()
+            chatListUseCase.refreshChatList()
             invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
@@ -40,6 +43,7 @@ class AuthUseCase @Inject constructor(
         if (response.isSuccessful) {
             saveTokens(response.body())
             saveDeviceToken()
+            chatListUseCase.refreshChatList()
             invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
@@ -49,6 +53,7 @@ class AuthUseCase @Inject constructor(
         if (response.isSuccessful) {
             saveTokens(response.body())
             saveDeviceToken()
+            chatListUseCase.refreshChatList()
             registrationSocialMode = response.body()?.registration == true
             invitationUseCase.refreshInvitations()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())

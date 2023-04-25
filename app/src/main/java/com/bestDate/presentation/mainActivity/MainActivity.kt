@@ -81,35 +81,23 @@ class MainActivity : AppCompatActivity() {
     private fun setUpPusherObserver() {
         observe(viewModel.newMessageLiveData) {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, true)
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInCurrentUserChat(it?.sender_id) -> {
-                    viewModel.addChatMessage(it)
-                    viewModel.sendReadingEvent(it?.sender_id)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.addChatMessage(it)
+                viewModel.sendReadingEvent(it?.sender_id)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.editMessageLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInCurrentUserChat(it?.sender_id) -> {
-                    viewModel.editChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.editChatMessage(it)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.deleteMessageLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInCurrentUserChat(it?.sender_id) -> {
-                    viewModel.deleteChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.deleteChatMessage(it)
             }
+            viewModel.refreshChatList()
         }
         observe(viewModel.typingLiveData) {
             when {
@@ -124,14 +112,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         observe(viewModel.readingLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInCurrentUserChat(it?.recipient_id) -> {
-                    viewModel.editChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.recipient_id)) {
+                viewModel.editChatMessage(it)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.coinsLiveData) {
             viewModel.setCoinsCount(it)

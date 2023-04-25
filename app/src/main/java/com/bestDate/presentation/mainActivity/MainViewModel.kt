@@ -125,4 +125,10 @@ class MainViewModel @Inject constructor(
             chatUseCase.refreshMessages()
         }
     }
+
+    fun setMessageToChatList(message: Message?) {
+        doAsync {
+            chatListUseCase.setMessage(message)
+        }
+    }
 }

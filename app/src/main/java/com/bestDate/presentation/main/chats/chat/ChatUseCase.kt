@@ -8,6 +8,7 @@ import com.bestDate.data.model.*
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.view.chat.ChatStatusType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -19,6 +20,7 @@ import javax.inject.Singleton
 class ChatUseCase @Inject constructor(
     private val userDao: UserDao,
     private val chatsRemoteData: ChatsRemoteData,
+    private val chatListUseCase: ChatListUseCase,
     private val translateRemoteData: TranslationRemoteData
 ) {
     var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData()
@@ -32,7 +34,10 @@ class ChatUseCase @Inject constructor(
     suspend fun sendTextMessage(recipientId: Int?, parentId: Int?, text: String) {
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
+            response.body()?.data?.let {
+                messages.postValue(addNewMessage(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -46,14 +51,20 @@ class ChatUseCase @Inject constructor(
         val body = MultipartBody.Part.createFormData("image", "name", requestFile)
         val response = chatsRemoteData.sendImageMessage(recipientId.orZero, body, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
+            response.body()?.data?.let {
+                messages.postValue(addNewMessage(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
     suspend fun editMessage(messageId: Int?, text: String) {
         val response = chatsRemoteData.updateMessage(messageId.orZero, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(editMessageList(it)) }
+            response.body()?.data?.let {
+                messages.postValue(editMessageList(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -61,6 +72,7 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.deleteMessage(messageId.orZero)
         if (response.isSuccessful) {
             messages.postValue(deleteMessageFromList(messageId))
+            chatListUseCase.refreshChatList()
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
