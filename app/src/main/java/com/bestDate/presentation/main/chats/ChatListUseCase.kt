@@ -52,6 +52,18 @@ class ChatListUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
+    suspend fun setMessage(message: Message?) {
+        val chatId = currentList?.indexOfFirst {
+            it.user?.id == message?.sender_id || it.user?.id == message?.recipient_id
+        }
+        if (chatId != null) {
+            currentList?.get(chatId)?.last_message = message
+            transformChatList(currentList)
+        } else {
+            refreshChatList()
+        }
+    }
+
     private fun transformChatList(list: MutableList<Chat>?) {
         val userId = userDao.getUser()?.id
         val newList: MutableList<Chat> = mutableListOf(createNewHeader())
@@ -88,6 +100,7 @@ class ChatListUseCase @Inject constructor(
     fun clearData() {
         chatList.postValue(mutableListOf())
         hasNewChats.postValue(false)
+        currentList = null
     }
 
     fun setTypingEvent(senderId: Int?, isOn: Boolean) {

@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         observe(viewModel.notificationsAction) {
-            if (!(it == NotificationType.MESSAGE && (isInChat() || isInChatList()))) {
+            if (!(it == NotificationType.MESSAGE && (isInCurrentUserChat() || isInChatList()))) {
                 viewModel.showPush(this)
             }
         }
@@ -81,35 +81,23 @@ class MainActivity : AppCompatActivity() {
     private fun setUpPusherObserver() {
         observe(viewModel.newMessageLiveData) {
             binding.bottomNavigationView.setBadge(BottomButton.CHATS, true)
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInChat(it?.sender_id) -> {
-                    viewModel.addChatMessage(it)
-                    viewModel.sendReadingEvent(it?.sender_id)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.addChatMessage(it)
+                viewModel.sendReadingEvent(it?.sender_id)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.editMessageLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInChat(it?.sender_id) -> {
-                    viewModel.editChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.editChatMessage(it)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.deleteMessageLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInChat(it?.sender_id) -> {
-                    viewModel.deleteChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.sender_id)) {
+                viewModel.deleteChatMessage(it)
             }
+            viewModel.refreshChatList()
         }
         observe(viewModel.typingLiveData) {
             when {
@@ -117,21 +105,17 @@ class MainActivity : AppCompatActivity() {
                     viewModel.setChatListTypingEvent(it, true)
                     chatListTypingEventCoordinator.setTypingEvent(it)
                 }
-                isInChat(it) -> {
+                isInCurrentUserChat(it) -> {
                     viewModel.setChatTypingEvent(true)
                     chatTypingEventCoordinator.setTypingEvent(it)
                 }
             }
         }
         observe(viewModel.readingLiveData) {
-            when {
-                isInChatList() -> {
-                    viewModel.refreshChatList()
-                }
-                isInChat(it?.recipient_id) -> {
-                    viewModel.editChatMessage(it)
-                }
+            if (isInCurrentUserChat(it?.recipient_id)) {
+                viewModel.editChatMessage(it)
             }
+            viewModel.setMessageToChatList(it)
         }
         observe(viewModel.coinsLiveData) {
             viewModel.setCoinsCount(it)
@@ -154,6 +138,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.refreshData(getString(R.string.app_locale))
         if (isInChatList()) viewModel.refreshChatList()
+        if (isInChat()) viewModel.refreshChatMessages()
     }
 
     override fun onPause() {
@@ -190,11 +175,10 @@ class MainActivity : AppCompatActivity() {
     private fun isInChatList() =
         navController.currentDestination?.getCurrentScreen() == Screens.CHAT_LIST
 
-    private fun isInChat(senderId: Int?) =
-        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
-                && viewModel.isCurrentUserChat(senderId)
+    private fun isInCurrentUserChat(senderId: Int?) = isInChat() &&
+            viewModel.isCurrentUserChat(senderId)
 
-    private fun isInChat() =
-        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
-                && viewModel.isCurrentUserChat()
+    private fun isInCurrentUserChat() = isInChat() && viewModel.isCurrentUserChat()
+
+    private fun isInChat() = navController.currentDestination?.getCurrentScreen() == Screens.CHAT
 }

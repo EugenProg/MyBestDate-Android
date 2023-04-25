@@ -40,6 +40,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         super.onInit()
         user = args.user
         setUserInfo()
+        viewModel.sendReadingEvent(user?.id)
         viewModel.getChatMessages(user?.id)
         getNavigationResult<ShortUserData?>(NavigationResultKey.USER) {
             it?.let { user = it }

@@ -119,4 +119,16 @@ class MainViewModel @Inject constructor(
             chatUseCase.deletePusherMessage(message)
         }
     }
+
+    fun refreshChatMessages() {
+        doAsync {
+            chatUseCase.refreshMessages()
+        }
+    }
+
+    fun setMessageToChatList(message: Message?) {
+        doAsync {
+            chatListUseCase.setMessage(message)
+        }
+    }
 }

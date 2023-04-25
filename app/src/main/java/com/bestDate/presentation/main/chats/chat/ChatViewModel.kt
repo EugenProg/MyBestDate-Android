@@ -85,6 +85,12 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun sendReadingEvent(recipientId: Int?) {
+        doAsync {
+            chatUseCase.sendReadingEvent(recipientId)
+        }
+    }
+
     fun translateText(text: String?, language: String?) {
         doAsync {
             chatUseCase.translate(text, language)
