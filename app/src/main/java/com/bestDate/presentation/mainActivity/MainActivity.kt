@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         observe(viewModel.notificationsAction) {
-            if (!(it == NotificationType.MESSAGE && (isInChat() || isInChatList()))) {
+            if (!(it == NotificationType.MESSAGE && (isInCurrentUserChat() || isInChatList()))) {
                 viewModel.showPush(this)
             }
         }
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 isInChatList() -> {
                     viewModel.refreshChatList()
                 }
-                isInChat(it?.sender_id) -> {
+                isInCurrentUserChat(it?.sender_id) -> {
                     viewModel.addChatMessage(it)
                     viewModel.sendReadingEvent(it?.sender_id)
                 }
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 isInChatList() -> {
                     viewModel.refreshChatList()
                 }
-                isInChat(it?.sender_id) -> {
+                isInCurrentUserChat(it?.sender_id) -> {
                     viewModel.editChatMessage(it)
                 }
             }
@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 isInChatList() -> {
                     viewModel.refreshChatList()
                 }
-                isInChat(it?.sender_id) -> {
+                isInCurrentUserChat(it?.sender_id) -> {
                     viewModel.deleteChatMessage(it)
                 }
             }
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
                     viewModel.setChatListTypingEvent(it, true)
                     chatListTypingEventCoordinator.setTypingEvent(it)
                 }
-                isInChat(it) -> {
+                isInCurrentUserChat(it) -> {
                     viewModel.setChatTypingEvent(true)
                     chatTypingEventCoordinator.setTypingEvent(it)
                 }
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 isInChatList() -> {
                     viewModel.refreshChatList()
                 }
-                isInChat(it?.recipient_id) -> {
+                isInCurrentUserChat(it?.recipient_id) -> {
                     viewModel.editChatMessage(it)
                 }
             }
@@ -154,6 +154,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.refreshData(getString(R.string.app_locale))
         if (isInChatList()) viewModel.refreshChatList()
+        if (isInChat()) viewModel.refreshChatMessages()
     }
 
     override fun onPause() {
@@ -190,11 +191,10 @@ class MainActivity : AppCompatActivity() {
     private fun isInChatList() =
         navController.currentDestination?.getCurrentScreen() == Screens.CHAT_LIST
 
-    private fun isInChat(senderId: Int?) =
-        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
-                && viewModel.isCurrentUserChat(senderId)
+    private fun isInCurrentUserChat(senderId: Int?) = isInChat() &&
+            viewModel.isCurrentUserChat(senderId)
 
-    private fun isInChat() =
-        navController.currentDestination?.getCurrentScreen() == Screens.CHAT
-                && viewModel.isCurrentUserChat()
+    private fun isInCurrentUserChat() = isInChat() && viewModel.isCurrentUserChat()
+
+    private fun isInChat() = navController.currentDestination?.getCurrentScreen() == Screens.CHAT
 }

@@ -253,4 +253,8 @@ class ChatUseCase @Inject constructor(
     fun setTypingEvent(on: Boolean) {
         typingMode.postValue(if (on) ChatStatusType.TYPING else ChatStatusType.ONLINE)
     }
+
+    suspend fun refreshMessages() {
+        getChatMessages(currentUserId)
+    }
 }
