@@ -32,11 +32,11 @@ enum class ZodiacSign(@StringRes val title: Int, val start: String, val end: Str
     LEO(R.string.leo, "07-23", "08-23"),
     VIRGO(R.string.virgo, "08-24", "09-22"),
     LIBRA(R.string.libra, "09-23", "10-23"),
-    SCORPIO(R.string.aries, "10-24", "11-22"),
-    SAGITTARIUS(R.string.aries, "11-23", "12-21"),
-    CAPRICORN(R.string.aries, "12-22", "01-20"),
-    AQUARIUS(R.string.aries, "01-21", "02-18"),
-    PISCES(R.string.aries, "02-19", "03-20");
+    SCORPIO(R.string.scorpio, "10-24", "11-22"),
+    SAGITTARIUS(R.string.sagittarius, "11-23", "12-21"),
+    CAPRICORN(R.string.capricorn, "12-22", "01-20"),
+    AQUARIUS(R.string.aquarius, "01-21", "02-18"),
+    PISCES(R.string.pisces, "02-19", "03-20");
 
     fun isThisZodiac(date: String): Boolean {
         return if (this != CAPRICORN) {

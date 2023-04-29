@@ -8,6 +8,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.toServerFormat
 import com.bestDate.data.model.SocialProvider
+import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.auth.AuthViewModel
 import com.bestDate.presentation.registration.GenderType
 import com.bestDate.view.alerts.LoaderDialog
@@ -30,6 +31,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
     private lateinit var callbackManager: CallbackManager
     protected lateinit var loaderDialog: LoaderDialog
     protected var isLoggedIn = false
+    private var user: UserDB? = null
 
     abstract fun navigateToMain()
     abstract fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType)
@@ -48,7 +50,10 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
             errorAction()
         }
         observe(viewModel.user) {
-            if (viewModel.user.value != null && isLoggedIn) {
+            user = it
+        }
+        observe(viewModel.loginSuccessLiveData) {
+            if (user != null && isLoggedIn) {
                 chooseRoute()
             }
         }
