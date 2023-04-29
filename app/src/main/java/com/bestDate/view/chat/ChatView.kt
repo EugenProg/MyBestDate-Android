@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.*
@@ -158,5 +159,9 @@ class ChatView @JvmOverloads constructor(
 
     fun setTranslatedText(text: String?) {
         binding.bottomPanelView.setTranslatedText(text)
+    }
+
+    fun showInvitationView(show: Boolean) {
+        binding.chatInvitation.isVisible = show && messageList?.isEmpty() == true
     }
 }

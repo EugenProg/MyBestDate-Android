@@ -118,9 +118,13 @@ class MatchImageView @JvmOverloads constructor(
             Glide.with(context)
                 .load(it.thumb_url)
                 .into(binding.avatarThumb)
+        }
+    }
 
+    fun initFullImage() {
+        user?.getMainPhoto()?.full_url?.let {
             Glide.with(context)
-                .load(it.full_url)
+                .load(it)
                 .into(binding.avatar)
         }
     }

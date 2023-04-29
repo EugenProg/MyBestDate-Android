@@ -225,4 +225,21 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.setUser(user)
         }
     }
+
+    override fun scrollAction() {
+        super.scrollAction()
+        binding.chatView.showInvitationView(false)
+    }
+
+    override fun hideAction() {
+        super.hideAction()
+        binding.chatView.showInvitationView(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        postDelayed({
+            hideKeyboardAction()
+        }, 100)
+    }
 }
