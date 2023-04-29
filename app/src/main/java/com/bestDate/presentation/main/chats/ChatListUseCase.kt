@@ -56,7 +56,7 @@ class ChatListUseCase @Inject constructor(
         val chatId = currentList?.indexOfFirst {
             it.user?.id == message?.sender_id || it.user?.id == message?.recipient_id
         }
-        if (chatId != null) {
+        if (chatId != null && chatId >= 0) {
             currentList?.get(chatId)?.last_message = message
             transformChatList(currentList)
         } else {
