@@ -131,7 +131,8 @@ data class ShortUserData(
     var last_online_at: String? = null,
     var distance: Double? = null,
     var main_photo: ProfileImage? = null,
-    var location: LocationDB? = null
+    var location: LocationDB? = null,
+    var photos_count: Int? = null
 ) : Parcelable {
     fun getMainPhoto(): ProfileImage {
         return main_photo ?: ProfileImage().getDefaultPhoto()

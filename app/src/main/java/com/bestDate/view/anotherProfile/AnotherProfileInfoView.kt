@@ -51,6 +51,7 @@ class AnotherProfileInfoView @JvmOverloads constructor(
                 age.text = user?.getAge()
                 location.text = user?.getLocation()
                 verifyView.isVerified = user?.full_questionnaire
+                binding.imageLinePreview.setImagesCount(user?.photos_count ?: 3)
             }
         }
     }

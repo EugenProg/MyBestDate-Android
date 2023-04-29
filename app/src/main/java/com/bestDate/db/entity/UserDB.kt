@@ -134,7 +134,8 @@ data class UserDB(
             last_online_at = last_online_at,
             distance = distance,
             main_photo = getMainPhoto(),
-            location = location
+            location = location,
+            photos_count = photos?.size ?: 3
         )
     }
 }
