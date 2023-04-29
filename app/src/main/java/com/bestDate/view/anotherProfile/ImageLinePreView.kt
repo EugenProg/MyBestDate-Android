@@ -18,5 +18,6 @@ class ImageLinePreView @JvmOverloads constructor(
     fun setImagesCount(count: Int) {
         binding.three.visibility = if (count >= 3) View.VISIBLE else View.INVISIBLE
         binding.two.visibility = if (count >= 2) View.VISIBLE else View.INVISIBLE
+        binding.one.visibility = if (count > 0) View.VISIBLE else View.INVISIBLE
     }
 }
