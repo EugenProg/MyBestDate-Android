@@ -168,7 +168,7 @@ class ChatUseCase @Inject constructor(
     }
 
     private fun addNewMessage(message: Message): MutableList<Message> {
-        originalList?.add(0, message)
+        if (originalList?.firstOrNull()?.id != message.id) originalList?.add(0, message)
         return transformMessageList(originalList)
     }
 
