@@ -114,9 +114,9 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
         loadMoreItems?.invoke()
     }
 
-    override fun submitList(list: MutableList<Guest>?) {
+    override fun submitList(list: MutableList<Guest>?, commitCallback: Runnable?) {
         loadingMode = false
-        super.submitList(list)
+        super.submitList(list, commitCallback)
     }
 
     private var loadingItem: Guest =

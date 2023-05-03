@@ -58,6 +58,7 @@ class ChatListUseCase @Inject constructor(
         }
         if (chatId != null && chatId >= 0) {
             currentList?.get(chatId)?.last_message = message
+            currentList?.sortByDescending { it.last_message?.created_at }
             transformChatList(currentList)
         } else {
             refreshChatList()
@@ -66,18 +67,22 @@ class ChatListUseCase @Inject constructor(
 
     private fun transformChatList(list: MutableList<Chat>?) {
         val userId = userDao.getUser()?.id
-        val newList: MutableList<Chat> = mutableListOf(createNewHeader())
-        val oldList: MutableList<Chat> = mutableListOf(createOldHeader())
+        var newChats = 0
+        val chatsList: MutableList<Chat> = mutableListOf()
+        //val newList: MutableList<Chat> = mutableListOf(createNewHeader())
+       // val oldList: MutableList<Chat> = mutableListOf(createOldHeader())
         list?.forEach {
             if (it.last_message?.read_at == null && it.last_message?.sender_id != userId) {
-                newList.add(it.transform(ListItemType.NEW_ITEM))
+                newChats++
+                chatsList.add(it.transform(ListItemType.NEW_ITEM))
             } else {
-                oldList.add(it.transform(ListItemType.OLD_ITEM))
+                chatsList.add(it.transform(ListItemType.OLD_ITEM))
             }
         }
-        hasNewChats.postValue(newList.size > 1)
+        hasNewChats.postValue(newChats > 0)
+        chatList.postValue(chatsList)
 
-        when {
+      /*  when {
             newList.size > 1 && oldList.size > 1 -> {
                 newList.addAll(oldList)
                 chatList.postValue(newList)
@@ -88,7 +93,7 @@ class ChatListUseCase @Inject constructor(
             newList.size > 1 && oldList.size == 1 -> {
                 chatList.postValue(newList)
             }
-        }
+        }*/
     }
 
     private fun createNewHeader(): Chat =
