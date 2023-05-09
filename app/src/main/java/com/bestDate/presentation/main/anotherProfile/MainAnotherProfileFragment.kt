@@ -41,4 +41,10 @@ class MainAnotherProfileFragment: BaseAnotherProfileFragment() {
             MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToSearch()
         )
     }
+
+    override fun navigateToTariffList() {
+        navController.navigate(
+            MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToTariffList()
+        )
+    }
 }

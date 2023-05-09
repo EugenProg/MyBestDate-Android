@@ -70,6 +70,7 @@ class UserUseCase @Inject constructor(
         hasNewLikes.postValue(user.new_likes.orZero > 0)
         hasNewMatches.postValue(user.new_matches.orZero > 0)
         hasNewDuels.postValue(user.new_duels.orZero > 0)
+        preferencesUtils.saveBoolean(Preferences.IS_A_MAN, user.gender == "male")
         preferencesUtils.saveInt(Preferences.SENT_MESSAGES_TODAY, user.sent_messages_today.orZero)
         preferencesUtils.saveInt(
             Preferences.SENT_INVITATIONS_TODAY,

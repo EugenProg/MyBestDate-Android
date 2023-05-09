@@ -36,12 +36,15 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_launch)
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
-        if (preferencesUtils.getBooleanWithDefault(Preferences.FIRST_ENTER, true)) {
-            postDelayed({
-                startWithStandardNavigation()
-            }, 1600)
-        } else {
-            checkForDeeplink()
+        if (!isStarted) {
+            isStarted = true
+            if (preferencesUtils.getBooleanWithDefault(Preferences.FIRST_ENTER, true)) {
+                postDelayed({
+                    startWithStandardNavigation()
+                }, 1600)
+            } else {
+                checkForDeeplink()
+            }
         }
     }
 
@@ -108,5 +111,9 @@ class SplashActivity : AppCompatActivity() {
             .setDestination(destinationId)
             .setArguments(args)
             .createPendingIntent()
+    }
+
+    companion object {
+        var isStarted: Boolean = false
     }
 }

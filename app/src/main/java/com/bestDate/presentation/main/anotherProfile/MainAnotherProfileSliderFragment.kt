@@ -10,4 +10,10 @@ class MainAnotherProfileSliderFragment: AnotherProfileSliderFragment() {
     override fun getPosition() = args.position
 
     override fun getUserId() = args.userId
+
+    override fun navigateToTariffList() {
+        navController.navigate(
+            MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToTariffList()
+        )
+    }
 }

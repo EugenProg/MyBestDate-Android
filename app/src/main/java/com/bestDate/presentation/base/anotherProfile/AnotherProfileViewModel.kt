@@ -6,6 +6,8 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.LikesBody
 import com.bestDate.data.model.ProfileImage
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
@@ -17,7 +19,8 @@ import javax.inject.Inject
 class AnotherProfileViewModel @Inject constructor(
     private val anotherProfileUseCase: AnotherProfileUseCase,
     private val invitationUseCase: InvitationUseCase,
-    private val likesUseCase: LikesListUseCase
+    private val likesUseCase: LikesListUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     var user: MutableLiveData<UserDB> = anotherProfileUseCase.user
@@ -79,5 +82,16 @@ class AnotherProfileViewModel @Inject constructor(
             anotherProfileUseCase.complain(userId)
             _complainLiveData.postValue(true)
         }
+    }
+
+    fun invitationSendAllowed(): Boolean {
+        return if (
+            preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
+            preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
+            !preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION)
+        ) {
+            preferencesUtils.getInt(Preferences.SENT_INVITATIONS_TODAY) <
+                    preferencesUtils.getInt(Preferences.FREE_INVITATIONS_COUNT)
+        } else true
     }
 }

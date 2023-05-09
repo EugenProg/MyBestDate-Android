@@ -15,7 +15,8 @@ import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.presentation.main.userProfile.UserProfileFragmentDirections
+import com.bestDate.view.alerts.showBanningCardsDialog
+import com.bestDate.view.alerts.showBanningMessagesDialog
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
@@ -59,7 +60,14 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.sendClick = { text, parentId ->
-                viewModel.sendTextMessage(user?.id, parentId, text)
+                if (viewModel.messageSendAllowed()) {
+                    viewModel.sendTextMessage(user?.id, parentId, text)
+                } else {
+                    chatView.stopSendLoading()
+                    requireActivity().showBanningMessagesDialog {
+                        navigateToTariffList()
+                    }
+                }
             }
             chatView.editClick = { text, messageId ->
                 viewModel.editMessage(messageId, text)
@@ -74,8 +82,14 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 viewModel.returnMessage(it)
             }
             chatView.showInvitationClick = {
-                requireActivity().showCreateInvitationDialog(invitationList) {
-                    viewModel.sendInvitation(user?.id, it.id)
+                if (viewModel.invitationSendAllowed()) {
+                    requireActivity().showCreateInvitationDialog(invitationList) {
+                        viewModel.sendInvitation(user?.id, it.id)
+                    }
+                } else {
+                    requireActivity().showBanningCardsDialog {
+                        navigateToTariffList()
+                    }
                 }
             }
             chatView.openActionSheet = { message, chatActions ->
@@ -123,6 +137,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 reDrawBars()
             }
         }
+
+        fragment.navigateToTariffList = {
+            close(fragment, binding.container) {
+                navigateToTariffList()
+            }
+        }
     }
 
     open fun navigateToUserProfile(userData: ShortUserData?) {
@@ -134,6 +154,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     .actionGlobalChatToAnotherProfile(userData, BackScreenType.CHAT)
             )
         }
+    }
+
+    open fun navigateToTariffList() {
+        navController.navigate(
+            ChatFragmentDirections.actionGlobalChatToTariffList()
+        )
     }
 
     private fun doChatAction(action: ChatActions, message: Message?) {

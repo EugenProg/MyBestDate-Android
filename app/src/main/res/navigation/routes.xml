@@ -448,6 +448,13 @@
                 app:destination="@id/search_nav_graph"
                 app:popUpTo="@id/another_profile_nav_graph"
                 app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_global_another_profile_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <navigation
             android:id="@+id/search_nav_graph"
@@ -608,6 +615,13 @@
             <action
                 android:id="@+id/action_global_chat_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right"/>
         </navigation>
         <action
             android:id="@+id/action_global_authFragment"
@@ -674,7 +688,17 @@
             <action
                 android:id="@+id/action_chatPush_to_another_profile"
                 app:destination="@id/another_profile_nav_graph"/>
+            <action
+                android:id="@+id/action_globalChatPush_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </fragment>
+        <fragment android:id="@+id/tariffListFragment"
+            android:name="com.bestDate.presentation.main.tariff.TariffListFragment"
+            android:label="TariffListFragment"/>
     </navigation>
 
     <navigation
