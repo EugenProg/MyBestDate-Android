@@ -37,7 +37,7 @@ class ResultProfileView @JvmOverloads constructor(
                 ageTextView.text = user?.getAge()
                 Glide.with(binding.root.context)
                     .load(value?.thumb_url)
-                    .placeholder(R.drawable.ic_default_photo)
+                    .centerCrop()
                     .into(binding.profileImageView)
                 verifyView.isVerified = user?.full_questionnaire
                 barView.percent = value?.rating

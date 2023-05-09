@@ -27,9 +27,11 @@ fun FragmentActivity.showMatchActionDialog(
                 .into(avatar)
             Glide.with(this@showMatchActionDialog)
                 .load(match.user?.getMainPhoto()?.thumb_url)
+                .circleCrop()
                 .into(matchPhoto)
             Glide.with(this@showMatchActionDialog)
                 .load(mainPhoto)
+                .circleCrop()
                 .into(myPhoto)
 
             name.text = match.user?.name

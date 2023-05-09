@@ -97,7 +97,8 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
                     )
                 }, { user ->
                     navController.navigate(
-                        MatchesFragmentDirections.actionGlobalMatchesToChat(user, BackScreenType.MATCHES)
+                        MatchesFragmentDirections
+                            .actionGlobalMatchesToChat(user, BackScreenType.MATCHES)
                     )
                 })
             }

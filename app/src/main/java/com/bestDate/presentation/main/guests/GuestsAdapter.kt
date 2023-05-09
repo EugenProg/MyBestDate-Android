@@ -78,7 +78,7 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
                 ageTextView.text = item.guest?.getAge()
                 Glide.with(binding.root.context)
                     .load(item.guest?.main_photo?.thumb_url)
-                    .placeholder(R.drawable.ic_default_photo)
+                    .centerCrop()
                     .into(binding.profileImageView)
                 verifyView.isVerified = item.guest?.full_questionnaire
 

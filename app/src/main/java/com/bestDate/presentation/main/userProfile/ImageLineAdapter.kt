@@ -40,6 +40,7 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean) :
                 itemView.setWidth(viewHeight)
                 Glide.with(itemView.context)
                     .load(item.thumb_url)
+                    .centerCrop()
                     .into(binding.image)
 
                 binding.top.isVisible = item.top == true && showTop
