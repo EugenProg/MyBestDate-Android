@@ -53,7 +53,9 @@ data class UserDB(
     var blocked: Boolean? = null,
     var blocked_me: Boolean? = null,
     @Embedded
-    var questionnaire: QuestionnaireDB? = null
+    var questionnaire: QuestionnaireDB? = null,
+    var sent_messages_today: Int? = null,
+    var sent_invitations_today: Int? = null
 ) : Parcelable {
     fun getLocalizeGender(): Int {
         return when {

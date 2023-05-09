@@ -45,7 +45,17 @@ data class ProfileImage(
     var viewType: ViewType = ViewType.PHOTO
 ) : Parcelable {
     fun copy(): ProfileImage {
-        return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes, viewType = viewType)
+        return ProfileImage(
+            id,
+            full_url,
+            thumb_url,
+            main,
+            top,
+            top_place,
+            liked,
+            likes,
+            viewType = viewType
+        )
     }
 
     fun getDefaultPhoto() = ProfileImage(
@@ -215,13 +225,18 @@ data class Guest(
     val itemType: ListItemType? = null
 )
 
+data class SendInvitationResponse(
+    val data: InvitationCard? = null
+) : BaseResponse()
+
 data class InvitationCard(
     val id: Int? = null,
     var invitation: Invitation? = null,
     var from_user: ShortUserData? = null,
     var to_user: ShortUserData? = null,
     var answer: Invitation? = null,
-    var created_at: String? = null
+    var created_at: String? = null,
+    var sent_invitations_today: Int? = null
 ) {
     fun getAnswer(): InvitationAnswer {
         return when (answer?.id) {
@@ -338,7 +353,8 @@ data class Message(
     var isLastMessage: Boolean? = null,
     var viewType: ChatItemType? = null,
     var translatedText: String? = null,
-    var translateStatus: TranslateStatus? = null
+    var translateStatus: TranslateStatus? = null,
+    var sent_messages_today: Int? = null
 ) {
     fun transform(type: ChatItemType, parent: ParentMessage?, isLast: Boolean?): Message {
         return Message(
@@ -430,3 +446,24 @@ data class GoogleAccessTokenResponse(
     var token_type: String? = null,
     var id_token: String? = null
 )
+
+data class AppSettings(
+    var subscription: Boolean? = null,
+    var free_messages_count: Int? = null,
+    var free_invitations_count: Int? = null
+)
+
+data class AppSettingsResponse(
+    val data: AppSettings? = null
+) : BaseResponse()
+
+data class SubscriptionInfo(
+    val id: Int? = null,
+    val device: String? = null,
+    val start_at: String? = null,
+    val end_at: String? = null
+)
+
+data class SubscriptionInfoResponse(
+    val data: SubscriptionInfo? = null
+) : BaseResponse()

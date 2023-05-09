@@ -9,6 +9,7 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.SubscriptionUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.chats.chat.ChatUseCase
@@ -26,6 +27,7 @@ class MainViewModel @Inject constructor(
     private val guestsUseCase: GuestsUseCase,
     private val notificationCenter: NotificationCenter,
     private val pusherCenter: PusherCenter,
+    private val subscriptionUseCase: SubscriptionUseCase,
     sessionManager: SessionManager
 ) : BaseViewModel() {
 
@@ -129,6 +131,12 @@ class MainViewModel @Inject constructor(
     fun setMessageToChatList(message: Message?) {
         doAsync {
             chatListUseCase.setMessage(message)
+        }
+    }
+
+    fun refreshAppSettings() {
+        doAsync {
+            subscriptionUseCase.getAppSettings()
         }
     }
 }

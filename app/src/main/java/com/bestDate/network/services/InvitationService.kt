@@ -1,9 +1,6 @@
 package com.bestDate.network.services
 
-import com.bestDate.data.model.BaseResponse
-import com.bestDate.data.model.InvitationAnswerRequest
-import com.bestDate.data.model.InvitationsListResponse
-import com.bestDate.data.model.SendInvitationRequest
+import com.bestDate.data.model.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -14,7 +11,7 @@ interface InvitationService {
 
     /**Send invitation*/
     @POST("/api/v1/invitations")
-    suspend fun sendInvitation(@Body body: SendInvitationRequest): Response<BaseResponse>
+    suspend fun sendInvitation(@Body body: SendInvitationRequest): Response<SendInvitationResponse>
 
     /**Answer to invitation*/
     @PUT("/api/v1/invitations/{id}")
