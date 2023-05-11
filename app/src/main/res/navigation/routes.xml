@@ -537,6 +537,13 @@
             <action
                 android:id="@+id/action_global_guests_to_profile"
                 app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <navigation
             android:id="@+id/top_nav_graph"

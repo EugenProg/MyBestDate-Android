@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="84dp"
     android:layout_marginVertical="5dp"
     android:background="@color/bg_box"
     android:foreground="?selectableItemBackground"
@@ -51,10 +51,32 @@
                 android:layout_width="13dp"
                 android:layout_height="13dp"
                 android:layout_marginStart="7dp" />
-
         </TableRow>
-
     </TableLayout>
+
+    <FrameLayout
+        android:id="@+id/name_blur_box"
+        android:layout_width="162dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/blur_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_guests_hearts"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/ageTextView"
@@ -90,13 +112,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
         android:textColor="@color/white_40"
         android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@+id/_visitedView"
         app:layout_constraintStart_toEndOf="@+id/profileImageView"
         app:layout_constraintTop_toBottomOf="@+id/nameView"
         tools:ignore="SmallSp"
         tools:text="Almaty, Kazakhstan" />
+
+    <FrameLayout
+        android:id="@+id/location_blur_box"
+        android:layout_width="99dp"
+        android:layout_height="13dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/_visitedView"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/name_blur_box">
+
+        <ImageView
+            android:id="@+id/small_blur_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/ic_guests_hearts_small" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/_visitedView"
@@ -104,17 +149,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="3dp"
         android:drawablePadding="4dp"
         android:gravity="center"
         android:text="@string/visited"
         android:textColor="@color/white"
         android:textSize="10sp"
         app:drawableStartCompat="@drawable/ic_time_square"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
         app:layout_constraintStart_toEndOf="@+id/profileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
         tools:ignore="SmallSp" />
 
     <TextView
@@ -123,14 +165,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="3dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/_visitedView"
         app:layout_constraintStart_toEndOf="@+id/_visitedView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        app:layout_constraintTop_toTopOf="@+id/_visitedView"
         tools:ignore="SmallSp"
         tools:text="1 min" />
 
@@ -139,9 +179,7 @@
         style="@style/component_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginBottom="7dp"
         android:background="@drawable/bg_gradient_corners"
         android:drawablePadding="6dp"
         android:gravity="center"
@@ -153,8 +191,5 @@
         app:drawableEndCompat="@drawable/ic_signal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
         tools:ignore="SmallSp" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

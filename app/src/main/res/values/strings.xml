@@ -680,4 +680,6 @@
     <string name="the_image_is_out_of_frames">The image is out of bounds. Please correct the image</string>
     <string name="copy">Copy</string>
     <string name="message_is_copied_to_clipboard">Message is copied to clipboard</string>
+    <string name="do_you_want_to_see_who_viewed_your_profile">Do you want to see who viewed your profile?</string>
+    <string name="buy_a_subscription">Buy a subscription</string>
 </resources>

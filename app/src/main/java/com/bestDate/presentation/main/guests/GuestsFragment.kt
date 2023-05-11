@@ -5,11 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.show
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.Guest
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentGuestsBinding
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.bottomSheet.BuySubscriptionBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,6 +22,7 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
 
     override val statusBarColor = R.color.bg_main
     private val adapter: GuestsAdapter = GuestsAdapter()
+    private val buySubscriptionSheet = BuySubscriptionBottomSheet()
 
     override fun onInit() {
         super.onInit()
@@ -41,12 +44,24 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
         with(binding) {
             guestsView.layoutManager = LinearLayoutManager(requireContext())
             guestsView.adapter = adapter
+            adapter.guestsVisibility = viewModel.getGuestsVisibility()
 
             adapter.itemClick = {
-                goToAnotherProfile(it?.guest)
+                if (adapter.guestsVisibility) {
+                    goToAnotherProfile(it?.guest)
+                } else {
+                    buySubscriptionSheet.show(childFragmentManager)
+                }
             }
             adapter.loadMoreItems = {
                 viewModel.loadNextPage()
+            }
+
+            buySubscriptionSheet.buyClick = {
+                buySubscriptionSheet.dismiss()
+                navController.navigate(
+                    GuestsFragmentDirections.actionGlobalGuestsToTariffList()
+                )
             }
         }
     }
