@@ -32,6 +32,7 @@ abstract class AnotherProfileSliderFragment :
     abstract fun getPosition(): Int
     abstract fun getUserId(): Int
     abstract fun navigateToTariffList()
+    abstract fun navigateToChat()
 
     private var invitationList: MutableList<Invitation> = mutableListOf()
     private var isLikeClicked: Boolean = false
@@ -56,6 +57,9 @@ abstract class AnotherProfileSliderFragment :
                     navigateToTariffList()
                 }
             }
+        }
+        binding.navBox.chatClick = {
+            navigateToChat()
         }
         binding.sliderView.onSwipe = {
             goBack()

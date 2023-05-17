@@ -436,9 +436,8 @@
                     android:defaultValue="0"
                     app:argType="integer" />
                 <argument
-                    android:name="userId"
-                    android:defaultValue="0"
-                    app:argType="integer" />
+                    android:name="user"
+                    app:argType="com.bestDate.data.model.ShortUserData" />
             </fragment>
             <action
                 android:id="@+id/action_global_another_profile_to_chat"
