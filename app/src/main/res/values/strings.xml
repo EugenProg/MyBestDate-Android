@@ -682,4 +682,6 @@
     <string name="message_is_copied_to_clipboard">Message is copied to clipboard</string>
     <string name="do_you_want_to_see_who_viewed_your_profile">Do you want to see who viewed your profile?</string>
     <string name="buy_a_subscription">Buy a subscription</string>
+    <string name="weak_internet_connection">Weak internet connection</string>
+    <string name="check_your_mobile_internet_or_wifi_network">Check your Mobile Internet or WiFi network</string>
 </resources>

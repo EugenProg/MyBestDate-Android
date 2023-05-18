@@ -564,7 +564,7 @@
     <string name="you_have_received_an_invitation_please_give_an_answer">Вы получили приглашение,\nпожалуйста, дайте ответ</string>
     <string name="answer_choice">Варианты ответа</string>
     <string name="we_have_transmitted_your_reply_to_the_sender">Мы передали ваш\nответ отправителю</string>
-    <string name="you_invited">Вы приглашены</string>
+    <string name="you_invited">Вы пригласили</string>
     <string name="user_has_not_given_answer_yet">%s еще не ответила</string>
     <string name="general_info_about_your_account">Общая информация о вашем аккаунте, постарайтесь заполнить корректные данные.</string>
     <string name="general_info">Общая информация</string>
@@ -666,6 +666,8 @@
     <string name="the_image_is_out_of_frames">Изображение выходит за границы. Пожалуйста поправьте изображение</string>
     <string name="copy">Копировать</string>
     <string name="message_is_copied_to_clipboard">Сообщение скопировано в буфер обмена</string>
-    <string name="do_you_want_to_see_who_viewed_your_profile">Do you want to see who viewed your profile?</string>
-    <string name="buy_a_subscription">Buy a subscription</string>
+    <string name="do_you_want_to_see_who_viewed_your_profile">Хотите увидеть, кто просматривал\nваш профиль?</string>
+    <string name="buy_a_subscription">Купить подписку</string>
+    <string name="weak_internet_connection">Слабое интернет-соединение</string>
+    <string name="check_your_mobile_internet_or_wifi_network">Проверьте мобильный интернет или сеть Wi-Fi</string>
 </resources>
