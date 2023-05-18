@@ -28,23 +28,28 @@
         app:layout_constraintVertical_bias="0.6"
         tools:text="Мужской" />
 
-    <com.bestDate.view.filter.FilterButton
-        android:id="@+id/locationFilterButton"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/filters_block"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
+        android:orientation="horizontal"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintEnd_toStartOf="@id/filtersView">
 
-    <com.bestDate.view.filter.FilterButton
-        android:id="@+id/statusFilterButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@+id/locationFilterButton"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        <com.bestDate.view.filter.FilterButton
+            android:id="@+id/locationFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"/>
+
+        <com.bestDate.view.filter.FilterButton
+            android:id="@+id/statusFilterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"/>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/filtersView"
@@ -52,9 +57,9 @@
         android:layout_height="60dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/bg_shadow_gradient_circular"
-        app:layout_constraintBottom_toBottomOf="@+id/statusFilterButton"
+        app:layout_constraintBottom_toBottomOf="@+id/filters_block"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/locationFilterButton">
+        app:layout_constraintTop_toTopOf="@+id/filters_block">
 
         <FrameLayout
             android:layout_width="80dp"
@@ -79,7 +84,7 @@
         android:layout_marginTop="13dp"
         android:background="@color/white_20"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
+        app:layout_constraintTop_toBottomOf="@+id/filters_block" />
 
     <com.bestDate.view.search.SearchView
         android:id="@+id/searchView"
