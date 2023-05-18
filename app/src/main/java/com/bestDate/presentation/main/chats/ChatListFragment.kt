@@ -103,4 +103,9 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
             }
         }
     }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.refreshChatList()
+    }
 }

@@ -206,4 +206,9 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             .centerCrop()
             .into(binding.imageBack)
     }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.updateUserData()
+    }
 }

@@ -74,6 +74,11 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         }
     }
 
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        getAllUsers()
+    }
+
     private fun setUpSearchView() {
         with(binding.searchView) {
             openUser = {

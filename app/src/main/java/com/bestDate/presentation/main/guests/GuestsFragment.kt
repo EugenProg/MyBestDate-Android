@@ -109,4 +109,9 @@ class GuestsFragment : BaseVMFragment<FragmentGuestsBinding, GuestsViewModel>() 
             if (list.isNotEmpty()) viewModel.markGuestsViewed(list)
         }
     }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getGuests()
+    }
 }

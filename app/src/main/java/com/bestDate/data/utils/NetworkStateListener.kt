@@ -4,18 +4,20 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.net.NetworkRequest
 
-class NetworkStateListener(context: Context) {
-    var statusChanged: ((NetworkStatus) -> Unit)? = null
+object NetworkStateListener {
+    var currentStatus: NetworkStatus = NetworkStatus.AVAILABLE
 
-    init {
-        val connectivityManager =
+    var statusChanged: ((NetworkStatus) -> Unit)? = null
+    var cameOnline: (() -> Unit)? = null
+
+    fun init(context: Context) {
+        val connectionManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        connectivityManager.requestNetwork(getNetworkRequest(), getNetworkCallback())
+        connectionManager.requestNetwork(getNetworkRequest(), getNetworkCallback())
         currentStatus =
-            if (connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork) != null)
+            if (connectionManager.getNetworkCapabilities(connectionManager.activeNetwork) != null)
                 NetworkStatus.AVAILABLE else NetworkStatus.LOST
     }
 
@@ -32,20 +34,21 @@ class NetworkStateListener(context: Context) {
 
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                currentStatus = NetworkStatus.AVAILABLE
-                statusChanged?.invoke(NetworkStatus.AVAILABLE)
+                if (currentStatus != NetworkStatus.AVAILABLE) {
+                    currentStatus = NetworkStatus.AVAILABLE
+                    statusChanged?.invoke(NetworkStatus.AVAILABLE)
+                    cameOnline?.invoke()
+                }
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                currentStatus = NetworkStatus.LOST
-                statusChanged?.invoke(NetworkStatus.LOST)
+                if (currentStatus != NetworkStatus.LOST) {
+                    statusChanged?.invoke(NetworkStatus.LOST)
+                    currentStatus = NetworkStatus.LOST
+                }
             }
         }
-    }
-
-    companion object {
-        var currentStatus: NetworkStatus = NetworkStatus.AVAILABLE
     }
 }
 

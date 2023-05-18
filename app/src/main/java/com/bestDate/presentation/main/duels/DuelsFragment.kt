@@ -115,4 +115,9 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             }
         }
     }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getDuels()
+    }
 }

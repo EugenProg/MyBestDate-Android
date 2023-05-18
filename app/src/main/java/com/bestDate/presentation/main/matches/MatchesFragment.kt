@@ -115,4 +115,9 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
             showMessage(it.exception.message)
         }
     }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        if (viewModel.matchesList.value.isNullOrEmpty()) viewModel.getMatches()
+    }
 }

@@ -227,12 +227,13 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        uri?.let {
-            val image = Image(uri = it)
-            openImageEditor(image)
+    private val picker =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                val image = Image(uri = it)
+                openImageEditor(image)
+            }
         }
-    }
 
     private fun setUserInfo() {
         with(binding) {
@@ -267,5 +268,10 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         postDelayed({
             hideKeyboardAction()
         }, 100)
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getChatMessages(user?.id)
     }
 }

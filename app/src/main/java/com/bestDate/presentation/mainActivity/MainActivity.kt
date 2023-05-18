@@ -131,10 +131,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpNetworkListener() {
         lostConnectionDialog = LostConnectionDialog(this)
-        val networkListener = NetworkStateListener(this)
+        NetworkStateListener.init(this)
         if (NetworkStateListener.currentStatus == NetworkStatus.LOST) lostConnectionDialog.startLoading()
 
-        networkListener.statusChanged = {
+        NetworkStateListener.statusChanged = {
             if (it == NetworkStatus.LOST) lostConnectionDialog.startLoading()
             else lostConnectionDialog.stopLoading()
         }

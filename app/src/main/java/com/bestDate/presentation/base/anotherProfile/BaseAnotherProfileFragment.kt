@@ -14,7 +14,6 @@ import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.alerts.showBanningCardsDialog
-import com.bestDate.view.alerts.showBanningMessagesDialog
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -129,9 +128,14 @@ abstract class BaseAnotherProfileFragment :
         }
     }
 
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getUserById(user?.id)
+    }
+
     override fun goBack() {
         viewModel.clearUserData()
-        when(getBackScreen()) {
+        when (getBackScreen()) {
             BackScreenType.SEARCH -> {
                 setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
                 super.goBack()
