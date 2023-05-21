@@ -77,12 +77,13 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 navController.navigate(
                     UserProfileFragmentDirections.actionProfileToSlider(photos.toTypedArray())
                 )
+            } else {
+                openImageSelector()
             }
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
-                if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
-                else imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                openImageSelector()
             } else {
                 showMessage(getString(R.string.you_can_upload_only_9_photo))
             }
@@ -121,6 +122,11 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
             sheet.show(childFragmentManager)
         }
+    }
+
+    private fun openImageSelector() {
+        if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+        else imageListSheet.show(childFragmentManager, imageListSheet.tag)
     }
 
     private fun showPhotoPicker() {

@@ -28,6 +28,7 @@ class SearchViewModel @Inject constructor(
     val user = userUseCase.getMyUser.asLiveData()
     val userList = searchUseCase.usersList
     var meta: Meta? = Meta()
+    var isDataValidated: Boolean = false
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
@@ -113,6 +114,6 @@ enum class FilterType(var serverName: String) {
 
 enum class GenderFilter(val filterName: Int, var serverName: String?) {
     MEN(R.string.men, "male"),
-    WOMEN(R.string.women ,"female"),
+    WOMEN(R.string.women, "female"),
     ALL(R.string.all_gender, null)
 }

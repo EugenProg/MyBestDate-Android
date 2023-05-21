@@ -103,8 +103,8 @@
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_auth_to_fillRegistrationAouthData"
-            app:destination="@id/fillRegistrationAouthDataFragment"
+            android:id="@+id/action_auth_to_fillRegistrationData"
+            app:destination="@id/fillRegistrationDataFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -155,8 +155,8 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_startRegistration_to_fillRegistrationAouthData"
-            app:destination="@id/fillRegistrationAouthDataFragment"
+            android:id="@+id/action_startRegistration_to_fillRegistrationData"
+            app:destination="@id/fillRegistrationDataFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -437,13 +437,37 @@
             <fragment
                 android:id="@+id/searchFragment"
                 android:name="com.bestDate.presentation.main.search.SearchFragment"
-                android:label="SearchFragment" />
+                android:label="SearchFragment" >
+                <action
+                    android:id="@+id/action_search_to_fillData"
+                    app:destination="@id/mainFillDataFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right"/>
+            </fragment>
             <action
                 android:id="@+id/action_global_search_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
                 android:id="@+id/action_global_search_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <fragment android:id="@+id/mainFillDataFragment"
+                android:name="com.bestDate.presentation.main.search.MainFillDataFragment"
+                android:label="MainFillDataFragment">
+                <argument
+                    android:name="name"
+                    app:argType="string"
+                    app:nullable="true" />
+                <argument
+                    android:name="gender"
+                    app:argType="com.bestDate.presentation.registration.GenderType"
+                    android:defaultValue="WOMAN_LOOKING_MAN" />
+                <argument
+                    android:name="birthDate"
+                    app:argType="string"
+                    app:nullable="true" />
+            </fragment>
         </navigation>
         <navigation
             android:id="@+id/matches_nav_graph"
@@ -838,13 +862,13 @@
             app:popExitAnim="@anim/slide_out_right" />
     </navigation>
     <fragment
-        android:id="@+id/fillRegistrationAouthDataFragment"
-        android:name="com.bestDate.presentation.registrationOAuthData.FillRegistrationOAuthDataFragment"
-        android:label="FillRegistrationAouthDataFragment">
+        android:id="@+id/fillRegistrationDataFragment"
+        android:name="com.bestDate.presentation.registrationOAuthData.FillRegistrationDataFragment"
+        android:label="FillRegistrationDataFragment">
         <action
             android:id="@+id/action_fillRegistrationAouthData_to_photo_editor"
             app:destination="@id/photo_editor_nav_graph"
-            app:popUpTo="@id/fillRegistrationAouthDataFragment"
+            app:popUpTo="@id/fillRegistrationDataFragment"
             app:popUpToInclusive="true"  />
         <argument
             android:name="name"

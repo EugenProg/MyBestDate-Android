@@ -1,14 +1,13 @@
 package com.bestDate.presentation.splashActivity
 
 import android.annotation.SuppressLint
-import android.app.PendingIntent
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
-import androidx.navigation.NavDeepLinkBuilder
 import com.bestDate.R
+import com.bestDate.data.extension.createPendingIntent
 import com.bestDate.data.extension.getPushType
 import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.safetyToInt
@@ -71,7 +70,7 @@ class SplashActivity : AppCompatActivity() {
                         "user" to ShortUserData(id = userId),
                         "backScreen" to BackScreenType.START
                     )
-                    createPendingIntent(R.id.another_profile_nav_graph, args).send()
+                    createPendingIntent(this, R.id.another_profile_nav_graph, args).send()
                 } ?: navigate()
             }
             .addOnFailureListener {
@@ -89,7 +88,7 @@ class SplashActivity : AppCompatActivity() {
                 "backScreen" to BackScreenType.PROFILE
             )
         }
-        createPendingIntent(pushType.destination, args).send()
+        createPendingIntent(this, pushType.destination, args).send()
     }
 
     private fun getUserFromBundle(bundle: Bundle): ShortUserData? {
@@ -99,14 +98,5 @@ class SplashActivity : AppCompatActivity() {
             Logger.print("Parsing exception: ${e.message}")
         }
         return null
-    }
-
-    private fun createPendingIntent(destinationId: Int, args: Bundle?): PendingIntent {
-        return NavDeepLinkBuilder(this)
-            .setComponentName(MainActivity::class.java)
-            .setGraph(R.navigation.routes)
-            .setDestination(destinationId)
-            .setArguments(args)
-            .createPendingIntent()
     }
 }

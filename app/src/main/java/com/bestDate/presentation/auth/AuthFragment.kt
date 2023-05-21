@@ -73,7 +73,7 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
     override fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType) {
         navController.navigate(
             AuthFragmentDirections
-                .actionAuthToFillRegistrationAouthData(name, birthDate, genderType))
+                .actionAuthToFillRegistrationData(name, birthDate, genderType))
     }
 
     override fun navigateToPhoto() {

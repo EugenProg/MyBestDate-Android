@@ -1,4 +1,4 @@
-package com.bestDate.presentation.registrationOAuthData
+package com.bestDate.presentation.base.fillRequredData
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

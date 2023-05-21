@@ -13,10 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.R
-import com.bestDate.data.extension.Screens
-import com.bestDate.data.extension.getCurrentScreen
-import com.bestDate.data.extension.isBottomNavVisible
-import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.*
 import com.bestDate.data.utils.NetworkStateListener
 import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.data.utils.notifications.NotificationType
@@ -74,7 +71,6 @@ class MainActivity : AppCompatActivity() {
         observe(viewModel.navigationAction) {
             navController.navigate(it.first, it.second)
         }
-
     }
 
     var pushPermissionLauncher =

@@ -12,6 +12,7 @@ import com.bestDate.data.model.LocationParams
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentSearchBinding
+import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.search.distance.DistanceFragment
 import com.bestDate.presentation.mainActivity.MainActivity
@@ -63,6 +64,9 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
             locationMap = viewModel.getLocationMap(requireContext())
             statusesMap = viewModel.getStatusesMap(requireContext())
             setUpFilters()
+            if (!viewModel.isDataValidated) {
+                it?.let { validateUserData(it) }
+            }
         }
         observe(viewModel.locationLiveData) {
             additionalFilters = AdditionalFilters(LocationParams(distance, it?.lat, it?.lon))
@@ -71,6 +75,19 @@ class SearchFragment : BaseVMFragment<FragmentSearchBinding, SearchViewModel>() 
         }
         observe(viewModel.errorLiveData) {
             binding.searchView.closeLoading()
+        }
+    }
+
+    private fun validateUserData(user: UserDB) {
+        if (user.name.isNullOrBlank() || user.gender.isNullOrBlank() || user.birthday.isNullOrBlank()) {
+            viewModel.isDataValidated = true
+            navController.navigate(
+                SearchFragmentDirections.actionSearchToFillData(
+                    name = user.name,
+                    gender = user.getGenderType(),
+                    birthDate = user.birthday
+                )
+            )
         }
     }
 

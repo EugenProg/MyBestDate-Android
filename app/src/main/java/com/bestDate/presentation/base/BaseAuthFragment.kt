@@ -72,7 +72,7 @@ abstract class BaseAuthFragment<VB: ViewBinding>: BaseVMFragment<VB, AuthViewMod
                 viewModel.registrationSocialMode = false
                 val name = viewModel.user.value?.name
                 val gender = viewModel.user.value?.getGenderType() ?: GenderType.WOMAN_LOOKING_MAN
-                val birthDate = viewModel.user.value?.getBirthDate()?.toServerFormat()
+                val birthDate = viewModel.user.value?.birthday
                 navigateToFillData(name, birthDate, gender)
             }
             viewModel.user.value?.hasNoPhotos() == true && viewModel.getSkipImageCount() < 3 -> {
