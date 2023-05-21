@@ -64,6 +64,22 @@ fun String?.getDateWithTimeOffset(): Date {
     return calendar.time
 }
 
+fun String?.getDate(): Date {
+    if (this.isNullOrBlank()) return Date()
+    val calendar = Calendar.getInstance()
+    val date = this.substring(0, 10).split("-")
+    val time = this.substring(11, 16).split(":")
+    calendar.set(
+        date[0].toInt(),
+        date[1].toInt() - 1,
+        date[2].toInt(),
+        time[0].toInt(),
+        time[1].toInt()
+    )
+
+    return calendar.time
+}
+
 @SuppressLint("SimpleDateFormat")
 fun String?.getWeekdayWithTime(): String {
     val formatter = SimpleDateFormat("EE HH:mm")

@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.R
 import com.bestDate.data.model.FilterOptions
+import com.bestDate.data.model.GeocodingResponse
 import com.bestDate.data.model.Meta
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,10 +28,11 @@ class SearchViewModel @Inject constructor(
     val user = userUseCase.getMyUser.asLiveData()
     val userList = searchUseCase.usersList
     var meta: Meta? = Meta()
+    var isDataValidated: Boolean = false
 
     private var _loadingLiveData = MutableLiveData<Boolean>()
     val loadingLiveData: LiveData<Boolean> = _loadingLiveData
-    val locationLiveData = geoLocationUseCase.locationLiveData
+    val locationLiveData = LiveEvent<GeocodingResponse?>()
 
     fun getUsers(filters: FilterOptions) {
         _loadingLiveData.postValue(true)
@@ -41,8 +44,10 @@ class SearchViewModel @Inject constructor(
     }
 
     fun getLocationByAddress(location: CityListItem?) {
+        _loadingLiveData.postValue(true)
         doAsync {
             geoLocationUseCase.getLocationByAddress(location)
+            locationLiveData.postValue(geoLocationUseCase.location)
         }
     }
 
@@ -109,6 +114,6 @@ enum class FilterType(var serverName: String) {
 
 enum class GenderFilter(val filterName: Int, var serverName: String?) {
     MEN(R.string.men, "male"),
-    WOMEN(R.string.women ,"female"),
+    WOMEN(R.string.women, "female"),
     ALL(R.string.all_gender, null)
 }

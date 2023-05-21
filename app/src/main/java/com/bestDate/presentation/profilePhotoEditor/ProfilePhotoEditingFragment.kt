@@ -18,7 +18,6 @@ import com.bestDate.databinding.FragmentProfilePhotoEditingBinding
 import com.bestDate.presentation.base.BasePhotoEditorFragment
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.presentation.main.userProfile.ImageLineAdapter
-import com.bestDate.presentation.main.userProfile.UserProfileFragmentDirections
 import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.bottomSheet.photoSettingsSheet.PhotoSettingsSheet
 import com.bumptech.glide.Glide

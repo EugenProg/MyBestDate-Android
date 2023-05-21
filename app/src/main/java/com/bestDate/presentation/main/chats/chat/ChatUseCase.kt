@@ -5,6 +5,8 @@ import com.bestDate.data.extension.getDateString
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.*
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
@@ -21,7 +23,8 @@ class ChatUseCase @Inject constructor(
     private val userDao: UserDao,
     private val chatsRemoteData: ChatsRemoteData,
     private val chatListUseCase: ChatListUseCase,
-    private val translateRemoteData: TranslationRemoteData
+    private val translateRemoteData: TranslationRemoteData,
+    private val preferencesUtils: PreferencesUtils
 ) {
     var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData()
     var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
@@ -35,6 +38,10 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
         if (response.isSuccessful) {
             response.body()?.data?.let {
+                preferencesUtils.saveInt(
+                    Preferences.SENT_MESSAGES_TODAY,
+                    it.sent_messages_today.orZero
+                )
                 messages.postValue(addNewMessage(it))
                 chatListUseCase.setMessage(it)
             }
@@ -52,6 +59,10 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.sendImageMessage(recipientId.orZero, body, text)
         if (response.isSuccessful) {
             response.body()?.data?.let {
+                preferencesUtils.saveInt(
+                    Preferences.SENT_MESSAGES_TODAY,
+                    it.sent_messages_today.orZero
+                )
                 messages.postValue(addNewMessage(it))
                 chatListUseCase.setMessage(it)
             }
@@ -136,11 +147,11 @@ class ChatUseCase @Inject constructor(
     }
 
     fun returnMessage(message: Message) {
-            val newMessage = message.copy(
-                translatedText = null,
-                translateStatus = Message.TranslateStatus.UN_ACTIVE
-            )
-            messages.postValue(editMessageList(newMessage))
+        val newMessage = message.copy(
+            translatedText = null,
+            translateStatus = Message.TranslateStatus.UN_ACTIVE
+        )
+        messages.postValue(editMessageList(newMessage))
     }
 
     fun addPusherMessage(message: Message?) {

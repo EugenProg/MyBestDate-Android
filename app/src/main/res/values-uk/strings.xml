@@ -564,7 +564,7 @@
     <string name="you_have_received_an_invitation_please_give_an_answer">Ви отримали запрошення,\nбудь ласка, дайте відповідь</string>
     <string name="answer_choice">Варіанти відповіді</string>
     <string name="we_have_transmitted_your_reply_to_the_sender">Ми передали вашу\nвідповідь відправнику</string>
-    <string name="you_invited">Ви запрошені</string>
+    <string name="you_invited">Ви запросили</string>
     <string name="user_has_not_given_answer_yet">%s ще не відповіла</string>
     <string name="general_info_about_your_account">Загальна інформація про ваш обліковий запис, постарайтеся заповнити коректні дані.</string>
     <string name="general_info">Загальна інформація</string>
@@ -666,4 +666,11 @@
     <string name="the_image_is_out_of_frames">Зображення виходить за межі. Будь ласка, виправте зображення</string>
     <string name="copy">Копіювати</string>
     <string name="message_is_copied_to_clipboard">Повідомлення скопійовано</string>
+    <string name="do_you_want_to_see_who_viewed_your_profile">Хочете побачити, хто переглядав\nваш профіль?</string>
+    <string name="buy_a_subscription">Купити підписку</string>
+    <string name="weak_internet_connection">Слабке з\'єднання з Інтернетом</string>
+    <string name="check_your_mobile_internet_or_wifi_network">Перевірте мобільний інтернет або мережу Wi-Fi</string>
+    <string name="not_activated">Not activated</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">You can’t see the matches because you don’t participate in them</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
 </resources>

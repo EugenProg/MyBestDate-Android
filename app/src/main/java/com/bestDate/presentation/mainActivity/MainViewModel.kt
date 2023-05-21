@@ -9,10 +9,12 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.SubscriptionUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.presentation.main.chats.chat.ChatUseCase
 import com.bestDate.presentation.main.guests.GuestsUseCase
+import com.bestDate.presentation.main.userProfile.settings.SettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -26,6 +28,8 @@ class MainViewModel @Inject constructor(
     private val guestsUseCase: GuestsUseCase,
     private val notificationCenter: NotificationCenter,
     private val pusherCenter: PusherCenter,
+    private val subscriptionUseCase: SubscriptionUseCase,
+    private val settingsUseCase: SettingsUseCase,
     sessionManager: SessionManager
 ) : BaseViewModel() {
 
@@ -81,6 +85,7 @@ class MainViewModel @Inject constructor(
             doAsync {
                 userUseCase.changeLanguage(appLanguage)
                 invitationUseCase.refreshInvitations()
+                settingsUseCase.refreshUserSettings()
                 pusherCenter.startPusher()
             }
         }
@@ -129,6 +134,12 @@ class MainViewModel @Inject constructor(
     fun setMessageToChatList(message: Message?) {
         doAsync {
             chatListUseCase.setMessage(message)
+        }
+    }
+
+    fun refreshAppSettings() {
+        doAsync {
+            subscriptionUseCase.getAppSettings()
         }
     }
 }

@@ -31,7 +31,7 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
         loaderDialog = LoaderDialog(requireActivity())
         setUpToolbar()
         setUpMatchesView()
-        if (viewModel.listIsEmpty()) viewModel.getMatches()
+        if (viewModel.listIsEmpty() && viewModel.matchesEnabled()) viewModel.getMatches()
     }
 
     private fun setUpToolbar() {
@@ -44,9 +44,25 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
     private fun setUpMatchesView() {
         val needingHeight = resources.displayMetrics.heightPixels - 97f.toPx() - 80f.toPx() -
                 resources.displayMetrics.widthPixels - 132f.toPx()
-        binding.matchView.isVisible = needingHeight > -8f
-        binding.scrollMatchContainer.isVisible = needingHeight < -8f
         matchView = if (needingHeight > -8) binding.matchView else binding.scrollMatchView
+
+        with(binding) {
+            if (viewModel.matchesEnabled()) {
+                matchesDisabledView.isVisible = false
+                matchView.isVisible = needingHeight > -8f
+                scrollMatchContainer.isVisible = needingHeight < -8f
+            } else {
+                matchesDisabledView.isVisible = true
+                matchView.isVisible = false
+                scrollMatchContainer.isVisible = false
+
+                matchesDisabledView.clickAction = {
+                    navController.navigate(
+                        MatchesFragmentDirections.actionGlobalMatchesToSettings()
+                    )
+                }
+            }
+        }
     }
 
     override fun onViewClickListener() {
@@ -83,8 +99,8 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
             binding.toolbar.photo = mainPhoto
         }
         observe(viewModel.matchesList) {
-            binding.noDataView.noData = it.isEmpty()
-            matchView.isVisible = it.isNotEmpty()
+            binding.noDataView.noData = it.isEmpty() && viewModel.matchesEnabled()
+            matchView.isVisible = it.isNotEmpty() && viewModel.matchesEnabled()
             matchView.setMatches(it)
         }
         observe(viewModel.matchAction) {
@@ -97,7 +113,8 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
                     )
                 }, { user ->
                     navController.navigate(
-                        MatchesFragmentDirections.actionGlobalMatchesToChat(user, BackScreenType.MATCHES)
+                        MatchesFragmentDirections
+                            .actionGlobalMatchesToChat(user, BackScreenType.MATCHES)
                     )
                 })
             }
@@ -113,5 +130,10 @@ class MatchesFragment : BaseVMFragment<FragmentMatchesBinding, MatchesViewModel>
             loaderDialog.stopLoading()
             showMessage(it.exception.message)
         }
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        if (viewModel.matchesList.value.isNullOrEmpty()) viewModel.getMatches()
     }
 }

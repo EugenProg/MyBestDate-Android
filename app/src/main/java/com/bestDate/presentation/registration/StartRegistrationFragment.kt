@@ -135,7 +135,7 @@ class StartRegistrationFragment : BaseAuthFragment<FragmentStartRegistrationBind
 
     override fun navigateToFillData(name: String?, birthDate: String?, genderType: GenderType) {
         navController.navigate(StartRegistrationFragmentDirections
-            .actionStartRegistrationToFillRegistrationAouthData(name, birthDate, genderType))
+            .actionStartRegistrationToFillRegistrationData(name, birthDate, genderType))
     }
 
     override fun navigateToPhoto() {

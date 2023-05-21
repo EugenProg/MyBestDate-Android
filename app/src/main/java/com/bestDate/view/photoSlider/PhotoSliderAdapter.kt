@@ -32,10 +32,12 @@ class PhotoSliderAdapter:
         override fun bind(item: ProfileImage?) {
             Glide.with(itemView.context)
                 .load(item?.thumb_url)
+                .centerCrop()
                 .into(binding.photo)
 
             Glide.with(itemView.context)
                 .load(item?.full_url)
+                .centerCrop()
                 .into(binding.photo)
 
             binding.root.onSwipeListener(onSwipeBottom = {

@@ -117,6 +117,7 @@ class MatchImageView @JvmOverloads constructor(
         user?.getMainPhoto()?.let {
             Glide.with(context)
                 .load(it.thumb_url)
+                .centerCrop()
                 .into(binding.avatarThumb)
         }
     }
@@ -125,6 +126,7 @@ class MatchImageView @JvmOverloads constructor(
         user?.getMainPhoto()?.full_url?.let {
             Glide.with(context)
                 .load(it)
+                .centerCrop()
                 .into(binding.avatar)
         }
     }

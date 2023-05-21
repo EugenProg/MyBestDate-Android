@@ -6,19 +6,20 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.R
-import com.bestDate.data.extension.Screens
-import com.bestDate.data.extension.getCurrentScreen
-import com.bestDate.data.extension.isBottomNavVisible
-import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.*
+import com.bestDate.data.utils.NetworkStateListener
+import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.data.utils.notifications.NotificationType
 import com.bestDate.data.utils.notifications.TypingEventCoordinator
 import com.bestDate.databinding.ActivityMainBinding
+import com.bestDate.view.alerts.LostConnectionDialog
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,12 +33,14 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels()
     private lateinit var chatListTypingEventCoordinator: TypingEventCoordinator
     private lateinit var chatTypingEventCoordinator: TypingEventCoordinator
+    private lateinit var lostConnectionDialog: LostConnectionDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        setUpNetworkListener()
         setUpNavigation()
         setUpUserObserver()
         setUpUserListObserver()
@@ -122,6 +125,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpNetworkListener() {
+        lostConnectionDialog = LostConnectionDialog(this)
+        NetworkStateListener.init(this)
+        if (NetworkStateListener.currentStatus == NetworkStatus.LOST) lostConnectionDialog.startLoading()
+
+        NetworkStateListener.statusChanged = {
+            if (it == NetworkStatus.LOST) lostConnectionDialog.startLoading()
+            else lostConnectionDialog.stopLoading()
+        }
+    }
+
     private fun setUpChatListTypingCoordinator() {
         chatListTypingEventCoordinator = TypingEventCoordinator {
             viewModel.setChatListTypingEvent(it, false)
@@ -136,6 +150,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (NetworkStateListener.currentStatus == NetworkStatus.LOST) return
+        viewModel.refreshAppSettings()
         viewModel.refreshData(getString(R.string.app_locale))
         if (isInChatList()) viewModel.refreshChatList()
         if (isInChat()) viewModel.refreshChatMessages()

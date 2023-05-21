@@ -163,9 +163,9 @@ class ChatListAdapter : ListAdapter<Chat, ChatListBaseViewHolder<*>>(ChatListDif
         loadMoreItems?.invoke()
     }
 
-    override fun submitList(list: MutableList<Chat>?) {
+    override fun submitList(list: MutableList<Chat>?, commitCallback: Runnable?) {
         loadingMode = false
-        super.submitList(list)
+        super.submitList(list, commitCallback)
     }
 
     private var loadingItem: Chat =

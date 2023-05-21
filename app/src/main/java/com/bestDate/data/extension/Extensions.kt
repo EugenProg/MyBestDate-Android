@@ -1,6 +1,7 @@
 package com.bestDate.data.extension
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
@@ -8,6 +9,7 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.MediaStore
@@ -18,11 +20,13 @@ import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.LifecycleOwner
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.bestDate.R
 import com.bestDate.data.model.BaseResponse
 import com.bestDate.presentation.main.chats.ChatListAdapter
+import com.bestDate.presentation.mainActivity.MainActivity
 import com.bumptech.glide.RequestBuilder
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -273,4 +277,13 @@ fun RecyclerView.swipeDeleteListener(deleteAction: ((Int) -> Unit)) {
             }
         }
     }).attachToRecyclerView(this)
+}
+
+fun createPendingIntent(context: Context, destinationId: Int, args: Bundle?): PendingIntent {
+    return NavDeepLinkBuilder(context)
+        .setComponentName(MainActivity::class.java)
+        .setGraph(R.navigation.routes)
+        .setDestination(destinationId)
+        .setArguments(args)
+        .createPendingIntent()
 }

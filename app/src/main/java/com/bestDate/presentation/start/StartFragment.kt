@@ -5,7 +5,10 @@ import android.view.ViewGroup
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.model.InternalException
 import com.bestDate.data.utils.Logger
+import com.bestDate.data.utils.NetworkStateListener
+import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.databinding.FragmentStartBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +48,9 @@ class StartFragment : BaseVMFragment<FragmentStartBinding, StartViewModel>() {
         }
         observe(viewModel.errorLiveData) {
             Logger.print("refresh exception: ${it.exception.message}")
-            navController.navigate(StartFragmentDirections.actionStartToAuth())
+            if (NetworkStateListener.currentStatus == NetworkStatus.LOST) {
+                chooseRoute()
+            } else navController.navigate(StartFragmentDirections.actionStartToAuth())
         }
         observe(viewModel.user) {
             if (it != null && tokenIsRefreshed) {

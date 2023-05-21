@@ -40,9 +40,11 @@ class MatchesListAdapter(private val myPhotoUrl: String) :
                     .into(avatar)
                 Glide.with(itemView.context)
                     .load(myPhotoUrl)
+                    .centerCrop()
                     .into(myPhoto)
                 Glide.with(itemView.context)
                     .load(item?.user?.main_photo?.thumb_url)
+                    .centerCrop()
                     .into(userPhoto)
                 name.text = item?.user?.name
                 location.text = item?.user?.getLocation()

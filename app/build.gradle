@@ -15,8 +15,8 @@ android {
         applicationId "com.bestDate"
         minSdk 26
         targetSdk 33
-        versionCode 15
-        versionName '1.0.15'
+        versionCode 16
+        versionName '1.0.16'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -73,6 +73,7 @@ dependencies {
 
     //BLUR
     implementation 'jp.wasabeef:blurry:4.0.1'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
     //Editor photo
     implementation 'com.github.takusemba:cropme:2.0.8'

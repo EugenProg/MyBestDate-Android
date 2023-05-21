@@ -15,6 +15,7 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.chats.ChatListUseCase
+import com.bestDate.presentation.main.userProfile.settings.SettingsUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
     private val chatListUseCase: ChatListUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
@@ -63,6 +65,7 @@ class AuthViewModel @Inject constructor(
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.changeLanguage(appLanguage)
             chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
@@ -76,6 +79,7 @@ class AuthViewModel @Inject constructor(
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.changeLanguage(appLanguage)
             chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
@@ -88,6 +92,7 @@ class AuthViewModel @Inject constructor(
             authUseCase.loginSocial(provider, token)
             userUseCase.changeLanguage(appLanguage)
             chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
             _loginSuccessLiveData.postValue(user.value)
@@ -99,6 +104,7 @@ class AuthViewModel @Inject constructor(
             authUseCase.loginWithGoogle(authCode)
             userUseCase.changeLanguage(appLanguage)
             chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
             _loginSuccessLiveData.postValue(user.value)

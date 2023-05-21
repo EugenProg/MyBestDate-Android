@@ -141,6 +141,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun subscriptionService(@Core_network retrofit: Retrofit): SubscriptionService =
+        retrofit.create(SubscriptionService::class.java)
+
+    @Provides
+    @Singleton
     fun getAuthToken(@GoogleAuthCode_network retrofit: Retrofit): GoogleAuthService =
         retrofit.create(GoogleAuthService::class.java)
 
@@ -183,6 +188,11 @@ object NetworkModule {
     @Singleton
     fun topRemoteData(topService: TopService): TopRemoteData =
         TopRemoteData(topService)
+
+    @Provides
+    @Singleton
+    fun subscriptionRemoteData(subscriptionService: SubscriptionService): SubscriptionRemoteData =
+        SubscriptionRemoteData(subscriptionService)
 
     @Provides
     @Singleton

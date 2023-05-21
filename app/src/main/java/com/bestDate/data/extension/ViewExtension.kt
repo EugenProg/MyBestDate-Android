@@ -13,6 +13,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import androidx.viewpager2.widget.ViewPager2
 import com.bestDate.R
 
@@ -212,4 +215,24 @@ fun View.hideWithAlphaAnimation(duration: Long = 800) {
         visibility = View.INVISIBLE
         alpha = 1f
     }, duration)
+}
+
+fun RecyclerView.setOnScrollListener(scrolledDown: (() -> Unit)? = null, scrolledUp: (() -> Unit)?) {
+    this.addOnScrollListener(object : OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (dy > 0) scrolledDown?.invoke()
+            else if (dy < 0) scrolledUp?.invoke()
+        }
+    })
+}
+
+fun RecyclerView.isToLastPositionScrolled(isScrolled: () -> Unit) {
+    this.setOnScrollListener {
+        if (this.layoutManager is LinearLayoutManager) {
+            val layoutManager = this.layoutManager as LinearLayoutManager
+            if (layoutManager.itemCount - layoutManager.findLastVisibleItemPosition() < 3) {
+                isScrolled.invoke()
+            }
+        }
+    }
 }

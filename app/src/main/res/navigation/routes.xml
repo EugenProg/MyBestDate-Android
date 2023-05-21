@@ -103,8 +103,8 @@
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_auth_to_fillRegistrationAouthData"
-            app:destination="@id/fillRegistrationAouthDataFragment"
+            android:id="@+id/action_auth_to_fillRegistrationData"
+            app:destination="@id/fillRegistrationDataFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -155,8 +155,8 @@
             app:popEnterAnim="@anim/slide_in_right"
             app:popExitAnim="@anim/slide_out_right" />
         <action
-            android:id="@+id/action_startRegistration_to_fillRegistrationAouthData"
-            app:destination="@id/fillRegistrationAouthDataFragment"
+            android:id="@+id/action_startRegistration_to_fillRegistrationData"
+            app:destination="@id/fillRegistrationDataFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_right"
@@ -268,13 +268,6 @@
                     app:popEnterAnim="@anim/slide_in_top_right"
                     app:popExitAnim="@anim/slide_out_right" />
                 <action
-                    android:id="@+id/action_profile_to_settings"
-                    app:destination="@id/settingsFragment"
-                    app:enterAnim="@anim/slide_in_top_left"
-                    app:exitAnim="@anim/slide_out_left"
-                    app:popEnterAnim="@anim/slide_in_top_right"
-                    app:popExitAnim="@anim/slide_out_right"  />
-                <action
                     android:id="@+id/action_profile_to_questionnaire"
                     app:destination="@id/profileQuestionnaireFragment"
                     app:enterAnim="@anim/slide_in_top_left"
@@ -334,33 +327,9 @@
                     app:popExitAnim="@anim/slide_out_right" />
             </fragment>
             <fragment
-                android:id="@+id/settingsFragment"
-                android:name="com.bestDate.presentation.main.userProfile.settings.SettingsFragment"
-                android:label="SettingsFragment">
-                <action
-                    android:id="@+id/action_settings_to_blockedUsers"
-                    app:destination="@id/blockedUsersFragment"
-                    app:enterAnim="@anim/slide_in_left"
-                    app:exitAnim="@anim/slide_out_left"
-                    app:popEnterAnim="@anim/slide_in_right"
-                    app:popExitAnim="@anim/slide_out_right" />
-                <action
-                    android:id="@+id/action_refresh"
-                    app:destination="@id/settingsFragment"
-                    app:enterAnim="@anim/fade_in"
-                    app:exitAnim="@anim/fade_out"
-                    app:popUpTo="@id/settingsFragment"
-                    app:popUpToInclusive="true"/>
-
-            </fragment>
-            <fragment
                 android:id="@+id/profileQuestionnaireFragment"
                 android:name="com.bestDate.presentation.main.userProfile.questionnaire.ProfileQuestionnaireFragment"
                 android:label="ProfileQuestionnaire" />
-            <fragment
-                android:id="@+id/blockedUsersFragment"
-                android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"
-                android:label="BlockedUsersFragment" />
             <fragment
                 android:id="@+id/changePasswordFragment"
                 android:name="com.bestDate.presentation.main.userProfile.personalData.changePassword.ChangePasswordFragment"
@@ -383,6 +352,13 @@
             <action
                 android:id="@+id/action_global_profile_to_chat"
                 app:destination="@id/chat_nav_graph" />
+            <action
+                android:id="@+id/action_global_profile_to_settings"
+                app:destination="@id/settings_nav_graph"
+                app:enterAnim="@anim/slide_in_top_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_top_right"
+                app:popExitAnim="@anim/slide_out_right" />
 
         </navigation>
 
@@ -436,9 +412,8 @@
                     android:defaultValue="0"
                     app:argType="integer" />
                 <argument
-                    android:name="userId"
-                    android:defaultValue="0"
-                    app:argType="integer" />
+                    android:name="user"
+                    app:argType="com.bestDate.data.model.ShortUserData" />
             </fragment>
             <action
                 android:id="@+id/action_global_another_profile_to_chat"
@@ -448,6 +423,13 @@
                 app:destination="@id/search_nav_graph"
                 app:popUpTo="@id/another_profile_nav_graph"
                 app:popUpToInclusive="true"/>
+            <action
+                android:id="@+id/action_global_another_profile_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <navigation
             android:id="@+id/search_nav_graph"
@@ -455,13 +437,37 @@
             <fragment
                 android:id="@+id/searchFragment"
                 android:name="com.bestDate.presentation.main.search.SearchFragment"
-                android:label="SearchFragment" />
+                android:label="SearchFragment" >
+                <action
+                    android:id="@+id/action_search_to_fillData"
+                    app:destination="@id/mainFillDataFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right"/>
+            </fragment>
             <action
                 android:id="@+id/action_global_search_to_profile"
                 app:destination="@id/profile_nav_graph" />
             <action
                 android:id="@+id/action_global_search_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <fragment android:id="@+id/mainFillDataFragment"
+                android:name="com.bestDate.presentation.main.search.MainFillDataFragment"
+                android:label="MainFillDataFragment">
+                <argument
+                    android:name="name"
+                    app:argType="string"
+                    app:nullable="true" />
+                <argument
+                    android:name="gender"
+                    app:argType="com.bestDate.presentation.registration.GenderType"
+                    android:defaultValue="WOMAN_LOOKING_MAN" />
+                <argument
+                    android:name="birthDate"
+                    app:argType="string"
+                    app:nullable="true" />
+            </fragment>
         </navigation>
         <navigation
             android:id="@+id/matches_nav_graph"
@@ -501,7 +507,18 @@
                 app:destination="@id/another_profile_nav_graph" />
             <action
                 android:id="@+id/action_global_matches_to_chat"
-                app:destination="@id/chat_nav_graph" />
+                app:destination="@id/chat_nav_graph"
+                app:enterAnim="@anim/slide_in_top_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_top_right"
+                app:popExitAnim="@anim/slide_out_right" />
+            <action
+                android:id="@+id/action_global_matches_to_settings"
+                app:destination="@id/settings_nav_graph"
+                app:enterAnim="@anim/slide_in_top_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_top_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <navigation
             android:id="@+id/chat_list_nav_graph"
@@ -530,6 +547,13 @@
             <action
                 android:id="@+id/action_global_guests_to_profile"
                 app:destination="@id/profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_guests_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <navigation
             android:id="@+id/top_nav_graph"
@@ -608,12 +632,55 @@
             <action
                 android:id="@+id/action_global_chat_to_another_profile"
                 app:destination="@id/another_profile_nav_graph" />
+            <action
+                android:id="@+id/action_global_chat_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right"/>
         </navigation>
         <action
             android:id="@+id/action_global_authFragment"
             app:destination="@id/authFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
+
+        <navigation android:id="@+id/settings_nav_graph"
+            app:startDestination="@id/settingsFragment">
+            <fragment
+                android:id="@+id/settingsFragment"
+                android:name="com.bestDate.presentation.main.userProfile.settings.SettingsFragment"
+                android:label="SettingsFragment">
+                <action
+                    android:id="@+id/action_settings_to_blockedUsers"
+                    app:destination="@id/blockedUsersFragment"
+                    app:enterAnim="@anim/slide_in_left"
+                    app:exitAnim="@anim/slide_out_left"
+                    app:popEnterAnim="@anim/slide_in_right"
+                    app:popExitAnim="@anim/slide_out_right" />
+                <action
+                    android:id="@+id/action_refresh"
+                    app:destination="@id/settingsFragment"
+                    app:enterAnim="@anim/fade_in"
+                    app:exitAnim="@anim/fade_out"
+                    app:popUpTo="@id/settingsFragment"
+                    app:popUpToInclusive="true"/>
+
+            </fragment>
+            <fragment
+                android:id="@+id/blockedUsersFragment"
+                android:name="com.bestDate.presentation.main.userProfile.settings.bockedUsers.BlockedUsersFragment"
+                android:label="BlockedUsersFragment" />
+            <action
+                android:id="@+id/action_global_settings_to_another_profile"
+                app:destination="@id/another_profile_nav_graph"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right"/>
+        </navigation>
+
         <fragment
             android:id="@+id/globalLikePushScreen"
             android:name="com.bestDate.presentation.globalPushScreens.GlobalLikePushScreen"
@@ -674,7 +741,17 @@
             <action
                 android:id="@+id/action_chatPush_to_another_profile"
                 app:destination="@id/another_profile_nav_graph"/>
+            <action
+                android:id="@+id/action_globalChatPush_to_tariffList"
+                app:destination="@id/tariffListFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </fragment>
+        <fragment android:id="@+id/tariffListFragment"
+            android:name="com.bestDate.presentation.main.tariff.TariffListFragment"
+            android:label="TariffListFragment"/>
     </navigation>
 
     <navigation
@@ -785,13 +862,13 @@
             app:popExitAnim="@anim/slide_out_right" />
     </navigation>
     <fragment
-        android:id="@+id/fillRegistrationAouthDataFragment"
-        android:name="com.bestDate.presentation.registrationOAuthData.FillRegistrationOAuthDataFragment"
-        android:label="FillRegistrationAouthDataFragment">
+        android:id="@+id/fillRegistrationDataFragment"
+        android:name="com.bestDate.presentation.registrationOAuthData.FillRegistrationDataFragment"
+        android:label="FillRegistrationDataFragment">
         <action
             android:id="@+id/action_fillRegistrationAouthData_to_photo_editor"
             app:destination="@id/photo_editor_nav_graph"
-            app:popUpTo="@id/fillRegistrationAouthDataFragment"
+            app:popUpTo="@id/fillRegistrationDataFragment"
             app:popUpToInclusive="true"  />
         <argument
             android:name="name"

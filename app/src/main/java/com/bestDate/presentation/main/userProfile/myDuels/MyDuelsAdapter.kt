@@ -30,9 +30,9 @@ class MyDuelsAdapter: PagingDataAdapter<MyDuel, MyDuelsAdapter.MyDuelsViewHolder
         BaseClickViewHolder<MyDuel?, ((ShortUserData?) -> Unit)?, ItemMyDuelBinding>(binding) {
         override fun bindView(item: MyDuel?, itemClick: ((ShortUserData?) -> Unit)?) {
             with(binding) {
-                Glide.with(itemView.context).load(item?.winning_photo?.thumb_url).into(winnerImage)
-                Glide.with(itemView.context).load(item?.loser_photo?.thumb_url).into(loserImage)
-                Glide.with(itemView.context).load(item?.voter?.getMainPhoto()?.thumb_url).into(voterImage)
+                Glide.with(itemView.context).load(item?.winning_photo?.thumb_url).centerCrop().into(winnerImage)
+                Glide.with(itemView.context).load(item?.loser_photo?.thumb_url).centerCrop().into(loserImage)
+                Glide.with(itemView.context).load(item?.voter?.getMainPhoto()?.thumb_url).centerCrop().into(voterImage)
 
                 name.text = item?.voter?.name
                 age.text = item?.voter?.getAge()

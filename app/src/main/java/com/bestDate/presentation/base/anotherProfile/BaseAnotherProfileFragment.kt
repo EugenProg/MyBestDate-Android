@@ -13,6 +13,7 @@ import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.alerts.showBanningCardsDialog
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,6 +43,7 @@ abstract class BaseAnotherProfileFragment :
     abstract fun navigateToSlider(position: Int)
     abstract fun navigateToQuestionnaire()
     abstract fun navigateToSearch()
+    abstract fun navigateToTariffList()
 
     override fun onInit() {
         super.onInit()
@@ -73,8 +75,14 @@ abstract class BaseAnotherProfileFragment :
             goBack()
         }
         binding.navBox.cardClick = {
-            requireActivity().showCreateInvitationDialog(invitationList) {
-                viewModel.sendInvitation(user?.id, it.id)
+            if (viewModel.invitationSendAllowed()) {
+                requireActivity().showCreateInvitationDialog(invitationList) {
+                    viewModel.sendInvitation(user?.id, it.id)
+                }
+            } else {
+                requireActivity().showBanningCardsDialog {
+                    navigateToTariffList()
+                }
             }
         }
         binding.navBox.chatClick = {
@@ -120,9 +128,14 @@ abstract class BaseAnotherProfileFragment :
         }
     }
 
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getUserById(user?.id)
+    }
+
     override fun goBack() {
         viewModel.clearUserData()
-        when(getBackScreen()) {
+        when (getBackScreen()) {
             BackScreenType.SEARCH -> {
                 setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
                 super.goBack()

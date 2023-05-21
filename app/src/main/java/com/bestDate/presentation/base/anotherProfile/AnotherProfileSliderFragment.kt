@@ -10,6 +10,7 @@ import com.bestDate.data.extension.setNavigationResult
 import com.bestDate.databinding.FragmentAnotherProfileSliderBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.alerts.showBanningCardsDialog
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +31,8 @@ abstract class AnotherProfileSliderFragment :
 
     abstract fun getPosition(): Int
     abstract fun getUserId(): Int
+    abstract fun navigateToTariffList()
+    abstract fun navigateToChat()
 
     private var invitationList: MutableList<Invitation> = mutableListOf()
     private var isLikeClicked: Boolean = false
@@ -45,9 +48,18 @@ abstract class AnotherProfileSliderFragment :
             goBack()
         }
         binding.navBox.cardClick = {
-            requireActivity().showCreateInvitationDialog(invitationList) {
-                viewModel.sendInvitation(viewModel.user.value?.id, it.id)
+            if (viewModel.invitationSendAllowed()) {
+                requireActivity().showCreateInvitationDialog(invitationList) {
+                    viewModel.sendInvitation(viewModel.user.value?.id, it.id)
+                }
+            } else {
+                requireActivity().showBanningCardsDialog {
+                    navigateToTariffList()
+                }
             }
+        }
+        binding.navBox.chatClick = {
+            navigateToChat()
         }
         binding.sliderView.onSwipe = {
             goBack()

@@ -2,6 +2,7 @@ package com.bestDate.presentation.main.anotherProfile
 
 import androidx.navigation.fragment.navArgs
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.presentation.base.anotherProfile.BaseAnotherProfileFragment
 
 class MainAnotherProfileFragment: BaseAnotherProfileFragment() {
@@ -26,7 +27,8 @@ class MainAnotherProfileFragment: BaseAnotherProfileFragment() {
     override fun navigateToSlider(position: Int) {
         navController.navigate(
             MainAnotherProfileFragmentDirections
-                .actionAnotherProfileToSlider(position, fullUser?.id ?: 0)
+                .actionAnotherProfileToSlider(
+                    fullUser?.getShortUser(null) ?: ShortUserData(), position)
         )
     }
 
@@ -39,6 +41,12 @@ class MainAnotherProfileFragment: BaseAnotherProfileFragment() {
     override fun navigateToSearch() {
         navController.navigate(
             MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToSearch()
+        )
+    }
+
+    override fun navigateToTariffList() {
+        navController.navigate(
+            MainAnotherProfileFragmentDirections.actionGlobalAnotherProfileToTariffList()
         )
     }
 }

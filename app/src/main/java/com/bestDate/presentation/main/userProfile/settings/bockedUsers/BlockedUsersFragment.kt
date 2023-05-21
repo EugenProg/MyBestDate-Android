@@ -50,7 +50,7 @@ class BlockedUsersFragment : BaseVMFragment<FragmentBlockedUsersBinding, Blocked
             adapter.openClick = {
                 navController.navigate(
                     BlockedUsersFragmentDirections
-                        .actionGlobalAnotherProfile(it, BackScreenType.PROFILE)
+                        .actionGlobalSettingsToAnotherProfile(it, BackScreenType.PROFILE)
                 )
             }
             adapter.unlockClick = {

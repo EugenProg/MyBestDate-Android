@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.base.anotherProfile.AnotherProfileUseCase
@@ -15,7 +17,8 @@ import javax.inject.Inject
 class MatchesViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
     private val matchUseCase: MatchUseCase,
-    private val anotherProfileUseCase: AnotherProfileUseCase
+    private val anotherProfileUseCase: AnotherProfileUseCase,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()
     val matchesList = matchUseCase.matchesList
@@ -33,6 +36,8 @@ class MatchesViewModel @Inject constructor(
     }
 
     fun listIsEmpty(): Boolean = matchUseCase.fullList.isEmpty()
+
+    fun matchesEnabled(): Boolean = preferencesUtils.getBoolean(Preferences.MATCHES_ENABLED)
 
     fun matchAction(userId: Int?) {
         doAsync {

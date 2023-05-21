@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.bestDate.R
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.databinding.FragmentDistanceBinding
@@ -42,7 +43,7 @@ class DistanceFragment(var userLocation: String?,
         binding.bar.run {
             minProgress = 0
             maxProgress = 300
-            progress = distance?.let { distance } ?: getHalfDistance()
+            progress = distance ?: getHalfDistance()
         }
     }
 
@@ -61,12 +62,19 @@ class DistanceFragment(var userLocation: String?,
             selectedLocation = it
         }
         binding.saveButton.setOnSaveClickListener {
-            if (selectedLocation == null) {
+            if (selectedLocation == null && distance == null && binding.bar.progress == getHalfDistance()) {
                 goBack()
             } else {
-                saveClick?.invoke(selectedLocation, binding.bar.progress)
+                val location = selectedLocation ?: getLocationFromUserAddress()
+                saveClick?.invoke(location, binding.bar.progress)
             }
         }
+    }
+
+    private fun getLocationFromUserAddress(): CityListItem {
+        val address = userLocation?.split(", ")
+        if (address?.size.orZero < 2) return CityListItem(0, "", userLocation ?: "")
+        return CityListItem(0, address?.get(0), address?.get(1) ?: "")
     }
 
     override fun scrollAction() {

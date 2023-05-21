@@ -70,6 +70,12 @@ class UserUseCase @Inject constructor(
         hasNewLikes.postValue(user.new_likes.orZero > 0)
         hasNewMatches.postValue(user.new_matches.orZero > 0)
         hasNewDuels.postValue(user.new_duels.orZero > 0)
+        preferencesUtils.saveBoolean(Preferences.IS_A_MAN, user.gender == "male")
+        preferencesUtils.saveInt(Preferences.SENT_MESSAGES_TODAY, user.sent_messages_today.orZero)
+        preferencesUtils.saveInt(
+            Preferences.SENT_INVITATIONS_TODAY,
+            user.sent_invitations_today.orZero
+        )
     }
 
     suspend fun logout() {
@@ -94,6 +100,8 @@ class UserUseCase @Inject constructor(
         preferencesUtils.saveString(Preferences.FILTER_LOCATION, FilterType.ALL.serverName)
         preferencesUtils.saveString(Preferences.FILTER_STATUS, FilterType.NOT_SELECTED.serverName)
         preferencesUtils.saveString(Preferences.FILTER_GENDER, "")
+        preferencesUtils.saveInt(Preferences.SENT_MESSAGES_TODAY, 0)
+        preferencesUtils.saveInt(Preferences.SENT_INVITATIONS_TODAY, 0)
     }
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {

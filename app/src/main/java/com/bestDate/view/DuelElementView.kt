@@ -30,6 +30,7 @@ class DuelElementView @JvmOverloads constructor(
         isLiked = false
         Glide.with(context)
             .load(image)
+            .centerCrop()
             .into(binding.profileImageView)
     }
 
