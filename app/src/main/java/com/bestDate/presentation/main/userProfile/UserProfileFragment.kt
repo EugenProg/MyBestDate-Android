@@ -104,7 +104,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             navController.navigate(UserProfileFragmentDirections.actionProfileToPersonalData())
         }
         binding.settingsButton.click = {
-            navController.navigate(UserProfileFragmentDirections.actionProfileToSettings())
+            navController.navigate(UserProfileFragmentDirections.actionGlobalProfileToSettings())
         }
         binding.questionnaireButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToQuestionnaire())

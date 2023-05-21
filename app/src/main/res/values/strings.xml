@@ -684,4 +684,7 @@
     <string name="buy_a_subscription">Buy a subscription</string>
     <string name="weak_internet_connection">Weak internet connection</string>
     <string name="check_your_mobile_internet_or_wifi_network">Check your Mobile Internet or WiFi network</string>
+    <string name="not_activated">Not activated</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">You can’t see the matches because\nyou don’t participate in them</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
 </resources>

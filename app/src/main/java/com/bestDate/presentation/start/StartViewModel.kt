@@ -7,6 +7,7 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
+import com.bestDate.presentation.main.userProfile.settings.SettingsUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,6 +16,7 @@ import javax.inject.Inject
 class StartViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
     private val authUseCase: AuthUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val preferencesUtils: PreferencesUtils,
     private val pusherCenter: PusherCenter
 ) : BaseViewModel() {
@@ -45,12 +47,14 @@ class StartViewModel @Inject constructor(
     fun refreshUser() {
         doAsync {
             userUseCase.refreshUser()
+            settingsUseCase.refreshUserSettings()
         }
     }
 
     fun changeLanguage(language: String) {
         doAsync {
             userUseCase.changeLanguage(language)
+            settingsUseCase.refreshUserSettings()
             _updateLanguageSuccessLiveData.postValue(true)
         }
     }
