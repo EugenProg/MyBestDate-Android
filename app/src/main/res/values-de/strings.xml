@@ -670,7 +670,7 @@
     <string name="buy_a_subscription">Ein Abonnement kaufen</string>
     <string name="weak_internet_connection">Schwache Internetverbindung</string>
     <string name="check_your_mobile_internet_or_wifi_network">Überprüfen Sie Ihr mobiles Internet oder Wi-Fi-Netzwerk</string>
-    <string name="not_activated">Not activated</string>
-    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">You can’t see the matches because you don’t participate in them</string>
-    <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
+    <string name="not_activated">Nicht aktiviert</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">Sie können die Spiele nicht sehen,\nweil Sie nicht an ihnen teilnehmen</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">Sie müssen zu den Einstellungen gehen und\nSpiele aktivieren</string>
 </resources>

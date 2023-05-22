@@ -670,7 +670,7 @@
     <string name="buy_a_subscription">Купить подписку</string>
     <string name="weak_internet_connection">Слабое интернет-соединение</string>
     <string name="check_your_mobile_internet_or_wifi_network">Проверьте мобильный интернет или сеть Wi-Fi</string>
-    <string name="not_activated">Not activated</string>
-    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">You can’t see the matches because you don’t participate in them</string>
-    <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
+    <string name="not_activated">Не активировано</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">Вы не можете видеть матчи,\nпотому что не участвуете в них</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">Вам нужно перейти в настройки и\nактивировать матчи</string>
 </resources>
