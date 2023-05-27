@@ -16,6 +16,10 @@ class RegistrationOtpFragment : BaseOtpFragment() {
         if (RegistrationHolder.type == RegistrationType.EMAIL) R.string.on_the_email_you_specified_we_send_the_confirmation_code
         else R.string.on_the_phone_you_specified_we_send_the_confirmation_code
 
+    override fun resendCode() {
+        viewModel.sendRegistrationCode(RegistrationHolder.login)
+    }
+
     override fun getButtonTitle(): Int = R.string.confirm
 
     override fun onInit() {

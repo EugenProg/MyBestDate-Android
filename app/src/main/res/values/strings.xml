@@ -462,6 +462,11 @@
 
 
     <string name="i_didn_t_get_the_code_send_it_again">I didn’t get the code, send it again</string>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="many">%d seconds</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
     <string name="_60_second">60 second</string>
     <string name="enter_the_confirmation_code">Enter the confirmation code</string>
     <string name="confirmation_code">Confirmation code</string>

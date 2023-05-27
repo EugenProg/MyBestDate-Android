@@ -1,19 +1,24 @@
 package com.bestDate.presentation.base
 
+import android.os.CountDownTimer
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.core.view.isVisible
+import com.bestDate.R
 import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.utils.Logger
 import com.bestDate.databinding.FragmentBaseOtpBinding
 
 abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBaseOtpBinding =
         { inflater, parent, attach -> FragmentBaseOtpBinding.inflate(inflater, parent, attach) }
 
+    private lateinit var timer: CountDownTimer
     abstract fun getTitle(): Int
     abstract fun getText(): Int
+    abstract fun resendCode()
+    abstract fun sendOtp(code: String)
     abstract fun getButtonTitle(): Int
     override val statusBarLight = true
 
@@ -26,6 +31,8 @@ abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
             otpInput.inputType = InputType.TYPE_CLASS_NUMBER
 
             otpInput.icon = null
+
+            startTimer()
         }
     }
 
@@ -34,7 +41,10 @@ abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
         with(binding) {
             backButton.onClick = { goBack() }
             confirmButton.onClick = { sendOtp(binding.otpInput.text) }
-            resendButton.setOnSaveClickListener { resendCode() }
+            resendButton.setOnSaveClickListener {
+                startTimer()
+                resendCode()
+            }
 
             otpInput.onTextChangeListener = {
                 if (it.length >= 6) sendOtp(it)
@@ -46,9 +56,6 @@ abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
         binding.headerEmail.text = login
     }
 
-    abstract fun sendOtp(code: String)
-
-    protected open fun resendCode() {}
 
     override fun scrollAction() {
         super.scrollAction()
@@ -58,5 +65,36 @@ abstract class BaseOtpFragment : BaseFragment<FragmentBaseOtpBinding>() {
     override fun hideAction() {
         super.hideAction()
         binding.resendButton.isVisible = true
+    }
+
+    private fun startTimer() {
+        binding.resendTitle.isVisible = false
+        binding.timeView.isVisible = true
+        try {
+            timer = object : CountDownTimer(60000, 1000) {
+                override fun onTick(t: Long) {
+                    val time = (t / 1000).toInt()
+                    binding.timeView.text =
+                        resources.getQuantityString(R.plurals.seconds, time, time)
+                }
+
+                override fun onFinish() {
+                    binding.resendTitle.isVisible = true
+                    binding.timeView.isVisible = false
+                }
+
+            }
+        } catch (e: Exception) {
+            Logger.print("timer exception: ${e.message}")
+        }
+
+        timer.start()
+    }
+
+    override var customBackNavigation: Boolean = true
+
+    override fun goBack() {
+        timer.cancel()
+        super.goBack()
     }
 }

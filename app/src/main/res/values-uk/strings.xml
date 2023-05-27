@@ -449,6 +449,12 @@
     <string name="JP">Японія</string>
 
     <string name="i_didn_t_get_the_code_send_it_again">Я не отримав код, відправте його ще раз</string>
+    <plurals name="seconds">
+        <item quantity="one">%d секунда</item>
+        <item quantity="few">%d секунди</item>
+        <item quantity="many">%d секунд</item>
+        <item quantity="other">%d секунд</item>
+    </plurals>
     <string name="_60_second">60 секунд</string>
     <string name="enter_the_confirmation_code">Введіть код підтвердження</string>
     <string name="confirmation_code">Код підтвердження</string>

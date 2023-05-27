@@ -12,6 +12,7 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -24,10 +25,10 @@ class RegistrationViewModel @Inject constructor(
     private val preferencesUtils: PreferencesUtils
     ) : BaseViewModel() {
 
-    private var _sendCodeLiveData = MutableLiveData<Boolean>()
+    private var _sendCodeLiveData = LiveEvent<Boolean>()
     val sendCodeLiveData: LiveData<Boolean> = _sendCodeLiveData
 
-    private var _registrationLiveData = MutableLiveData<Boolean>()
+    private var _registrationLiveData = LiveEvent<Boolean>()
     val registrationLiveData: LiveData<Boolean> = _registrationLiveData
 
     private var _loadingLiveData = MutableLiveData<Boolean>()

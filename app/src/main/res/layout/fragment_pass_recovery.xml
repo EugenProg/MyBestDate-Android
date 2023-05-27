@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 app:back_button_color="@color/bg_main"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/headerTitle"
@@ -58,15 +58,23 @@
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
-                    app:hint="@string/email_or_phone_number"
-                    android:layout_marginTop="35dp" />
+                    android:layout_marginTop="35dp"
+                    app:hint="@string/email_or_phone_number" />
+
+                <com.bestDate.view.StandardInputView
+                    android:id="@+id/passInput"
+                    style="@style/standard_input"
+                    android:layout_marginTop="24dp"
+                    app:hint="@string/enter_a_new_password"
+                    app:isPassField="true"
+                    app:src="@drawable/ic_eye" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/recoveryButton"
                     style="@style/standard_button"
-                    app:title="@string/next"
                     android:layout_marginTop="35dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    app:title="@string/next" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
