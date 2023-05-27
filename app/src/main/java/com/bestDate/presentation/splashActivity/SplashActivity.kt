@@ -41,6 +41,7 @@ class SplashActivity : AppCompatActivity() {
             }, 1600)
         } else {
             checkForDeeplink()
+            navigate()
         }
     }
 
@@ -71,11 +72,10 @@ class SplashActivity : AppCompatActivity() {
                         "backScreen" to BackScreenType.START
                     )
                     createPendingIntent(this, R.id.another_profile_nav_graph, args).send()
-                } ?: navigate()
+                }
             }
             .addOnFailureListener {
                 Logger.print("Deeplink read exception: ${it.message}")
-                navigate()
             }
     }
 

@@ -21,6 +21,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private var activeRequests: HashMap<String, Boolean> = hashMapOf()
+
+    fun requestIsValid(request: String): Boolean {
+        return activeRequests[request] == null
+    }
+
+    fun addRequest(request: String) {
+        activeRequests[request] = true
+    }
+
+    fun removeRequest(request: String) {
+        activeRequests.remove(request)
+    }
+
     @Provides
     @Core_url
     fun providesCoreBaseURL(): String = "https://api.bestdate.info"
@@ -47,6 +61,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(HeaderInterceptor(context))
             .addInterceptor(AuthorizationInterceptor(sessionManager))
+            .addInterceptor(ValidateInterceptor())
             .addInterceptor(interceptor)
             .build()
     }
