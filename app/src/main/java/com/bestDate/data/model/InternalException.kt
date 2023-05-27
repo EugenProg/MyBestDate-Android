@@ -6,7 +6,7 @@ sealed class InternalException(override val message: String): IOException(messag
     class OperationException(message: String?): InternalException(message.orEmpty())
     class NotConnectionException(): InternalException("Connection lost")
     class UnknownException(val original: Exception): InternalException("Unknown error")
-    class LogoutException(): InternalException("Logout error")
+    class RequestDuplicateException(requestString: String): InternalException("Duplicate: $requestString")
     class ValidationException(message: String): InternalException(message)
 }
 
