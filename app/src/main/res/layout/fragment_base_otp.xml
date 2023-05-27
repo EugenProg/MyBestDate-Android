@@ -107,15 +107,18 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/resend_title"
             style="@style/component_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:text="@string/i_didn_t_get_the_code_send_it_again"
             android:textColor="@color/white_60"
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/time_view"
             style="@style/component_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

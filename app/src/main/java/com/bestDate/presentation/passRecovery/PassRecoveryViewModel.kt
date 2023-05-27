@@ -14,6 +14,7 @@ import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.registration.RegistrationType
+import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -28,10 +29,10 @@ class PassRecoveryViewModel @Inject constructor(
 
     var user = userUseCase.getMyUser.asLiveData()
 
-    private var _sendCodeLiveData = MutableLiveData<Boolean>()
+    private var _sendCodeLiveData = LiveEvent<Boolean>()
     val sendCodeLiveData: LiveData<Boolean> = _sendCodeLiveData
 
-    private var _recoveryLiveData = MutableLiveData<Boolean>()
+    private var _recoveryLiveData = LiveEvent<Boolean>()
     val recoveryLiveData: LiveData<Boolean> = _recoveryLiveData
 
     private var _validationErrorLiveData = MutableLiveData<Int>()
@@ -68,32 +69,32 @@ class PassRecoveryViewModel @Inject constructor(
         }
     }
 
-    fun confirmPassRecovery(appLanguage: String) {
+    fun confirmPassRecovery(code: String, appLanguage: String) {
         if (PassRecoveryDataHolder.type == RegistrationType.EMAIL) {
-            confirmEmailPassRecovery(appLanguage)
+            confirmEmailPassRecovery(code, appLanguage)
         } else {
-            confirmPhonePassRecovery(appLanguage)
+            confirmPhonePassRecovery(code, appLanguage)
         }
     }
 
-    private fun confirmEmailPassRecovery(appLanguage: String) {
+    private fun confirmEmailPassRecovery(code: String, appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetEmailPassword(
                 PassRecoveryDataHolder.login,
-                PassRecoveryDataHolder.code,
+                code,
                 PassRecoveryDataHolder.password
             )
             loginByEmail(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)
         }
     }
 
-    private fun confirmPhonePassRecovery(appLanguage: String) {
+    private fun confirmPhonePassRecovery(code: String, appLanguage: String) {
         _loadingLiveData.postValue(true)
         doAsync {
             passRecoveryUseCase.resetPhonePassword(
                 PassRecoveryDataHolder.login,
-                PassRecoveryDataHolder.code,
+                code,
                 PassRecoveryDataHolder.password
             )
             loginByPhone(PassRecoveryDataHolder.login, PassRecoveryDataHolder.password, appLanguage)

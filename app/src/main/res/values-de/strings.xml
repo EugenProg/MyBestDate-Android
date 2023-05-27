@@ -449,6 +449,10 @@
     <string name="JP">Japan</string>
 
     <string name="i_didn_t_get_the_code_send_it_again">Ich habe den Code nicht erhalten, senden Sie ihn erneut</string>
+    <plurals name="seconds">
+        <item quantity="one">%d Secunde</item>
+        <item quantity="other">%d Secunden</item>
+    </plurals>
     <string name="_60_second">60 Sekunden</string>
     <string name="enter_the_confirmation_code">Geben Sie den Bestätigungscode ein</string>
     <string name="confirmation_code">Bestätigungscode</string>
