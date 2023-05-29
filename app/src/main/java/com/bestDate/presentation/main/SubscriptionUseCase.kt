@@ -2,10 +2,12 @@ package com.bestDate.presentation.main
 
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.toLongServerDate
 import com.bestDate.data.model.InternalException
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.SubscriptionRemoteData
+import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,8 +30,10 @@ class SubscriptionUseCase @Inject constructor(
 
     suspend fun getUserSubscriptionInfo() {
         val response = remoteData.getUserSubscriptionInfo()
-        if (!response.isSuccessful)
-            throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        if (response.isSuccessful) {
+            val hasAActiveSubscription = response.body()?.data?.end_at.orEmpty() > Date().toLongServerDate()
+            preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION, hasAActiveSubscription)
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
     suspend fun updateSubscriptionInfo(startDate: String, endDate: String) {

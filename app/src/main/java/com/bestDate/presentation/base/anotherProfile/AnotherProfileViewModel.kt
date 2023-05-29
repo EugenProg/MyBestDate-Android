@@ -3,12 +3,11 @@ package com.bestDate.presentation.base.anotherProfile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
-import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.data.model.LikesBody
 import com.bestDate.data.model.ProfileImage
-import com.bestDate.data.preferences.Preferences
-import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.db.entity.UserDB
+import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -20,11 +19,11 @@ class AnotherProfileViewModel @Inject constructor(
     private val anotherProfileUseCase: AnotherProfileUseCase,
     private val invitationUseCase: InvitationUseCase,
     private val likesUseCase: LikesListUseCase,
-    private val preferencesUtils: PreferencesUtils
+    private val subscriptionUtil: SubscriptionUtil
 ) : BaseViewModel() {
 
     var user: MutableLiveData<UserDB> = anotherProfileUseCase.user
-    var photos:  MutableLiveData<MutableList<ProfileImage>?> = anotherProfileUseCase.photos
+    var photos: MutableLiveData<MutableList<ProfileImage>?> = anotherProfileUseCase.photos
     var invitations = invitationUseCase.invitations.asLiveData()
 
     private var _blockLiveData: MutableLiveData<Boolean> = MutableLiveData()
@@ -84,14 +83,5 @@ class AnotherProfileViewModel @Inject constructor(
         }
     }
 
-    fun invitationSendAllowed(): Boolean {
-        return if (
-            preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
-            preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
-            !preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION)
-        ) {
-            preferencesUtils.getInt(Preferences.SENT_INVITATIONS_TODAY) <
-                    preferencesUtils.getInt(Preferences.FREE_INVITATIONS_COUNT)
-        } else true
-    }
+    fun invitationSendAllowed(): Boolean = subscriptionUtil.invitationSendAllowed()
 }

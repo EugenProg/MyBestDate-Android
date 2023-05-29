@@ -74,7 +74,7 @@ data class UserDB(
 
     @SuppressLint("SimpleDateFormat")
     fun getFormattedBirthday(): String? {
-        val incomingFormatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val incomingFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val dateFormatter = SimpleDateFormat("dd MMMM yyyy")
 
         return birthday?.let { bd ->

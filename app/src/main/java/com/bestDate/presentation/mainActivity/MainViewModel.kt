@@ -86,6 +86,7 @@ class MainViewModel @Inject constructor(
                 userUseCase.changeLanguage(appLanguage)
                 invitationUseCase.refreshInvitations()
                 settingsUseCase.refreshUserSettings()
+                subscriptionUseCase.getUserSubscriptionInfo()
                 pusherCenter.startPusher()
             }
         }
@@ -140,6 +141,12 @@ class MainViewModel @Inject constructor(
     fun refreshAppSettings() {
         doAsync {
             subscriptionUseCase.getAppSettings()
+        }
+    }
+
+    fun updateSubscriptionInfo(start: String, end: String) {
+        doAsync {
+            subscriptionUseCase.updateSubscriptionInfo(start, end)
         }
     }
 }

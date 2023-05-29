@@ -5,8 +5,7 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.Meta
-import com.bestDate.data.preferences.Preferences
-import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -17,7 +16,7 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
     private val invitationUseCase: InvitationUseCase,
-    private val preferencesUtils: PreferencesUtils
+    private val subscriptionUtil: SubscriptionUtil
 ) : BaseViewModel() {
 
     var invitations = invitationUseCase.invitations.asLiveData()
@@ -117,25 +116,7 @@ class ChatViewModel @Inject constructor(
         chatUseCase.clearChatData()
     }
 
-    fun messageSendAllowed(): Boolean {
-        return if (
-            preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
-            preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
-            !preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION)
-        ) {
-            preferencesUtils.getInt(Preferences.SENT_MESSAGES_TODAY) <
-                    preferencesUtils.getInt(Preferences.FREE_MESSAGES_COUNT)
-        } else true
-    }
+    fun messageSendAllowed(): Boolean = subscriptionUtil.messageSendAllowed()
 
-    fun invitationSendAllowed(): Boolean {
-        return if (
-            preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
-            preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
-            !preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION)
-        ) {
-            preferencesUtils.getInt(Preferences.SENT_INVITATIONS_TODAY) <
-                    preferencesUtils.getInt(Preferences.FREE_INVITATIONS_COUNT)
-        } else true
-    }
+    fun invitationSendAllowed(): Boolean = subscriptionUtil.invitationSendAllowed()
 }

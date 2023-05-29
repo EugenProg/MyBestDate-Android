@@ -3,6 +3,7 @@ package com.bestDate.data.preferences
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
+import com.bestDate.data.utils.subscription.SubscriptionUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +25,9 @@ object PreferencesModule {
     @Singleton
     fun providesPreferencesUtils(preferences: SharedPreferences): PreferencesUtils =
         PreferencesUtils(preferences)
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionUtils(preferencesUtils: PreferencesUtils): SubscriptionUtil =
+        SubscriptionUtil(preferencesUtils)
 }
