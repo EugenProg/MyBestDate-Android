@@ -22,12 +22,10 @@ import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
-class SubscriptionManager(context: Context) {
+class SubscriptionManager(context: Context,
+                          private val preferencesUtils: PreferencesUtils) {
     private val client: BillingClient
     private var productList: MutableList<ProductDetails> = mutableListOf()
-
-    @Inject
-    lateinit var preferencesUtils: PreferencesUtils
 
     var updateSubscriptionData: ((start: String, end: String) -> Unit)? = null
 
@@ -112,7 +110,6 @@ class SubscriptionManager(context: Context) {
             if (result.responseCode == BillingResponseCode.OK) {
                 productList.clear()
                 detailsList.forEach {
-                    //it.subscriptionOfferDetails?.firstOrNull()?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
                     productList.add(it)
                 }
             }

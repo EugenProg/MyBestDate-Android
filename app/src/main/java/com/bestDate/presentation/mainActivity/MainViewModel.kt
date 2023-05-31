@@ -85,9 +85,9 @@ class MainViewModel @Inject constructor(
             doAsync {
                 userUseCase.changeLanguage(appLanguage)
                 invitationUseCase.refreshInvitations()
-                settingsUseCase.refreshUserSettings()
                 subscriptionUseCase.getUserSubscriptionInfo()
                 pusherCenter.startPusher()
+                settingsUseCase.refreshUserSettings()
             }
         }
     }

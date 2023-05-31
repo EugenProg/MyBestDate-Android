@@ -9,18 +9,21 @@ import com.bestDate.data.utils.subscription.SubscriptionManager
 import com.bestDate.databinding.FragmentTariffListBinding
 import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.ViewPagerAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class TariffListFragment: BaseFragment<FragmentTariffListBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTariffListBinding =
         { inflater, parent, attach -> FragmentTariffListBinding.inflate(inflater, parent, attach) }
 
     override val statusBarColor = R.color.bg_main
-    private lateinit var subscriptionManager: SubscriptionManager
+
+    @Inject
+    lateinit var subscriptionManager: SubscriptionManager
 
     override fun onInit() {
         super.onInit()
-
-        subscriptionManager = SubscriptionManager(requireContext())
         val pagerAdapter = ViewPagerAdapter(childFragmentManager, lifecycle, getItemsList())
 
         with(binding) {
@@ -37,7 +40,6 @@ class TariffListFragment: BaseFragment<FragmentTariffListBinding>() {
         val items: MutableList<Fragment> = mutableListOf()
 
         TariffType.values().forEach {
-
             items.add(
                 TariffFragment(it, subscriptionManager.getProductDetailsById(it.id)) {
                     it?.let {

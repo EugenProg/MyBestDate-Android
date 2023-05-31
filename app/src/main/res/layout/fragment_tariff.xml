@@ -55,12 +55,13 @@
             style="@style/component_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="58sp"
+            android:textSize="40sp"
             android:paddingTop="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView29"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView29" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView29"
+            tools:text="KZT 7,990.00"/>
 
         <TextView
             android:id="@+id/periodView"
@@ -162,7 +163,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="11dp"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="16dp"
             android:text="@string/unlimited_invite_cards"
             android:textColor="@color/white_80"
             android:textSize="14sp"
