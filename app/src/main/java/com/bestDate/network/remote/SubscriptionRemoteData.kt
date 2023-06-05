@@ -10,7 +10,7 @@ class SubscriptionRemoteData @Inject constructor(
     suspend fun getAppSettings() = service.getAppSettings()
 
     suspend fun getUserSubscriptionInfo() =
-        service.getUserSubscriptionInfo(SubscriptionInfoRequest())
+        service.getUserSubscriptionInfo(SubscriptionInfoRequest(device = "ios"))
 
     suspend fun updateSubscriptionInfo(startDate: String, endDate: String) =
         service.updateSubscriptionInfo(

@@ -24,6 +24,7 @@ class SettingsUseCase @Inject constructor(
         if (response.isSuccessful) {
             response.body()?.let {
                 preferencesUtils.saveBoolean(Preferences.MATCHES_ENABLED, it.data.matchParticipation)
+                preferencesUtils.saveBoolean(Preferences.CHAT_CLOSED, it.data.block_messages)
                 userSettingsDao.validate(it.data)
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
@@ -34,6 +35,7 @@ class SettingsUseCase @Inject constructor(
         if (response.isSuccessful) {
             response.body()?.let {
                 preferencesUtils.saveBoolean(Preferences.MATCHES_ENABLED, it.data.matchParticipation)
+                preferencesUtils.saveBoolean(Preferences.CHAT_CLOSED, it.data.block_messages)
                 userSettingsDao.validate(it.data)
             }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())

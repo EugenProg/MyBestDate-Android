@@ -121,6 +121,10 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.loadNextPage = {
                 viewModel.loadNextPage()
             }
+            chatView.goToSettings = {
+                navigateToSettings()
+            }
+            chatView.setChatClosed(viewModel.chatClosed())
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
                 openImageEditor(it)
@@ -143,6 +147,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 navigateToTariffList()
             }
         }
+    }
+
+    open fun navigateToSettings() {
+        navController.navigate(
+            ChatFragmentDirections.actionGlobalChatToSettings()
+        )
     }
 
     open fun navigateToUserProfile(userData: ShortUserData?) {
@@ -193,6 +203,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         observe(viewModel.messages) {
             it?.let {
                 binding.chatView.setMessages(it, viewModel.meta)
+                binding.chatView.setChatClosed(viewModel.chatClosed())
             }
         }
         observe(viewModel.sendMessageLiveData) {

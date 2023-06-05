@@ -639,6 +639,13 @@
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_out_right"/>
+            <action
+                android:id="@+id/action_global_chat_to_settings"
+                app:destination="@id/settings_nav_graph"
+                app:enterAnim="@anim/slide_in_top_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_top_right"
+                app:popExitAnim="@anim/slide_out_right" />
         </navigation>
         <action
             android:id="@+id/action_global_authFragment"
@@ -748,6 +755,13 @@
                 app:exitAnim="@anim/slide_out_left"
                 app:popEnterAnim="@anim/slide_in_right"
                 app:popExitAnim="@anim/slide_out_right" />
+            <action
+                android:id="@+id/action_globalChatPush_to_settings"
+                app:destination="@id/settings_nav_graph"
+                app:enterAnim="@anim/slide_in_top_left"
+                app:exitAnim="@anim/slide_out_left"
+                app:popEnterAnim="@anim/slide_in_top_right"
+                app:popExitAnim="@anim/slide_out_right"/>
         </fragment>
         <fragment android:id="@+id/tariffListFragment"
             android:name="com.bestDate.presentation.main.tariff.TariffListFragment"

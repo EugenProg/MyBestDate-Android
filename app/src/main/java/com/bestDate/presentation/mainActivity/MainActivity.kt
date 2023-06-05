@@ -14,15 +14,18 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.NetworkStateListener
 import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.data.utils.notifications.NotificationType
 import com.bestDate.data.utils.notifications.TypingEventCoordinator
+import com.bestDate.data.utils.subscription.SubscriptionManager
 import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.view.alerts.LostConnectionDialog
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 //HG3g8wnkTaUGgQHxFcw4
 @AndroidEntryPoint
@@ -34,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var chatListTypingEventCoordinator: TypingEventCoordinator
     private lateinit var chatTypingEventCoordinator: TypingEventCoordinator
     private lateinit var lostConnectionDialog: LostConnectionDialog
+
+    @Inject
+    lateinit var subscriptionManager: SubscriptionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         setUpPusherObserver()
         setUpChatListTypingCoordinator()
         setUpChatTypingListener()
+        setUpSubscriptionManager()
         bottomNavView = binding.bottomNavigationView
 
         if (!allPermissionsGranted()) {
@@ -136,6 +143,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setUpSubscriptionManager() {
+        subscriptionManager.updateSubscriptionData = { start, end ->
+            viewModel.updateSubscriptionInfo(start, end)
+        }
+    }
+
     private fun setUpChatListTypingCoordinator() {
         chatListTypingEventCoordinator = TypingEventCoordinator {
             viewModel.setChatListTypingEvent(it, false)
@@ -151,6 +164,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (NetworkStateListener.currentStatus == NetworkStatus.LOST) return
+        subscriptionManager.startConnection()
         viewModel.refreshAppSettings()
         viewModel.refreshData(getString(R.string.app_locale))
         if (isInChatList()) viewModel.refreshChatList()

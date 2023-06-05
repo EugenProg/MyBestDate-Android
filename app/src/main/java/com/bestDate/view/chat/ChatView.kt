@@ -35,6 +35,7 @@ class ChatView @JvmOverloads constructor(
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
     var loadNextPage: (() -> Unit)? = null
+    var goToSettings: (() -> Unit)? = null
 
     init {
         with(binding) {
@@ -82,6 +83,9 @@ class ChatView @JvmOverloads constructor(
             }
             adapter.loadMoreItems = {
                 loadNextPage?.invoke()
+            }
+            chatClosedView.click = {
+                goToSettings?.invoke()
             }
 
             messagesListView.layoutManager =
@@ -163,5 +167,12 @@ class ChatView @JvmOverloads constructor(
 
     fun showInvitationView(show: Boolean) {
         binding.chatInvitation.isVisible = show && messageList?.isEmpty() == true
+    }
+
+    fun setChatClosed(closed: Boolean) {
+        if (user?.allow_chat != true || user?.isBot() == true || messageList == null) return
+        if (messageList?.isEmpty() != true) {
+            binding.chatClosedView.isVisible = closed
+        }
     }
 }

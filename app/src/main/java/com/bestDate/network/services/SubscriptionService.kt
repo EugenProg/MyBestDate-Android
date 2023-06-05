@@ -16,12 +16,12 @@ interface SubscriptionService {
     suspend fun getAppSettings(): Response<AppSettingsResponse>
 
     /**Get user subscription*/
-    @POST("/user/subscription")
+    @POST("/api/v1/user/subscription")
     suspend fun getUserSubscriptionInfo(@Body request: SubscriptionInfoRequest):
             Response<SubscriptionInfoResponse>
 
     /**Update subscription info*/
-    @POST("/subscriptions")
+    @POST("/api/v1/subscriptions")
     suspend fun updateSubscriptionInfo(@Body request: SubscriptionInfoRequest):
             Response<SubscriptionInfoResponse>
 }
