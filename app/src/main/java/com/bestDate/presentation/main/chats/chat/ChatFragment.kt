@@ -121,6 +121,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.loadNextPage = {
                 viewModel.loadNextPage()
             }
+            chatView.setChatClosed(viewModel.chatClosed())
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
                 openImageEditor(it)
@@ -193,6 +194,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         observe(viewModel.messages) {
             it?.let {
                 binding.chatView.setMessages(it, viewModel.meta)
+                binding.chatView.setChatClosed(viewModel.chatClosed())
             }
         }
         observe(viewModel.sendMessageLiveData) {

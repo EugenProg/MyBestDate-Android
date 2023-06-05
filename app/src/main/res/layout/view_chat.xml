@@ -19,11 +19,22 @@
             android:id="@+id/messagesListView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/bottomPanelView"
+            app:layout_constraintBottom_toTopOf="@id/chat_closed_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topPanelView"
             app:reverseLayout="true" />
+
+        <com.bestDate.view.chat.ChatClosedView
+            android:id="@+id/chat_closed_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/bottomPanelView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.bestDate.view.chat.ChatBottomPanelView
             android:id="@+id/bottomPanelView"

@@ -677,4 +677,6 @@
     <string name="not_activated">Nicht aktiviert</string>
     <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">Sie können die Spiele nicht sehen,\nweil Sie nicht an ihnen teilnehmen</string>
     <string name="you_need_to_go_to_settings_and_activate_matches">Sie müssen zu den Einstellungen gehen und\nSpiele aktivieren</string>
+    <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
+    <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
 </resources>

@@ -5,6 +5,8 @@ import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.Meta
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
@@ -16,7 +18,8 @@ import javax.inject.Inject
 class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
     private val invitationUseCase: InvitationUseCase,
-    private val subscriptionUtil: SubscriptionUtil
+    private val subscriptionUtil: SubscriptionUtil,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     var invitations = invitationUseCase.invitations.asLiveData()
@@ -115,6 +118,8 @@ class ChatViewModel @Inject constructor(
     fun clearMessages() {
         chatUseCase.clearChatData()
     }
+
+    fun chatClosed(): Boolean = preferencesUtils.getBoolean(Preferences.CHAT_CLOSED)
 
     fun messageSendAllowed(): Boolean = subscriptionUtil.messageSendAllowed()
 
