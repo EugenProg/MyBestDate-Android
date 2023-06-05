@@ -121,6 +121,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.loadNextPage = {
                 viewModel.loadNextPage()
             }
+            chatView.goToSettings = {
+                navigateToSettings()
+            }
             chatView.setChatClosed(viewModel.chatClosed())
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
@@ -144,6 +147,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 navigateToTariffList()
             }
         }
+    }
+
+    open fun navigateToSettings() {
+        navController.navigate(
+            ChatFragmentDirections.actionGlobalChatToSettings()
+        )
     }
 
     open fun navigateToUserProfile(userData: ShortUserData?) {
