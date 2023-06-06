@@ -17,11 +17,11 @@ class ProfilePhotoUseCase @Inject constructor(
 
     var savedImage: ProfileImage? = null
 
-    suspend fun saveUserPhoto(image: ByteArray) {
+    suspend fun saveUserPhoto(moderated: Boolean, image: ByteArray) {
         val requestFile =
             image.toRequestBody("multipart/form-data".toMediaTypeOrNull(), 0, image.size)
         val body = MultipartBody.Part.createFormData("photo", "name", requestFile)
-        val response = imageRemoteData.saveUserPhoto(body)
+        val response = imageRemoteData.saveUserPhoto(moderated, body)
         if (response.isSuccessful) {
             savedImage = response.body()?.data
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())

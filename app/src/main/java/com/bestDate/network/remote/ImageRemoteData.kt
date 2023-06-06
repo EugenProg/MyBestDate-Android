@@ -11,8 +11,8 @@ class ImageRemoteData @Inject constructor(
     private var service: ImageApiService
 ) {
 
-    suspend fun saveUserPhoto(image: MultipartBody.Part) =
-        service.saveProfileImage(image)
+    suspend fun saveUserPhoto(moderated: Boolean, image: MultipartBody.Part) =
+        service.saveProfileImage(moderated, image)
 
     suspend fun deleteUserPhoto(id: Int): Response<BaseResponse> =
         service.deleteUserPhoto(id)

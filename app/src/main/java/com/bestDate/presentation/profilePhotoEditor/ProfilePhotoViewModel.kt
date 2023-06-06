@@ -38,9 +38,9 @@ class ProfilePhotoViewModel @Inject constructor(
     private var _updateLoadingLiveData = MutableLiveData<Boolean>()
     val updateLoadingLiveData: LiveData<Boolean> = _updateLoadingLiveData
 
-    fun savePhoto(image: Bitmap) {
+    fun savePhoto(moderated: Boolean, image: Bitmap) {
         doAsync {
-            photoUseCase.saveUserPhoto(image.toByteArray())
+            photoUseCase.saveUserPhoto(moderated, image.toByteArray())
             userUseCase.refreshUser()
             _photoSaveLiveData.postValue(photoUseCase.savedImage)
         }
