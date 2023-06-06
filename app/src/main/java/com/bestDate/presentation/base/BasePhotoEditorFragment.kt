@@ -16,7 +16,6 @@ import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.utils.FaceDetectorUtils
 import com.bestDate.databinding.FragmentPhotoEditorBinding
 import com.bestDate.presentation.profilePhotoEditor.ProfilePhotoViewModel
-import com.bestDate.view.bottomSheet.NotCorrectPhotoSheet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -29,8 +28,6 @@ abstract class BasePhotoEditorFragment :
 
     override val statusBarLight = false
     override val statusBarColor = R.color.bg_main
-
-    private val notCorrectSheet = NotCorrectPhotoSheet()
 
     abstract fun setSelectedImage()
 
@@ -96,17 +93,12 @@ abstract class BasePhotoEditorFragment :
     private fun successCrop(): (Bitmap) -> Unit {
         return {
             binding.saveButton.toggleActionEnabled(false)
-            viewModel.savePhoto(it)
-           /* val detector = FaceDetectorUtils()
+            val detector = FaceDetectorUtils()
             detector.detectFaces(it)
 
             detector.completion = { faces ->
-                if (faces == 1) {
-                    viewModel.savePhoto(it)
-                } else {
-                    notCorrectSheet.show(childFragmentManager, notCorrectSheet.tag)
-                }
-            }*/
+                viewModel.savePhoto(faces != 1, it)
+            }
         }
     }
 

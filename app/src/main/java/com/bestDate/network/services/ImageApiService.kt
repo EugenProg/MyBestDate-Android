@@ -9,7 +9,10 @@ interface ImageApiService {
     /**Load user photo*/
     @Multipart
     @POST("/api/v1/user/photos")
-    suspend fun saveProfileImage(@Part image: MultipartBody.Part): Response<ProfileImageResponse>
+    suspend fun saveProfileImage(
+        @Query("moderated") moderated: Boolean,
+        @Part image: MultipartBody.Part
+    ): Response<ProfileImageResponse>
 
     /**Delete profile image*/
     @DELETE("/api/v1/user/photos/{id}")
@@ -17,7 +20,9 @@ interface ImageApiService {
 
     /**Update image status*/
     @PUT("/api/v1/user/photos/{id}")
-    suspend fun updateUserPhoto(@Path("id") id: Int,
-                                @Body params: PhotoStatusUpdateRequest): Response<BaseResponse>
+    suspend fun updateUserPhoto(
+        @Path("id") id: Int,
+        @Body params: PhotoStatusUpdateRequest
+    ): Response<BaseResponse>
 
 }
