@@ -114,9 +114,19 @@ class MatchImageView @JvmOverloads constructor(
 
     fun setUser(user: ShortUserData?) {
         this.user = user
+        user?.getMainPhoto()?.let {
+            Glide.with(context)
+                .load(it.thumb_url)
+                .centerCrop()
+                .into(binding.avatarThumb)
+        }
+    }
+
+    fun initFullImage() {
         user?.getMainPhoto()?.full_url?.let {
             Glide.with(context)
                 .load(it)
+                .centerCrop()
                 .into(binding.avatar)
         }
     }

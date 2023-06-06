@@ -34,7 +34,7 @@ class LikesListAdapter :
                     .load(item?.user?.main_photo?.thumb_url)
                     .circleCrop()
                     .into(userAvatar)
-                Glide.with(itemView.context).load(item?.photo?.thumb_url).into(likedImage)
+                Glide.with(itemView.context).load(item?.photo?.thumb_url).centerCrop().into(likedImage)
                 online.isVisible = item?.user?.is_online == true
                 userName.text = item?.user?.name
                 timeView.text = item?.getLikeTime()

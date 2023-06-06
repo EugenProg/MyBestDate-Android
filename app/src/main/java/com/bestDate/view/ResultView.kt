@@ -7,6 +7,7 @@ import android.widget.LinearLayout
 import com.bestDate.R
 import com.bestDate.data.extension.setAttrs
 import com.bestDate.data.model.DuelProfile
+import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.ViewResultBinding
 
 class ResultView @JvmOverloads constructor(
@@ -15,9 +16,18 @@ class ResultView @JvmOverloads constructor(
     private var binding: ViewResultBinding =
         ViewResultBinding.inflate(LayoutInflater.from(context), this)
 
+    var openProfile: ((ShortUserData?) -> Unit)? = null
+
     init {
         setAttrs(attrs, R.styleable.ResultView) {
             binding.headerTextview.root.text = it.getString(R.styleable.ResultView_result_title)
+        }
+
+        binding.firstResultProfileView.clickAction = {
+            openProfile?.invoke(it)
+        }
+        binding.secondResultProfileView.clickAction = {
+            openProfile?.invoke(it)
         }
     }
 

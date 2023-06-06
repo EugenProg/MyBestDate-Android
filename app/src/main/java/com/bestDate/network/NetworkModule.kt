@@ -21,6 +21,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+    private var activeRequests: HashMap<String, Boolean> = hashMapOf()
+
+    fun requestIsValid(request: String): Boolean {
+        return activeRequests[request] == null
+    }
+
+    fun addRequest(request: String) {
+        activeRequests[request] = true
+    }
+
+    fun removeRequest(request: String) {
+        activeRequests.remove(request)
+    }
+
     @Provides
     @Core_url
     fun providesCoreBaseURL(): String = "https://api.bestdate.info"
@@ -47,6 +61,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .addInterceptor(HeaderInterceptor(context))
             .addInterceptor(AuthorizationInterceptor(sessionManager))
+            .addInterceptor(ValidateInterceptor())
             .addInterceptor(interceptor)
             .build()
     }
@@ -141,6 +156,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun subscriptionService(@Core_network retrofit: Retrofit): SubscriptionService =
+        retrofit.create(SubscriptionService::class.java)
+
+    @Provides
+    @Singleton
     fun getAuthToken(@GoogleAuthCode_network retrofit: Retrofit): GoogleAuthService =
         retrofit.create(GoogleAuthService::class.java)
 
@@ -183,6 +203,11 @@ object NetworkModule {
     @Singleton
     fun topRemoteData(topService: TopService): TopRemoteData =
         TopRemoteData(topService)
+
+    @Provides
+    @Singleton
+    fun subscriptionRemoteData(subscriptionService: SubscriptionService): SubscriptionRemoteData =
+        SubscriptionRemoteData(subscriptionService)
 
     @Provides
     @Singleton

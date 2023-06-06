@@ -53,12 +53,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ProgressBar
+            <com.bestDate.view.LoadingDotsView
                 android:id="@+id/loader"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:indeterminateTint="@color/white" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
         </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

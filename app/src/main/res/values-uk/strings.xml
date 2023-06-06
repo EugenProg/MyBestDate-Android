@@ -449,6 +449,12 @@
     <string name="JP">Японія</string>
 
     <string name="i_didn_t_get_the_code_send_it_again">Я не отримав код, відправте його ще раз</string>
+    <plurals name="seconds">
+        <item quantity="one">%d секунда</item>
+        <item quantity="few">%d секунди</item>
+        <item quantity="many">%d секунд</item>
+        <item quantity="other">%d секунд</item>
+    </plurals>
     <string name="_60_second">60 секунд</string>
     <string name="enter_the_confirmation_code">Введіть код підтвердження</string>
     <string name="confirmation_code">Код підтвердження</string>
@@ -564,7 +570,7 @@
     <string name="you_have_received_an_invitation_please_give_an_answer">Ви отримали запрошення,\nбудь ласка, дайте відповідь</string>
     <string name="answer_choice">Варіанти відповіді</string>
     <string name="we_have_transmitted_your_reply_to_the_sender">Ми передали вашу\nвідповідь відправнику</string>
-    <string name="you_invited">Ви запрошені</string>
+    <string name="you_invited">Ви запросили</string>
     <string name="user_has_not_given_answer_yet">%s ще не відповіла</string>
     <string name="general_info_about_your_account">Загальна інформація про ваш обліковий запис, постарайтеся заповнити коректні дані.</string>
     <string name="general_info">Загальна інформація</string>
@@ -610,6 +616,7 @@
     <string name="result">Результат</string>
     <string name="duels_are_over">Дуелі закінчилися</string>
     <string name="you_voted_for_all_the_photos">Вибачте, ви проголосували за всі фото</string>
+    <string name="you_voted_for_all_the_photos_">Вибачте, ви проголосували за всі фото</string>
     <string name="but_you_can_also_go_to_the_top">Але ви також можете увійти\nдо Топ-50</string>
     <string name="duels">Дуелі</string>
     <string name="you_have_no_guests_yet">У вас поки що немає гостей</string>
@@ -619,7 +626,7 @@
     <string name="picture">Зображення</string>
     <string name="typing">друкую…</string>
     <string name="go_to">Заглянути</string>
-    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Цей користувач жадає тільки реальних зустрічей\nі не готовий витрачати час на\nдовге листування</string>
+    <string name="this_user_craves_only_real_meetings_and_is_not_ready_to_waste_time_on_long_correspondence">Цей користувач жадає тільки реальних зустрічей і не готовий витрачати час на довге листування</string>
     <string name="chat_closed">ЧАТ ЗАКРИТИЙ!</string>
     <string name="you_can_always_send_an_invitation_in_the_form_of_a_card_in_a_more_convenient_form">Ви завжди можете надіслати\nзапрошення у вигляді листівки,\nу зручнішій для Вас формі</string>
     <string name="this_user_agrees_to_accept_only_cards">Цей користувач згоден приймати\nтільки картки</string>
@@ -646,16 +653,16 @@
     <string name="terms_of_use">Правила використання</string>
     <string name="complain_about_content">Поскаржитися на зміст</string>
     <string name="complain_is_send_successful">Скаргу успішно надіслано</string>
-    <string name="montly_plan">Monthly plan</string>
-    <string name="per_montly">Per monthly</string>
-    <string name="three_months_plan">Three months plan</string>
-    <string name="per_three_monthly">Per three monthly</string>
-    <string name="six_months_plan">Six months plan</string>
-    <string name="per_six_monthly">Per six monthly</string>
-    <string name="features">Features</string>
-    <string name="everything_in_this_plan">Everything in this plan</string>
-    <string name="unlimited_invite_cards">Unlimited Invite Cards</string>
-    <string name="unlimited_messages">Unlimited Messages</string>
+    <string name="montly_plan">Місячний план</string>
+    <string name="per_montly">Щомісяця</string>
+    <string name="three_months_plan">Тримісячний план</string>
+    <string name="per_three_monthly">За три щомісячні</string>
+    <string name="six_months_plan">Шестимісячний план</string>
+    <string name="per_six_monthly">За шість місяців</string>
+    <string name="features">Особливості</string>
+    <string name="everything_in_this_plan">В цьому плані</string>
+    <string name="unlimited_invite_cards">Безлімітні запрошення</string>
+    <string name="unlimited_messages">Безлімітні повідомлення</string>
     <string name="images_not_found">Зображення не знайдені</string>
     <string name="messages_blocked">Повідомлення заблоковані</string>
     <string name="messages_unlocked">Повідомлення розблоковано</string>
@@ -663,4 +670,15 @@
     <string name="women">Жіночий</string>
     <string name="all_gender">Все</string>
     <string name="the_image_is_out_of_frames">Зображення виходить за межі. Будь ласка, виправте зображення</string>
+    <string name="copy">Копіювати</string>
+    <string name="message_is_copied_to_clipboard">Повідомлення скопійовано</string>
+    <string name="do_you_want_to_see_who_viewed_your_profile">Хочете побачити, хто переглядав\nваш профіль?</string>
+    <string name="buy_a_subscription">Купити підписку</string>
+    <string name="weak_internet_connection">Слабке з\'єднання з Інтернетом</string>
+    <string name="check_your_mobile_internet_or_wifi_network">Перевірте мобільний інтернет або мережу Wi-Fi</string>
+    <string name="not_activated">Не активовано</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">Ви не можете бачити матчі,\nбо не берете в них участі</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">Потрібно зайти в налаштування і\nактивувати матчі</string>
+    <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
+    <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
 </resources>

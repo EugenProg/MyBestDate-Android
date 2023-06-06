@@ -22,6 +22,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.hideKeyboard
 import com.bestDate.data.extension.setMarginTop
 import com.bestDate.data.extension.showKeyboard
+import com.bestDate.data.utils.NetworkStateListener
 import com.bestDate.view.alerts.showDefaultDialog
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
 
@@ -53,6 +54,7 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
+        setUpNetworkListener()
         try {
             onInit()
             onViewLifecycle()
@@ -181,6 +183,14 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
             override fun handleOnBackPressed() {
                 onCustomBackNavigation()
             }
+        }
+    }
+
+    open fun networkIsUpdated() { }
+
+    private fun setUpNetworkListener() {
+        NetworkStateListener.cameOnline = {
+            networkIsUpdated()
         }
     }
 }

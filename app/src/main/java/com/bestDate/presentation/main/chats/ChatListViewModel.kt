@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ChatListViewModel @Inject constructor(
-    private val userUseCase: UserUseCase,
+    userUseCase: UserUseCase,
     private val chatsListUseCase: ChatListUseCase
 ) : BaseViewModel() {
     val user = userUseCase.getMyUser.asLiveData()

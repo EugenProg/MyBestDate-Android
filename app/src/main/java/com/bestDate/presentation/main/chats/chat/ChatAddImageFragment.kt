@@ -12,6 +12,7 @@ import com.bestDate.data.model.Image
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatAddImageBinding
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.alerts.showBanningMessagesDialog
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,8 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ChatAddImageFragment(
     private val user: ShortUserData?,
     private val image: Image?
-) :
-    BaseVMFragment<FragmentChatAddImageBinding, ChatViewModel>() {
+) : BaseVMFragment<FragmentChatAddImageBinding, ChatViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentChatAddImageBinding =
         { inflater, parent, attach ->
             FragmentChatAddImageBinding.inflate(
@@ -34,6 +34,7 @@ class ChatAddImageFragment(
     override val statusBarColor: Int = R.color.bg_main
     private var imageLiveData: MutableLiveData<Pair<String?, Bitmap>> = MutableLiveData()
     var closeAction: (() -> Unit)? = null
+    var navigateToTariffList: (() -> Unit)? = null
 
     override fun onInit() {
         super.onInit()
@@ -50,8 +51,15 @@ class ChatAddImageFragment(
                 goBack()
             }
             inputView.sendClick = { text ->
-                val bitmap = image?.uri.getBitmap(requireContext())
-                bitmap?.scale(1024.0)?.let { imageLiveData.postValue(Pair(text, it)) }
+                if (viewModel.messageSendAllowed()) {
+                    val bitmap = image?.uri.getBitmap(requireContext())
+                    bitmap?.scale(1024.0)?.let { imageLiveData.postValue(Pair(text, it)) }
+                } else {
+                    binding.inputView.toggleSendLoading(false)
+                    requireActivity().showBanningMessagesDialog {
+                        navigateToTariffList?.invoke()
+                    }
+                }
             }
             inputView.translateClick = {
                 viewModel.translateText(it, user?.language)

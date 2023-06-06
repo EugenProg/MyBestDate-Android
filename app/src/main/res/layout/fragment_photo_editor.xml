@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg_main">
 
     <com.bestDate.view.button.BackButtonView
@@ -13,132 +12,102 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-        <LinearLayout
+    <com.bestDate.view.squareFrameLayout.SquareFrameLayout
+        android:id="@+id/editorContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/saveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/backButton">
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_margin="7dp"
+            android:elevation="1dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="30dp">
 
-            <TextView
-                android:id="@+id/headerTitle"
-                style="@style/title"
-                android:textColor="@color/white"
-                android:layout_marginTop="2dp"
-                android:textSize="26sp"
-                android:text="@string/adding_and_editing_a_photo"
+            <com.takusemba.cropme.CropLayout
+                android:id="@+id/photoEditor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cropme_background_alpha="100%"
+                app:cropme_frame_height_percent="100%"
+                app:cropme_frame_width_percent="100%"
+                app:cropme_max_scale="5.0"
+                app:cropme_overlay_shape="rectangle"
+                app:cropme_with_border="false" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="11dp"
+            android:background="@drawable/transparent_frame"
+            android:elevation="15dp"
+            android:visibility="visible">
+
+            <View
+                android:id="@+id/lineH1"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="@color/white_13"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/backButton" />
+                app:layout_constraintTop_toBottomOf="@id/lineH2" />
 
-            <com.bestDate.view.squareFrameLayout.SquareFrameLayout
-                android:id="@+id/editorContainer"
+            <View
+                android:id="@+id/lineH2"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
+                android:layout_height="1.5dp"
+                android:background="@color/white_13"
+                app:layout_constraintBottom_toTopOf="@+id/lineH1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/headerTitle">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="7dp"
-                    android:elevation="1dp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="30dp">
+            <View
+                android:id="@+id/lineV1"
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/white_13"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/lineV2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.takusemba.cropme.CropLayout
-                        android:id="@+id/photoEditor"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cropme_background_alpha="100%"
-                        app:cropme_frame_height_percent="100%"
-                        app:cropme_frame_width_percent="100%"
-                        app:cropme_max_scale="5.0"
-                        app:cropme_overlay_shape="rectangle"
-                        app:cropme_with_border="false" />
-                </androidx.cardview.widget.CardView>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_margin="11dp"
-                    android:background="@drawable/transparent_frame"
-                    android:elevation="15dp"
-                    android:visibility="visible">
-
-                    <View
-                        android:id="@+id/lineH1"
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5dp"
-                        android:background="@color/white_13"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/lineH2" />
-
-                    <View
-                        android:id="@+id/lineH2"
-                        android:layout_width="match_parent"
-                        android:layout_height="1.5dp"
-                        android:background="@color/white_13"
-                        app:layout_constraintBottom_toTopOf="@+id/lineH1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/lineV1"
-                        android:layout_width="1.5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/white_13"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/lineV2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/lineV2"
-                        android:layout_width="1.5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/white_13"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/lineV1"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="visible"
-                    android:elevation="5dp"
-                    android:indeterminateTint="@color/bg_main"/>
-            </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
-
-            <TextView
-                style="@style/component_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="32dp"
-                android:layout_marginBottom="35dp"
-                android:gravity="center"
-                android:text="@string/you_can_upload_up_to_9_photos_to_your_profile"
-                android:textColor="@color/white_60"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toTopOf="@+id/saveButton"
+            <View
+                android:id="@+id/lineV2"
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/white_13"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/lineV1"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.bestDate.view.LoadingDotsView
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:visibility="visible" />
+    </com.bestDate.view.squareFrameLayout.SquareFrameLayout>
 
             <com.bestDate.view.button.WhiteButton
                 android:id="@+id/saveButton"
                 style="@style/standard_button"
                 android:layout_marginBottom="32dp"
                 app:title="@string/save"
+                app:layout_constraintTop_toBottomOf="@+id/editorContainer"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-        </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

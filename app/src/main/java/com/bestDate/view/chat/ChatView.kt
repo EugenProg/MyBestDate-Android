@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.*
 import com.bestDate.databinding.ViewChatBinding
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
@@ -20,21 +22,28 @@ class ChatView @JvmOverloads constructor(
     private var user: ShortUserData? = null
     private var editMode: Boolean = false
     private var adapter: ChatAdapter = ChatAdapter()
+    private var scrollToEditedId: Int? = null
 
     var showInvitationClick: (() -> Unit)? = null
     var sendClick: ((text: String, parentId: Int?) -> Unit)? = null
     var editClick: ((text: String, messageId: Int?) -> Unit)? = null
     var translateClick: ((text: String) -> Unit)? = null
+    var translateMessageClick: ((message: Message) -> Unit)? = null
+    var returnMessageClick: ((message: Message) -> Unit)? = null
     var typingEvent: (() -> Unit)? = null
     var addImageClick: (() -> Unit)? = null
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var openActionSheet: ((Message?, MutableList<ChatActions>) -> Unit)? = null
     var loadNextPage: (() -> Unit)? = null
+    var goToSettings: (() -> Unit)? = null
 
     init {
         with(binding) {
             bottomPanelView.sendClick = {
-                if (editMode) editClick?.invoke(it, parentMessage?.id)
+                if (editMode) {
+                    scrollToEditedId = parentMessage?.id
+                    editClick?.invoke(it, parentMessage?.id)
+                }
                 else sendClick?.invoke(it, parentMessage?.id)
             }
             bottomPanelView.translateClick = {
@@ -58,6 +67,14 @@ class ChatView @JvmOverloads constructor(
             adapter.messageClick = {
                 openActionSheet?.invoke(it, getActions(it))
             }
+            adapter.translateClick = {
+                scrollToEditedId = it.id
+                translateMessageClick?.invoke(it)
+            }
+            adapter.returnClick = {
+                scrollToEditedId = it.id
+                returnMessageClick?.invoke(it)
+            }
             adapter.imageLongClick = {
                 openActionSheet?.invoke(it, getActions(it))
             }
@@ -66,6 +83,9 @@ class ChatView @JvmOverloads constructor(
             }
             adapter.loadMoreItems = {
                 loadNextPage?.invoke()
+            }
+            chatClosedView.click = {
+                goToSettings?.invoke()
             }
 
             messagesListView.layoutManager =
@@ -87,7 +107,7 @@ class ChatView @JvmOverloads constructor(
                 else ChatActions.values().toMutableList()
             }
             ChatItemType.USER_TEXT_MESSAGE,
-            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY)
+            ChatItemType.USER_IMAGE_MESSAGE -> mutableListOf(ChatActions.REPLY, ChatActions.COPY)
             else -> mutableListOf()
         }
     }
@@ -101,11 +121,19 @@ class ChatView @JvmOverloads constructor(
     }
 
     fun setMessages(messages: MutableList<Message>?, meta: Meta) {
+        val scroll = adapter.meta?.current_page == meta.current_page
         messageList = messages
         if (user?.allow_chat == true || user?.isBot() == true) {
             adapter.meta = meta
             adapter.submitList(messageList) {
-                binding.messagesListView.scrollToPosition(0)
+                if (scroll) {
+                    var position = 0
+                    if (scrollToEditedId != null) {
+                        position = messages?.indexOfFirst { it.id == scrollToEditedId }.orZero
+                        scrollToEditedId = null
+                    }
+                    binding.messagesListView.scrollToPosition(position)
+                }
             }
         }
         setVisibility()
@@ -135,5 +163,16 @@ class ChatView @JvmOverloads constructor(
 
     fun setTranslatedText(text: String?) {
         binding.bottomPanelView.setTranslatedText(text)
+    }
+
+    fun showInvitationView(show: Boolean) {
+        binding.chatInvitation.isVisible = show && messageList?.isEmpty() == true
+    }
+
+    fun setChatClosed(closed: Boolean) {
+        if (user?.allow_chat != true || user?.isBot() == true || messageList == null) return
+        if (messageList?.isEmpty() != true) {
+            binding.chatClosedView.isVisible = closed
+        }
     }
 }

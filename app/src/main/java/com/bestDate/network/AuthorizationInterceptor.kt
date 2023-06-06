@@ -1,5 +1,8 @@
 package com.bestDate.network
 
+import com.bestDate.data.model.InternalException
+import com.bestDate.data.utils.NetworkStateListener
+import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.data.utils.SessionManager
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -15,6 +18,9 @@ class AuthorizationInterceptor @Inject constructor(
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val shouldAddAuthHeaders = chain.request().headers["isAuthorize"] != "false"
+
+        if (NetworkStateListener.currentStatus == NetworkStatus.LOST)
+            throw InternalException.NotConnectionException()
 
         return if (shouldAddAuthHeaders) {
             if (sessionManager.isAccessTokenExpired() || sessionManager.refreshToken.isBlank()) {

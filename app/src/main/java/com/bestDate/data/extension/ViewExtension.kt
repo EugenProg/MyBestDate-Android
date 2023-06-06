@@ -13,12 +13,21 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import androidx.viewpager2.widget.ViewPager2
 import com.bestDate.R
 
 fun View.setMarginTop(marginTop: Int) {
     val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
     menuLayoutParams.setMargins(0, marginTop, 0, 0)
+    this.layoutParams = menuLayoutParams
+}
+
+fun View.setMargin(start: Int = 0, top: Int = 0, end: Int = 0, bottom: Int = 0) {
+    val menuLayoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+    menuLayoutParams.setMargins(start, top, end, bottom)
     this.layoutParams = menuLayoutParams
 }
 
@@ -194,4 +203,36 @@ fun View.showKeyboard() {
 fun View.hideKeyboard() {
     val imm = this.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     imm.hideSoftInputFromWindow(this.windowToken, 0)
+}
+
+fun View.hideWithAlphaAnimation(duration: Long = 800) {
+    this.animate()
+        .alpha(0f)
+        .setDuration(duration)
+        .start()
+
+    postDelayed({
+        visibility = View.INVISIBLE
+        alpha = 1f
+    }, duration)
+}
+
+fun RecyclerView.setOnScrollListener(scrolledDown: (() -> Unit)? = null, scrolledUp: (() -> Unit)?) {
+    this.addOnScrollListener(object : OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (dy > 0) scrolledDown?.invoke()
+            else if (dy < 0) scrolledUp?.invoke()
+        }
+    })
+}
+
+fun RecyclerView.isToLastPositionScrolled(isScrolled: () -> Unit) {
+    this.setOnScrollListener {
+        if (this.layoutManager is LinearLayoutManager) {
+            val layoutManager = this.layoutManager as LinearLayoutManager
+            if (layoutManager.itemCount - layoutManager.findLastVisibleItemPosition() < 3) {
+                isScrolled.invoke()
+            }
+        }
+    }
 }

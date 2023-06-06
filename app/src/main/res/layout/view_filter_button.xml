@@ -7,8 +7,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bgView"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content">
+        android:layout_width="125dp"
+        android:layout_height="wrap_content" >
 
         <TextView
             android:id="@+id/textView"
@@ -21,7 +21,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingVertical="9dp"
-            android:paddingStart="20dp"
+            android:paddingStart="8dp"
             android:paddingEnd="12.5dp"
             android:textSize="14sp"
             app:drawableEndCompat="@drawable/ic_arrow_down"

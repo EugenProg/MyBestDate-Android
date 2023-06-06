@@ -13,7 +13,7 @@ import com.bestDate.db.entity.UserDB
 import com.bestDate.db.entity.UserSettings
 
 @Database(
-    version = 5,
+    version = 6,
     entities = [
         UserDB::class,
         Invitation::class,

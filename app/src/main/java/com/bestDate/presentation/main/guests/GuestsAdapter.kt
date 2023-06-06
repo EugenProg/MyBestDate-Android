@@ -1,15 +1,14 @@
 package com.bestDate.presentation.main.guests
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
-import com.bestDate.data.extension.getVisitPeriod
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.Guest
 import com.bestDate.data.model.ListItemType
 import com.bestDate.data.model.Meta
@@ -18,6 +17,10 @@ import com.bestDate.databinding.ItemHeaderBinding
 import com.bestDate.databinding.ItemLoaderBinding
 import com.bestDate.presentation.base.GuestBaseViewHolder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.request.RequestOptions
+import jp.wasabeef.glide.transformations.BlurTransformation
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation
 
 class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils()) {
 
@@ -25,6 +28,9 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
     var loadMoreItems: (() -> Unit)? = null
     var meta: Meta? = Meta()
     var loadingMode: Boolean = false
+    var guestsVisibility: Boolean = true
+    var blurPhoto = 8.toPx()
+    var blurLine = 4.toPx()
 
     class GuestsDiffUtils : DiffUtil.ItemCallback<Guest>() {
         override fun areItemsTheSame(oldItem: Guest, newItem: Guest): Boolean {
@@ -51,7 +57,7 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
             else -> GuestViewHolder(
                 ItemGuestBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                ), itemClick
+                ), itemClick, guestsVisibility, blurPhoto, blurLine
             )
         }
     }
@@ -65,26 +71,61 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
     }
 
     class GuestViewHolder(
-        override val binding: ItemGuestBinding, override val itemClick: ((Guest) -> Unit)?
+        override val binding: ItemGuestBinding, override val itemClick: ((Guest) -> Unit)?,
+        val visible: Boolean, var photoBlur: Int, var lineBlur: Int
     ) : GuestBaseViewHolder<ItemGuestBinding>(binding, itemClick) {
         @SuppressLint("SetTextI18n")
         override fun bind(item: Guest) {
             binding.run {
+                setVisibility()
                 newVisitTextView.isVisible = item.viewed == false
-                nameTextView.text = item.guest?.name
                 timeTextView.text = item.visit_at.getVisitPeriod(binding.root.context)
-                locationTextView.text =
-                    "${item.guest?.location?.city}, ${item.guest?.location?.country}"
-                ageTextView.text = item.guest?.getAge()
-                Glide.with(binding.root.context)
-                    .load(item.guest?.main_photo?.thumb_url)
-                    .placeholder(R.drawable.ic_default_photo)
-                    .into(binding.profileImageView)
-                verifyView.isVerified = item.guest?.full_questionnaire
+                if (visible) {
+                    nameTextView.text = item.guest?.name
+                    locationTextView.text =
+                        "${item.guest?.location?.city}, ${item.guest?.location?.country}"
+                    ageTextView.text = item.guest?.getAge()
+                    Glide.with(binding.root.context)
+                        .load(item.guest?.getMainPhoto()?.thumb_url)
+                        .centerCrop()
+                        .into(profileImageView)
+                    verifyView.isVerified = item.guest?.full_questionnaire
+                } else {
+                    Glide.with(binding.root.context)
+                        .load(item.guest?.getMainPhoto()?.thumb_url)
+                        .centerCrop()
+                        .apply(RequestOptions.bitmapTransform(BlurTransformation(photoBlur)))
+                        .into(profileImageView)
+
+                    val multi = MultiTransformation(
+                        BlurTransformation(lineBlur),
+                        RoundedCornersTransformation(10, 0)
+                    )
+                    Glide.with(itemView.context)
+                        .load(R.drawable.guests_blur)
+                        .apply(RequestOptions.bitmapTransform(multi))
+                        .into(smallBlurView)
+
+                    Glide.with(itemView.context)
+                        .load(R.drawable.guests_blur)
+                        .apply(RequestOptions.bitmapTransform(multi))
+                        .into(blurView)
+                }
 
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)
                 }
+            }
+        }
+
+        private fun setVisibility() {
+            with(binding) {
+                locationBlurBox.isVisible = !visible
+                nameBlurBox.isVisible = !visible
+                nameView.isVisible = visible
+                locationTextView.isVisible = visible
+                ageTextView.isVisible = visible
+                yearTextView.isVisible = visible
             }
         }
     }
@@ -114,9 +155,9 @@ class GuestsAdapter : ListAdapter<Guest, GuestBaseViewHolder<*>>(GuestsDiffUtils
         loadMoreItems?.invoke()
     }
 
-    override fun submitList(list: MutableList<Guest>?) {
+    override fun submitList(list: MutableList<Guest>?, commitCallback: Runnable?) {
         loadingMode = false
-        super.submitList(list)
+        super.submitList(list, commitCallback)
     }
 
     private var loadingItem: Guest =

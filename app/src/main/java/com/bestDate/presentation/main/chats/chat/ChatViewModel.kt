@@ -3,7 +3,11 @@ package com.bestDate.presentation.main.chats.chat
 import android.graphics.Bitmap
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
+import com.bestDate.data.model.Message
 import com.bestDate.data.model.Meta
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -13,7 +17,9 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
-    private val invitationUseCase: InvitationUseCase
+    private val invitationUseCase: InvitationUseCase,
+    private val subscriptionUtil: SubscriptionUtil,
+    private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
     var invitations = invitationUseCase.invitations.asLiveData()
@@ -84,6 +90,12 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun sendReadingEvent(recipientId: Int?) {
+        doAsync {
+            chatUseCase.sendReadingEvent(recipientId)
+        }
+    }
+
     fun translateText(text: String?, language: String?) {
         doAsync {
             chatUseCase.translate(text, language)
@@ -91,7 +103,25 @@ class ChatViewModel @Inject constructor(
         }
     }
 
+    fun translateMessage(message: Message) {
+        doAsync {
+            chatUseCase.translateMessage(message)
+        }
+    }
+
+    fun returnMessage(message: Message) {
+        doAsync {
+            chatUseCase.returnMessage(message)
+        }
+    }
+
     fun clearMessages() {
         chatUseCase.clearChatData()
     }
+
+    fun chatClosed(): Boolean = preferencesUtils.getBoolean(Preferences.CHAT_CLOSED)
+
+    fun messageSendAllowed(): Boolean = subscriptionUtil.messageSendAllowed()
+
+    fun invitationSendAllowed(): Boolean = subscriptionUtil.invitationSendAllowed()
 }

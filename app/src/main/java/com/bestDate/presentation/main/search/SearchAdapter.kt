@@ -68,8 +68,8 @@ class SearchAdapter :
                     (item?.distance ?: 0.0).toInt()
                 )
                 Glide.with(binding.root.context)
-                    .load(item?.main_photo?.thumb_url)
-                    .placeholder(R.drawable.ic_default_photo)
+                    .load(item?.getMainPhoto()?.thumb_url)
+                    .centerCrop()
                     .into(binding.profileImageView)
                 onlineView.isVisible = item?.is_online == true
                 verifyView.isVerified = item?.full_questionnaire

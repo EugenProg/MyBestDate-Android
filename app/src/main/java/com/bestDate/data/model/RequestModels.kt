@@ -183,3 +183,9 @@ data class GetGoogleAccessTokenRequest(
     val client_secret: String = "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",
     val code: String
 )
+
+data class SubscriptionInfoRequest(
+    val device: String = "android",
+    val start_at: String? = null,
+    val end_at: String? = null
+)

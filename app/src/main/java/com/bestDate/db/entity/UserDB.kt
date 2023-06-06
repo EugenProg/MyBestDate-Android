@@ -53,7 +53,9 @@ data class UserDB(
     var blocked: Boolean? = null,
     var blocked_me: Boolean? = null,
     @Embedded
-    var questionnaire: QuestionnaireDB? = null
+    var questionnaire: QuestionnaireDB? = null,
+    var sent_messages_today: Int? = null,
+    var sent_invitations_today: Int? = null
 ) : Parcelable {
     fun getLocalizeGender(): Int {
         return when {
@@ -72,7 +74,7 @@ data class UserDB(
 
     @SuppressLint("SimpleDateFormat")
     fun getFormattedBirthday(): String? {
-        val incomingFormatter = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
+        val incomingFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val dateFormatter = SimpleDateFormat("dd MMMM yyyy")
 
         return birthday?.let { bd ->
@@ -134,7 +136,8 @@ data class UserDB(
             last_online_at = last_online_at,
             distance = distance,
             main_photo = getMainPhoto(),
-            location = location
+            location = location,
+            photos_count = photos?.size ?: 3
         )
     }
 }

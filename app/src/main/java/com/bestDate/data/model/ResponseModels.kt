@@ -41,16 +41,31 @@ data class ProfileImage(
     var top_place: Int? = null,
     var liked: Boolean? = null,
     var likes: Int? = null,
-    var created_at: String? = null
+    var created_at: String? = null,
+    var viewType: ViewType = ViewType.PHOTO
 ) : Parcelable {
     fun copy(): ProfileImage {
-        return ProfileImage(id, full_url, thumb_url, main, top, top_place, liked, likes)
+        return ProfileImage(
+            id,
+            full_url,
+            thumb_url,
+            main,
+            top,
+            top_place,
+            liked,
+            likes,
+            viewType = viewType
+        )
     }
 
     fun getDefaultPhoto() = ProfileImage(
         full_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg",
         thumb_url = "${NetworkModule.providesCoreBaseURL()}/images/default_photo.jpg"
     )
+
+    enum class ViewType {
+        PHOTO, ADD, PREVIEW
+    }
 }
 
 data class UserDataResponse(
@@ -126,7 +141,8 @@ data class ShortUserData(
     var last_online_at: String? = null,
     var distance: Double? = null,
     var main_photo: ProfileImage? = null,
-    var location: LocationDB? = null
+    var location: LocationDB? = null,
+    var photos_count: Int? = null
 ) : Parcelable {
     fun getMainPhoto(): ProfileImage {
         return main_photo ?: ProfileImage().getDefaultPhoto()
@@ -209,13 +225,18 @@ data class Guest(
     val itemType: ListItemType? = null
 )
 
+data class SendInvitationResponse(
+    val data: InvitationCard? = null
+) : BaseResponse()
+
 data class InvitationCard(
     val id: Int? = null,
     var invitation: Invitation? = null,
     var from_user: ShortUserData? = null,
     var to_user: ShortUserData? = null,
     var answer: Invitation? = null,
-    var created_at: String? = null
+    var created_at: String? = null,
+    var sent_invitations_today: Int? = null
 ) {
     fun getAnswer(): InvitationAnswer {
         return when (answer?.id) {
@@ -330,12 +351,15 @@ data class Message(
     var created_at: String? = null,
     var parentMessage: ParentMessage? = null,
     var isLastMessage: Boolean? = null,
-    var viewType: ChatItemType? = null
+    var viewType: ChatItemType? = null,
+    var translatedText: String? = null,
+    var translateStatus: TranslateStatus? = null,
+    var sent_messages_today: Int? = null
 ) {
     fun transform(type: ChatItemType, parent: ParentMessage?, isLast: Boolean?): Message {
         return Message(
             id, sender_id, recipient_id, parent_id, text, image, read_at, created_at,
-            parent, isLast, type
+            parent, isLast, type, translatedText, translateStatus
         )
     }
 
@@ -346,6 +370,18 @@ data class Message(
             dateBetween == 1 -> context.getString(R.string.yesterday)
             else -> created_at.toShortDate()
         }
+    }
+
+    fun getStatus(): TranslateStatus {
+        return when {
+            translateStatus != null -> translateStatus ?: TranslateStatus.UN_ACTIVE
+            translatedText == null -> TranslateStatus.UN_ACTIVE
+            else -> TranslateStatus.TRANSLATED
+        }
+    }
+
+    enum class TranslateStatus {
+        UN_ACTIVE, LOADING, TRANSLATED
     }
 }
 
@@ -410,3 +446,24 @@ data class GoogleAccessTokenResponse(
     var token_type: String? = null,
     var id_token: String? = null
 )
+
+data class AppSettings(
+    var subscription: Boolean? = null,
+    var free_messages_count: Int? = null,
+    var free_invitations_count: Int? = null
+)
+
+data class AppSettingsResponse(
+    val data: AppSettings? = null
+) : BaseResponse()
+
+data class SubscriptionInfo(
+    val id: Int? = null,
+    val device: String? = null,
+    val start_at: String? = null,
+    val end_at: String? = null
+)
+
+data class SubscriptionInfoResponse(
+    val data: SubscriptionInfo? = null
+) : BaseResponse()

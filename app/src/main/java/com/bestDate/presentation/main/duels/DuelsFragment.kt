@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
+import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.DuelElementView
@@ -47,6 +48,11 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
         binding.noDataView.onClick = {
             navController.navigate(
                 DuelsFragmentDirections.actionDuelsToTop(viewModel.gender)
+            )
+        }
+        binding.resultView.openProfile = {
+            navController.navigate(
+                DuelsFragmentDirections.actionGlobalTopToAnotherProfile(it, BackScreenType.DUELS)
             )
         }
     }
@@ -108,5 +114,10 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 viewModel.postVote(profileImage.second.orZero, anotherProfileImage.second.orZero)
             }
         }
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getDuels()
     }
 }

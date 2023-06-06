@@ -2,16 +2,21 @@ package com.bestDate.presentation.main.chats.chat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.*
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.model.Image
 import com.bestDate.data.model.Message
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
+import com.bestDate.view.alerts.showBanningCardsDialog
+import com.bestDate.view.alerts.showBanningMessagesDialog
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
@@ -36,6 +41,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         super.onInit()
         user = args.user
         setUserInfo()
+        viewModel.sendReadingEvent(user?.id)
         viewModel.getChatMessages(user?.id)
         getNavigationResult<ShortUserData?>(NavigationResultKey.USER) {
             it?.let { user = it }
@@ -54,7 +60,14 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.sendClick = { text, parentId ->
-                viewModel.sendTextMessage(user?.id, parentId, text)
+                if (viewModel.messageSendAllowed()) {
+                    viewModel.sendTextMessage(user?.id, parentId, text)
+                } else {
+                    chatView.stopSendLoading()
+                    requireActivity().showBanningMessagesDialog {
+                        navigateToTariffList()
+                    }
+                }
             }
             chatView.editClick = { text, messageId ->
                 viewModel.editMessage(messageId, text)
@@ -62,9 +75,21 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.translateClick = {
                 viewModel.translateText(it, user?.language)
             }
+            chatView.translateMessageClick = {
+                viewModel.translateMessage(it)
+            }
+            chatView.returnMessageClick = {
+                viewModel.returnMessage(it)
+            }
             chatView.showInvitationClick = {
-                requireActivity().showCreateInvitationDialog(invitationList) {
-                    viewModel.sendInvitation(user?.id, it.id)
+                if (viewModel.invitationSendAllowed()) {
+                    requireActivity().showCreateInvitationDialog(invitationList) {
+                        viewModel.sendInvitation(user?.id, it.id)
+                    }
+                } else {
+                    requireActivity().showBanningCardsDialog {
+                        navigateToTariffList()
+                    }
                 }
             }
             chatView.openActionSheet = { message, chatActions ->
@@ -87,7 +112,8 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 }
             }
             chatView.addImageClick = {
-                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+                else imageListSheet.show(childFragmentManager, imageListSheet.tag)
             }
             chatView.typingEvent = {
                 viewModel.sendTypingEvent()
@@ -95,18 +121,38 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             chatView.loadNextPage = {
                 viewModel.loadNextPage()
             }
+            chatView.goToSettings = {
+                navigateToSettings()
+            }
+            chatView.setChatClosed(viewModel.chatClosed())
             imageListSheet.itemClick = {
                 imageListSheet.dismiss()
-                val fragment = ChatAddImageFragment(user, it)
-                open(fragment, binding.container)
-
-                fragment.closeAction = {
-                    close(fragment, binding.container) {
-                        reDrawBars()
-                    }
-                }
+                openImageEditor(it)
             }
         }
+    }
+
+    private fun openImageEditor(image: Image) {
+        val fragment = ChatAddImageFragment(user, image)
+        open(fragment, binding.container)
+
+        fragment.closeAction = {
+            close(fragment, binding.container) {
+                reDrawBars()
+            }
+        }
+
+        fragment.navigateToTariffList = {
+            close(fragment, binding.container) {
+                navigateToTariffList()
+            }
+        }
+    }
+
+    open fun navigateToSettings() {
+        navController.navigate(
+            ChatFragmentDirections.actionGlobalChatToSettings()
+        )
     }
 
     open fun navigateToUserProfile(userData: ShortUserData?) {
@@ -118,6 +164,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     .actionGlobalChatToAnotherProfile(userData, BackScreenType.CHAT)
             )
         }
+    }
+
+    open fun navigateToTariffList() {
+        navController.navigate(
+            ChatFragmentDirections.actionGlobalChatToTariffList()
+        )
     }
 
     private fun doChatAction(action: ChatActions, message: Message?) {
@@ -133,6 +185,10 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
             ChatActions.DELETE -> {
                 viewModel.deleteMessage(message?.id)
             }
+            ChatActions.COPY -> {
+                message?.text?.copyToClipboard(requireContext())
+                showMessage(getString(R.string.message_is_copied_to_clipboard))
+            }
         }
     }
 
@@ -147,6 +203,7 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         observe(viewModel.messages) {
             it?.let {
                 binding.chatView.setMessages(it, viewModel.meta)
+                binding.chatView.setChatClosed(viewModel.chatClosed())
             }
         }
         observe(viewModel.sendMessageLiveData) {
@@ -177,6 +234,18 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
         super.goBack()
     }
 
+    private fun showPhotoPicker() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val picker =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                val image = Image(uri = it)
+                openImageEditor(image)
+            }
+        }
+
     private fun setUserInfo() {
         with(binding) {
             Glide.with(requireContext())
@@ -193,5 +262,27 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
 
             chatView.setUser(user)
         }
+    }
+
+    override fun scrollAction() {
+        super.scrollAction()
+        binding.chatView.showInvitationView(false)
+    }
+
+    override fun hideAction() {
+        super.hideAction()
+        binding.chatView.showInvitationView(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        postDelayed({
+            hideKeyboardAction()
+        }, 100)
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.getChatMessages(user?.id)
     }
 }

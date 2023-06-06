@@ -58,8 +58,10 @@ class PassRecoveryFragment : BaseVMFragment<FragmentPassRecoveryBinding, PassRec
         with(binding) {
             when {
                 emailInput.text.isBlank() -> emailInput.setError()
+                passInput.text.length < 6 -> passInput.setError()
                 else -> {
                     PassRecoveryDataHolder.login = emailInput.text
+                    PassRecoveryDataHolder.password = passInput.text
                     viewModel.sendPassRecoveryCode(emailInput.text)
                 }
             }

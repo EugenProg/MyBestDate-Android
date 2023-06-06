@@ -77,7 +77,7 @@ class TopAdapter : PagingDataAdapter<DuelProfile, TopAdapter.TopListViewHolder>(
                     (item?.rating?.setScale(1, RoundingMode.UP) ?: BigDecimal.ZERO).toString()
                 Glide.with(itemView.context)
                     .load(item?.thumb_url)
-                    .placeholder(R.drawable.ic_default_photo)
+                    .centerCrop()
                     .into(binding.profileImageView)
                 root.setOnSaveClickListener {
                     itemClick?.invoke(item)

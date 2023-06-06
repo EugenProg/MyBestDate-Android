@@ -2,9 +2,12 @@ package com.bestDate.presentation.main.chats
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
+import com.bestDate.data.extension.isToLastPositionScrolled
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.swipeDeleteListener
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.databinding.FragmentChatListBinding
@@ -22,6 +25,7 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
     override val statusBarColor = R.color.bg_main
     private lateinit var loader: LoaderDialog
     private lateinit var adapter: ChatListAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onInit() {
         super.onInit()
@@ -31,7 +35,8 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
         with(binding) {
             toolbar.title = getString(R.string.chats)
 
-            chatListView.layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext())
+            chatListView.layoutManager = layoutManager
             chatListView.adapter = adapter
 
             chatListView.swipeDeleteListener {
@@ -46,7 +51,9 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
                 }
             }
         }
+        binding.loader.isVisible = viewModel.chatList.value.isNullOrEmpty()
         viewModel.refreshChatList()
+        checkNextListNeeding()
     }
 
     override fun onViewClickListener() {
@@ -76,6 +83,7 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
             adapter.submitList(it) {
                 adapter.meta = viewModel.meta
                 loader.stopLoading()
+                binding.loader.isVisible = false
             }
         }
         observe(viewModel.deleteLiveData) {
@@ -85,5 +93,19 @@ class ChatListFragment : BaseVMFragment<FragmentChatListBinding, ChatListViewMod
             loader.stopLoading()
             showMessage(it.exception.message)
         }
+    }
+
+    private fun checkNextListNeeding() {
+        binding.chatListView.isToLastPositionScrolled {
+            if (viewModel.meta.current_page.orZero < viewModel.meta.last_page.orZero && !adapter.loadingMode) {
+                adapter.loadingMode = true
+                viewModel.loadNextPage()
+            }
+        }
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.refreshChatList()
     }
 }

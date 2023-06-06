@@ -19,6 +19,10 @@ class ChatImageViewFragment(private val image: ChatImage?): BaseFragment<Fragmen
     override fun onInit() {
         super.onInit()
         Glide.with(requireContext())
+            .load(image?.thumb_url)
+            .into(binding.thumbImageView)
+
+        Glide.with(requireContext())
             .load(image?.full_url)
             .into(binding.imageView)
     }

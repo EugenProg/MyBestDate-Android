@@ -2,9 +2,12 @@ package com.bestDate.presentation.main.userProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.*
+import com.bestDate.data.model.Image
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.utils.DeeplinkCreator
 import com.bestDate.databinding.FragmentUserProfileBinding
@@ -74,11 +77,13 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
                 navController.navigate(
                     UserProfileFragmentDirections.actionProfileToSlider(photos.toTypedArray())
                 )
+            } else {
+                openImageSelector()
             }
         }
         adapter.addClick = {
             if (adapter.itemCount < 10) {
-                imageListSheet.show(childFragmentManager, imageListSheet.tag)
+                openImageSelector()
             } else {
                 showMessage(getString(R.string.you_can_upload_only_9_photo))
             }
@@ -100,7 +105,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             navController.navigate(UserProfileFragmentDirections.actionProfileToPersonalData())
         }
         binding.settingsButton.click = {
-            navController.navigate(UserProfileFragmentDirections.actionProfileToSettings())
+            navController.navigate(UserProfileFragmentDirections.actionGlobalProfileToSettings())
         }
         binding.questionnaireButton.click = {
             navController.navigate(UserProfileFragmentDirections.actionProfileToQuestionnaire())
@@ -116,6 +121,22 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             }
 
             sheet.show(childFragmentManager)
+        }
+    }
+
+    private fun openImageSelector() {
+        if (ActivityResultContracts.PickVisualMedia.isPhotoPickerAvailable()) showPhotoPicker()
+        else imageListSheet.show(childFragmentManager, imageListSheet.tag)
+    }
+
+    private fun showPhotoPicker() {
+        picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+    }
+
+    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let {
+            val image = Image(uri = it)
+            navController.navigate(UserProfileFragmentDirections.actionProfileToPhotoEditor(image))
         }
     }
 
@@ -168,7 +189,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     private fun getImageList(images: MutableList<ProfileImage>?): MutableList<ProfileImage> {
         val list = mutableListOf<ProfileImage>()
         list.addAll(images ?: mutableListOf())
-        list.add(ProfileImage(id = -1))
+        list.add(ProfileImage(viewType = ProfileImage.ViewType.ADD))
         return list
     }
 
@@ -182,7 +203,18 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             .into(binding.avatar)
 
         Glide.with(requireContext())
+            .load(image.thumb_url)
+            .centerCrop()
+            .into(binding.imageBackThumb)
+
+        Glide.with(requireContext())
             .load(image.full_url)
+            .centerCrop()
             .into(binding.imageBack)
+    }
+
+    override fun networkIsUpdated() {
+        super.networkIsUpdated()
+        viewModel.updateUserData()
     }
 }

@@ -462,6 +462,11 @@
 
 
     <string name="i_didn_t_get_the_code_send_it_again">I didn’t get the code, send it again</string>
+    <plurals name="seconds">
+        <item quantity="one">%d second</item>
+        <item quantity="many">%d seconds</item>
+        <item quantity="other">%d seconds</item>
+    </plurals>
     <string name="_60_second">60 second</string>
     <string name="enter_the_confirmation_code">Enter the confirmation code</string>
     <string name="confirmation_code">Confirmation code</string>
@@ -624,6 +629,7 @@
     <string name="result">Result</string>
     <string name="duels_are_over">Duels are over</string>
     <string name="you_voted_for_all_the_photos">You voted for all the photos</string>
+    <string name="you_voted_for_all_the_photos_">You voted for all the photos</string>
     <string name="but_you_can_also_go_to_the_top">But you can also go to\nthe Top 50</string>
     <string name="duels">Duels</string>
     <string name="you_have_no_guests_yet">You have no guests yet</string>
@@ -677,4 +683,15 @@
     <string name="women">Women</string>
     <string name="all_gender">All</string>
     <string name="the_image_is_out_of_frames">The image is out of bounds. Please correct the image</string>
+    <string name="copy">Copy</string>
+    <string name="message_is_copied_to_clipboard">Message is copied to clipboard</string>
+    <string name="do_you_want_to_see_who_viewed_your_profile">Do you want to see who viewed your profile?</string>
+    <string name="buy_a_subscription">Buy a subscription</string>
+    <string name="weak_internet_connection">Weak internet connection</string>
+    <string name="check_your_mobile_internet_or_wifi_network">Check your Mobile Internet or WiFi network</string>
+    <string name="not_activated">Not activated</string>
+    <string name="you_can_t_see_the_matches_because_you_don_t_participate_in_them">You can’t see the matches because\nyou don’t participate in them</string>
+    <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
+    <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
+    <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
 </resources>

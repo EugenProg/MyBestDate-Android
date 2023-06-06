@@ -5,9 +5,12 @@ import com.bestDate.data.extension.getDateString
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.*
+import com.bestDate.data.preferences.Preferences
+import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.db.dao.UserDao
 import com.bestDate.network.remote.ChatsRemoteData
 import com.bestDate.network.remote.TranslationRemoteData
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import com.bestDate.view.chat.ChatStatusType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -19,7 +22,9 @@ import javax.inject.Singleton
 class ChatUseCase @Inject constructor(
     private val userDao: UserDao,
     private val chatsRemoteData: ChatsRemoteData,
-    private val translateRemoteData: TranslationRemoteData
+    private val chatListUseCase: ChatListUseCase,
+    private val translateRemoteData: TranslationRemoteData,
+    private val preferencesUtils: PreferencesUtils
 ) {
     var messages: MutableLiveData<MutableList<Message>?> = MutableLiveData()
     var typingMode: MutableLiveData<ChatStatusType> = MutableLiveData()
@@ -32,7 +37,14 @@ class ChatUseCase @Inject constructor(
     suspend fun sendTextMessage(recipientId: Int?, parentId: Int?, text: String) {
         val response = chatsRemoteData.sendTextMessage(recipientId.orZero, parentId, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
+            response.body()?.data?.let {
+                preferencesUtils.saveInt(
+                    Preferences.SENT_MESSAGES_TODAY,
+                    it.sent_messages_today.orZero
+                )
+                messages.postValue(addNewMessage(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -46,14 +58,24 @@ class ChatUseCase @Inject constructor(
         val body = MultipartBody.Part.createFormData("image", "name", requestFile)
         val response = chatsRemoteData.sendImageMessage(recipientId.orZero, body, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(addNewMessage(it)) }
+            response.body()?.data?.let {
+                preferencesUtils.saveInt(
+                    Preferences.SENT_MESSAGES_TODAY,
+                    it.sent_messages_today.orZero
+                )
+                messages.postValue(addNewMessage(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
     suspend fun editMessage(messageId: Int?, text: String) {
         val response = chatsRemoteData.updateMessage(messageId.orZero, text)
         if (response.isSuccessful) {
-            response.body()?.data?.let { messages.postValue(editMessageList(it)) }
+            response.body()?.data?.let {
+                messages.postValue(editMessageList(it))
+                chatListUseCase.setMessage(it)
+            }
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -61,6 +83,7 @@ class ChatUseCase @Inject constructor(
         val response = chatsRemoteData.deleteMessage(messageId.orZero)
         if (response.isSuccessful) {
             messages.postValue(deleteMessageFromList(messageId))
+            chatListUseCase.refreshChatList()
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 
@@ -110,6 +133,27 @@ class ChatUseCase @Inject constructor(
         } else throw InternalException.OperationException(response.message())
     }
 
+    suspend fun translateMessage(message: Message) {
+        val myLanguage = userDao.getUser()?.language
+        val response =
+            translateRemoteData.translate(message.text.orEmpty(), (myLanguage ?: "EN").uppercase())
+        if (response.isSuccessful) {
+            val newMessage = message.copy(
+                translatedText = response.body()?.translations?.firstOrNull()?.text,
+                translateStatus = Message.TranslateStatus.TRANSLATED
+            )
+            messages.postValue(editMessageList(newMessage))
+        } else throw InternalException.OperationException(response.message())
+    }
+
+    fun returnMessage(message: Message) {
+        val newMessage = message.copy(
+            translatedText = null,
+            translateStatus = Message.TranslateStatus.UN_ACTIVE
+        )
+        messages.postValue(editMessageList(newMessage))
+    }
+
     fun addPusherMessage(message: Message?) {
         message?.let {
             messages.postValue(addNewMessage(it))
@@ -131,10 +175,11 @@ class ChatUseCase @Inject constructor(
     fun clearChatData() {
         messages.value = null
         currentUserId = null
+        myId = null
     }
 
     private fun addNewMessage(message: Message): MutableList<Message> {
-        originalList?.add(0, message)
+        if (originalList?.firstOrNull()?.id != message.id) originalList?.add(0, message)
         return transformMessageList(originalList)
     }
 
@@ -230,5 +275,9 @@ class ChatUseCase @Inject constructor(
 
     fun setTypingEvent(on: Boolean) {
         typingMode.postValue(if (on) ChatStatusType.TYPING else ChatStatusType.ONLINE)
+    }
+
+    suspend fun refreshMessages() {
+        getChatMessages(currentUserId)
     }
 }

@@ -4,9 +4,9 @@ import java.io.IOException
 
 sealed class InternalException(override val message: String): IOException(message) {
     class OperationException(message: String?): InternalException(message.orEmpty())
-    class NotFoundException(): InternalException("Not founded")
+    class NotConnectionException(): InternalException("Connection lost")
     class UnknownException(val original: Exception): InternalException("Unknown error")
-    class LogoutException(): InternalException("Logout error")
+    class RequestDuplicateException(requestString: String): InternalException("Duplicate: $requestString")
     class ValidationException(message: String): InternalException(message)
 }
 

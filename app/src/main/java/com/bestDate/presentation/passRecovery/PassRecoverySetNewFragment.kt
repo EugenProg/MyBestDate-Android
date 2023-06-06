@@ -83,7 +83,7 @@ class PassRecoverySetNewFragment :
             binding.passInput.text.length < 6) binding.passInput.setError()
         else {
             PassRecoveryDataHolder.password = binding.passInput.text
-            viewModel.confirmPassRecovery(getString(R.string.app_locale))
+            viewModel.confirmPassRecovery("", getString(R.string.app_locale))
         }
     }
 }

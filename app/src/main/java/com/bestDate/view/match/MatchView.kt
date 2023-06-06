@@ -18,6 +18,7 @@ class MatchView @JvmOverloads constructor(
         ViewMatchBinding.inflate(LayoutInflater.from(context), this)
 
     private val matchesList: MutableList<ShortUserData?> = mutableListOf()
+    private val viewList: MutableList<MatchImageView> = mutableListOf()
 
     var openQuestionnaireClick: ((userId: Int?) -> Unit)? = null
     var matchAction: ((userId: Int?) -> Unit)? = null
@@ -31,7 +32,7 @@ class MatchView @JvmOverloads constructor(
         }
     }
 
-    private fun getView(user: ShortUserData?): View {
+    private fun getView(user: ShortUserData?): MatchImageView {
         val view = MatchImageView(context)
         view.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         view.setUser(user)
@@ -52,9 +53,12 @@ class MatchView @JvmOverloads constructor(
     private fun removeMatchById(matchView: View?) {
         if (matchesList.isNotEmpty()) {
             matchesList.removeLast()
+            viewList.remove(matchView)
             binding.matchesBox.removeView(matchView)
             nextUser?.invoke(matchesList.isEmpty())
             setCurrentUserInfo()
+
+            viewList.lastOrNull()?.initFullImage()
         }
     }
 
@@ -75,10 +79,14 @@ class MatchView @JvmOverloads constructor(
 
     fun setMatches(it: MutableList<ShortUserData>?) {
         matchesList.clear()
+        viewList.clear()
         it?.forEach {
             matchesList.add(it)
-            binding.matchesBox.addView(getView(it))
+            val matchView = getView(it)
+            binding.matchesBox.addView(matchView)
+            viewList.add(matchView)
         }
+        viewList.lastOrNull()?.initFullImage()
         setCurrentUserInfo()
     }
 }

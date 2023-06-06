@@ -6,9 +6,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.bestDate.R
-import com.bestDate.data.extension.getTime
-import com.bestDate.data.extension.orZero
-import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.*
 import com.bestDate.data.model.ChatImage
 import com.bestDate.data.model.ChatItemType
 import com.bestDate.data.model.Message
@@ -23,6 +21,8 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
     var imageOpenClick: ((ChatImage?) -> Unit)? = null
     var imageLongClick: ((Message) -> Unit)? = null
     var loadMoreItems: (() -> Unit)? = null
+    var translateClick: ((Message) -> Unit)? = null
+    var returnClick: ((Message) -> Unit)? = null
     var meta: Meta? = Meta()
     var loadingMode: Boolean = false
 
@@ -62,14 +62,14 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 UserTextMessageViewHolder(
                     ItemUserTextMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
-                    ), messageClick
+                    ), messageClick, translateClick, returnClick
                 )
             }
             ChatItemType.USER_IMAGE_MESSAGE.ordinal -> {
                 UserImageMessageViewHolder(
                     ItemUserImageMessageBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
-                    ), messageClick, imageOpenClick, imageLongClick
+                    ), messageClick, imageOpenClick, imageLongClick, translateClick, returnClick
                 )
             }
             ChatItemType.LOADER.ordinal -> {
@@ -82,7 +82,7 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
             else -> UserTextMessageViewHolder(
                 ItemUserTextMessageBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
-                ), messageClick
+                ), messageClick, translateClick, returnClick
             )
         }
     }
@@ -171,9 +171,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
 
     class UserTextMessageViewHolder(
         override val binding: ItemUserTextMessageBinding,
-        itemClick: ((Message) -> Unit)?
-    ) :
-        ChatBaseViewHolder<ItemUserTextMessageBinding>(binding, itemClick) {
+        itemClick: ((Message) -> Unit)?,
+        private val translateClick: ((Message) -> Unit)?,
+        private val returnClick: ((Message) -> Unit)?
+    ) : ChatBaseViewHolder<ItemUserTextMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
             with(binding) {
@@ -181,18 +182,32 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 parentLine.isVisible = item.parentMessage != null
                 parentMessage.text = item.parentMessage?.text
                 parentImageBox.isVisible = item.parentMessage?.image != null
+
+                translateButton.setStatus(item.getStatus())
+
                 item.parentMessage?.image?.let {
                     Glide.with(itemView.context)
                         .load(it.thumb_url)
                         .into(parentImage)
                 }
 
-                message.text = item.text
+                message.text =
+                    if (item.getStatus() == Message.TranslateStatus.TRANSLATED) item.translatedText
+                    else item.text
+
                 time.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()
 
+                translateButton.setMargin(bottom = if (item.isLastMessage == true) 32.toPx() else 0)
+
                 messageBox.setOnSaveClickListener {
                     itemClick?.invoke(item)
+                }
+                translateButton.translateClick = {
+                    translateClick?.invoke(item)
+                }
+                translateButton.returnClick = {
+                    returnClick?.invoke(item)
                 }
             }
         }
@@ -202,9 +217,10 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
         override val binding: ItemUserImageMessageBinding,
         itemClick: ((Message) -> Unit)?,
         private val imageOpen: ((ChatImage?) -> Unit)?,
-        private val itemLongClick: ((Message) -> Unit)?
-    ) :
-        ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
+        private val itemLongClick: ((Message) -> Unit)?,
+        private val translateClick: ((Message) -> Unit)?,
+        private val returnClick: ((Message) -> Unit)?
+    ) : ChatBaseViewHolder<ItemUserImageMessageBinding>(binding, itemClick) {
         override fun bindView(item: Message) {
             super.bindView(item)
             with(binding) {
@@ -212,10 +228,24 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                     .load(item.image?.thumb_url)
                     .into(imageView)
 
-                message.isVisible = item.text != null
-                message.text = item.text
+                translateButton.setStatus(item.getStatus())
+
+                if (item.text != null) {
+                    message.isVisible = true
+                    translateButton.isVisible = true
+                } else {
+                    message.isVisible = false
+                    translateButton.isVisible = false
+                }
+
+                message.text =
+                    if (item.getStatus() == Message.TranslateStatus.TRANSLATED) item.translatedText
+                    else item.text
+
                 time.isVisible = item.isLastMessage == true
                 time.text = item.created_at.getTime()
+
+                translateButton.setMargin(bottom = if (item.isLastMessage == true) 32.toPx() else 0)
 
                 messageBox.setOnSaveClickListener {
                     itemClick?.invoke(item)
@@ -226,6 +256,12 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
                 imageView.setOnLongClickListener {
                     itemLongClick?.invoke(item)
                     true
+                }
+                translateButton.translateClick = {
+                    translateClick?.invoke(item)
+                }
+                translateButton.returnClick = {
+                    returnClick?.invoke(item)
                 }
             }
         }
@@ -251,9 +287,9 @@ class ChatAdapter : ListAdapter<Message, ChatBaseViewHolder<*>>(ChatDiffUtil()) 
         loadMoreItems?.invoke()
     }
 
-    override fun submitList(list: MutableList<Message>?) {
+    override fun submitList(list: MutableList<Message>?, commitCallback: Runnable?) {
         loadingMode = false
-        super.submitList(list)
+        super.submitList(list, commitCallback)
     }
 
     private var loadingItem: Message =

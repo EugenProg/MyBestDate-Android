@@ -45,5 +45,6 @@ class ChatActionsAdapter(private val actions: MutableList<ChatActions>) :
 enum class ChatActions(@StringRes val actionName: Int) {
     REPLY(R.string.reply),
     EDIT(R.string.edit),
+    COPY(R.string.copy),
     DELETE(R.string.delete)
 }

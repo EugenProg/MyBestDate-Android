@@ -1,6 +1,5 @@
 package com.bestDate.presentation.main.search
 
-import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.model.GeocodingResponse
 import com.bestDate.data.model.InternalException
@@ -11,12 +10,12 @@ import javax.inject.Inject
 class GeoLocationUseCase @Inject constructor(
     private val geocodingRemoteData: GeocodingRemoteData
 ) {
-    var locationLiveData: MutableLiveData<GeocodingResponse?> = MutableLiveData()
+    var location: GeocodingResponse? = null
 
     suspend fun getLocationByAddress(location: CityListItem?) {
         val response = geocodingRemoteData.getLocationByAddress(location)
         if (response.isSuccessful) {
-            locationLiveData.postValue(response.body()?.firstOrNull())
+            this.location = response.body()?.firstOrNull()
         } else throw InternalException.OperationException(response.errorBody().getErrorMessage())
     }
 }

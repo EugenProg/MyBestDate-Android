@@ -57,19 +57,22 @@ abstract class ChatListBaseViewHolder<VB : ViewBinding>(
     }
 }
 
-abstract class GuestBaseViewHolder<VB: ViewBinding>(
+abstract class GuestBaseViewHolder<VB : ViewBinding>(
     override val binding: VB,
     open val itemClick: ((Guest) -> Unit)?
-): BaseViewHolder<Guest, VB>(binding)
+) : BaseViewHolder<Guest, VB>(binding)
 
 abstract class ChatBaseViewHolder<VB : ViewBinding>(
     override val binding: VB,
     val itemClick: ((Message) -> Unit)?
 ) : BaseViewHolder<Message, VB>(binding)
 
-abstract class InvitationBaseViewHolder<VB: ViewBinding>(
+abstract class InvitationBaseViewHolder<VB : ViewBinding>(
     override val binding: VB
-): BaseViewHolder<InvitationCard, VB>(binding)
+) : BaseViewHolder<InvitationCard, VB>(binding)
 
 abstract class QuestionnaireBaseViewHolder<VB : ViewBinding>(override val binding: VB) :
     BaseClickViewHolder<QuestionnaireQuestion, ((QuestionnaireQuestion) -> Unit)?, VB>(binding)
+
+abstract class ImageLineBaseViewHolder<VB : ViewBinding, IC>(override val binding: VB) :
+    BaseClickViewHolder<ProfileImage, IC, VB>(binding)

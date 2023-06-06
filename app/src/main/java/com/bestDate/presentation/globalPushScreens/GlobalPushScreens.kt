@@ -99,6 +99,18 @@ class GlobalChatScreenPushScreen : ChatFragment() {
         )
     }
 
+    override fun navigateToTariffList() {
+        navController.navigate(
+            GlobalChatScreenPushScreenDirections.actionGlobalChatPushToTariffList()
+        )
+    }
+
+    override fun navigateToSettings() {
+        navController.navigate(
+            GlobalChatScreenPushScreenDirections.actionGlobalChatPushToSettings()
+        )
+    }
+
     override fun goBack() {
         if (navController.backQueue.size > 5) {
             super.goBack()

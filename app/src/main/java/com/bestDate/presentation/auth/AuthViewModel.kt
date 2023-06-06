@@ -1,5 +1,7 @@
 package com.bestDate.presentation.auth
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.R
 import com.bestDate.presentation.base.BaseViewModel
@@ -10,7 +12,10 @@ import com.bestDate.data.model.SocialProvider
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
+import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.main.UserUseCase
+import com.bestDate.presentation.main.chats.ChatListUseCase
+import com.bestDate.presentation.main.userProfile.settings.SettingsUseCase
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,6 +24,8 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authUseCase: AuthUseCase,
     private val userUseCase: UserUseCase,
+    private val chatListUseCase: ChatListUseCase,
+    private val settingsUseCase: SettingsUseCase,
     private val pusherCenter: PusherCenter,
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
@@ -34,6 +41,9 @@ class AuthViewModel @Inject constructor(
 
     private var _loginProcessLiveData = LiveEvent<Boolean>()
     val loginProcessLiveData: LiveEvent<Boolean> = _loginProcessLiveData
+
+    private var _loginSuccessLiveData = MutableLiveData<UserDB?>()
+    val loginSuccessLiveData: LiveData<UserDB?> = _loginSuccessLiveData
 
     var user = userUseCase.getMyUser.asLiveData()
 
@@ -54,9 +64,12 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByEmail(login.trim(), password)
             userUseCase.changeLanguage(appLanguage)
+            chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
+            _loginSuccessLiveData.postValue(user.value)
         }
     }
 
@@ -65,9 +78,12 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginByPhone(login.formatToPhoneNumber(), password)
             userUseCase.changeLanguage(appLanguage)
+            chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, false)
             _loginProcessLiveData.postValue(false)
+            _loginSuccessLiveData.postValue(user.value)
         }
     }
 
@@ -75,8 +91,11 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginSocial(provider, token)
             userUseCase.changeLanguage(appLanguage)
+            chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
+            _loginSuccessLiveData.postValue(user.value)
         }
     }
 
@@ -84,8 +103,11 @@ class AuthViewModel @Inject constructor(
         doAsync {
             authUseCase.loginWithGoogle(authCode)
             userUseCase.changeLanguage(appLanguage)
+            chatListUseCase.refreshChatList()
+            settingsUseCase.refreshUserSettings()
             pusherCenter.startPusher()
             preferencesUtils.saveBoolean(Preferences.FIRST_ENTER, registrationSocialMode)
+            _loginSuccessLiveData.postValue(user.value)
         }
     }
 }

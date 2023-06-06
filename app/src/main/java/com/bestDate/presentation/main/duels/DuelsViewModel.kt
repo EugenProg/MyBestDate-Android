@@ -50,7 +50,9 @@ class DuelsViewModel @Inject constructor(
         doAsync {
             duelUseCase.setUserGender()
             _genderIsSetLiveData.postValue(true)
-            getDuels()
+            if (duelImages.value.isNullOrEmpty()) {
+                getDuels()
+            }
         }
     }
 }

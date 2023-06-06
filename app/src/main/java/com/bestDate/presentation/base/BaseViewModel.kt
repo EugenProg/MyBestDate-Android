@@ -25,8 +25,10 @@ abstract class BaseViewModel: ViewModel() {
                 request()
             } catch (e: Exception) {
                 val exception = if (e !is InternalException) InternalException.UnknownException(e) else e
-                onError?.invoke(exception)
-                errorLiveData.postValue(HandleError(exception))
+                if (exception !is InternalException.RequestDuplicateException) {
+                    onError?.invoke(exception)
+                    errorLiveData.postValue(HandleError(exception))
+                }
             } finally {
                 if (loading) loadingMode.postValue(false)
             }

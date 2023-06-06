@@ -32,6 +32,12 @@ fun Date.toShortDate(): String {
 }
 
 @SuppressLint("SimpleDateFormat")
+fun Date.toLongServerDate(): String {
+    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    return formatter.format(this)
+}
+
+@SuppressLint("SimpleDateFormat")
 fun Date.toWeekday(): String {
     val formatter = SimpleDateFormat("EE")
     return formatter.format(this)

@@ -13,10 +13,16 @@ import com.bestDate.presentation.base.questionnaire.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-open class AnotherProfileQuestionnaireFragment:
+open class AnotherProfileQuestionnaireFragment :
     BaseVMFragment<FragmentAnotherProfileQuestionnaireBinding, AnotherProfileQuestionnaireViewModel>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAnotherProfileQuestionnaireBinding =
-        { inflater, parent, attach -> FragmentAnotherProfileQuestionnaireBinding.inflate(inflater, parent, attach) }
+        { inflater, parent, attach ->
+            FragmentAnotherProfileQuestionnaireBinding.inflate(
+                inflater,
+                parent,
+                attach
+            )
+        }
     override val viewModelClass: Class<AnotherProfileQuestionnaireViewModel> =
         AnotherProfileQuestionnaireViewModel::class.java
 
@@ -49,21 +55,54 @@ open class AnotherProfileQuestionnaireFragment:
     private fun setQuestionnaireInfo(questionnaire: QuestionnaireDB?) {
         with(binding) {
             aboutMe.setInfo(questionnaire?.about_me)
-            myHeight.setInfo(getString(R.string.cm_unit, questionnaire?.height.orZero.toString()))
-            myWeight.setInfo(getString(R.string.kg_unit, questionnaire?.weight.orZero.toString()))
+            myHeight.setInfo(
+                if (questionnaire?.height.orZero > 0) {
+                    getString(R.string.cm_unit, questionnaire?.height?.orZero.toString())
+                } else ""
+            )
+            myWeight.setInfo(
+                if (questionnaire?.weight.orZero > 0) {
+                    getString(R.string.kg_unit, questionnaire?.weight?.orZero.toString())
+                } else ""
+            )
             eyeColor.setInfo(EyeColorType().getName(requireContext(), questionnaire?.eye_color))
             hairColor.setInfo(HairColorType().getName(requireContext(), questionnaire?.hair_color))
-            hairLength.setInfo(HairLengthType().getName(requireContext(), questionnaire?.hair_length))
+            hairLength.setInfo(
+                HairLengthType().getName(
+                    requireContext(),
+                    questionnaire?.hair_length
+                )
+            )
 
-            maritalStatus.setInfo(MaritalStatus().getName(requireContext(), questionnaire?.marital_status))
+            maritalStatus.setInfo(
+                MaritalStatus().getName(
+                    requireContext(),
+                    questionnaire?.marital_status
+                )
+            )
             havingKids.setInfo(KidsCount().getName(requireContext(), questionnaire?.kids))
-            placeOfResidence.setInfo(NationalityType().getName(requireContext(), questionnaire?.nationality))
+            placeOfResidence.setInfo(
+                NationalityType().getName(
+                    requireContext(),
+                    questionnaire?.nationality
+                )
+            )
             education.setInfo(EducationStatus().getName(requireContext(), questionnaire?.education))
-            occupationalStatus.setInfo(OccupationalStatus().getName(requireContext(), questionnaire?.occupation))
+            occupationalStatus.setInfo(
+                OccupationalStatus().getName(
+                    requireContext(),
+                    questionnaire?.occupation
+                )
+            )
 
             hobby.setInfo(HobbyType().getNameLine(requireContext(), questionnaire?.hobby))
             typesOfSports.setInfo(SportTypes().getNameLine(requireContext(), questionnaire?.sport))
-            eveningTime.setInfo(EveningTimeType().getName(requireContext(), questionnaire?.evening_time))
+            eveningTime.setInfo(
+                EveningTimeType().getName(
+                    requireContext(),
+                    questionnaire?.evening_time
+                )
+            )
 
             socials.setSocials(questionnaire?.socials)
         }

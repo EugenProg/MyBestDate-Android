@@ -11,6 +11,7 @@ import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.GoogleAuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.chats.ChatListUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
