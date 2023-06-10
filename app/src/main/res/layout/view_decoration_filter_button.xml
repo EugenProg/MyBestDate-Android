@@ -33,12 +33,13 @@
             android:paddingStart="10dp"
             android:paddingEnd="12.5dp"
             android:textSize="12sp"
-            app:drawableEndCompat="@drawable/ic_arrow_down"
             app:drawableStartCompat="@drawable/ic_crown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/online" />
+
+        <!--app:drawableEndCompat="@drawable/ic_arrow_down"-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </merge>

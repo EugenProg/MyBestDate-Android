@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.bestDate.view.duel.GenderSelectorItemView
+            android:id="@+id/woman_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.bestDate.view.duel.GenderSelectorItemView
+            android:id="@+id/man_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</merge>

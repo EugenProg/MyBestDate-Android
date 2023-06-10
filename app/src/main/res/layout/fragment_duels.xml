@@ -5,37 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.bestDate.view.toolbar.ToolbarProfile
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
+    <include
+        android:id="@+id/coinView"
+        layout="@layout/view_duel_coin_button"
+        android:elevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/component_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/duels"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/coinView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/coinView" />
 
     <com.bestDate.view.ButtonTopView
         android:id="@+id/topButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="-10dp"
-        android:layout_marginBottom="-20dp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar"
+        android:layout_marginEnd="18dp"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/coinView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/coinView" />
 
     <com.bestDate.view.filter.FilterButton
         android:id="@+id/locationFilterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/coinView" />
 
-    <com.bestDate.view.ManWomanSelectorView
+    <com.bestDate.view.duel.GenderSelectorView
         android:id="@+id/selectorView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
+        app:layout_constraintEnd_toStartOf="@id/myDuelsButton"
+        app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
+
+    <com.bestDate.view.duel.MyDuelsButtonView
+        android:id="@+id/myDuelsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/locationFilterButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/locationFilterButton" />
@@ -49,6 +69,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/locationFilterButton" />
 
+    <FrameLayout
+        android:id="@+id/ad_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/_view" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -58,98 +87,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/_view">
+        app:layout_constraintTop_toBottomOf="@id/ad_container">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/bgButtonAndShadow"
-                    android:layout_width="161dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_button_and_shadow"
-                    app:layout_constraintBottom_toBottomOf="@+id/coinView"
-                    app:layout_constraintStart_toStartOf="@+id/coinView"
-                    app:layout_constraintTop_toTopOf="@+id/coinView" />
-
-                <View
-                    android:id="@+id/bgButtonNoShadow"
-                    android:layout_width="141dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/bg_button_no_shadow"
-                    app:layout_constraintBottom_toBottomOf="@+id/coinView"
-                    app:layout_constraintStart_toStartOf="@+id/coinView"
-                    app:layout_constraintTop_toTopOf="@+id/coinView" />
-
-                <TextView
-                    android:id="@+id/amountCoins"
-                    style="@style/component_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:scrollbarSize="16sp"
-                    android:textColor="@color/white"
-                    app:layout_constraintEnd_toEndOf="@id/bdCoin"
-                    app:layout_constraintStart_toStartOf="@id/bdCoin"
-                    app:layout_constraintTop_toTopOf="@+id/bgButtonNoShadow"
-                    tools:text="10" />
-
-                <TextView
-                    android:id="@+id/bdCoin"
-                    style="@style/component_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/bd_coin"
-                    android:textColor="@color/white_80"
-                    android:textSize="8sp"
-                    app:layout_constraintEnd_toEndOf="@id/bgButtonNoShadow"
-                    app:layout_constraintStart_toStartOf="@id/bgButtonNoShadow"
-                    app:layout_constraintTop_toBottomOf="@+id/amountCoins"
-                    tools:ignore="SmallSp" />
-
-                <FrameLayout
-                    android:id="@+id/coinView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="104dp"
-                        android:layout_height="104dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/avatar" />
-
-                    <ImageView
-                        android:layout_width="52dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="2dp"
-                        android:src="@drawable/coin_bd_mini" />
-                </FrameLayout>
-
-                <com.bestDate.view.button.UserDataButtonView
-                    android:id="@+id/myDuelsButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="18dp"
-                    app:button_icon="@drawable/ic_my_duel"
-                    app:button_title="@string/my_duels"
-                    app:layout_constraintBottom_toBottomOf="@+id/coinView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/coinView" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.bestDate.view.NoDataViewWithButton
                 android:id="@+id/noDataView"
@@ -168,6 +111,7 @@
                 android:id="@+id/duelView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 

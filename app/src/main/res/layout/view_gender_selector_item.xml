@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/selector"
+        style="@style/component_title"
+        android:layout_width="57dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        tools:text="W" />
+</merge>
