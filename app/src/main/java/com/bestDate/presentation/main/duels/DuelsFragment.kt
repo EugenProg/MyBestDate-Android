@@ -4,19 +4,14 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import com.bestDate.BuildConfig
 import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.utils.ads.BannerAdUtil
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.DuelElementView
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.RequestConfiguration
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,60 +21,14 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
-    private lateinit var adView: AdView
-    private var initialLayoutComplete = false
+    private val bannerUtil = BannerAdUtil()
 
     override fun onInit() {
         super.onInit()
         binding.resultView.isVisible = false
-        setUpAdMobs()
+        bannerUtil.setUpBanner(requireActivity(), binding.adContainer)
         viewModel.setUserGender()
     }
-
-    private fun setUpAdMobs() {
-        var bannerId = getString(R.string.ad_mob_duel_banner_id)
-        if (BuildConfig.DEBUG) {
-            val configurations = RequestConfiguration.Builder()
-                .setTestDeviceIds(listOf("25D641C228E3A8A73765F7B968E1F7AE"))
-                .build()
-            MobileAds.setRequestConfiguration(configurations)
-
-            bannerId = "ca-app-pub-3940256099942544/6300978111"
-        }
-
-        adView = AdView(requireContext())
-        binding.adContainer.addView(adView)
-
-        binding.adContainer.viewTreeObserver.addOnGlobalLayoutListener {
-            if (!initialLayoutComplete) {
-                initialLayoutComplete = true
-                adView.adUnitId = bannerId
-                adView.setAdSize(adSize)
-
-                adView.loadAd(
-                    AdRequest.Builder()
-                        .build()
-                )
-            }
-        }
-    }
-
-    private val adSize: AdSize
-        get() {
-            val windowMetrics = requireActivity().windowManager.currentWindowMetrics
-            val bounds = windowMetrics.bounds
-
-            var adWidthPixels = binding.adContainer.width.toFloat()
-
-            if (adWidthPixels == 0f) {
-                adWidthPixels = bounds.width().toFloat()
-            }
-
-            val density = resources.displayMetrics.density
-            val adWidth = (adWidthPixels / density).toInt()
-
-            return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(requireContext(), adWidth)
-        }
 
     override fun onViewClickListener() {
         super.onViewClickListener()

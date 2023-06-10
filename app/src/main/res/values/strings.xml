@@ -13,6 +13,7 @@
     <string name="percent_symbol" translatable="false">%</string>
     <string name="pro" translatable="false">Pro</string>
     <string name="ad_mob_duel_banner_id" translatable="false">ca-app-pub-6311251540314284/8128537658</string>
+    <string name="ad_mob_rewarded_id" translatable="false">ca-app-pub-6311251540314284/2098315926</string>
     <string name="ad_mob_app_id" translatable="false">ca-app-pub-6311251540314284~7773081954</string>
 
     <string name="skip">Skip</string>
