@@ -695,4 +695,7 @@
     <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
     <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
     <string name="no_ads_in_the_app">No ADS in the App</string>
+    <string name="congratulate">Congratulate!</string>
+    <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">The full functionality of the application\nis available to you without restrictions</string>
+    <string name="your_subscription_has_been_successfully_activated">Your subscription has been\nsuccessfully activated</string>
 </resources>

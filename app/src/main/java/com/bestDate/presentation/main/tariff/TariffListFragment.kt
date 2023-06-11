@@ -9,6 +9,7 @@ import com.bestDate.data.utils.subscription.SubscriptionManager
 import com.bestDate.databinding.FragmentTariffListBinding
 import com.bestDate.presentation.base.BaseFragment
 import com.bestDate.presentation.main.userProfile.invitationList.adapters.ViewPagerAdapter
+import com.bestDate.view.alerts.showSubscriptionSuccessDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -56,6 +57,11 @@ class TariffListFragment: BaseFragment<FragmentTariffListBinding>() {
         super.onViewClickListener()
         binding.closeBtn.setOnSaveClickListener {
             goBack()
+        }
+        subscriptionManager.subscriptionSuccess = {
+            requireActivity().showSubscriptionSuccessDialog {
+                navController.popBackStack()
+            }
         }
     }
 }
