@@ -684,4 +684,5 @@
     <string name="successfully">Успешно</string>
     <string name="sorry">Извините…</string>
     <string name="upload_new_photo">Загрузить новое фото</string>
+    <string name="photo_on_moderation">Фото на модерации</string>
 </resources>

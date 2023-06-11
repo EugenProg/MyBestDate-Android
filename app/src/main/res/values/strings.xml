@@ -697,4 +697,5 @@
     <string name="successfully">Successfully</string>
     <string name="sorry">Sorry…</string>
     <string name="upload_new_photo">Upload new Photo</string>
+    <string name="photo_on_moderation">Photo on moderation</string>
 </resources>
