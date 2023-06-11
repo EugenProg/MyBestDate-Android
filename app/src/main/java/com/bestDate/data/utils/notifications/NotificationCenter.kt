@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bestDate.data.extension.getPushType
-import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
@@ -14,6 +13,8 @@ import com.bestDate.db.dao.UserDao
 import com.bestDate.view.alerts.showInvitationPush
 import com.bestDate.view.alerts.showLikePush
 import com.bestDate.view.alerts.showMatchPush
+import com.bestDate.view.alerts.showModerationFailedPush
+import com.bestDate.view.alerts.showModerationSuccessPush
 import com.bestDate.view.button.InvitationActions
 import com.google.gson.Gson
 import dagger.Module
@@ -68,22 +69,21 @@ class NotificationCenter @Inject constructor() {
                     )
                 )
             }
-            /* else -> {
-                 activity.showDefaultPush(title, body) {
-                     val bundle =
-                         if (notificationType == NotificationType.MESSAGE) createMessageBundle()
-                         else null
-                     _navigationAction.postValue(Pair(notificationType.destination, bundle))
-                 }
-             }*/
+
+            NotificationType.MODERATION_SUCCESS -> activity.showModerationSuccessPush(title, body) {
+                _navigationAction.postValue(Pair(notificationType.destination, null))
+            }
+
+            NotificationType.MODERATION_FAILED -> activity.showModerationFailedPush(title, body) {
+                _navigationAction.postValue(
+                    Pair(
+                        notificationType.destination,
+                        bundleOf("show_photo_select" to true)
+                    )
+                )
+            }
         }
     }
-
-    private fun createMessageBundle(): Bundle =
-        bundleOf(
-            "user" to user,
-            "backScreen" to BackScreenType.PROFILE
-        )
 
     private fun createInvitationBundle(type: InvitationActions) =
         bundleOf("page" to type)

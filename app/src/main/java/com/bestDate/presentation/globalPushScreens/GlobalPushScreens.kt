@@ -90,24 +90,24 @@ class GlobalInvitationPushScreen : InvitationListFragment() {
     override var customBackNavigation: Boolean = true
 }
 
-class GlobalChatScreenPushScreen : ChatFragment() {
+class GlobalChatPushScreen : ChatFragment() {
 
     override fun navigateToUserProfile(userData: ShortUserData?) {
         navController.navigate(
-            GlobalChatScreenPushScreenDirections
+            GlobalChatPushScreenDirections
                 .actionChatPushToAnotherProfile(userData, BackScreenType.CHAT)
         )
     }
 
     override fun navigateToTariffList() {
         navController.navigate(
-            GlobalChatScreenPushScreenDirections.actionGlobalChatPushToTariffList()
+            GlobalChatPushScreenDirections.actionGlobalChatPushToTariffList()
         )
     }
 
     override fun navigateToSettings() {
         navController.navigate(
-            GlobalChatScreenPushScreenDirections.actionGlobalChatPushToSettings()
+            GlobalChatPushScreenDirections.actionGlobalChatPushToSettings()
         )
     }
 
@@ -116,7 +116,7 @@ class GlobalChatScreenPushScreen : ChatFragment() {
             super.goBack()
         } else {
             navController.navigate(
-                GlobalChatScreenPushScreenDirections.actionChatPushToSearch()
+                GlobalChatPushScreenDirections.actionChatPushToSearch()
             )
         }
     }
