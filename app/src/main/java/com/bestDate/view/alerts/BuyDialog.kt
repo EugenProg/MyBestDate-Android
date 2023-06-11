@@ -13,9 +13,9 @@ import com.bestDate.databinding.DialogBuyBinding
 fun FragmentActivity.showBuyDialog(
     type: BuyDialogType,
     coinsAmount: String,
-    buyForCoinsAction: (() -> Unit),
-    watchVideoAction: (() -> Unit),
-    buySubscriptionAction: (() -> Unit)
+    buyForCoinsAction: () -> Unit,
+    watchVideoAction: () -> Unit,
+    buySubscriptionAction: () -> Unit
 ) {
     val binding = DialogBuyBinding.inflate(layoutInflater)
 
@@ -31,15 +31,21 @@ fun FragmentActivity.showBuyDialog(
         }
 
         watchButton.setOnSaveClickListener {
-
+            dialog.hideWithScaleAnimation(box, this@showBuyDialog) {
+                watchVideoAction.invoke()
+            }
         }
 
         buyForCoinsBtn.setOnSaveClickListener {
-
+            dialog.hideWithScaleAnimation(box, this@showBuyDialog) {
+                buyForCoinsAction.invoke()
+            }
         }
 
         buyButton.setOnSaveClickListener {
-
+            dialog.hideWithScaleAnimation(box, this@showBuyDialog) {
+                buySubscriptionAction.invoke()
+            }
         }
 
         closeBtn.setOnSaveClickListener {

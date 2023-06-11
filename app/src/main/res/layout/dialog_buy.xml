@@ -101,7 +101,6 @@
                         android:layout_height="40dp"
                         android:layout_gravity="bottom"
                         android:layout_marginStart="8dp"
-                        android:elevation="4dp"
                         android:src="@drawable/ic_coins_mini" />
 
                     <TextView
@@ -162,10 +161,10 @@
                     style="@style/component_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
                     android:text="@string/unlimited_for_everything"
                     android:textColor="@color/white_50"
-                    android:textSize="12sp"
-                    android:layout_marginBottom="32dp"/>
+                    android:textSize="12sp" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
