@@ -679,4 +679,11 @@
     <string name="you_need_to_go_to_settings_and_activate_matches">Sie müssen zu den Einstellungen gehen und\nSpiele aktivieren</string>
     <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
     <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
+    <string name="you_have_reached_your_message_sending_limit">Sie haben das Limit für das Senden von Nachrichten erreicht</string>
+    <string name="for_sending_one_message">Für das Senden einer Nachricht</string>
+    <string name="you_have_reached_your_invitation_sending_limit">Sie haben Ihr Limit für das Versenden von Einladungen erreicht</string>
+    <string name="for_sending_one_invitation">Für den Versand einer Einladung</string>
+    <string name="unlimited_for_everything">Unbegrenzt für alles</string>
+    <string name="watch_the_video">Das Video ansehen</string>
+    <string name="buy_for_100_coins">Für <font size="20"><b>%s</b></font> coins kaufen</string>
 </resources>

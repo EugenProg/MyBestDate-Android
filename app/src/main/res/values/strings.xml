@@ -694,4 +694,11 @@
     <string name="you_need_to_go_to_settings_and_activate_matches">You need to go to settings and\nactivate matches</string>
     <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
     <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
+    <string name="you_have_reached_your_message_sending_limit">You have reached your\nmessage sending limit</string>
+    <string name="for_sending_one_message">For sending one message</string>
+    <string name="you_have_reached_your_invitation_sending_limit">You have reached your\ninvitation sending limit</string>
+    <string name="for_sending_one_invitation">For sending one invitation</string>
+    <string name="unlimited_for_everything">Unlimited for everything</string>
+    <string name="watch_the_video">Watch the video</string>
+    <string name="buy_for_100_coins">Buy for <font size="20"><b>%s</b></font> coins</string>
 </resources>
