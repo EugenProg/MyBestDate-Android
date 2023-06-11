@@ -56,3 +56,16 @@ fun getDialog(
     dialog.show()
     return dialog
 }
+
+fun Dialog.hideWithScaleAnimation(rootView: View, owner: LifecycleOwner, close: (() -> Unit)? = null) {
+    rootView.animate()
+        .scaleY(0.1f)
+        .scaleX(0.1f)
+        .setDuration(300)
+        .start()
+
+    owner.postDelayed({
+        this@hideWithScaleAnimation.dismiss()
+        close?.invoke()
+    }, 300)
+}
