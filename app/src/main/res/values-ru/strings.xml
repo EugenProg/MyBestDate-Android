@@ -688,4 +688,8 @@
     <string name="unlimited_for_everything">Безлимит на всё</string>
     <string name="watch_the_video">Посмотреть видео</string>
     <string name="buy_for_100_coins">Купить за <font size="20"><b>%s</b></font> монет</string>
+    <string name="your_balance">Ваш баланс</string>
+    <string name="do_you_confirm_the_purchase_for_coins">Подтверждаете ли вы покупку\nза монеты?</string>
+    <string name="insufficient_funds_for_payment">Недостаточно средств для\nоплаты</string>
+    <string name="buy_for_coins">Купить за монеты</string>
 </resources>

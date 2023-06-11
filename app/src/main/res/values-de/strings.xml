@@ -686,4 +686,8 @@
     <string name="unlimited_for_everything">Unbegrenzt für alles</string>
     <string name="watch_the_video">Das Video ansehen</string>
     <string name="buy_for_100_coins">Für <font size="20"><b>%s</b></font> coins kaufen</string>
+    <string name="your_balance">Ihr Guthaben</string>
+    <string name="do_you_confirm_the_purchase_for_coins">Bestätigen Sie den Kauf\nfür coins?</string>
+    <string name="insufficient_funds_for_payment">Unzureichende Mittel für die\nZahlung</string>
+    <string name="buy_for_coins">Für coins kaufen</string>
 </resources>
