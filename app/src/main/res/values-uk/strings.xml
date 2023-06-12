@@ -681,4 +681,8 @@
     <string name="you_need_to_go_to_settings_and_activate_matches">Потрібно зайти в налаштування і\nактивувати матчі</string>
     <string name="your_interlocutor_sees_the_messages_but_cannot_respond">Your interlocutor sees the messages, but cannot respond</string>
     <string name="go_to_settings_and_unblock_the_chat">Go to settings and unblock the chat</string>
+    <string name="successfully">Успішно</string>
+    <string name="sorry">Вибач…</string>
+    <string name="upload_new_photo">Завантажити нове фото</string>
+    <string name="photo_on_moderation">Фото на модерації</string>
 </resources>

@@ -72,6 +72,10 @@ class MainActivity : AppCompatActivity() {
         }
         observe(viewModel.notificationsAction) {
             if (!(it == NotificationType.MESSAGE && (isInCurrentUserChat() || isInChatList()))) {
+                if (it == NotificationType.MODERATION_SUCCESS ||
+                    it == NotificationType.MODERATION_FAILED) {
+                    viewModel.refreshUserData()
+                }
                 viewModel.showPush(this)
             }
         }
