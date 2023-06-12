@@ -82,12 +82,18 @@ class SplashActivity : AppCompatActivity() {
     private fun notificationAction(type: String, bundle: Bundle) {
         val pushType = type.getPushType()
         var args: Bundle? = null
-        if (pushType == NotificationType.MESSAGE) {
-            args = bundleOf(
-                "user" to getUserFromBundle(bundle),
-                "backScreen" to BackScreenType.PROFILE
-            )
+        when {
+            pushType == NotificationType.MESSAGE -> {
+                args = bundleOf(
+                    "user" to getUserFromBundle(bundle),
+                    "backScreen" to BackScreenType.PROFILE
+                )
+            }
+            pushType == NotificationType.MODERATION_FAILED -> {
+                args = bundleOf("show_photo_select" to true)
+            }
         }
+
         createPendingIntent(this, pushType.destination, args).send()
     }
 

@@ -9,5 +9,7 @@ enum class NotificationType(var code: String, var destination: Int) {
     INVITATION("invitation", R.id.globalInvitationPushScreen),
     INVITATION_ANSWER("invitation_answer", R.id.globalInvitationPushScreen),
     MESSAGE("message", R.id.globalChatPushScreen),
-    GUEST("guest", R.id.guests_nav_graph)
+    GUEST("guest", R.id.guests_nav_graph),
+    MODERATION_SUCCESS("photo_success", R.id.profile_nav_graph),
+    MODERATION_FAILED("photo_failed", R.id.profile_nav_graph)
 }

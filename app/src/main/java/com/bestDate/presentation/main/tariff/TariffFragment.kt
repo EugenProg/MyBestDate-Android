@@ -17,7 +17,7 @@ import com.bestDate.presentation.base.BaseFragment
 class TariffFragment(
     private var type: TariffType,
     private val product: ProductDetails?,
-    val subscribe: (ProductDetails?) -> Unit
+    private val subscribe: (ProductDetails?) -> Unit
 ) : BaseFragment<FragmentTariffBinding>() {
     override val onBinding: (LayoutInflater, ViewGroup?, Boolean) -> FragmentTariffBinding =
         { inflater, parent, attach -> FragmentTariffBinding.inflate(inflater, parent, attach) }

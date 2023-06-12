@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.*
@@ -28,6 +29,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     override val viewModelClass: Class<UserProfileViewModel> = UserProfileViewModel::class.java
     override val statusBarLight = true
     override val statusBarColor = R.color.bg_main
+    private val args: UserProfileFragmentArgs by navArgs()
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
@@ -122,6 +124,11 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
             sheet.show(childFragmentManager)
         }
+        if (args.showPhotoSelect) {
+            postDelayed({
+                openImageSelector()
+            }, 500)
+        }
     }
 
     private fun openImageSelector() {
@@ -177,7 +184,7 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
             navController.navigate(UserProfileFragmentDirections.actionGlobalAuthFragment())
         }
         observe(BasePhotoEditorFragment.editorAction) {
-            if (it != null) {
+            if (it != null && it.moderated == false) {
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
                 photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)

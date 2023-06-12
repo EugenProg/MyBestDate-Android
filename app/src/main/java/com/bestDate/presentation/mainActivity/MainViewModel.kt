@@ -92,6 +92,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun refreshUserData() {
+        doAsync {
+            userUseCase.refreshUser()
+        }
+    }
+
     fun disconnectPusher() {
         if (authUseCase.tokenIsFresh) {
             pusherCenter.disconnect()

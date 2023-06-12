@@ -44,8 +44,13 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean) :
                     .into(binding.image)
 
                 binding.top.isVisible = item.top == true && showTop
+                binding.moderatedBox.isVisible = item.moderated == true
 
-                setOnSaveClickListener { itemClick?.invoke(item) }
+                setOnSaveClickListener {
+                    if (item.moderated == false) {
+                        itemClick?.invoke(item)
+                    }
+                }
             }
         }
     }
@@ -62,8 +67,10 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean) :
         }
     }
 
-    class ImagePreviewHolder(override val binding: ItemImagePreviewBinding,
-                             private val viewHeight: Int) :
+    class ImagePreviewHolder(
+        override val binding: ItemImagePreviewBinding,
+        private val viewHeight: Int
+    ) :
         ImageLineBaseViewHolder<ItemImagePreviewBinding, (() -> Unit)?>(binding) {
         override fun bindView(item: ProfileImage, itemClick: (() -> Unit)?) {
             itemView.setWidth(viewHeight)
@@ -84,11 +91,13 @@ class ImageLineAdapter(var viewHeight: Int, var showTop: Boolean) :
                     LayoutInflater.from(parent.context), parent, false
                 ), viewHeight
             )
+
             ProfileImage.ViewType.PREVIEW.ordinal -> ImagePreviewHolder(
                 ItemImagePreviewBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 ), viewHeight
             )
+
             else -> ImageListViewHolder(
                 ItemImageListBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
