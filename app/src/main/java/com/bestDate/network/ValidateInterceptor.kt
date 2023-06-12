@@ -7,7 +7,7 @@ import okhttp3.Response
 
 class ValidateInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val requestString = "${chain.request().method} ${chain.request().url.encodedPath}"
+        val requestString = "${chain.request().method} ${chain.request().url.encodedPath} ${chain.request().body}"
         if (NetworkModule.requestIsValid(requestString)) {
             NetworkModule.addRequest(requestString)
             val response = chain.proceed(chain.request())

@@ -41,6 +41,7 @@ data class ProfileImage(
     var top_place: Int? = null,
     var liked: Boolean? = null,
     var likes: Int? = null,
+    var moderated: Boolean? = null,
     var created_at: String? = null,
     var viewType: ViewType = ViewType.PHOTO
 ) : Parcelable {
