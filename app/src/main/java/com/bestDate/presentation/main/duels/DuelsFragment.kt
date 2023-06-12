@@ -8,6 +8,7 @@ import com.bestDate.R
 import com.bestDate.data.extension.observe
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.model.BackScreenType
+import com.bestDate.data.utils.ads.BannerAdUtil
 import com.bestDate.databinding.FragmentDuelsBinding
 import com.bestDate.presentation.base.BaseVMFragment
 import com.bestDate.view.DuelElementView
@@ -20,19 +21,13 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
     override val viewModelClass: Class<DuelsViewModel> = DuelsViewModel::class.java
 
     override val statusBarColor = R.color.bg_main
+    private val bannerUtil = BannerAdUtil()
 
     override fun onInit() {
         super.onInit()
         binding.resultView.isVisible = false
-        setUpToolbar()
+        bannerUtil.setUpBanner(requireActivity(), binding.adContainer)
         viewModel.setUserGender()
-    }
-
-    private fun setUpToolbar() {
-        binding.toolbar.title = getString(R.string.duels)
-        binding.toolbar.onProfileClick = {
-            navController.navigate(DuelsFragmentDirections.actionGlobalTopToProfile())
-        }
     }
 
     override fun onViewClickListener() {
@@ -81,9 +76,6 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
                 setUpElement(binding.secondDuelElementView, it.last(), it.first())
             }
         }
-        observe(viewModel.user) {
-            binding.toolbar.photo = it?.getMainPhotoThumbUrl()
-        }
         observe(viewModel.hasNewDuels) {
             binding.myDuelsButton.badgeOn = it
         }
@@ -95,7 +87,7 @@ class DuelsFragment : BaseVMFragment<FragmentDuelsBinding, DuelsViewModel>() {
             if (viewModel.duelImages.value.isNullOrEmpty()) binding.noDataView.toggleLoading(it)
         }
         observe(viewModel.coins) {
-            binding.amountCoins.text = it
+            binding.coinView.amountCoins.text = it
         }
         observe(viewModel.errorLiveData) {
             binding.noDataView.toggleLoading(false)

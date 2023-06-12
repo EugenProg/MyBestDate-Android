@@ -43,7 +43,7 @@ enum class GenderType(@StringRes val line: Int, val gender: String, val aim: Mut
     MAN_LOOKING_WOMAN(R.string.man_looking_for_a_woman, "male", mutableListOf("female")),
 }
 
-enum class Gender(val label: Int, val serverName: String) {
-    WOMAN(R.string.woman, "female"),
-    MAN(R.string.man, "male")
+enum class Gender(val label: Int, val smallLabel: String, val smallBack: Int, val serverName: String) {
+    WOMAN(R.string.woman, "W", R.drawable.gender_active_pink, "female"),
+    MAN(R.string.man, "M", R.drawable.gender_active_blue, "male")
 }

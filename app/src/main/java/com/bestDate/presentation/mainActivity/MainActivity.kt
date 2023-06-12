@@ -13,8 +13,10 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.bestDate.R
-import com.bestDate.data.extension.*
-import com.bestDate.data.preferences.PreferencesUtils
+import com.bestDate.data.extension.Screens
+import com.bestDate.data.extension.getCurrentScreen
+import com.bestDate.data.extension.isBottomNavVisible
+import com.bestDate.data.extension.observe
 import com.bestDate.data.utils.NetworkStateListener
 import com.bestDate.data.utils.NetworkStatus
 import com.bestDate.data.utils.notifications.NotificationType
@@ -24,6 +26,7 @@ import com.bestDate.databinding.ActivityMainBinding
 import com.bestDate.view.alerts.LostConnectionDialog
 import com.bestDate.view.bottomNav.BottomButton
 import com.bestDate.view.bottomNav.CustomBottomNavView
+import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         setUpChatListTypingCoordinator()
         setUpChatTypingListener()
         setUpSubscriptionManager()
+        setUpAdMobs()
         bottomNavView = binding.bottomNavigationView
 
         if (!allPermissionsGranted()) {
@@ -82,6 +86,10 @@ class MainActivity : AppCompatActivity() {
         observe(viewModel.navigationAction) {
             navController.navigate(it.first, it.second)
         }
+    }
+
+    private fun setUpAdMobs() {
+        MobileAds.initialize(this) { }
     }
 
     var pushPermissionLauncher =
@@ -119,6 +127,7 @@ class MainActivity : AppCompatActivity() {
                     viewModel.setChatListTypingEvent(it, true)
                     chatListTypingEventCoordinator.setTypingEvent(it)
                 }
+
                 isInCurrentUserChat(it) -> {
                     viewModel.setChatTypingEvent(true)
                     chatTypingEventCoordinator.setTypingEvent(it)

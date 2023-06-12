@@ -117,4 +117,7 @@ dependencies {
 
     //subscription
     implementation "com.android.billingclient:billing-ktx:5.0.0"
+
+    //ad mobs
+    implementation 'com.google.android.gms:play-services-ads:22.1.0'
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/bgButtonNoShadow"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/bg_button_coins"
+        app:layout_constraintBottom_toBottomOf="@+id/coinView"
+        app:layout_constraintStart_toStartOf="@+id/coinView"
+        app:layout_constraintTop_toTopOf="@+id/coinView" />
+
+    <TextView
+        android:id="@+id/amountCoins"
+        style="@style/component_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@id/bdCoin"
+        app:layout_constraintStart_toStartOf="@id/bdCoin"
+        app:layout_constraintTop_toTopOf="@+id/bgButtonNoShadow"
+        tools:text="1000" />
+
+    <TextView
+        android:id="@+id/bdCoin"
+        style="@style/component_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bd_coin"
+        android:textColor="@color/white_80"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="@id/bgButtonNoShadow"
+        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintStart_toStartOf="@id/bgButtonNoShadow"
+        app:layout_constraintTop_toBottomOf="@+id/amountCoins"
+        tools:ignore="SmallSp" />
+
+    <FrameLayout
+        android:id="@+id/coinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="82dp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar" />
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:src="@drawable/coin_bd_mini" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
