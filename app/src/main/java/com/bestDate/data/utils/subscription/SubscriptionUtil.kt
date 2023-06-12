@@ -35,4 +35,12 @@ class SubscriptionUtil @Inject constructor(
     fun hideGuests() = preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
                 preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
                 !hasAActiveSubscription()
+
+    fun getAdditionInvitationPrice(): Int {
+        return preferencesUtils.getInt(Preferences.ADDITIONAL_INVITATION_PRICE)
+    }
+
+    fun getAdditionMessagePrice(): Int {
+        return preferencesUtils.getInt(Preferences.ADDITIONAL_MESSAGE_PRICE)
+    }
 }

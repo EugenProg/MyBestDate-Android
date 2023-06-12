@@ -37,6 +37,7 @@ class TariffFragment(
                 ?.pricingPhases?.pricingPhaseList?.firstOrNull()?.formattedPrice
             amountView.text = price
             periodView.text = getString(type.period)
+            adsSwitch.setImageResource(type.switch)
             cardsSwitch.setImageResource(type.switch)
             messageSwitch.setImageResource(type.switch)
 

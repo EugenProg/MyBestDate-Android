@@ -35,7 +35,9 @@ fun FragmentActivity.showBuyForCoinsDialog(
         }
 
         buyForCoinsBtn.setOnSaveClickListener {
-            buyAction.invoke()
+            dialog.hideWithScaleAnimation(box, this@showBuyForCoinsDialog) {
+                buyAction.invoke()
+            }
         }
 
         closeBtn.setOnSaveClickListener {
@@ -60,7 +62,9 @@ fun FragmentActivity.showNotEnoughCoinsDialog(
         }
 
         buyButton.setOnSaveClickListener {
-            buyAction.invoke()
+            dialog.hideWithScaleAnimation(box, this@showNotEnoughCoinsDialog) {
+                buyAction.invoke()
+            }
         }
 
         closeBtn.setOnSaveClickListener {

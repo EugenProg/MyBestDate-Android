@@ -3,6 +3,7 @@ package com.bestDate.network.remote
 import com.bestDate.data.model.*
 import com.bestDate.db.entity.QuestionnaireDB
 import com.bestDate.network.services.UserService
+import com.bestDate.view.alerts.BuyDialogType
 import javax.inject.Inject
 
 class UserRemoteData @Inject constructor(
@@ -73,4 +74,7 @@ class UserRemoteData @Inject constructor(
 
     suspend fun saveMessagingDeviceToken(token: String) =
         service.saveMessagingDeviceToken(SaveDeviceTokenRequest(token = token))
+
+    suspend fun withdrawCoins(type: BuyDialogType) =
+        service.withdrawCoins(WithdrawCoinsRequest(type.buyName))
 }

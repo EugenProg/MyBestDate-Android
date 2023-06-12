@@ -189,3 +189,7 @@ data class SubscriptionInfoRequest(
     val start_at: String? = null,
     val end_at: String? = null
 )
+
+data class WithdrawCoinsRequest(
+    var source: String
+)

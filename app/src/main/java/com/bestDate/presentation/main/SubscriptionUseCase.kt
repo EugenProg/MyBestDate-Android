@@ -24,6 +24,9 @@ class SubscriptionUseCase @Inject constructor(
                 preferencesUtils.saveBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED, it.subscription == true)
                 preferencesUtils.saveInt(Preferences.FREE_MESSAGES_COUNT, it.free_messages_count.orZero)
                 preferencesUtils.saveInt(Preferences.FREE_INVITATIONS_COUNT, it.free_invitations_count.orZero)
+                preferencesUtils.saveInt(Preferences.FREE_MATCHES_COUNT, it.free_matches_count.orZero)
+                preferencesUtils.saveInt(Preferences.ADDITIONAL_MESSAGE_PRICE, it.additional_messages_rate.orZero)
+                preferencesUtils.saveInt(Preferences.ADDITIONAL_INVITATION_PRICE, it.additional_invitations_rate.orZero)
             }
         }
     }

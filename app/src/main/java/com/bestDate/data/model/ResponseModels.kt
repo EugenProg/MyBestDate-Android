@@ -451,7 +451,10 @@ data class GoogleAccessTokenResponse(
 data class AppSettings(
     var subscription: Boolean? = null,
     var free_messages_count: Int? = null,
-    var free_invitations_count: Int? = null
+    var free_invitations_count: Int? = null,
+    var free_matches_count: Int? = null,
+    var additional_messages_rate: Int? = null,
+    var additional_invitations_rate: Int? = null
 )
 
 data class AppSettingsResponse(

@@ -5,7 +5,13 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.bestDate.R
-import com.bestDate.data.extension.*
+import com.bestDate.data.extension.NavigationResultKey
+import com.bestDate.data.extension.getNavigationResult
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.extension.setNavigationResult
+import com.bestDate.data.extension.share
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.data.utils.DeeplinkCreator
@@ -13,10 +19,12 @@ import com.bestDate.databinding.FragmentAnotherProfileBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.view.alerts.showBanningCardsDialog
+import com.bestDate.view.alerts.BanningDialog
+import com.bestDate.view.alerts.BuyDialogType
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.anotherProfileAdditional.AnotherProfileAdditionalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 abstract class BaseAnotherProfileFragment :
@@ -32,6 +40,9 @@ abstract class BaseAnotherProfileFragment :
     override val viewModelClass: Class<AnotherProfileViewModel> =
         AnotherProfileViewModel::class.java
     override val statusBarLight = true
+
+    @Inject
+    lateinit var banningDialog: BanningDialog
 
     private var isBlocked: Boolean = false
     protected var user: ShortUserData? = null
@@ -75,13 +86,11 @@ abstract class BaseAnotherProfileFragment :
             goBack()
         }
         binding.navBox.cardClick = {
-            if (viewModel.invitationSendAllowed()) {
-                requireActivity().showCreateInvitationDialog(invitationList) {
+            requireActivity().showCreateInvitationDialog(invitationList) {
+                if (viewModel.invitationSendAllowed()) {
                     viewModel.sendInvitation(user?.id, it.id)
-                }
-            } else {
-                requireActivity().showBanningCardsDialog {
-                    navigateToTariffList()
+                } else {
+                    setUpBanningDialog(it)
                 }
             }
         }
@@ -128,6 +137,21 @@ abstract class BaseAnotherProfileFragment :
         }
     }
 
+    private fun setUpBanningDialog(invitation: Invitation) {
+        banningDialog.show(requireActivity(), BuyDialogType.INVITATION)
+        banningDialog.buySubscriptionAction = {
+            navigateToTariffList()
+        }
+        banningDialog.sendAction = {
+            postDelayed({
+                viewModel.sendInvitation(user?.id, invitation.id)
+            }, 300)
+        }
+        banningDialog.buyForCoinsAction = {
+            viewModel.withdrawCoins(it, invitation.id)
+        }
+    }
+
     override fun networkIsUpdated() {
         super.networkIsUpdated()
         viewModel.getUserById(user?.id)
@@ -140,13 +164,16 @@ abstract class BaseAnotherProfileFragment :
                 setNavigationResult(NavigationResultKey.SAVE_POSITION, true)
                 super.goBack()
             }
+
             BackScreenType.DUELS -> {
                 setNavigationResult(NavigationResultKey.CHECK_GENDER, true)
                 super.goBack()
             }
+
             BackScreenType.START -> {
                 navigateToSearch()
             }
+
             else -> super.goBack()
         }
     }
@@ -175,6 +202,9 @@ abstract class BaseAnotherProfileFragment :
 
         observe(viewModel.likeLiveData) {
             viewModel.getUserById(user?.id)
+        }
+        observe(viewModel.withdrawLiveData) {
+            viewModel.sendInvitation(user?.id, it)
         }
         getNavigationResult<Boolean>(NavigationResultKey.RELOAD) { result ->
             if (result) {
