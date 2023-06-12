@@ -684,4 +684,8 @@
     <string name="sorry">Entschuldigung…</string>
     <string name="upload_new_photo">Neues Foto hochladen</string>
     <string name="photo_on_moderation">Foto auf Moderation</string>
+    <string name="no_ads_in_the_app">Keine Werbung in der App</string>
+    <string name="congratulate">Gratuliere!</string>
+    <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">Der volle Funktionsumfang der Anwendung\nsteht Ihnen ohne Einschränkungen zur Verfügung</string>
+    <string name="your_subscription_has_been_successfully_activated">Ihr Abonnement wurde\nerfolgreich aktiviert</string>
 </resources>

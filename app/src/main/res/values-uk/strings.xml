@@ -686,4 +686,8 @@
     <string name="sorry">Вибач…</string>
     <string name="upload_new_photo">Завантажити нове фото</string>
     <string name="photo_on_moderation">Фото на модерації</string>
+    <string name="no_ads_in_the_app">Жодної реклами в додатку</string>
+    <string name="congratulate">Вітаємо!</string>
+    <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">Повний функціонал додатку\nдоступний вам без обмежень</string>
+    <string name="your_subscription_has_been_successfully_activated">Ваша підписка\nуспішно активована</string>
 </resources>

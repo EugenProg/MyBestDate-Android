@@ -20,7 +20,6 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
 import java.util.Calendar
 import java.util.Date
-import javax.inject.Inject
 
 class SubscriptionManager(context: Context,
                           private val preferencesUtils: PreferencesUtils) {
@@ -28,6 +27,7 @@ class SubscriptionManager(context: Context,
     private var productList: MutableList<ProductDetails> = mutableListOf()
 
     var updateSubscriptionData: ((start: String, end: String) -> Unit)? = null
+    var subscriptionSuccess: (() -> Unit)? = null
 
     init {
         client = BillingClient.newBuilder(context)
@@ -44,6 +44,7 @@ class SubscriptionManager(context: Context,
         if (result.responseCode == BillingResponseCode.OK && !purchases.isNullOrEmpty()) {
             val isActive = purchases.first().purchaseState == Purchase.PurchaseState.PURCHASED
             preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION, isActive)
+            if (isActive) subscriptionSuccess?.invoke()
         }
     }
 
