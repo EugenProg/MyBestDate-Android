@@ -703,4 +703,15 @@
     <string name="congratulate">Congratulate!</string>
     <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">The full functionality of the application\nis available to you without restrictions</string>
     <string name="your_subscription_has_been_successfully_activated">Your subscription has been\nsuccessfully activated</string>
+    <string name="you_have_reached_your_message_sending_limit">You have reached your\nmessage sending limit</string>
+    <string name="for_sending_one_message">For sending one message</string>
+    <string name="you_have_reached_your_invitation_sending_limit">You have reached your\ninvitation sending limit</string>
+    <string name="for_sending_one_invitation">For sending one invitation</string>
+    <string name="unlimited_for_everything">Unlimited for everything</string>
+    <string name="watch_the_video">Watch the video</string>
+    <string name="buy_for_100_coins">Buy for <font size="20">%s</font> coins</string>
+    <string name="your_balance">Your balance</string>
+    <string name="do_you_confirm_the_purchase_for_coins">Do you confirm the purchase\nfor coins?</string>
+    <string name="insufficient_funds_for_payment">Insufficient funds for\npayment</string>
+    <string name="buy_for_coins">Buy for coins</string>
 </resources>

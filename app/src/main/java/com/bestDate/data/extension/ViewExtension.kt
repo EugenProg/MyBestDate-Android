@@ -236,3 +236,19 @@ fun RecyclerView.isToLastPositionScrolled(isScrolled: () -> Unit) {
         }
     }
 }
+
+inline fun View.showWithScaleAnimation(crossinline showViews: () -> Unit) {
+    this.isVisible = false
+    this.scaleX = 0.1f
+    this.scaleY = 0.1f
+
+    showViews.invoke()
+
+    this.isVisible = true
+
+    this.animate()
+        .scaleX(1f)
+        .scaleY(1f)
+        .setDuration(300)
+        .start()
+}

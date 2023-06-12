@@ -688,4 +688,15 @@
     <string name="congratulate">Gratuliere!</string>
     <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">Der volle Funktionsumfang der Anwendung\nsteht Ihnen ohne Einschränkungen zur Verfügung</string>
     <string name="your_subscription_has_been_successfully_activated">Ihr Abonnement wurde\nerfolgreich aktiviert</string>
+    <string name="you_have_reached_your_message_sending_limit">Sie haben das Limit für das Senden von Nachrichten erreicht</string>
+    <string name="for_sending_one_message">Für das Senden einer Nachricht</string>
+    <string name="you_have_reached_your_invitation_sending_limit">Sie haben Ihr Limit für das Versenden von Einladungen erreicht</string>
+    <string name="for_sending_one_invitation">Für den Versand einer Einladung</string>
+    <string name="unlimited_for_everything">Unbegrenzt für alles</string>
+    <string name="watch_the_video">Das Video ansehen</string>
+    <string name="buy_for_100_coins">Für <font size="20"><b>%s</b></font> coins kaufen</string>
+    <string name="your_balance">Ihr Guthaben</string>
+    <string name="do_you_confirm_the_purchase_for_coins">Bestätigen Sie den Kauf\nfür coins?</string>
+    <string name="insufficient_funds_for_payment">Unzureichende Mittel für die\nZahlung</string>
+    <string name="buy_for_coins">Für coins kaufen</string>
 </resources>

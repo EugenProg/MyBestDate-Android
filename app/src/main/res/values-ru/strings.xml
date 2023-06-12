@@ -690,4 +690,15 @@
     <string name="congratulate">Поздравляем!</string>
     <string name="the_full_functionality_of_the_application_is_available_to_you_without_restrictions">Полная функциональность приложения\nдоступна вам без ограничений</string>
     <string name="your_subscription_has_been_successfully_activated">Ваша подписка\nуспешно активирована</string>
+    <string name="you_have_reached_your_message_sending_limit">Вы достигли лимита отправки сообщений</string>
+    <string name="for_sending_one_message">За отправку одного сообщения</string>
+    <string name="you_have_reached_your_invitation_sending_limit">Вы достигли лимита отправки приглашений</string>
+    <string name="for_sending_one_invitation">За отправку одного приглашения</string>
+    <string name="unlimited_for_everything">Безлимит на всё</string>
+    <string name="watch_the_video">Посмотреть видео</string>
+    <string name="buy_for_100_coins">Купить за <font size="20"><b>%s</b></font> монет</string>
+    <string name="your_balance">Ваш баланс</string>
+    <string name="do_you_confirm_the_purchase_for_coins">Подтверждаете ли вы покупку\nза монеты?</string>
+    <string name="insufficient_funds_for_payment">Недостаточно средств для\nоплаты</string>
+    <string name="buy_for_coins">Купить за монеты</string>
 </resources>
