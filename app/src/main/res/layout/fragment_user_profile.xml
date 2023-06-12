@@ -217,13 +217,18 @@
                             android:layout_marginStart="18dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="18dp"
+                            android:layout_marginBottom="36dp"
                             tools:layout_height="wrap_content" />
+                        
+                        <com.bestDate.view.SubscriptionInfoView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"/>
 
                         <com.bestDate.view.button.DirectionLineButtonView
                             android:id="@+id/questionnaireButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="36dp"
                             app:button_background="@drawable/buttons_box_pink"
                             app:button_image="@drawable/ic_questionnaire"
                             app:button_name="@string/questionnaire" />

@@ -8,6 +8,8 @@ import com.bestDate.databinding.DialogDefaultPushBinding
 import com.bestDate.databinding.DialogInvitationPushBinding
 import com.bestDate.databinding.DialogLikePushBinding
 import com.bestDate.databinding.DialogMatchPushBinding
+import com.bestDate.databinding.DialogModerationFailedPushBinding
+import com.bestDate.databinding.DialogModerationSuccessPushBinding
 import com.bumptech.glide.Glide
 
 fun FragmentActivity.showLikePush(userData: ShortUserData?, navigateAction: (() -> Unit)) {
@@ -91,6 +93,50 @@ fun FragmentActivity.showInvitationPush(userData: ShortUserData?, navigateAction
 
         postDelayed({
             dialog.closeWithSlideTopAnimation(root, this@showInvitationPush)
+        }, 3000)
+    }
+}
+
+fun FragmentActivity.showModerationSuccessPush(title: String?, body: String?, navigateAction: (() -> Unit)) {
+    val binding = DialogModerationSuccessPushBinding.inflate(layoutInflater)
+
+    val dialog = getDialog(binding.root, position = Gravity.TOP)
+
+    with(binding) {
+        box.showWithSlideBottomAnimation {
+            titleView.text = title
+            bodyView.text = body
+        }
+
+        root.setOnSaveClickListener {
+            dialog.closeWithSlideTopAnimation(root, this@showModerationSuccessPush)
+            navigateAction.invoke()
+        }
+
+        postDelayed({
+            dialog.closeWithSlideTopAnimation(root, this@showModerationSuccessPush)
+        }, 3000)
+    }
+}
+
+fun FragmentActivity.showModerationFailedPush(title: String?, body: String?, navigateAction: (() -> Unit)) {
+    val binding = DialogModerationFailedPushBinding.inflate(layoutInflater)
+
+    val dialog = getDialog(binding.root, position = Gravity.TOP)
+
+    with(binding) {
+        box.showWithSlideBottomAnimation {
+            titleView.text = title
+            bodyView.text = body
+        }
+
+        root.setOnSaveClickListener {
+            dialog.closeWithSlideTopAnimation(root, this@showModerationFailedPush)
+            navigateAction.invoke()
+        }
+
+        postDelayed({
+            dialog.closeWithSlideTopAnimation(root, this@showModerationFailedPush)
         }, 3000)
     }
 }

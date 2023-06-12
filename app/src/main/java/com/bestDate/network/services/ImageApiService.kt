@@ -10,7 +10,7 @@ interface ImageApiService {
     @Multipart
     @POST("/api/v1/user/photos")
     suspend fun saveProfileImage(
-        @Query("moderated") moderated: Boolean,
+        @Query("moderated") moderated: Int,
         @Part image: MultipartBody.Part
     ): Response<ProfileImageResponse>
 
