@@ -64,6 +64,23 @@
             <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireTitleView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:questionnaire_title="@string/search_condition"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/purpose_of_dating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/purpose_of_dating"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView
+                android:id="@+id/wont_for_a_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:questionnaire_item_title="@string/what_do_you_want_for_a_date"/>
+
+            <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireTitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 app:questionnaire_title="@string/personal_information"/>
 
             <com.bestDate.view.anotherProfile.questionnaire.QuestionnaireInfoView

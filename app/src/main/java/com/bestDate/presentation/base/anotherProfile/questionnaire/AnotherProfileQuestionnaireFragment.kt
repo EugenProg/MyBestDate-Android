@@ -74,6 +74,19 @@ open class AnotherProfileQuestionnaireFragment :
                 )
             )
 
+            purposeOfDating.setInfo(
+                PurposeOfDating().getName(
+                    requireContext(),
+                    questionnaire?.purpose
+                )
+            )
+            wontForADate.setInfo(
+                ExpectationType().getName(
+                    requireContext(),
+                    questionnaire?.expectations
+                )
+            )
+
             maritalStatus.setInfo(
                 MaritalStatus().getName(
                     requireContext(),
