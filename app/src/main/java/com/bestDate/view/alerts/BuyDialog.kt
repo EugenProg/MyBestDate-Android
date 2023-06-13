@@ -26,8 +26,10 @@ class BanningDialog @Inject constructor(
     var closeAction: (() -> Unit)? = null
 
     private lateinit var rewardedAdUtil: RewardedAdUtil
+    private var isSent = false
 
     fun show(activity: FragmentActivity, type: BuyDialogType) {
+        isSent = false
         setUpRewardAdUtil(activity)
         val coinsBalance = userUseCase.coinsCount.value?.safetyToInt()
         val coinsPrice =
@@ -65,7 +67,10 @@ class BanningDialog @Inject constructor(
         rewardedAdUtil = RewardedAdUtil(activity)
 
         rewardedAdUtil.earnedReward = {
-            sendAction?.invoke()
+            if (!isSent) {
+                isSent = true
+                sendAction?.invoke()
+            }
         }
         rewardedAdUtil.failed = {
             closeAction?.invoke()

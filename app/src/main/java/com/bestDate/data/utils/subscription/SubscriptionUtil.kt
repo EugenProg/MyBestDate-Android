@@ -10,7 +10,8 @@ class SubscriptionUtil @Inject constructor(
 
     private fun hasAActiveSubscription() =
         preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION) ||
-                preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION)
+                preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION) ||
+                preferencesUtils.getBoolean(Preferences.HAS_A_ACTIVE_ANDROID_SUBSCRIPTION)
 
     fun invitationSendAllowed() =
         if (
@@ -33,8 +34,8 @@ class SubscriptionUtil @Inject constructor(
         } else true
 
     fun hideGuests() = preferencesUtils.getBoolean(Preferences.IS_A_MAN) &&
-                preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
-                !hasAActiveSubscription()
+            preferencesUtils.getBoolean(Preferences.SUBSCRIPTION_MODE_ENABLED) &&
+            !hasAActiveSubscription()
 
     fun getAdditionInvitationPrice(): Int {
         return preferencesUtils.getInt(Preferences.ADDITIONAL_INVITATION_PRICE)
@@ -42,5 +43,10 @@ class SubscriptionUtil @Inject constructor(
 
     fun getAdditionMessagePrice(): Int {
         return preferencesUtils.getInt(Preferences.ADDITIONAL_MESSAGE_PRICE)
+    }
+
+    fun getSubscriptionEndDate(): String? {
+        return if (hasAActiveSubscription()) preferencesUtils.getString(Preferences.ACTIVE_SUBSCRIPTION_END)
+        else null
     }
 }

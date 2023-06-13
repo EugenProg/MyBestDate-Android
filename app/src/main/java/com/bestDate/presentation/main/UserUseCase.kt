@@ -50,6 +50,8 @@ class UserUseCase @Inject constructor(
     var hasNewLikes: MutableLiveData<Boolean> = MutableLiveData(false)
     var hasNewMatches: MutableLiveData<Boolean> = MutableLiveData(false)
     var hasNewDuels: MutableLiveData<Boolean> = MutableLiveData(false)
+    var startWithPhotoSelect: Boolean = false
+    var userNeedRefresh: Boolean = false
 
     suspend fun refreshUser() {
         val response = userRemoteData.getUserData()
@@ -61,6 +63,7 @@ class UserUseCase @Inject constructor(
     }
 
     private fun setUser(user: UserDB) {
+        userNeedRefresh = false
         userDao.validate(user)
         userMainPhotoUrl.postValue(user.getMainPhotoThumbUrl())
         setUserGenderFilter(user.getGenderFilter())
@@ -102,6 +105,12 @@ class UserUseCase @Inject constructor(
         preferencesUtils.saveString(Preferences.FILTER_GENDER, "")
         preferencesUtils.saveInt(Preferences.SENT_MESSAGES_TODAY, 0)
         preferencesUtils.saveInt(Preferences.SENT_INVITATIONS_TODAY, 0)
+        preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_SUBSCRIPTION, false)
+        preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION, false)
+        preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_ANDROID_SUBSCRIPTION, false)
+        preferencesUtils.saveString(Preferences.ACTIVE_SUBSCRIPTION_END, "")
+        preferencesUtils.saveBoolean(Preferences.CHAT_CLOSED, false)
+        preferencesUtils.saveBoolean(Preferences.MATCHES_ENABLED, false)
     }
 
     suspend fun saveQuestionnaire(questionnaire: QuestionnaireDB) {

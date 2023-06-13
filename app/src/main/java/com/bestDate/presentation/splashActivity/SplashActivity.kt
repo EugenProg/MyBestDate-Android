@@ -17,6 +17,7 @@ import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.Logger
 import com.bestDate.data.utils.notifications.NotificationType
+import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.mainActivity.MainActivity
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
@@ -29,6 +30,9 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
     @Inject
     lateinit var preferencesUtils: PreferencesUtils
+
+    @Inject
+    lateinit var userUseCase: UserUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +94,11 @@ class SplashActivity : AppCompatActivity() {
                 )
             }
             pushType == NotificationType.MODERATION_FAILED -> {
-                args = bundleOf("show_photo_select" to true)
+                userUseCase.startWithPhotoSelect = true
+                userUseCase.userNeedRefresh = true
+            }
+            pushType == NotificationType.MODERATION_SUCCESS -> {
+                userUseCase.userNeedRefresh = true
             }
         }
 

@@ -213,11 +213,6 @@
         <navigation
             android:id="@+id/profile_nav_graph"
             app:startDestination="@id/userProfileFragment">
-            <argument
-                android:name="show_photo_select"
-                app:argType="boolean"
-                android:defaultValue="false" />
-
             <fragment
                 android:id="@+id/userProfileFragment"
                 android:name="com.bestDate.presentation.main.userProfile.UserProfileFragment"
@@ -278,10 +273,6 @@
                     app:exitAnim="@anim/slide_out_left"
                     app:popEnterAnim="@anim/slide_in_top_right"
                     app:popExitAnim="@anim/slide_out_right"  />
-                <argument
-                    android:name="show_photo_select"
-                    app:argType="boolean"
-                    android:defaultValue="false" />
             </fragment>
             <fragment
                 android:id="@+id/userProfilePhotoEditorFragment"

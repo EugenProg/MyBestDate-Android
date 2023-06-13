@@ -146,7 +146,7 @@ class ChatViewModel @Inject constructor(
 
     fun withdrawInvitationCoins(id: Int) {
         doAsync {
-            withdrawUseCase.withdrawCoins(BuyDialogType.MESSAGE)
+            withdrawUseCase.withdrawCoins(BuyDialogType.INVITATION)
             _withdrawInvitationLiveData.postValue(id)
         }
     }

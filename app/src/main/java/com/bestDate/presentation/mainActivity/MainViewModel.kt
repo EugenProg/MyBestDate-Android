@@ -155,4 +155,8 @@ class MainViewModel @Inject constructor(
             subscriptionUseCase.updateSubscriptionInfo(start, end)
         }
     }
+
+    fun setStartWithPhotoSelector(enable: Boolean) {
+        userUseCase.startWithPhotoSelect = enable
+    }
 }

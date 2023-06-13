@@ -4,6 +4,7 @@ import com.bestDate.data.extension.getErrorMessage
 import com.bestDate.data.extension.orZero
 import com.bestDate.data.extension.toLongServerDate
 import com.bestDate.data.model.InternalException
+import com.bestDate.data.model.SubscriptionInfoRequest
 import com.bestDate.data.preferences.Preferences
 import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.network.remote.SubscriptionRemoteData
@@ -32,10 +33,38 @@ class SubscriptionUseCase @Inject constructor(
     }
 
     suspend fun getUserSubscriptionInfo() {
-        val response = remoteData.getUserSubscriptionInfo()
+        val androidEndDate = getAndroidSubscription()
+        val iosEndDate = getIosSubscription()
+        val endDate = when {
+            androidEndDate.isNullOrBlank() && iosEndDate.isNullOrBlank() -> null
+            androidEndDate.isNullOrBlank() && !iosEndDate.isNullOrBlank() -> iosEndDate
+            !androidEndDate.isNullOrBlank() && iosEndDate.isNullOrBlank() -> androidEndDate
+            else -> {
+                if (androidEndDate.orEmpty() > iosEndDate.orEmpty()) androidEndDate
+                else iosEndDate
+            }
+        }
+        endDate?.let {
+            preferencesUtils.saveString(Preferences.ACTIVE_SUBSCRIPTION_END, it)
+        }
+
+    }
+
+    private suspend fun getAndroidSubscription(): String? {
+        val response = remoteData.getUserSubscriptionInfo(SubscriptionInfoRequest())
+        if (response.isSuccessful) {
+            val hasAActiveSubscription = response.body()?.data?.end_at.orEmpty() > Date().toLongServerDate()
+            preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_ANDROID_SUBSCRIPTION, hasAActiveSubscription)
+            return if (hasAActiveSubscription) response.body()?.data?.end_at.orEmpty() else null
+        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+    }
+
+    private suspend fun getIosSubscription(): String? {
+        val response = remoteData.getUserSubscriptionInfo(SubscriptionInfoRequest(device = "ios"))
         if (response.isSuccessful) {
             val hasAActiveSubscription = response.body()?.data?.end_at.orEmpty() > Date().toLongServerDate()
             preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION, hasAActiveSubscription)
+            return if (hasAActiveSubscription) response.body()?.data?.end_at.orEmpty() else null
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

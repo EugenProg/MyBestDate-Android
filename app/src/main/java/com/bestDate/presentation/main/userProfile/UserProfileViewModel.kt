@@ -3,6 +3,7 @@ package com.bestDate.presentation.main.userProfile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
+import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.userProfile.invitationList.InvitationListUseCase
@@ -12,6 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserProfileViewModel @Inject constructor(
     private val userUseCase: UserUseCase,
+    private val subscriptionUtil: SubscriptionUtil,
     invitationListUseCase: InvitationListUseCase
 ): BaseViewModel() {
 
@@ -37,4 +39,13 @@ class UserProfileViewModel @Inject constructor(
             _signOutLiveData.postValue(true)
         }
     }
+
+    fun getStartWithPhotoSelector() = userUseCase.startWithPhotoSelect
+    fun needUpdate() = userUseCase.userNeedRefresh
+
+    fun setStartWithPhotoSelector(enable: Boolean) {
+        userUseCase.startWithPhotoSelect = enable
+    }
+
+    fun getSubscriptionEndDate() = subscriptionUtil.getSubscriptionEndDate()
 }

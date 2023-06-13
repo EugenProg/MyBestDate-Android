@@ -684,7 +684,7 @@
     <string name="subscription">Підписка</string>
     <string name="successfully">Успішно</string>
     <string name="sorry">Вибач…</string>
-    <string name="upload_new_photo">Завантажити нове фото</string>
+    <string name="upload_new_photo">Завантажити\nнове фото</string>
     <string name="photo_on_moderation">Фото на модерації</string>
     <string name="no_ads_in_the_app">Жодної реклами в додатку</string>
     <string name="congratulate">Вітаємо!</string>
