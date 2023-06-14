@@ -26,7 +26,7 @@ class SubscriptionManager(context: Context,
     private val client: BillingClient
     private var productList: MutableList<ProductDetails> = mutableListOf()
 
-    var updateSubscriptionData: ((start: String, end: String) -> Unit)? = null
+    var updateSubscriptionData: ((id: String, start: String, end: String) -> Unit)? = null
     var subscriptionSuccess: (() -> Unit)? = null
 
     init {
@@ -89,6 +89,7 @@ class SubscriptionManager(context: Context,
                 val startTime = Date(purchase.purchaseTime)
                 val endDate = getEndDate(startTime, getPeriod(purchase.products))
                 updateSubscriptionData?.invoke(
+                    purchase.purchaseToken,
                     startTime.toLongServerDate(),
                     endDate.toLongServerDate()
                 )

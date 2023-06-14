@@ -160,8 +160,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSubscriptionManager() {
-        subscriptionManager.updateSubscriptionData = { start, end ->
-            viewModel.updateSubscriptionInfo(start, end)
+        subscriptionManager.updateSubscriptionData = { id, start, end ->
+            viewModel.updateSubscriptionInfo(id, start, end)
         }
     }
 

@@ -56,7 +56,8 @@ class SubscriptionUseCase @Inject constructor(
             val hasAActiveSubscription = response.body()?.data?.end_at.orEmpty() > Date().toLongServerDate()
             preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_ANDROID_SUBSCRIPTION, hasAActiveSubscription)
             return if (hasAActiveSubscription) response.body()?.data?.end_at.orEmpty() else null
-        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        } else if (response.code() != 404) throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        return null
     }
 
     private suspend fun getIosSubscription(): String? {
@@ -65,11 +66,12 @@ class SubscriptionUseCase @Inject constructor(
             val hasAActiveSubscription = response.body()?.data?.end_at.orEmpty() > Date().toLongServerDate()
             preferencesUtils.saveBoolean(Preferences.HAS_A_ACTIVE_IOS_SUBSCRIPTION, hasAActiveSubscription)
             return if (hasAActiveSubscription) response.body()?.data?.end_at.orEmpty() else null
-        } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        } else if (response.code() != 404) throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
+        return null
     }
 
-    suspend fun updateSubscriptionInfo(startDate: String, endDate: String) {
-        val response = remoteData.updateSubscriptionInfo(startDate, endDate)
+    suspend fun updateSubscriptionInfo(id: String, startDate: String, endDate: String) {
+        val response = remoteData.updateSubscriptionInfo(id, startDate, endDate)
         if (!response.isSuccessful)
             throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }

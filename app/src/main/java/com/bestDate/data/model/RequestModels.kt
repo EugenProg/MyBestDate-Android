@@ -186,6 +186,7 @@ data class GetGoogleAccessTokenRequest(
 
 data class SubscriptionInfoRequest(
     val device: String = "android",
+    val sub_id: String? = null,
     val start_at: String? = null,
     val end_at: String? = null
 )
