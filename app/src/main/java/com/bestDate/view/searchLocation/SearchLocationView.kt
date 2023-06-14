@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
 import com.bestDate.data.extension.hideKeyboard
 import com.bestDate.data.extension.setAttrs
+import com.bestDate.data.extension.setOnSaveClickListener
 import com.bestDate.data.extension.textInputAsFlow
 import com.bestDate.data.utils.CityListItem
 import com.bestDate.data.utils.LocationAutocompleteUtil
@@ -43,8 +44,11 @@ class SearchLocationView @JvmOverloads constructor(
             this.hideKeyboard()
             binding.input.clearFocus()
         }
-        binding.input.setOnFocusChangeListener { view, b ->
+        binding.input.setOnFocusChangeListener { _, b ->
             onFocusChanged?.invoke(b)
+        }
+        binding.close.setOnSaveClickListener {
+            binding.input.setText("")
         }
 
         binding.locationListView.layoutManager = LinearLayoutManager(context)
@@ -76,6 +80,7 @@ class SearchLocationView @JvmOverloads constructor(
             inputBox.setCardBackgroundColor(ContextCompat.getColor(context, style.inputBack))
             hint.setTextColor(ContextCompat.getColor(context, style.hintColor))
             input.setTextColor(ContextCompat.getColor(context, style.inputColor))
+            close.setColorFilter(ContextCompat.getColor(context, style.hintColor))
         }
     }
 
