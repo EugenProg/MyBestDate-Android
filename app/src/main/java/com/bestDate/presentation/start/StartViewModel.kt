@@ -7,6 +7,7 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.notifications.PusherCenter
 import com.bestDate.presentation.auth.AuthUseCase
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.SubscriptionUseCase
 import com.bestDate.presentation.main.UserUseCase
 import com.bestDate.presentation.main.userProfile.settings.SettingsUseCase
 import com.hadilq.liveevent.LiveEvent
@@ -20,6 +21,7 @@ class StartViewModel @Inject constructor(
     private val settingsUseCase: SettingsUseCase,
     private val invitationUseCase: InvitationUseCase,
     private val preferencesUtils: PreferencesUtils,
+    private val subscriptionUseCase: SubscriptionUseCase,
     private val pusherCenter: PusherCenter
 ) : BaseViewModel() {
 
@@ -51,6 +53,7 @@ class StartViewModel @Inject constructor(
             userUseCase.refreshUser()
             settingsUseCase.refreshUserSettings()
             invitationUseCase.refreshInvitations()
+            subscriptionUseCase.getUserSubscriptionInfo()
         }
     }
 
@@ -59,6 +62,7 @@ class StartViewModel @Inject constructor(
             userUseCase.changeLanguage(language)
             settingsUseCase.refreshUserSettings()
             invitationUseCase.refreshInvitations()
+            subscriptionUseCase.getUserSubscriptionInfo()
             _updateLanguageSuccessLiveData.postValue(true)
         }
     }

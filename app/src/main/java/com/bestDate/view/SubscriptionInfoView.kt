@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.bestDate.R
+import com.bestDate.data.extension.toSubscriptionDate
 import com.bestDate.databinding.ViewSubscriptionInfoBinding
 
 class SubscriptionInfoView @JvmOverloads constructor(
@@ -17,6 +18,6 @@ class SubscriptionInfoView @JvmOverloads constructor(
 
     @SuppressLint("SetTextI18n")
     fun setEndDate(endDate: String) {
-        binding.description.text = "${context.getString(R.string.active)} • $endDate"
+        binding.description.text = "${context.getString(R.string.active)} • ${endDate.toSubscriptionDate()}"
     }
 }

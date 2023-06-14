@@ -9,7 +9,9 @@ import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.db.entity.UserDB
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.WithdrawUseCase
 import com.bestDate.presentation.main.userProfile.likesList.LikesListUseCase
+import com.bestDate.view.alerts.BuyDialogType
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,6 +21,7 @@ class AnotherProfileViewModel @Inject constructor(
     private val anotherProfileUseCase: AnotherProfileUseCase,
     private val invitationUseCase: InvitationUseCase,
     private val likesUseCase: LikesListUseCase,
+    private val withdrawUseCase: WithdrawUseCase,
     private val subscriptionUtil: SubscriptionUtil
 ) : BaseViewModel() {
 
@@ -34,6 +37,9 @@ class AnotherProfileViewModel @Inject constructor(
 
     private var _sendInvitationLiveData: MutableLiveData<Boolean> = LiveEvent()
     var sendInvitationLiveData: LiveData<Boolean> = _sendInvitationLiveData
+
+    private var _withdrawLiveData = LiveEvent<Int>()
+    var withdrawLiveData: LiveData<Int> = _withdrawLiveData
 
     var likeLiveData: MutableLiveData<ProfileImage?> = likesUseCase.photoMainResult
 
@@ -80,6 +86,13 @@ class AnotherProfileViewModel @Inject constructor(
         doAsync {
             anotherProfileUseCase.complain(userId)
             _complainLiveData.postValue(true)
+        }
+    }
+
+    fun withdrawCoins(type: BuyDialogType, id: Int) {
+        doAsync {
+            withdrawUseCase.withdrawCoins(type)
+            _withdrawLiveData.postValue(id)
         }
     }
 

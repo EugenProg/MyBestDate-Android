@@ -117,4 +117,8 @@ interface UserService {
     /**Save messaging token*/
     @POST("/api/v1/device-token")
     suspend fun saveMessagingDeviceToken(@Body request: SaveDeviceTokenRequest): Response<BaseResponse>
+
+    /**Withdraw coins*/
+    @POST("/api/v1/user/withdraw-coins")
+    suspend fun withdrawCoins(@Body request: WithdrawCoinsRequest): Response<BaseResponse>
 }

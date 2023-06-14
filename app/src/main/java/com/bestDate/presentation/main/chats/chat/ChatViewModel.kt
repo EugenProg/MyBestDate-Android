@@ -1,6 +1,7 @@
 package com.bestDate.presentation.main.chats.chat
 
 import android.graphics.Bitmap
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.bestDate.data.extension.toByteArray
 import com.bestDate.data.model.Message
@@ -10,6 +11,8 @@ import com.bestDate.data.preferences.PreferencesUtils
 import com.bestDate.data.utils.subscription.SubscriptionUtil
 import com.bestDate.presentation.base.BaseViewModel
 import com.bestDate.presentation.main.InvitationUseCase
+import com.bestDate.presentation.main.WithdrawUseCase
+import com.bestDate.view.alerts.BuyDialogType
 import com.hadilq.liveevent.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,6 +22,7 @@ class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
     private val invitationUseCase: InvitationUseCase,
     private val subscriptionUtil: SubscriptionUtil,
+    private val withdrawUseCase: WithdrawUseCase,
     private val preferencesUtils: PreferencesUtils
 ) : BaseViewModel() {
 
@@ -35,6 +39,12 @@ class ChatViewModel @Inject constructor(
 
     private var _translateLiveData: LiveEvent<String?> = LiveEvent()
     var translateLiveData: LiveEvent<String?> = _translateLiveData
+
+    private var _withdrawInvitationLiveData = LiveEvent<Int>()
+    var withdrawInvitationLiveData: LiveData<Int> = _withdrawInvitationLiveData
+
+    private var _withdrawMessageLiveData = LiveEvent<Pair<Int?, String?>>()
+    var withdrawMessageLiveData: LiveData<Pair<Int?, String?>> = _withdrawMessageLiveData
 
     fun sendInvitation(userId: Int?, invitationId: Int) {
         doAsync {
@@ -124,4 +134,20 @@ class ChatViewModel @Inject constructor(
     fun messageSendAllowed(): Boolean = subscriptionUtil.messageSendAllowed()
 
     fun invitationSendAllowed(): Boolean = subscriptionUtil.invitationSendAllowed()
+
+
+    fun withdrawMessageCoins(parentId: Int?, message: String?) {
+        doAsync {
+            withdrawUseCase.withdrawCoins(BuyDialogType.MESSAGE)
+            _withdrawMessageLiveData.postValue(Pair(parentId, message))
+        }
+    }
+
+
+    fun withdrawInvitationCoins(id: Int) {
+        doAsync {
+            withdrawUseCase.withdrawCoins(BuyDialogType.INVITATION)
+            _withdrawInvitationLiveData.postValue(id)
+        }
+    }
 }

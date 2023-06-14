@@ -2,17 +2,19 @@ package com.bestDate.presentation.base.anotherProfile
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.fragment.navArgs
 import com.bestDate.R
 import com.bestDate.data.extension.NavigationResultKey
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.setNavigationResult
 import com.bestDate.databinding.FragmentAnotherProfileSliderBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.view.alerts.showBanningCardsDialog
+import com.bestDate.view.alerts.BanningDialog
+import com.bestDate.view.alerts.BuyDialogType
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 abstract class AnotherProfileSliderFragment :
@@ -28,6 +30,9 @@ abstract class AnotherProfileSliderFragment :
     override val statusBarColor = R.color.bg_main
     override val viewModelClass: Class<AnotherProfileViewModel> =
         AnotherProfileViewModel::class.java
+
+    @Inject
+    lateinit var banningDialog: BanningDialog
 
     abstract fun getPosition(): Int
     abstract fun getUserId(): Int
@@ -48,13 +53,11 @@ abstract class AnotherProfileSliderFragment :
             goBack()
         }
         binding.navBox.cardClick = {
-            if (viewModel.invitationSendAllowed()) {
-                requireActivity().showCreateInvitationDialog(invitationList) {
+            requireActivity().showCreateInvitationDialog(invitationList) {
+                if (viewModel.invitationSendAllowed()) {
                     viewModel.sendInvitation(viewModel.user.value?.id, it.id)
-                }
-            } else {
-                requireActivity().showBanningCardsDialog {
-                    navigateToTariffList()
+                } else {
+                    setUpBanningDialog(it)
                 }
             }
         }
@@ -63,6 +66,21 @@ abstract class AnotherProfileSliderFragment :
         }
         binding.sliderView.onSwipe = {
             goBack()
+        }
+    }
+
+    private fun setUpBanningDialog(invitation: Invitation) {
+        banningDialog.show(requireActivity(), BuyDialogType.INVITATION)
+        banningDialog.buySubscriptionAction = {
+            navigateToTariffList()
+        }
+        banningDialog.sendAction = {
+            postDelayed({
+                viewModel.sendInvitation(viewModel.user.value?.id, invitation.id)
+            }, 300)
+        }
+        banningDialog.buyForCoinsAction = {
+            viewModel.withdrawCoins(it, invitation.id)
         }
     }
 
@@ -80,7 +98,8 @@ abstract class AnotherProfileSliderFragment :
             setNavigationResult(NavigationResultKey.RELOAD, true)
         }
         observe(viewModel.photos) { photos ->
-            binding.sliderView.setPhotos(photos, false,
+            binding.sliderView.setPhotos(
+                photos, false,
                 if (isLikeClicked) binding.sliderView.position else getPosition()
             )
             binding.sliderView.handleIsLiked = { position ->
@@ -91,6 +110,9 @@ abstract class AnotherProfileSliderFragment :
                     viewModel.like(it)
                 }
             }
+        }
+        observe(viewModel.withdrawLiveData) {
+            viewModel.sendInvitation(viewModel.user.value?.id, it)
         }
     }
 }

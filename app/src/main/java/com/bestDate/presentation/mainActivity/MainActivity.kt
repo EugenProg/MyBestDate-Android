@@ -76,9 +76,12 @@ class MainActivity : AppCompatActivity() {
         }
         observe(viewModel.notificationsAction) {
             if (!(it == NotificationType.MESSAGE && (isInCurrentUserChat() || isInChatList()))) {
-                if (it == NotificationType.MODERATION_SUCCESS ||
-                    it == NotificationType.MODERATION_FAILED) {
-                    viewModel.refreshUserData()
+                when {
+                    it == NotificationType.MODERATION_SUCCESS -> viewModel.refreshUserData()
+                    it == NotificationType.MODERATION_FAILED -> {
+                        viewModel.refreshUserData()
+                        viewModel.setStartWithPhotoSelector(true)
+                    }
                 }
                 viewModel.showPush(this)
             }
@@ -157,8 +160,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpSubscriptionManager() {
-        subscriptionManager.updateSubscriptionData = { start, end ->
-            viewModel.updateSubscriptionInfo(start, end)
+        subscriptionManager.updateSubscriptionData = { id, start, end ->
+            viewModel.updateSubscriptionInfo(id, start, end)
         }
     }
 

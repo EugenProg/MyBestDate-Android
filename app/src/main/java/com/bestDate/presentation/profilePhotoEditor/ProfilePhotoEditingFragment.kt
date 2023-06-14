@@ -97,8 +97,8 @@ class ProfilePhotoEditingFragment :
             adapter.submitList(it)
         }
         observe(BasePhotoEditorFragment.editorAction) {
+            binding.nextButton.isVisible = it != null
             if (it != null && it.moderated == false) {
-                binding.nextButton.isVisible = true
                 val photoSettingsSheet = PhotoSettingsSheet()
                 photoSettingsSheet.setSelectedImage(it)
                 photoSettingsSheet.show(childFragmentManager, photoSettingsSheet.tag)

@@ -150,9 +150,13 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun updateSubscriptionInfo(start: String, end: String) {
+    fun updateSubscriptionInfo(id: String, start: String, end: String) {
         doAsync {
-            subscriptionUseCase.updateSubscriptionInfo(start, end)
+            subscriptionUseCase.updateSubscriptionInfo(id, start, end)
         }
+    }
+
+    fun setStartWithPhotoSelector(enable: Boolean) {
+        userUseCase.startWithPhotoSelect = enable
     }
 }

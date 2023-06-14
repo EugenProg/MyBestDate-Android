@@ -7,14 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import com.bestDate.R
 import com.bestDate.data.extension.getBitmap
 import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.postDelayed
 import com.bestDate.data.extension.scale
 import com.bestDate.data.model.Image
 import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatAddImageBinding
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.view.alerts.showBanningMessagesDialog
+import com.bestDate.view.alerts.BanningDialog
+import com.bestDate.view.alerts.BuyDialogType
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ChatAddImageFragment(
@@ -36,6 +39,9 @@ class ChatAddImageFragment(
     var closeAction: (() -> Unit)? = null
     var navigateToTariffList: (() -> Unit)? = null
 
+    @Inject
+    lateinit var banningDialog: BanningDialog
+
     override fun onInit() {
         super.onInit()
         binding.toolbar.title = user?.name
@@ -52,13 +58,10 @@ class ChatAddImageFragment(
             }
             inputView.sendClick = { text ->
                 if (viewModel.messageSendAllowed()) {
-                    val bitmap = image?.uri.getBitmap(requireContext())
-                    bitmap?.scale(1024.0)?.let { imageLiveData.postValue(Pair(text, it)) }
+                    setUpImage(text)
                 } else {
                     binding.inputView.toggleSendLoading(false)
-                    requireActivity().showBanningMessagesDialog {
-                        navigateToTariffList?.invoke()
-                    }
+                    setUpBanningDialog(text)
                 }
             }
             inputView.translateClick = {
@@ -85,6 +88,29 @@ class ChatAddImageFragment(
             showMessage(it.exception.message)
             binding.inputView.toggleSendLoading(false)
             binding.inputView.toggleTranslateLoading(false)
+        }
+        observe(viewModel.withdrawMessageLiveData) {
+            setUpImage(it.second)
+        }
+    }
+
+    private fun setUpImage(text: String?) {
+        val bitmap = image?.uri.getBitmap(requireContext())
+        bitmap?.scale(1024.0)?.let { imageLiveData.postValue(Pair(text, it)) }
+    }
+
+    private fun setUpBanningDialog(text: String?) {
+        banningDialog.show(requireActivity(), BuyDialogType.MESSAGE)
+        banningDialog.buySubscriptionAction = {
+            navigateToTariffList?.invoke()
+        }
+        banningDialog.sendAction = {
+            postDelayed({
+                setUpImage(text)
+            }, 300)
+        }
+        banningDialog.buyForCoinsAction = {
+            viewModel.withdrawMessageCoins(null, text)
         }
     }
 

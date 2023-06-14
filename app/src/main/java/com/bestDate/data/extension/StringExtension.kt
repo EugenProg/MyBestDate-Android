@@ -160,3 +160,10 @@ fun String?.safetyToInt(): Int {
     return if (this?.matches(Regex("[0-9]+")) == true) this.toInt()
     else 0
 }
+
+fun String?.toSubscriptionDate(): String {
+    if (this.isNullOrBlank() || this.length < 10) return ""
+    val date = this.substring(0, 10).split("-")
+    if (date.size < 3) return ""
+    return "${date[2]}.${date[1]}.${date[0]}"
+}

@@ -4,10 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.navigation.fragment.navArgs
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bestDate.R
-import com.bestDate.data.extension.*
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.orZero
+import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.share
+import com.bestDate.data.extension.show
+import com.bestDate.data.extension.toPx
 import com.bestDate.data.model.Image
 import com.bestDate.data.model.ProfileImage
 import com.bestDate.data.utils.DeeplinkCreator
@@ -29,7 +35,6 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
     override val viewModelClass: Class<UserProfileViewModel> = UserProfileViewModel::class.java
     override val statusBarLight = true
     override val statusBarColor = R.color.bg_main
-    private val args: UserProfileFragmentArgs by navArgs()
 
     private lateinit var adapter: ImageLineAdapter
     private var imageListSheet: ImageListSheet = ImageListSheet()
@@ -45,6 +50,13 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
         binding.refreshView.setOnRefreshListener {
             viewModel.updateUserData()
+        }
+        if (viewModel.needUpdate()) viewModel.updateUserData()
+
+        val subscriptionEnd = viewModel.getSubscriptionEndDate()
+        binding.subscriptionView.isVisible = subscriptionEnd != null
+        subscriptionEnd?.let {
+            binding.subscriptionView.setEndDate(it)
         }
     }
 
@@ -124,7 +136,8 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
 
             sheet.show(childFragmentManager)
         }
-        if (args.showPhotoSelect) {
+        if (viewModel.getStartWithPhotoSelector()) {
+            viewModel.setStartWithPhotoSelector(false)
             postDelayed({
                 openImageSelector()
             }, 500)
@@ -140,12 +153,17 @@ class UserProfileFragment : BaseVMFragment<FragmentUserProfileBinding, UserProfi
         picker.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
     }
 
-    private val picker = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        uri?.let {
-            val image = Image(uri = it)
-            navController.navigate(UserProfileFragmentDirections.actionProfileToPhotoEditor(image))
+    private val picker =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                val image = Image(uri = it)
+                navController.navigate(
+                    UserProfileFragmentDirections.actionProfileToPhotoEditor(
+                        image
+                    )
+                )
+            }
         }
-    }
 
     override fun onViewLifecycle() {
         super.onViewLifecycle()

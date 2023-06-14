@@ -682,7 +682,7 @@
     <string name="subscription">Abonnement</string>
     <string name="successfully">Erfolgreich</string>
     <string name="sorry">Entschuldigung…</string>
-    <string name="upload_new_photo">Neues Foto hochladen</string>
+    <string name="upload_new_photo">Neues Foto\nhochladen</string>
     <string name="photo_on_moderation">Foto auf Moderation</string>
     <string name="no_ads_in_the_app">Keine Werbung in der App</string>
     <string name="congratulate">Gratuliere!</string>

@@ -11,7 +11,7 @@ import com.bestDate.network.remote.AuthRemoteData
 import com.bestDate.network.remote.GoogleAuthRemoteData
 import com.bestDate.network.remote.UserRemoteData
 import com.bestDate.presentation.main.InvitationUseCase
-import com.bestDate.presentation.main.chats.ChatListUseCase
+import com.bestDate.presentation.main.SubscriptionUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +20,7 @@ class AuthUseCase @Inject constructor(
     private val authRemoteData: AuthRemoteData,
     private val userRemoteData: UserRemoteData,
     private val invitationUseCase: InvitationUseCase,
+    private val subscriptionUseCase: SubscriptionUseCase,
     private val googleAuthRemoteData: GoogleAuthRemoteData,
     private val preferencesUtils: PreferencesUtils
 ) {
@@ -33,6 +34,7 @@ class AuthUseCase @Inject constructor(
             saveTokens(response.body())
             saveDeviceToken()
             invitationUseCase.refreshInvitations()
+            subscriptionUseCase.getUserSubscriptionInfo()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
@@ -42,6 +44,7 @@ class AuthUseCase @Inject constructor(
             saveTokens(response.body())
             saveDeviceToken()
             invitationUseCase.refreshInvitations()
+            subscriptionUseCase.getUserSubscriptionInfo()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 
@@ -52,6 +55,7 @@ class AuthUseCase @Inject constructor(
             saveDeviceToken()
             registrationSocialMode = response.body()?.registration == true
             invitationUseCase.refreshInvitations()
+            subscriptionUseCase.getUserSubscriptionInfo()
         } else throw InternalException.OperationException(response.errorBody()?.getErrorMessage())
     }
 

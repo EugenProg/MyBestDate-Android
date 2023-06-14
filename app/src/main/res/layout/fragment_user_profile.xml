@@ -217,10 +217,11 @@
                             android:layout_marginStart="18dp"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="18dp"
-                            android:layout_marginBottom="36dp"
+                            android:layout_marginBottom="18dp"
                             tools:layout_height="wrap_content" />
                         
                         <com.bestDate.view.SubscriptionInfoView
+                            android:id="@+id/subscription_view"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone"/>

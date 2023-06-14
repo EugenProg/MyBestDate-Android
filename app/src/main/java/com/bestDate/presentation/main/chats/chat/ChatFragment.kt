@@ -7,7 +7,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.bestDate.R
-import com.bestDate.data.extension.*
+import com.bestDate.data.extension.AnimationType
+import com.bestDate.data.extension.NavigationResultKey
+import com.bestDate.data.extension.close
+import com.bestDate.data.extension.copyToClipboard
+import com.bestDate.data.extension.getNavigationResult
+import com.bestDate.data.extension.observe
+import com.bestDate.data.extension.open
+import com.bestDate.data.extension.postDelayed
+import com.bestDate.data.extension.setOnSaveClickListener
+import com.bestDate.data.extension.show
 import com.bestDate.data.model.BackScreenType
 import com.bestDate.data.model.Image
 import com.bestDate.data.model.Message
@@ -15,8 +24,8 @@ import com.bestDate.data.model.ShortUserData
 import com.bestDate.databinding.FragmentChatBinding
 import com.bestDate.db.entity.Invitation
 import com.bestDate.presentation.base.BaseVMFragment
-import com.bestDate.view.alerts.showBanningCardsDialog
-import com.bestDate.view.alerts.showBanningMessagesDialog
+import com.bestDate.view.alerts.BanningDialog
+import com.bestDate.view.alerts.BuyDialogType
 import com.bestDate.view.alerts.showCreateInvitationDialog
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActions
 import com.bestDate.view.bottomSheet.chatActionsSheet.ChatActionsSheet
@@ -24,6 +33,7 @@ import com.bestDate.view.bottomSheet.imageSheet.ImageListSheet
 import com.bestDate.view.chat.ChatStatusType
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
@@ -36,6 +46,9 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
     private var imageListSheet: ImageListSheet = ImageListSheet()
     private var user: ShortUserData? = null
     private var invitationList: MutableList<Invitation> = mutableListOf()
+
+    @Inject
+    lateinit var banningDialog: BanningDialog
 
     override fun onInit() {
         super.onInit()
@@ -64,8 +77,10 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                     viewModel.sendTextMessage(user?.id, parentId, text)
                 } else {
                     chatView.stopSendLoading()
-                    requireActivity().showBanningMessagesDialog {
-                        navigateToTariffList()
+                    setUpBanningDialog(BuyDialogType.MESSAGE, {
+                        viewModel.withdrawMessageCoins(parentId, text)
+                    }) {
+                        viewModel.sendTextMessage(user?.id, parentId, text)
                     }
                 }
             }
@@ -82,13 +97,15 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 viewModel.returnMessage(it)
             }
             chatView.showInvitationClick = {
-                if (viewModel.invitationSendAllowed()) {
-                    requireActivity().showCreateInvitationDialog(invitationList) {
+                requireActivity().showCreateInvitationDialog(invitationList) {
+                    if (viewModel.invitationSendAllowed()) {
                         viewModel.sendInvitation(user?.id, it.id)
-                    }
-                } else {
-                    requireActivity().showBanningCardsDialog {
-                        navigateToTariffList()
+                    } else {
+                        setUpBanningDialog(BuyDialogType.INVITATION, {
+                            viewModel.withdrawInvitationCoins(it.id)
+                        }) {
+                            viewModel.sendInvitation(user?.id, it.id)
+                        }
                     }
                 }
             }
@@ -129,6 +146,25 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 imageListSheet.dismiss()
                 openImageEditor(it)
             }
+        }
+    }
+
+    private fun setUpBanningDialog(
+        type: BuyDialogType,
+        buyForCoinsAction: () -> Unit,
+        sendAction: () -> Unit
+    ) {
+        banningDialog.show(requireActivity(), type)
+        banningDialog.buySubscriptionAction = {
+            navigateToTariffList()
+        }
+        banningDialog.sendAction = {
+            postDelayed({
+                sendAction.invoke()
+            }, 300)
+        }
+        banningDialog.buyForCoinsAction = {
+            buyForCoinsAction.invoke()
         }
     }
 
@@ -178,13 +214,16 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 binding.chatView.setReplyMode(message)
                 showKeyboardAction()
             }
+
             ChatActions.EDIT -> {
                 binding.chatView.setEditMode(message)
                 showKeyboardAction()
             }
+
             ChatActions.DELETE -> {
                 viewModel.deleteMessage(message?.id)
             }
+
             ChatActions.COPY -> {
                 message?.text?.copyToClipboard(requireContext())
                 showMessage(getString(R.string.message_is_copied_to_clipboard))
@@ -224,6 +263,12 @@ open class ChatFragment : BaseVMFragment<FragmentChatBinding, ChatViewModel>() {
                 binding.statusView.setStatus(it)
                 binding.online.isVisible = true
             }
+        }
+        observe(viewModel.withdrawMessageLiveData) {
+            viewModel.sendTextMessage(user?.id, it.first, it.second.orEmpty())
+        }
+        observe(viewModel.withdrawInvitationLiveData) {
+            viewModel.sendInvitation(user?.id, it)
         }
     }
 

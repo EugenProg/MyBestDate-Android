@@ -18,7 +18,8 @@ import com.bestDate.db.entity.UserSettings
         UserDB::class,
         Invitation::class,
         UserSettings::class
-    ]
+    ],
+    exportSchema = false
 )
 @TypeConverters(StringConverter::class, PhotoConverter::class)
 abstract class LocalDB : RoomDatabase() {
