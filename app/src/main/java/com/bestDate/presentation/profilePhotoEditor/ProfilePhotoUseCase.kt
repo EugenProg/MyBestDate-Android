@@ -7,6 +7,7 @@ import com.bestDate.network.remote.ImageRemoteData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,7 +21,7 @@ class ProfilePhotoUseCase @Inject constructor(
     suspend fun saveUserPhoto(moderated: Boolean, image: ByteArray) {
         val requestFile =
             image.toRequestBody("multipart/form-data".toMediaTypeOrNull(), 0, image.size)
-        val body = MultipartBody.Part.createFormData("photo", "name", requestFile)
+        val body = MultipartBody.Part.createFormData("photo", "${UUID.randomUUID()}.jpg", requestFile)
         val response = imageRemoteData.saveUserPhoto(moderated, body)
         if (response.isSuccessful) {
             savedImage = response.body()?.data

@@ -15,6 +15,7 @@ import com.bestDate.view.chat.ChatStatusType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,7 +56,7 @@ class ChatUseCase @Inject constructor(
     ) {
         val requestFile =
             image.toRequestBody("multipart/form-data".toMediaTypeOrNull(), 0, image.size)
-        val body = MultipartBody.Part.createFormData("image", "name", requestFile)
+        val body = MultipartBody.Part.createFormData("image", "${UUID.randomUUID()}.jpg", requestFile)
         val response = chatsRemoteData.sendImageMessage(recipientId.orZero, body, text)
         if (response.isSuccessful) {
             response.body()?.data?.let {
