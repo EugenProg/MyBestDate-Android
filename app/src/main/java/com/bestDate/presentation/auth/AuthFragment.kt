@@ -23,10 +23,8 @@ class AuthFragment : BaseAuthFragment<FragmentAuthBinding>() {
 
     override fun onViewClickListener() {
         super.onViewClickListener()
+        makeStatusBarTransparent(binding.scroll)
         with(binding) {
-            backButton.onClick = {
-                goBack()
-            }
             authButton.onSafeClick = {
                 validate()
             }
