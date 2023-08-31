@@ -48,9 +48,9 @@
         <action
             android:id="@+id/action_onboardStartFragment_to_authFragment"
             app:destination="@id/authFragment"
-            app:enterAnim="@anim/slide_in_left"
+            app:enterAnim="@anim/slide_in_top_left"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_top_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
@@ -60,9 +60,9 @@
         <action
             android:id="@+id/action_onboardSecondFragment_to_authFragment"
             app:destination="@id/authFragment"
-            app:enterAnim="@anim/slide_in_left"
+            app:enterAnim="@anim/slide_in_top_left"
             app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_right"
+            app:popEnterAnim="@anim/slide_in_top_right"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment

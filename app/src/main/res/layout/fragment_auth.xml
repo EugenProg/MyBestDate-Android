@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bg_auth_couple"
+        android:adjustViewBounds="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -12,94 +21,65 @@
         app:layout_constraintBottom_toBottomOf="@+id/socialContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.bestDate.view.button.BackButtonView
-                android:id="@+id/backButton"
-                android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:back_button_color="@color/bg_main"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/headerTitle"
-                style="@style/title"
-                android:layout_marginTop="2dp"
-                android:text="@string/hello_login_now"
+                android:src="@drawable/ic_logo_name"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toTopOf="@+id/inputContainer"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/backButton" />
-
-            <TextView
-                android:id="@+id/textView4"
-                style="@style/text"
-                android:layout_marginTop="4dp"
-                android:lineSpacingExtra="3dp"
-                android:text="@string/welcome_to_our_kind_and_cozy_home"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/headerTitle" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <LinearLayout
                 android:id="@+id/inputContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="256dp"
                 android:background="@drawable/bottom_dark_sheet"
                 android:orientation="vertical"
                 android:paddingBottom="90dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4">
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.bestDate.view.AuthTabView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginHorizontal="18dp"/>
 
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/emailInput"
                     style="@style/standard_input"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="16dp"
                     app:hint="@string/email_or_phone_number"
                     app:src="@drawable/ic_message" />
 
                 <com.bestDate.view.StandardInputView
                     android:id="@+id/passInput"
                     style="@style/standard_input"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="16dp"
                     app:hint="@string/password"
                     app:isPassField="true"
                     app:src="@drawable/ic_eye" />
 
-                <LinearLayout
+                <TextView
                     android:id="@+id/passForgotButton"
+                    style="@style/component_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="29dp"
-                    android:layout_marginTop="4dp"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <TextView
-                        style="@style/component_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/forgot_password"
-                        android:textColor="@color/white_60"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        style="@style/component_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/reset"
-                        android:textColor="@color/white"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                    android:text="@string/forgot_password"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white_60"
+                    android:textSize="14sp"
+                    android:padding="16dp" />
 
                 <com.bestDate.view.button.WhiteButton
                     android:id="@+id/authButton"
@@ -113,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="25dp"
                     android:orientation="horizontal"
                     android:padding="16dp">
